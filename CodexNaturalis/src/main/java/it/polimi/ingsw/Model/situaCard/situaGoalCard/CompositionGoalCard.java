@@ -1,10 +1,11 @@
 package it.polimi.ingsw.Model.situaCard.situaGoalCard;
 
+import  it.polimi.ingsw.Model.situaPlayer.Player;
 public class CompositionGoalCard extends GoalCard {
 
     private final Composition comp;
-    public CompositionGoalCard(Composition c) {
-
+    public CompositionGoalCard(int points, Composition c) {
+        super(points);
         this.comp=c;
     }
     public Composition getComp() {
@@ -12,5 +13,7 @@ public class CompositionGoalCard extends GoalCard {
     }
 
     //non posso realizzarla fino a quando non so come funziona precisamente player ed il suo campo da gioco
-    public int PointsCalc(Player p);
+    public int PointsCalc(Player p){
+        return 0; //todo
+    }
 }

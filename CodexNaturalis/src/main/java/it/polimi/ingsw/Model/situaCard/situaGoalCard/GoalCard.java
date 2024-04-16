@@ -10,6 +10,5 @@ public abstract class GoalCard extends Card {
     public int GetPoints() {
         return this.points;
     }
-    public abstract int PointsCalc();
 
 }

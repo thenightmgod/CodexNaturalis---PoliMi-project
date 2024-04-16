@@ -1,12 +1,15 @@
 package it.polimi.ingsw.Model.situaCard.situaGoalCard;
 
+import it.polimi.ingsw.Model.situaPlayer.Player;
+
 public class ObjectsGoalCard extends GoalCard {
-    private final int[] obj = new int[3];
+    private final int[] obj;
     //la prima posizione è la QUILL, la seconda è la INKWELL, la terza MANUSCRIPT,
     // quando le istanzio metto un '2' al primo posto se la carta obiettivo
     //richiede 2 QUILL ecc...
 
-    public ObjectsGoalCard (int [] arrayInput) {
+    public ObjectsGoalCard (int points, int [] arrayInput) {
+        super(points);
         if (arrayInput.length != 3) {
             throw new IllegalArgumentException("L'array di input deve essere di dimensione 3");
         }
