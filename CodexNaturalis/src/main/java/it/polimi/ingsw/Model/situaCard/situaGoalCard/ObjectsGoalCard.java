@@ -23,15 +23,29 @@ public class ObjectsGoalCard extends GoalCard {
         return obj;
     }
     public int PointsCalc(Player player) {
+        int totalPoints = 0;
+
         if (this.getPoints() == 3) {
-            int QuillCount= player.getObjectCounter(Objects.Quill);
-            int InkwellCount= player.getObjectCounter(Objects.Inkwell);
-            int ManuscriptCount=player.getObjectCounter(Obects.Manuscript);
-            int totalPoints=0;
-            int totalGroups= Math.min(QuillCount, Math.min(InkwellCount, ManuscriptCount));
+            int QuillCount = player.getObjectCounter(Objects.Quill);
+            int InkwellCount = player.getObjectCounter(Objects.Inkwell);
+            int ManuscriptCount = player.getObjectCounter(Obects.Manuscript);
+            int totalGroups = Math.min(QuillCount, Math.min(InkwellCount, ManuscriptCount));
             totalPoints = totalGroups * 3;
+        } else if (objectsCount[0] == 2) {
+            int QuillCount = player.getObjectCounter(Objects.Quill);
+            totalPoints = QuillCount / 2;
+        } else if (ObjectsCount[1] == 2) {
+            int InkwellCount = player.getObjectCounter(Objects.Inkwell);
+            totalPoints = InkwellCount / 2;
+        } else if (ObjectsCount[2] == 2) {
+            int ManuscriptCount = player.getObjectCounter(Objects.Manuscript);
+            totalPoints = ManuscriptCount / 2;
         }
-        else
+        return totalPoints;
+    }
+
+
+
 
 
 
