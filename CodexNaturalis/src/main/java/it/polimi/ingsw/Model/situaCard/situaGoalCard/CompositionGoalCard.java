@@ -3,7 +3,7 @@ package it.polimi.ingsw.Model.situaCard.situaGoalCard;
 public class CompositionGoalCard extends GoalCard {
 
     private final Composition comp;
-    public CompositionGoalCard(Comp c) {
+    public CompositionGoalCard(Composition c) {
 
         this.comp=c;
     }

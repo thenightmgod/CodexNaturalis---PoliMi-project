@@ -20,6 +20,17 @@ public class ObjectsGoalCard extends GoalCard {
         return obj;
     }
     public int PointsCalc(Player player) {
+        if (this.getPoints() == 3) {
+            int QuillCount= player.getObjectCounter(Objects.Quill);
+            int InkwellCount= player.getObjectCounter(Objects.Inkwell);
+            int ManuscriptCount=player.getObjectCounter(Obects.Manuscript);
+            int totalPoints=0;
+            int totalGroups= Math.min(QuillCount, Math.min(InkwellCount, ManuscriptCount));
+            totalPoints = totalGroups * 3;
+        }
+        else
+
+
 
 
     }
