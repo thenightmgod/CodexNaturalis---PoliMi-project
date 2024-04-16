@@ -1,5 +1,29 @@
 package it.polimi.ingsw.Model.situaCard.situaGoalCard;
 
 public class ObjectsGoalCard extends GoalCard {
-    // TODO
+    private final int[] obj = new int[3];
+    //la prima posizione è la QUILL, la seconda è la INKWELL, la terza MANUSCRIPT,
+    // quando le istanzio metto un '2' al primo posto se la carta obiettivo
+    //richiede 2 QUILL ecc...
+
+    public ObjectsGoalCard (int [] arrayInput) {
+        if (arrayInput.length != 3) {
+            throw new IllegalArgumentException("L'array di input deve essere di dimensione 3");
+        }
+        obj = new int[3];
+        // Copia gli elementi dall'array di input a obj
+        for (int i = 0; i < 3; i++) {
+            obj[i] = arrayInput[i];
+        }
+    }
+    public int[] getObj() {
+        return obj;
+    }
+    public int PointsCalc(Player player) {
+
+
+    }
+
+
+
 }

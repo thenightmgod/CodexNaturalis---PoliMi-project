@@ -4,5 +4,4 @@ public enum Objects implements CardRes {
     QUILL,
     INKWELL,
     MANUSCRIPT
-
 }
