@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Model.situaCard.situaGoalCard;
 
 import it.polimi.ingsw.Model.situaPlayer.Player;
+import it.polimi.ingsw.Model.situaCorner.Objects;
 
 public class ObjectsGoalCard extends GoalCard {
     private final int[] obj;
@@ -8,8 +9,8 @@ public class ObjectsGoalCard extends GoalCard {
     // quando le istanzio metto un '2' al primo posto se la carta obiettivo
     //richiede 2 QUILL ecc...
 
-    public ObjectsGoalCard (int points, int [] arrayInput) {
-        super(points);
+    public ObjectsGoalCard (int id, int points, int[] arrayInput) {
+        super(id, points);
         if (arrayInput.length != 3) {
             throw new IllegalArgumentException("L'array di input deve essere di dimensione 3");
         }
@@ -19,39 +20,42 @@ public class ObjectsGoalCard extends GoalCard {
             obj[i] = arrayInput[i];
         }
     }
+
+    @Override
+    public int getId() {
+        return super.getId();
+    }
+    @Override
+    public int GetPoints() {
+        return super.GetPoints();
+    }
+
     public int[] getObj() {
         return obj;
     }
+
     public int PointsCalc(Player player) {
         int totalPoints = 0;
 
-        if (this.getPoints() == 3) {
-            int QuillCount = player.getObjectCounter(Objects.Quill);
-            int InkwellCount = player.getObjectCounter(Objects.Inkwell);
-            int ManuscriptCount = player.getObjectCounter(Obects.Manuscript);
+        if (this.GetPoints() == 3) {
+            int QuillCount = player.getObjectCounter(Objects.QUILL);
+            int InkwellCount = player.getObjectCounter(Objects.INKWELL);
+            int ManuscriptCount = player.getObjectCounter(Objects.MANUSCRIPT);
             int totalGroups = Math.min(QuillCount, Math.min(InkwellCount, ManuscriptCount));
             totalPoints = totalGroups * 3;
-        } else if (objectsCount[0] == 2) {
-            int QuillCount = player.getObjectCounter(Objects.Quill);
+        } else if (obj[0] == 2) {
+            int QuillCount = player.getObjectCounter(Objects.QUILL);
             totalPoints = QuillCount / 2;
-        } else if (ObjectsCount[1] == 2) {
-            int InkwellCount = player.getObjectCounter(Objects.Inkwell);
+        } else if (obj[1] == 2) {
+            int InkwellCount = player.getObjectCounter(Objects.INKWELL);
             totalPoints = InkwellCount / 2;
-        } else if (ObjectsCount[2] == 2) {
-            int ManuscriptCount = player.getObjectCounter(Objects.Manuscript);
+        } else if (obj[2] == 2) {
+            int ManuscriptCount = player.getObjectCounter(Objects.MANUSCRIPT);
             totalPoints = ManuscriptCount / 2;
         }
         return totalPoints;
     }
 
 
-
-
-
-
-
-    }
-
-
-
 }
+

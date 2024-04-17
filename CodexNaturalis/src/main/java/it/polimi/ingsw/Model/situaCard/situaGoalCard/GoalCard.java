@@ -4,11 +4,16 @@ import it.polimi.ingsw.Model.situaCard.Card;
 
 public abstract class GoalCard extends Card {
     private final int points;
-    public GoalCard(int p) {
+    public GoalCard(int id, int p) {
+        super(id);
         this.points=p;
     }
+    @Override
+    public int getId() {
+        return super.getId();
+    }
+
     public int GetPoints() {
         return this.points;
     }
-
 }

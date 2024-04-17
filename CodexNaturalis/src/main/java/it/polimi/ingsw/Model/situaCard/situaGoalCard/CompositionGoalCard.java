@@ -4,8 +4,8 @@ import  it.polimi.ingsw.Model.situaPlayer.Player;
 public class CompositionGoalCard extends GoalCard {
 
     private final Composition comp;
-    public CompositionGoalCard(int points, Composition c) {
-        super(points);
+    public CompositionGoalCard(int id,int points, Composition c) {
+        super(id,points);
         this.comp=c;
     }
     public Composition getComp() {
