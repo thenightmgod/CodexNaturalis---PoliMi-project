@@ -1,5 +1,9 @@
 package it.polimi.ingsw.Model;
 
 public class Room {
-    // TODO
+    private int RoomId;
+
+    public int getRoomId() {
+        return RoomId;
+    }
 }

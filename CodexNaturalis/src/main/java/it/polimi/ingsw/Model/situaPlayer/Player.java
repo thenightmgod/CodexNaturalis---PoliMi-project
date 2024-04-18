@@ -3,6 +3,7 @@ import it.polimi.ingsw.Model.situaCard.situaPlayableCard.PlayableCard;
 import it.polimi.ingsw.Model.situaCard.situaPlayableCard.ResourceCard;
 import it.polimi.ingsw.Model.situaCorner.Resources;
 import it.polimi.ingsw.Model.situaCorner.Objects;
+import it.polimi.ingsw.Model.Deck;
 
 public class Player {
     private String Name;
@@ -10,8 +11,7 @@ public class Player {
     private int PointsCounter;
     private int[] ResourceCounter;
     private int[] ObjectCounter;
-
-    private PlayingField Field; //todo il come inizializzarlo diocan
+    private PlayingField Field; //todo il come inizializzarlo
 
     public Player(String name, PlayerColor color) {
         Name = name;
@@ -24,12 +24,12 @@ public class Player {
     public String getName() {
         return Name;
     }
-    public Player(PlayerColor color) {
-        Color = color;
-    } //raga che minchia è sta roba?
-    public Player(int pointsCounter) {
-        PointsCounter = pointsCounter;
-    } //stessa cosa
+    public PlayerColor getColor() {
+        return Color;
+    }
+    public int getPointsCounter() {
+        return PointsCounter;
+    }
     public int getResourceCounter(Resources R){
         if(R==Resources.PLANT_KINGDOM)
             return ResourceCounter[0];
@@ -53,9 +53,7 @@ public class Player {
         //todo dopo il deck
         return null;
     }
-
     public void placeCard(PlayableCard c, FB face){
         Field.showFreePositions();
-
     }
 }
