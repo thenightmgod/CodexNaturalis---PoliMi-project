@@ -3,46 +3,66 @@ package it.polimi.ingsw.Model.situaCard.situaPlayableCard;
 import it.polimi.ingsw.Model.situaCard.Card;
 import it.polimi.ingsw.Model.situaCorner.Corner;
 import it.polimi.ingsw.Model.situaCorner.Orientation;
+import it.polimi.ingsw.Model.situaCorner.Resources;
+import it.polimi.ingsw.Model.situaPlayer.Position;
 
+import java.util.LinkedList;
+import java.util.SortedSet;
 
 public abstract class PlayableCard extends Card{
-    private boolean[] BackRes;
-    private Corner HR;
+    private final boolean[] BackRes;
+    private Corner HR; //ragionare poi su final eventualità
     private Corner HL;
     private Corner LR;
     private Corner LL;
 
-    public PlayableCard(int id,int tiporesource){
+    public PlayableCard(int id, Resources R, LinkedList<Corner> Corners){
+
         super(id);
-        for(int i=0; i<4; i++){
-            if(i==tiporesource){
-                this.BackRes[i]= true; //metto uno nella posizione corrisponde alla risorsa
-            }
-            else{
-                this.BackRes[i]= false;
-            }
-        }
+
+        this.HR = Corners.get(0);
+        this.HL = Corners.get(1);
+        this.LR = Corners.get(2);
+        this.LL = Corners.get(3);
+
+        BackRes = new boolean[4];
+
+        BackRes[0] = false;
+        BackRes[1] = false;
+        BackRes[2] = false;
+        BackRes[3] = false;
+
+        if(R==Resources.PLANT_KINGDOM) {
+            BackRes[0] = true;
+        } else if(R==Resources.ANIMAL_KINGDOM)
+            BackRes[1] = true;
+        else if(R==Resources.FUNGI_KINGDOM)
+            BackRes[2] = true;
+        else
+            BackRes[3] = true;
     }
-    public int getBackRes(){
-        for(int i=0; i<4; i++){
-            if(this.BackRes[i]==true){
-                return i;
-            }
-        }
-        return 0;
+    public LinkedList<Resources> getBackRes(){
+        LinkedList<Resources> Res = new LinkedList<Resources>();
+
+        if(this.BackRes[0])
+            Res.add(Resources.PLANT_KINGDOM);
+        else if(this.BackRes[1])
+            Res.add(Resources.ANIMAL_KINGDOM);
+        else if(this.BackRes[2])
+            Res.add(Resources.FUNGI_KINGDOM);
+        else if(this.BackRes[3])
+            Res.add(Resources.INSECT_KINGDOM);
+
+        return Res;
+
     }
     public Corner getCorner(Orientation Orient){
-        switch(Orient){
-            case HR:
-                return this.HR;
-            case HL:
-                return this.HL;
-            case LR:
-                return this.LR;
-            case LL:
-                return this.LL;
-        }
-        return null;
+        return switch (Orient) {
+            case HR -> this.HR;
+            case HL -> this.HL;
+            case LR -> this.LR;
+            case LL -> this.LL;
+        };
     }
 
 
