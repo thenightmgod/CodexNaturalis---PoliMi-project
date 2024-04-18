@@ -10,6 +10,11 @@ public class Position {
         this.x = x;
         this.y = y;
     }
+    public Position(int x, int y){
+        face = FB.FRONT;
+        this.x = x;
+        this.y = y;
+    }
 
     public int getX() {
         return x;
@@ -22,4 +27,5 @@ public class Position {
     public FB getFace() {
         return face;
     }
+
 }

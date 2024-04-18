@@ -64,7 +64,7 @@ public class Player {
     }
 
     public void placeCard(PlayableCard c, FB face) {
-        Field.showFreePositions();
+        //todo
     }
 
     public GoalCard pickGoalCard(GoalCard A, GoalCard B) {

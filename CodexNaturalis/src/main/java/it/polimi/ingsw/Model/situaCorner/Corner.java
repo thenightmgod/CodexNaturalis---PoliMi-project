@@ -13,6 +13,9 @@ public class Corner {
         Covered = k;
         return;
     }
+    public CardRes getRes(){
+        return Res;
+    }
     public boolean getCovered(){
         return Covered;
     }
@@ -22,5 +25,6 @@ public class Corner {
     public CardRes getCardRes(){
         return Res;
     }
+
 
 }
