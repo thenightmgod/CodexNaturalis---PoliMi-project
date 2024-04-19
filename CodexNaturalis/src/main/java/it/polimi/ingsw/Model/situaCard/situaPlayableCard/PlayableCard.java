@@ -16,7 +16,7 @@ public abstract class PlayableCard extends Card{
     private Corner LR;
     private Corner LL;
 
-    public PlayableCard(int id, Resources R, LinkedList<Corner> Corners){
+    public PlayableCard(int id, LinkedList<Resources> R, LinkedList<Corner> Corners){
 
         super(id);
 
@@ -32,14 +32,14 @@ public abstract class PlayableCard extends Card{
         BackRes[2] = false;
         BackRes[3] = false;
 
-        if(R==Resources.PLANT_KINGDOM) {
-            BackRes[0] = true;
-        } else if(R==Resources.ANIMAL_KINGDOM)
-            BackRes[1] = true;
-        else if(R==Resources.FUNGI_KINGDOM)
-            BackRes[2] = true;
-        else
-            BackRes[3] = true;
+        for(Resources elemento : R) {
+            switch (elemento) {
+                case PLANT_KINGDOM -> this.BackRes[0] = true;
+                case ANIMAL_KINGDOM -> this.BackRes[1] = true;
+                case FUNGI_KINGDOM -> this.BackRes[2] = true;
+                case INSECT_KINGDOM -> this.BackRes[3] = true;
+            }
+        }
     }
     public LinkedList<Resources> getBackRes(){
         LinkedList<Resources> Res = new LinkedList<Resources>();

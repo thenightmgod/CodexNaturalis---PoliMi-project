@@ -34,6 +34,10 @@ public class PlayingField {
         };
     }
 
+    public HashMap<Position, PlayableCard> getField() {
+        return Field;
+    }
+
     public Orientation getOppFromCorner(Orientation Orient){
         return switch (Orient) {
             case HR -> Orientation.LL;
@@ -66,7 +70,7 @@ public class PlayingField {
                 for(Orientation Orien : Orientation.values()) {           //per tutti gli altri
                     if (Field.containsKey(getPosFromCorner(front, Orien))) {   //se c'è carta alla posizione di fronte all'angolo
                         Position toCheck = getPosFromCorner(front, Orien);    // posizione da checkare
-                        if ((Field.get(toCheck).getCorner(getOppFromCorner(Orien))).getCardRes().equals(ABSENT)) //vediamo se l'angolo opposto a quello che stiamo controllando, nella carta in pos toCheck ha effettivamente l'angolo
+                        if ((Field.get(toCheck).getCorner(getOppFromCorner(Orien))).getRes().equals(ABSENT)) //vediamo se l'angolo opposto a quello che stiamo controllando, nella carta in pos toCheck ha effettivamente l'angolo
                             return;
                     }
                 }

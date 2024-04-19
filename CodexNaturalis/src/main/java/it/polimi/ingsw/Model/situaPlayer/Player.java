@@ -1,12 +1,17 @@
 package it.polimi.ingsw.Model.situaPlayer;
-import it.polimi.ingsw.Model.situaCard.situaPlayableCard.GoldCard;
-import it.polimi.ingsw.Model.situaCard.situaPlayableCard.PlayableCard;
-import it.polimi.ingsw.Model.situaCard.situaPlayableCard.ResourceCard;
+
+import java.util.*;
+import it.polimi.ingsw.Model.*;
+import it.polimi.ingsw.Model.situaCard.*;
+import it.polimi.ingsw.Model.situaCard.situaPlayableCard.*;
+import it.polimi.ingsw.Model.situaCorner.*;
 import it.polimi.ingsw.Model.situaCorner.Resources;
 import it.polimi.ingsw.Model.situaCorner.Objects;
 import it.polimi.ingsw.Model.Deck;
 import it.polimi.ingsw.Model.situaCard.situaGoalCard.GoalCard;
-import java.util.Scanner;
+import static it.polimi.ingsw.Model.situaCorner.CornerState.EMPTY;
+
+import static it.polimi.ingsw.Model.situaCorner.CardRes.*;
 
 public class Player {
     private final String Name;
@@ -16,14 +21,21 @@ public class Player {
     private int[] ObjectCounter;
     private PlayableCard[] Hand;
     private GoalCard PlayerGoal;
-    private PlayingField Field; //todo il come inizializzarlo
+    private PlayingField PlayingField; //todo il come inizializzarlo
 
     public Player(String name, PlayerColor color) {
         Name = name;
         Color = color;
         PointsCounter = 0;
         ResourceCounter = new int[4];
+        for(int i=0; i<4; i++){
+            ResourceCounter[i]=0;
+        }
         ObjectCounter = new int[3];
+        for(int i=0; i<3; i++){
+            ObjectCounter[i]=0;
+        }
+        PlayingField = new PlayingField();
     }
 
     public String getName() {
@@ -63,24 +75,37 @@ public class Player {
         return null;
     }
 
-    public void placeCard(PlayableCard c, FB face, Position p) {
-        //todo
+    public void placeCard(PlayableCard c, Position p) {
+        this.PlayingField.getField().put(p, c);
+        if(p.getFace().equals(FB.BACK)){
+            LinkedList<Resources> Res = c.getBackRes();
+            for(Resources elemento : Res){
+                switch(elemento){
+                    case PLANT_KINGDOM -> this.ResourceCounter[0]++;
+                    case ANIMAL_KINGDOM -> this.ResourceCounter[1]++;
+                    case FUNGI_KINGDOM -> this.ResourceCounter[2]++;
+                    case INSECT_KINGDOM -> this.ResourceCounter[3]++;
+                }
+            }
+            for(Orientation Orien : Orientation.values()){
+                c.getCorner(Orien).setRes(EMPTY);
+            }
+        }
+        else{
+            for(Orientation Orien : Orientation.values()){
+                switch (c.getCorner(Orien).getRes()){
+                    case PLANT_KINGDOM
+                }
+            }
+        }
+        //coverare angoli e togliere roba dai resources cosi
+        this.PlayingField.updateFreePositions(p);
+        return;
     }
 
     public GoalCard pickGoalCard(GoalCard A, GoalCard B) {
-        //TODO stampa a video
-        System.out.println("Premi 1 per selezionare la prima GoalCard, 2 per la seconda");
-        Scanner scanner = new Scanner(System.in);
-        int scelta = scanner.nextInt();
-        scanner.close();
+        //TODO
 
-        if (scelta == 1) {
-            this.PlayerGoal = A;
-            return B;
-        } else {
-            this.PlayerGoal = B;
-            return A;
-        }
     }
 
 }
