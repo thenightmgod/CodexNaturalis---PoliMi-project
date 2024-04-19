@@ -34,8 +34,7 @@ public class PlayingField {
         };
     }
 
-    public Orientation getOppFromCorner(Position p, Orientation Orient){
-        Position newPosition;
+    public Orientation getOppFromCorner(Orientation Orient){
         return switch (Orient) {
             case HR -> Orientation.LL;
             case HL -> Orientation.LR;
@@ -46,14 +45,36 @@ public class PlayingField {
 
     public void updateFreePositions(Position p){
         FreePositions.remove(p);
+        for(Orientation o: Orientation.values()){
+            checkCorners(p, o);
+        }
         return;
     }
 
-    public void CheckCorners(Position p, Corner c){
-        if(c.getRes().equals(ABSENT)){
-            Position x;
-            x=getPosFromCorner(p,c.getOrientation());
+    public void checkCorners(Position p, Orientation o) {
+        if (Field.get(p).getCorner(o).getRes().equals(ABSENT)) {
+            Position x = getPosFromCorner(p, o);
             Field.remove(x);
         }
+        else {
+            Position front = getPosFromCorner(p, o);
+            if(Field.containsKey(front)){
+                return;
+            }
+            else{
+                //Orientation lazz = getOppFromCorner(o);  angolo da non controllare ma sti cazzi
+                for(Orientation Orien : Orientation.values()) {           //per tutti gli altri
+                    if (Field.containsKey(getPosFromCorner(front, Orien))) {   //se c'è carta alla posizione di fronte all'angolo
+                        Position toCheck = getPosFromCorner(front, Orien);    // posizione da checkare
+                        if ((Field.get(toCheck).getCorner(getOppFromCorner(Orien))).getCardRes().equals(ABSENT)) //vediamo se l'angolo opposto a quello che stiamo controllando, nella carta in pos toCheck ha effettivamente l'angolo
+                            return;
+                    }
+                }
+                FreePositions.add(front);
+            }
+        }
+        return;
+    }
+
 
 }
