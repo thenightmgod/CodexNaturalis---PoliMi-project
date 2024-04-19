@@ -13,7 +13,7 @@ public class GoldCard extends ResourceCard {
     //se per posizionare la carta mi servono 3 funghi e una farfalla, avrò un 3 in pos.2 ed un 1 in posizione 3
     private final PointsCondition PointsC;
 
-    public GoldCard(int id, Resources R, LinkedList<Corner> Corners, CardColor c, int p, int[] requirementsInput, PointsCondition pointsC) {
+    public GoldCard(int id, LinkedList<Resources> R, LinkedList<Corner> Corners, CardColor c, int p, int[] requirementsInput, PointsCondition pointsC) {
         super(id, R, c, p, Corners);
         if (requirementsInput.length != 3) {
             throw new IllegalArgumentException("L'array di input deve essere di dimensione 3");
