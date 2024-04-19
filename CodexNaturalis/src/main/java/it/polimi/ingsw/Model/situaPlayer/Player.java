@@ -12,6 +12,11 @@ import it.polimi.ingsw.Model.situaCard.situaGoalCard.GoalCard;
 import static it.polimi.ingsw.Model.situaCorner.CornerState.EMPTY;
 
 import static it.polimi.ingsw.Model.situaCorner.CardRes.*;
+import static it.polimi.ingsw.Model.situaCorner.Objects.*;
+import static it.polimi.ingsw.Model.situaCorner.Resources.ANIMAL_KINGDOM;
+import static it.polimi.ingsw.Model.situaCorner.Resources.PLANT_KINGDOM;
+import static it.polimi.ingsw.Model.situaCorner.Resources.FUNGI_KINGDOM;
+import static it.polimi.ingsw.Model.situaCorner.Resources.INSECT_KINGDOM;
 
 public class Player {
     private final String Name;
@@ -21,7 +26,7 @@ public class Player {
     private int[] ObjectCounter;
     private PlayableCard[] Hand;
     private GoalCard PlayerGoal;
-    private PlayingField PlayingField; //todo il come inizializzarlo
+    private PlayingField PlayerField; //todo il come inizializzarlo
 
     public Player(String name, PlayerColor color) {
         Name = name;
@@ -35,7 +40,7 @@ public class Player {
         for(int i=0; i<3; i++){
             ObjectCounter[i]=0;
         }
-        PlayingField = new PlayingField();
+        PlayerField = new PlayingField();
     }
 
     public String getName() {
@@ -51,9 +56,9 @@ public class Player {
     }
 
     public int getResourceCounter(Resources R) {
-        if (R == Resources.PLANT_KINGDOM)
+        if (R == PLANT_KINGDOM)
             return ResourceCounter[0];
-        else if (R == Resources.ANIMAL_KINGDOM)
+        else if (R == ANIMAL_KINGDOM)
             return ResourceCounter[1];
         else if (R == Resources.FUNGI_KINGDOM)
             return ResourceCounter[2];
@@ -62,9 +67,9 @@ public class Player {
     }
 
     public int getObjectCounter(Objects O) {
-        if (O == Objects.QUILL)
+        if (O == QUILL)
             return ObjectCounter[0];
-        else if (O == Objects.INKWELL)
+        else if (O == INKWELL)
             return ObjectCounter[1];
         else
             return ObjectCounter[2];
@@ -76,7 +81,8 @@ public class Player {
     }
 
     public void placeCard(PlayableCard c, Position p) {
-        this.PlayingField.getField().put(p, c);
+        HashMap<Position, PlayableCard> x = this.PlayerField.getField();
+        this.PlayerField.getField().put(p, c);
         if(p.getFace().equals(FB.BACK)){
             LinkedList<Resources> Res = c.getBackRes();
             for(Resources elemento : Res){
@@ -94,18 +100,45 @@ public class Player {
         else{
             for(Orientation Orien : Orientation.values()){
                 switch (c.getCorner(Orien).getRes()){
-                    case PLANT_KINGDOM
+                    case PLANT_KINGDOM -> this.ResourceCounter[0]++;
+                    case ANIMAL_KINGDOM -> this.ResourceCounter[1]++;
+                    case FUNGI_KINGDOM -> this.ResourceCounter[2]++;
+                    case INSECT_KINGDOM -> this.ResourceCounter[3]++;
+                    case QUILL -> this.ObjectCounter[0]++;
+                    case INKWELL -> this.ObjectCounter[1]++;
+                    case MANUSCRIPT -> this.ObjectCounter[2]++;
+                    default ->{
+                        break;
+                    }
                 }
             }
         }
-        //coverare angoli e togliere roba dai resources cosi
-        this.PlayingField.updateFreePositions(p);
+        for(Orientation Orien : Orientation.values()){
+            Position front = PlayerField.getPosFromCorner(p, Orien); //posizioni davanti agli angoli
+            if(x.containsKey(front)){ //se c'è carta in quelle posizioni
+                Corner toCover = x.get(front).getCorner(PlayerField.getOppFromCorner(Orien));
+                toCover.setCovered(true); //si covera l'angolo
+                switch (toCover.getRes()){  //accedo a risorsa dell'angolo coperto e diminuisco il counter
+                    case PLANT_KINGDOM -> this.ResourceCounter[0]--;
+                    case ANIMAL_KINGDOM -> this.ResourceCounter[1]--;
+                    case FUNGI_KINGDOM -> this.ResourceCounter[2]--;
+                    case INSECT_KINGDOM -> this.ResourceCounter[3]--;
+                    case QUILL -> this.ObjectCounter[0]--;
+                    case INKWELL -> this.ObjectCounter[1]--;
+                    case MANUSCRIPT -> this.ObjectCounter[2]--;
+                    default ->{
+                        break;
+                    }
+                }
+            }
+        }
+        this.PlayerField.updateFreePositions(p); //updato poi le posizioni libere
         return;
     }
 
-    public GoalCard pickGoalCard(GoalCard A, GoalCard B) {
+   // public GoalCard pickGoalCard(GoalCard A, GoalCard B) {
         //TODO
 
-    }
+   // }
 
 }
