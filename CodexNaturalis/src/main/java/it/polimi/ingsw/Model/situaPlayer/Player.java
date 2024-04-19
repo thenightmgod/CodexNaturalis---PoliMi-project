@@ -63,7 +63,7 @@ public class Player {
         return null;
     }
 
-    public void placeCard(PlayableCard c, FB face) {
+    public void placeCard(PlayableCard c, FB face, Position p) {
         //todo
     }
 
@@ -82,4 +82,5 @@ public class Player {
             return A;
         }
     }
+
 }

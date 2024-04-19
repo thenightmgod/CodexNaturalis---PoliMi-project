@@ -1,8 +1,11 @@
 package it.polimi.ingsw.Model.situaCard.situaPlayableCard;
 
+import it.polimi.ingsw.Model.situaCorner.Corner;
 import it.polimi.ingsw.Model.situaCorner.Objects;
 import it.polimi.ingsw.Model.situaCorner.Resources;
 import it.polimi.ingsw.Model.situaPlayer.Player;
+
+import java.util.LinkedList;
 
 public class GoldCard extends ResourceCard {
     private final int[] requirements;
@@ -10,8 +13,8 @@ public class GoldCard extends ResourceCard {
     //se per posizionare la carta mi servono 3 funghi e una farfalla, avrò un 3 in pos.2 ed un 1 in posizione 3
     private final PointsCondition PointsC;
 
-    public GoldCard(int id, int tiporesource, CardColor c, int p, int[] requirementsInput, PointsCondition pointsC) {
-        super(id, tiporesource, c, p);
+    public GoldCard(int id, Resources R, LinkedList<Corner> Corners, CardColor c, int p, int[] requirementsInput, PointsCondition pointsC) {
+        super(id, R, c, p, Corners);
         if (requirementsInput.length != 3) {
             throw new IllegalArgumentException("L'array di input deve essere di dimensione 3");
         }
