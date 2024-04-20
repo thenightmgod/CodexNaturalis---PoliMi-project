@@ -26,7 +26,7 @@ public class Player {
     private int[] ObjectCounter;
     private PlayableCard[] Hand;
     private GoalCard PlayerGoal;
-    private PlayingField PlayerField; //todo il come inizializzarlo
+    private PlayingField PlayerField;
 
     public Player(String name, PlayerColor color) {
         Name = name;
@@ -136,9 +136,10 @@ public class Player {
         return;
     }
 
-   // public GoalCard pickGoalCard(GoalCard A, GoalCard B) {
-        //TODO
-
-   // }
+   public void pickGoalCard(GoalCard A, GoalCard B, boolean choice) { //tanto la scelta avviene nel controller
+        if (choice)
+            this.PlayerGoal = A;
+        else this.PlayerGoal = B;
+    }
 
 }
