@@ -1,17 +1,15 @@
 package it.polimi.ingsw.Model.situaPlayer;
 
 import java.util.*;
-import it.polimi.ingsw.Model.*;
-import it.polimi.ingsw.Model.situaCard.*;
+
 import it.polimi.ingsw.Model.situaCard.situaPlayableCard.*;
 import it.polimi.ingsw.Model.situaCorner.*;
 import it.polimi.ingsw.Model.situaCorner.Resources;
 import it.polimi.ingsw.Model.situaCorner.Objects;
-import it.polimi.ingsw.Model.Deck;
+import it.polimi.ingsw.Model.situaDeck.Deck;
 import it.polimi.ingsw.Model.situaCard.situaGoalCard.GoalCard;
 import static it.polimi.ingsw.Model.situaCorner.CornerState.EMPTY;
 
-import static it.polimi.ingsw.Model.situaCorner.CardRes.*;
 import static it.polimi.ingsw.Model.situaCorner.Objects.*;
 import static it.polimi.ingsw.Model.situaCorner.Resources.ANIMAL_KINGDOM;
 import static it.polimi.ingsw.Model.situaCorner.Resources.PLANT_KINGDOM;
@@ -33,6 +31,7 @@ public class Player {
         Color = color;
         PointsCounter = 0;
         ResourceCounter = new int[4];
+        Hand = new PlayableCard[3];
         for(int i=0; i<4; i++){
             ResourceCounter[i]=0;
         }
@@ -140,6 +139,9 @@ public class Player {
         if (choice)
             this.PlayerGoal = A;
         else this.PlayerGoal = B;
-    }
+   }
 
+   public void drawCard(Deck d){ //dal controller si potrà scegliere solo tra ResourceDeck e GoldDeck
+        PlayableCard c = (PlayableCard)d.getCards().getFirst(); //da rivedere
+   }
 }

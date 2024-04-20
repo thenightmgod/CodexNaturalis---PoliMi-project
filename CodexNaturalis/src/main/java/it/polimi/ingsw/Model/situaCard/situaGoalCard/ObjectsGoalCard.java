@@ -21,23 +21,14 @@ public class ObjectsGoalCard extends GoalCard {
         }
     }
 
-    @Override
-    public int getId() {
-        return super.getId();
-    }
-    @Override
-    public int GetPoints() {
-        return super.GetPoints();
-    }
-
     public int[] getObj() {
         return obj;
     }
 
-    public int PointsCalc(Player player) {
+    public int pointsCalc(Player player) {
         int totalPoints = 0;
 
-        if (this.GetPoints() == 3) {
+        if (this.getPoints() == 3) {
             int QuillCount = player.getObjectCounter(Objects.QUILL);
             int InkwellCount = player.getObjectCounter(Objects.INKWELL);
             int ManuscriptCount = player.getObjectCounter(Objects.MANUSCRIPT);

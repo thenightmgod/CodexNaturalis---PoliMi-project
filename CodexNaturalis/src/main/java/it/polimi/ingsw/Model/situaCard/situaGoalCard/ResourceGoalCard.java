@@ -12,11 +12,11 @@ public class ResourceGoalCard extends GoalCard {
     public Resources getRes() {
         return Res;
     }
-    public int PointsCalc(Player player) {
+    public int pointsCalc(Player player) {
         int ricorrenze, totpoints=0;
 
         ricorrenze= player.getResourceCounter(Res);
-        totpoints = ( ricorrenze/ 3 ) * this.GetPoints();
+        totpoints = ( ricorrenze/ 3 ) * this.getPoints();
         //se getpoints() mi ritorna 2, mi dà due punti ogni ogni 3 risorse di quel tipo
         return totpoints;
     }
