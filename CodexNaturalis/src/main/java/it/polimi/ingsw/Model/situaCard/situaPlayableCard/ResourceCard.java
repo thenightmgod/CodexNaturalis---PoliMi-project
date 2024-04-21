@@ -10,7 +10,7 @@ import java.util.LinkedList;
 public class ResourceCard extends PlayableCard {
     private final CardColor Color;
     private final int Points;
-    public ResourceCard(int id, LinkedList<Resources> R, CardColor c, int p, LinkedList<Corner> Corners){
+    public ResourceCard(int id, boolean[] R, CardColor c, int p, LinkedList<Corner> Corners){
         super(id, R, Corners);
         this.Color=c;
         this.Points=p;
