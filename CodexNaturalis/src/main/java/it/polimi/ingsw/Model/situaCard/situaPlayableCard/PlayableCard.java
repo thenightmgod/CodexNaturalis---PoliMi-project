@@ -35,11 +35,11 @@ public abstract class PlayableCard extends Card{
 
         if(this.BackRes[0])
             Res.add(Resources.PLANT_KINGDOM);
-        else if(this.BackRes[1])
+        if(this.BackRes[1])
             Res.add(Resources.ANIMAL_KINGDOM);
-        else if(this.BackRes[2])
+        if(this.BackRes[2])
             Res.add(Resources.FUNGI_KINGDOM);
-        else if(this.BackRes[3])
+        if(this.BackRes[3])
             Res.add(Resources.INSECT_KINGDOM);
 
         return Res;
