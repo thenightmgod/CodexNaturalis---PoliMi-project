@@ -10,13 +10,13 @@ import java.util.LinkedList;
 import java.util.SortedSet;
 
 public abstract class PlayableCard extends Card{
-    private final boolean[] BackRes;
+    private boolean[] BackRes;
     private Corner HR; //ragionare poi su final eventualità
     private Corner HL;
     private Corner LR;
     private Corner LL;
 
-    public PlayableCard(int id, LinkedList<Resources> R, LinkedList<Corner> Corners){
+    public PlayableCard(int id, boolean[] robo, LinkedList<Corner> Corners){
 
         super(id);
         this.HR = new Corner(Corners.get(0).getRes(), Orientation.HR);
@@ -26,15 +26,9 @@ public abstract class PlayableCard extends Card{
 
         BackRes = new boolean[4];
 
-        BackRes[0] = false;
-        BackRes[1] = false;
-        BackRes[2] = false;
-        BackRes[3] = false;
-
-        if(R.contains(Resources.PLANT_KINGDOM)) this.BackRes[0] = true;
-        if(R.contains(Resources.ANIMAL_KINGDOM)) this.BackRes[1] = true;
-        if(R.contains(Resources.FUNGI_KINGDOM)) this.BackRes[2] = true;
-        if(R.contains(Resources.INSECT_KINGDOM)) this.BackRes[3] = true;
+        for(int i=0; i<4; i++){
+            BackRes[i] = robo[i];
+        }
     }
     public LinkedList<Resources> getBackRes(){
         LinkedList<Resources> Res = new LinkedList<Resources>();
