@@ -19,11 +19,10 @@ public abstract class PlayableCard extends Card{
     public PlayableCard(int id, LinkedList<Resources> R, LinkedList<Corner> Corners){
 
         super(id);
-
-        this.HR = Corners.get(0);
-        this.HL = Corners.get(1);
-        this.LR = Corners.get(2);
-        this.LL = Corners.get(3);
+        this.HR = new Corner(Corners.get(0).getRes(), Orientation.HR);
+        this.HL = new Corner(Corners.get(1).getRes(), Orientation.HL);
+        this.LR = new Corner(Corners.get(2).getRes(), Orientation.LR);
+        this.LL = new Corner(Corners.get(3).getRes(), Orientation.LL);
 
         BackRes = new boolean[4];
 
@@ -32,14 +31,10 @@ public abstract class PlayableCard extends Card{
         BackRes[2] = false;
         BackRes[3] = false;
 
-        for(Resources elemento : R) {
-            switch (elemento) {
-                case PLANT_KINGDOM -> this.BackRes[0] = true;
-                case ANIMAL_KINGDOM -> this.BackRes[1] = true;
-                case FUNGI_KINGDOM -> this.BackRes[2] = true;
-                case INSECT_KINGDOM -> this.BackRes[3] = true;
-            }
-        }
+        if(R.contains(Resources.PLANT_KINGDOM)) this.BackRes[0] = true;
+        if(R.contains(Resources.ANIMAL_KINGDOM)) this.BackRes[1] = true;
+        if(R.contains(Resources.FUNGI_KINGDOM)) this.BackRes[2] = true;
+        if(R.contains(Resources.INSECT_KINGDOM)) this.BackRes[3] = true;
     }
     public LinkedList<Resources> getBackRes(){
         LinkedList<Resources> Res = new LinkedList<Resources>();

@@ -53,10 +53,16 @@ public class Room {
         player.placeCard(card, p);
     }
     public void drawCard(){
-        //TODO  prima fare i decks
+        //TODO, prima fare i decks
     }
     public void pickGoalCard(Player player, GoalCard A, GoalCard B, boolean choice){
         player.pickGoalCard(A, B, choice);
     }
-    
+    public void initializeGame() {
+        //vanno creati i deck
+        for (int i = 0; i < this.Turns.length; i++){
+
+        }
+
+    }
 }
