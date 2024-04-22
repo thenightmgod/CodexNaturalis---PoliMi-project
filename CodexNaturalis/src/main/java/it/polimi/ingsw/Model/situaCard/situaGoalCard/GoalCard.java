@@ -13,7 +13,7 @@ public abstract class GoalCard extends Card {
         return super.getId();
     }
 
-    public int GetPoints() {
+    public int getPoints() {
         return this.points;
     }
 }

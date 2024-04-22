@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Model.situaCorner;
 
-public class Corner {
+public class   Corner {
     private final Orientation Orient;
     private boolean Covered;
     private CardRes Res;
@@ -28,6 +28,24 @@ public class Corner {
         return Orient;
     }
 
+    public String toString() {
+        return "Orientation: " + Orient + ", Resource: " + Res;
+    }
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Corner corner = (Corner) obj;
+        return Covered == corner.Covered &&
+                Orient == corner.Orient &&
+                Objects.equals(Res, corner.Res);
+    }
 
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(Orient, Covered, Res);
+    }
 }

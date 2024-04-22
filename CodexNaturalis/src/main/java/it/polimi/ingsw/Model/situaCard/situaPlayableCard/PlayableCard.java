@@ -11,60 +11,49 @@ import java.util.SortedSet;
 
 public abstract class PlayableCard extends Card{
     private final boolean[] BackRes;
-    private Corner HR; //ragionare poi su final eventualità
-    private Corner HL;
-    private Corner LR;
-    private Corner LL;
+    private LinkedList<Corner> Corners;
 
-    public PlayableCard(int id, LinkedList<Resources> R, LinkedList<Corner> Corners){
+    public PlayableCard(int id, boolean[] robo, LinkedList<Corner> Corners){
 
         super(id);
+        this.Corners = new LinkedList<>();
+        this.Corners.add(new Corner(Corners.get(0).getRes(), Orientation.HR));
+        this.Corners.add(new Corner(Corners.get(1).getRes(), Orientation.HL));
+        this.Corners.add(new Corner(Corners.get(2).getRes(), Orientation.LR));
+        this.Corners.add(new Corner(Corners.get(3).getRes(), Orientation.LL));
 
-        this.HR = Corners.get(0);
-        this.HL = Corners.get(1);
-        this.LR = Corners.get(2);
-        this.LL = Corners.get(3);
 
         BackRes = new boolean[4];
 
-        BackRes[0] = false;
-        BackRes[1] = false;
-        BackRes[2] = false;
-        BackRes[3] = false;
-
-        for(Resources elemento : R) {
-            switch (elemento) {
-                case PLANT_KINGDOM -> this.BackRes[0] = true;
-                case ANIMAL_KINGDOM -> this.BackRes[1] = true;
-                case FUNGI_KINGDOM -> this.BackRes[2] = true;
-                case INSECT_KINGDOM -> this.BackRes[3] = true;
-            }
+        for(int i=0; i<4; i++){
+            BackRes[i] = robo[i];
         }
     }
+
+
     public LinkedList<Resources> getBackRes(){
         LinkedList<Resources> Res = new LinkedList<Resources>();
 
         if(this.BackRes[0])
             Res.add(Resources.PLANT_KINGDOM);
-        else if(this.BackRes[1])
+        if(this.BackRes[1])
             Res.add(Resources.ANIMAL_KINGDOM);
-        else if(this.BackRes[2])
+        if(this.BackRes[2])
             Res.add(Resources.FUNGI_KINGDOM);
-        else if(this.BackRes[3])
+        if(this.BackRes[3])
             Res.add(Resources.INSECT_KINGDOM);
 
         return Res;
 
     }
     public Corner getCorner(Orientation Orient){
-        return switch (Orient) {
-            case HR -> this.HR;
-            case HL -> this.HL;
-            case LR -> this.LR;
-            case LL -> this.LL;
+        return switch(Orient){
+            case HR -> this.Corners.get(0);
+            case HL -> this.Corners.get(1);
+            case LR -> this.Corners.get(2);
+            case LL -> this.Corners.get(3);
         };
     }
-
 
 }
 

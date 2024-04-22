@@ -26,8 +26,8 @@ public class ObjectsGoalCard extends GoalCard {
         return super.getId();
     }
     @Override
-    public int GetPoints() {
-        return super.GetPoints();
+    public int getPoints() {
+        return super.getPoints();
     }
 
     public int[] getObj() {
@@ -37,7 +37,7 @@ public class ObjectsGoalCard extends GoalCard {
     public int PointsCalc(Player player) {
         int totalPoints = 0;
 
-        if (this.GetPoints() == 3) {
+        if (this.getPoints() == 3) {
             int QuillCount = player.getObjectCounter(Objects.QUILL);
             int InkwellCount = player.getObjectCounter(Objects.INKWELL);
             int ManuscriptCount = player.getObjectCounter(Objects.MANUSCRIPT);
