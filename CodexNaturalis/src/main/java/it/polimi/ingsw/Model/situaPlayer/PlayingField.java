@@ -1,9 +1,7 @@
 package it.polimi.ingsw.Model.situaPlayer;
 
 import it.polimi.ingsw.Model.situaCard.situaPlayableCard.PlayableCard;
-import it.polimi.ingsw.Model.situaCorner.*;
 import it.polimi.ingsw.Model.situaCorner.Orientation;
-import it.polimi.ingsw.Model.situaCorner.CornerState;
 
 import java.util.*;
 

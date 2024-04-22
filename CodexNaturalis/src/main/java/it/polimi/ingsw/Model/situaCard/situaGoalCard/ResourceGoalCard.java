@@ -12,7 +12,7 @@ public class ResourceGoalCard extends GoalCard {
     public Resources getRes() {
         return Res;
     }
-    public int PointsCalc(Player player) {
+    public int pointsCalc(Player player) {
         int ricorrenze, totpoints=0;
 
         ricorrenze= player.getResourceCounter(Res);
