@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Model.situaCard.situaGoalCard.GoalCard;
+import it.polimi.ingsw.Model.situaDeck.Deck;
 import it.polimi.ingsw.Model.situaPlayer.PlayerColor;
 import java.util.Set;
 

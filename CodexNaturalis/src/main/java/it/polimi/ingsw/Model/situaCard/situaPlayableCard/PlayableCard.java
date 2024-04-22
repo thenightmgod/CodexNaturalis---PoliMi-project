@@ -17,10 +17,10 @@ public abstract class PlayableCard extends Card{
 
         super(id);
         this.Corners = new LinkedList<>();
-        this.Corners.add(new Corner(Corners.get(0).getRes(), Orientation.HR));
-        this.Corners.add(new Corner(Corners.get(1).getRes(), Orientation.HL));
-        this.Corners.add(new Corner(Corners.get(2).getRes(), Orientation.LR));
-        this.Corners.add(new Corner(Corners.get(3).getRes(), Orientation.LL));
+        this.Corners.add(new Corner(Corners.get(0).getRes(), Corners.get(0).getOrientation()));
+        this.Corners.add(new Corner(Corners.get(1).getRes(), Corners.get(1).getOrientation()));
+        this.Corners.add(new Corner(Corners.get(2).getRes(), Corners.get(2).getOrientation()));
+        this.Corners.add(new Corner(Corners.get(3).getRes(), Corners.get(3).getOrientation()));
 
 
         BackRes = new boolean[4];
@@ -54,6 +54,8 @@ public abstract class PlayableCard extends Card{
             case LL -> this.Corners.get(3);
         };
     }
+
+
 
 }
 

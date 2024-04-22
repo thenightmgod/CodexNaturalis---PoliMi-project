@@ -1,28 +1,23 @@
 package it.polimi.ingsw;
 import it.polimi.ingsw.Model.situaCard.situaPlayableCard.ResourceCard;
-import it.polimi.ingsw.Model.situaCorner.CardResAdapter;
-import it.polimi.ingsw.Model.situaCorner.CardRes;
-import it.polimi.ingsw.Model.Deck;
+import it.polimi.ingsw.Model.situaCorner.*;
+import it.polimi.ingsw.Model.situaDeck.Deck;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import it.polimi.ingsw.Model.situaCorner.Orientation;
 
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
-import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
         // Carica le ResourceCard dal file JSON
         List<ResourceCard> resourceCards = loadResourceCardsFromFile("src/main/Resources/ResourceCard.json");
-
         // Crea un mazzo utilizzando le ResourceCard caricate
         Deck deck = new Deck(resourceCards);
-
         // Stampa il contenuto del deck
         System.out.println("Contenuto del deck:");
         for (ResourceCard card : deck.getCards()) {
@@ -46,7 +41,7 @@ public class Main {
 
             // Crea un GsonBuilder per configurare Gson con il TypeAdapter personalizzato
             Gson gson = new GsonBuilder()
-                    .registerTypeAdapter(CardRes.class, new CardResAdapter())
+                    .registerTypeAdapter(CardRes.class, new CardResDeserializer())
                     .create();
 
             // Deserializzazione del JSON in una lista di oggetti ResourceCard utilizzando Gson

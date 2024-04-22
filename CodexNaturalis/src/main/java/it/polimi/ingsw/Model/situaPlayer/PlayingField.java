@@ -8,8 +8,6 @@ import it.polimi.ingsw.Model.situaCorner.CornerState;
 import java.util.*;
 
 import static it.polimi.ingsw.Model.situaCorner.CornerState.ABSENT;
-
-
 public class PlayingField {
 
     private HashMap<Position, PlayableCard> Field;
@@ -52,7 +50,6 @@ public class PlayingField {
         for(Orientation o: Orientation.values()){
             checkCorners(p, o);
         }
-        return;
     }
 
     public void checkCorners(Position p, Orientation o) {
@@ -62,11 +59,8 @@ public class PlayingField {
         }
         else {
             Position front = getPosFromCorner(p, o);
-            if(Field.containsKey(front)){
-                return;
-            }
-            else{
-                //Orientation lazz = getOppFromCorner(o);  angolo da non controllare ma sti cazzi
+            if(!Field.containsKey(front)){
+                //Orientation Lazzaro = getOppFromCorner(o);  angolo da non controllare ma sti cazzi
                 for(Orientation Orien : Orientation.values()) {           //per tutti gli altri
                     if (Field.containsKey(getPosFromCorner(front, Orien))) {   //se c'è carta alla posizione di fronte all'angolo
                         Position toCheck = getPosFromCorner(front, Orien);    // posizione da checkare
@@ -77,7 +71,6 @@ public class PlayingField {
                 FreePositions.add(front);
             }
         }
-        return;
     }
 
 

@@ -5,39 +5,24 @@
   "Color": "RED",
   "Points": 0,
   "Corners": [
-    {"HR": {"type": "CornerState", "value": "Empty"}},
-    {"HL": {"type": "Resources", "value": "FUNGI_KINGDOM"}},
-    {"LR": {"type": "CornerState", "value": "ABSENT"}},
-    {"LL": {"type": "Resources", "value": "FUNGI_KINGDOM"}}
+    {"Res": "EMPTY", "Orient": "HR"},
+    {"Res": "FUNGI_KINGDOM", "Orient": "HL"},
+    {"Res": "ABSENT", "Orient": "LR"},
+    {"Res": "FUNGI_KINGDOM", "Orient": "LL"}
   ]
  },
 
   {
     "Id": 2,
-    "BackRes": [
-      false,
-      false,
-      true,
-      false
-    ],
+    "BackRes": [false, false, true, false],
     "Color": "RED",
     "Points": 0,
-    "HR": {
-      "type": "Resources",
-      "value": "FUNGI_KINGDOM"
-    },
-    "HL": {
-      "type": "Resources",
-      "value": "FUNGI_KINGDOM"
-    },
-    "LR": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    },
-    "LL": {
-      "type": "CornerState",
-      "value": "ABSENT"
-    }
+    "Corners": [
+      {"Res": "FUNGI_KINGDOM", "Orient": "HR"},
+      {"Res": "FUNGI_KINGDOM", "Orient": "HL"},
+      {"Res":  "EMPTY", "Orient": "LR"},
+      {"Res": "ABSENT", "Orient": "LL"}
+    ]
   },
 
 
@@ -51,1110 +36,647 @@
     ],
     "Color": "RED",
     "Points": 0,
-    "HR": {
-      "type": "CornerState",
-      "value": "ABSENT"
-    },
-    "HL": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    },
-    "LR": {
-      "type": "Resources",
-      "value": "FUNGI_KINGDOM"
-    },
-    "LL": {
-      "type": "Resources",
-      "value": "FUNGI_KINGDOM"
-    }
-  },
-
-
-  {
-    "Id": 4,
-    "BackRes": [
-      false,
-      false,
-      true,
-      false
-    ],
-    "Color": "RED",
-    "Points": 0,
-    "HR": {
-      "type": "Resources",
-      "value": "FUNGI_KINGDOM"
-    },
-    "HL": {
-      "type": "CornerState",
-      "value": "ABSENT"
-    },
-    "LR": {
-      "type": "Resources",
-      "value": "FUNGI_KINGDOM"
-    },
-    "LL": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    }
-  },
-
-
-  {
-    "Id": 5,
-    "BackRes": [
-      false,
-      false,
-      true,
-      false
-    ],
-    "Color": "RED",
-    "Points": 0,
-    "HR": {
-      "type": "Objects",
-      "value": "QUILL"
-    },
-    "HL": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    },
-    "LR": {
-      "type": "Resources",
-      "value": "FUNGI_KINGDOM"
-    },
-    "LL": {
-      "type": "Resources",
-      "value": "PLANT_KINGDOM"
-    }
+    "Corners" : [
+      { "Res": "ABSENT", "Orient": "HR"},
+      {"Res": "EMPTY", "Orient": "HL"},
+      {"Res": "FUNGI_KINGDOM", "Orient": "LR"},
+      {"Res": "FUNGI_KINGDOM", "Orient": "LL"}]
   },
 
 
 
-  {
-    "Id": 6,
-    "BackRes": [
-      false,
-      false,
-      true,
-      false
-    ],
-    "Color": "RED",
-    "Points": 0,
-    "HR": {
-      "type": "Resources",
-      "value": "FUNGI_KINGDOM"
-    },
-    "HL": {
-      "type": "Objects",
-      "value": "INKWELL"
-    },
-    "LR": {
-      "type": "Resources",
-      "value": "ANIMAL_KINGDOM"
-    },
-    "LL": {
-      "type": "CornerState",
-      "value": "ABSENT"
-    }
-  },
-
-
-  {
-    "Id": 7,
-    "BackRes": [
-      false,
-      false,
-      true,
-      false
-    ],
-    "Color": "RED",
-    "Points": 0,
-    "HR": {
-      "type": "Resources",
-      "value": "INSECT_KINGDOM"
-    },
-    "HL": {
-      "type": "Resources",
-      "value": "FUNGI_KINGDOM"
-    },
-    "LR": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    },
-    "LL": {
-      "type": "Objects",
-      "value": "MANUSCRIPT"
-    }
-  },
-
-
-  {
-    "Id": 8,
-    "BackRes": [
-      false,
-      false,
-      true,
-      false
-    ],
-    "Color": "RED",
-    "Points": 1,
-    "HR": {
-      "type": "Resources",
-      "value": "FUNGI_KINGDOM"
-    },
-    "HL": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    },
-    "LR": {
-      "type": "CornerState",
-      "value": "ABSENT"
-    },
-    "LL": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    }
-  },
-
-
-  {
-    "Id": 9,
-    "BackRes": [
-      false,
-      false,
-      true,
-      false
-    ],
-    "Color": "RED",
-    "Points": 1,
-    "HR": {
-      "type": "CornerState",
-      "value": "ABSENT"
-    },
-    "HL": {
-      "type": "Resources",
-      "value": "FUNGI_KINGDOM"
-    },
-    "LR": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    },
-    "LL": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    }
-  },
-
-
-
-  {
-    "Id": 10,
-    "BackRes": [
-      false,
-      false,
-      true,
-      false
-    ],
-    "Color": "RED",
-    "Points": 1,
-    "HR": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    },
-    "HL": {
-      "type": "CornerState",
-      "value": "ABSENT"
-    },
-    "LR": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    },
-    "LL": {
-      "type": "Resources",
-      "value": "FUNGI_KINGDOM"
-    }
-  },
-
-
-  {
-    "Id": 11,
-    "BackRes": [
-      true,
-      false,
-      false,
-      false
-    ],
-    "Color": "GREEN",
-    "Points": 0,
-    "HR": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    },
-    "HL": {
-      "type": "Resources",
-      "value": "PLANT_KINGDOM"
-    },
-    "LR": {
-      "type": "CornerState",
-      "value": "ABSENT"
-    },
-    "LL": {
-      "type": "Resources",
-      "value": "PLANT_KINGDOM"
-    }
-  },
-
-
-
-  {
-    "Id": 12,
-    "BackRes": [
-      true,
-      false,
-      false,
-      false
-    ],
-    "Color": "GREEN",
-    "Points": 0,
-    "HR": {
-      "type": "Resources",
-      "value": "PLANT_KINGDOM"
-    },
-    "HL": {
-      "type": "Resources",
-      "value": "PLANT_KINGDOM"
-    },
-    "LR": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    },
-    "LL": {
-      "type": "CornerState",
-      "value": "ABSENT"
-    }
-  },
-
-
-  {
-    "Id": 13,
-    "BackRes": [
-      true,
-      false,
-      false,
-      false
-    ],
-    "Color": "GREEN",
-    "Points": 0,
-    "HR": {
-      "type": "CornerState",
-      "value": "ABSENT"
-    },
-    "HL": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    },
-    "LR": {
-      "type": "Resources",
-      "value": "PLANT_KINGDOM"
-    },
-    "LL": {
-      "type": "Resources",
-      "value": "PLANT_KINGDOM"
-    }
-  },
-
-
-  {
-    "Id": 14,
-    "BackRes": [
-      true,
-      false,
-      false,
-      false
-    ],
-    "Color": "GREEN",
-    "Points": 0,
-    "HR": {
-      "type": "Resources",
-      "value": "PLANT_KINGDOM"
-    },
-    "HL": {
-      "type": "CornerState",
-      "value": "ABSENT"
-    },
-    "LR": {
-      "type": "Resources",
-      "value": "PLANT_KINGDOM"
-    },
-    "LL": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    }
-  },
-
-
-  {
-    "Id": 15,
-    "BackRes": [
-      true,
-      false,
-      false,
-      false
-    ],
-    "Color": "GREEN",
-    "Points": 0,
-    "HR": {
-      "type": "Resources",
-      "value": "INSECT_KINGDOM"
-    },
-    "HL": {
-      "type": "CornerState",
-      "value": "ABSENT"
-    },
-    "LR": {
-      "type": "Resources",
-      "value": "PLANT_KINGDOM"
-    },
-    "LL": {
-      "type": "Objects",
-      "value": "QUILL"
-    }
-  },
-
-
-
-  {
-    "Id": 16,
-    "BackRes": [
-      true,
-      false,
-      false,
-      false
-    ],
-    "Color": "GREEN",
-    "Points": 0,
-    "HR": {
-      "type": "Resources",
-      "value": "PLANT_KINGDOM"
-    },
-    "HL": {
-      "type": "Resources",
-      "value": "FUNGI_KINGDOM"
-    },
-    "LR": {
-      "type": "Objects",
-      "value": "INKWELL"
-    },
-    "LL": {
-      "type": "CornerState",
-      "value": "ABSENT"
-    }
-  },
-
-
-
-  {
-    "Id": 17,
-    "BackRes": [
-      true,
-      false,
-      false,
-      false
-    ],
-    "Color": "GREEN",
-    "Points": 0,
-    "HR": {
-      "type": "CornerState",
-      "value": "ABSENT"
-    },
-    "HL": {
-      "type": "Objects",
-      "value": "MANUSCRIPT"
-    },
-    "LR": {
-      "type": "Resources",
-      "value": "ANIMAL_KINGDOM"
-    },
-    "LL": {
-      "type": "Resources",
-      "value": "PLANT_KINGDOM"
-    }
-  },
-
-
-  {
-    "Id": 18,
-    "BackRes": [
-      true,
-      false,
-      false,
-      false
-    ],
-    "Color": "GREEN",
-    "Points": 1,
-    "HR": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    },
-    "HL": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    },
-    "LR": {
-      "type": "CornerState",
-      "value": "ABSENT"
-    },
-    "LL": {
-      "type": "Resources",
-      "value": "PLANT_KINGDOM"
-    }
-  },
-
-
-  {
-    "Id": 19,
-    "BackRes": [
-      true,
-      false,
-      false,
-      false
-    ],
-    "Color": "GREEN",
-    "Points": 1,
-    "HR": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    },
-    "HL": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    },
-    "LR": {
-      "type": "Resources",
-      "value": "PLANT_KINGDOM"
-    },
-    "LL": {
-      "type": "CornerState",
-      "value": "ABSENT"
-    }
-  },
-
-
-
-  {
-    "Id": 20,
-    "BackRes": [
-      true,
-      false,
-      false,
-      false
-    ],
-    "Color": "GREEN",
-    "Points": 1,
-    "HR": {
-      "type": "Resources",
-      "value": "PLANT_KINGDOM"
-    },
-    "HL": {
-      "type": "CornerState",
-      "value": "ABSENT"
-    },
-    "LR": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    },
-    "LL": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    }
-  },
-
-
-  {
-    "Id": 21,
-    "BackRes": [
-      false,
-      true,
-      false,
-      false
-    ],
-    "Color": "BLUE",
-    "Points": 0,
-    "HR": {
-      "type": "Resources",
-      "value": "ANIMAL_KINGDOM"
-    },
-    "HL": {
-      "type": "Resources",
-      "value": "ANIMAL_KINGDOM"
-    },
-    "LR": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    },
-    "LL": {
-      "type": "CornerState",
-      "value": "ABSENT"
-    }
-  },
-
-
-  {
-    "Id": 22,
-    "BackRes": [
-      false,
-      true,
-      false,
-      false
-    ],
-    "Color": "BLUE",
-    "Points": 0,
-    "HR": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    },
-    "HL": {
-      "type": "CornerState",
-      "value": "ABSENT"
-    },
-    "LR": {
-      "type": "Resources",
-      "value": "ANIMAL_KINGDOM"
-    },
-    "LL": {
-      "type": "Resources",
-      "value": "ANIMAL_KINGDOM"
-    }
-  },
-
-
-  {
-    "Id": 23,
-    "BackRes": [
-      false,
-      true,
-      false,
-      false
-    ],
-    "Color": "BLUE",
-    "Points": 0,
-    "HR": {
-      "type": "CornerState",
-      "value": "ABSENT"
-    },
-    "HL": {
-      "type": "Resources",
-      "value": "ANIMAL_KINGDOM"
-    },
-    "LR": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    },
-    "LL": {
-      "type": "Resources",
-      "value": "ANIMAL_KINGDOM"
-    }
-  },
-
-
-  {
-    "Id": 24,
-    "BackRes": [
-      false,
-      true,
-      false,
-      false
-    ],
-    "Color": "BLUE",
-    "Points": 0,
-    "HR": {
-      "type": "Resources",
-      "value": "ANIMAL_KINGDOM"
-    },
-    "HL": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    },
-    "LR": {
-      "type": "Resources",
-      "value": "ANIMAL_KINGDOM"
-    },
-    "LL": {
-      "type": "CornerState",
-      "value": "ABSENT"
-    }
-  },
-
-
-  {
-    "Id": 25,
-    "BackRes": [
-      false,
-      true,
-      false,
-      false
-    ],
-    "Color": "BLUE",
-    "Points": 0,
-    "HR": {
-      "type": "Resources",
-      "value": "INSECT_KINGDOM"
-    },
-    "HL": {
-      "type": "CornerState",
-      "value": "ABSENT"
-    },
-    "LR": {
-      "type": "Resources",
-      "value": "ANIMAL_KINGDOM"
-    },
-    "LL": {
-      "type": "Objects",
-      "value": "Inkwell"
-    }
-  },
-
-
-
-
-
-  {
-    "Id": 26,
-    "BackRes": [
-      false,
-      true,
-      false,
-      false
-    ],
-    "Color": "BLUE",
-    "Points": 0,
-    "HR": {
-      "type": "Resources",
-      "value": "ANIMAL_KINGDOM"
-    },
-    "HL": {
-      "type": "Resources",
-      "value": "PLANT_KINGDOM"
-    },
-    "LR": {
-      "type": "Objects",
-      "value": "MANUSCRIPT"
-    },
-    "LL": {
-      "type": "CornerState",
-      "value": "ABSENT"
-    }
-  },
-
-
-  {
-    "Id": 27,
-    "BackRes": [
-      false,
-      true,
-      false,
-      false
-    ],
-    "Color": "BLUE",
-    "Points": 0,
-    "HR": {
-      "type": "CornerState",
-      "value": "ABSENT"
-    },
-    "HL": {
-      "type": "Objects",
-      "value": "QUILL"
-    },
-    "LR": {
-      "type": "Resources",
-      "value": "FUNGI_KINGDOM"
-    },
-    "LL": {
-      "type": "Resources",
-      "value": "ANIMAL_KINGDOM"
-    }
-  },
-
-
-  {
-    "Id": 28,
-    "BackRes": [
-      false,
-      true,
-      false,
-      false
-    ],
-    "Color": "BLUE",
-    "Points": 1,
-    "HR": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    },
-    "HL": {
-      "type": "CornerState",
-      "value": "ABSENT"
-    },
-    "LR": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    },
-    "LL": {
-      "type": "Resources",
-      "value": "ANIMAL_KINGDOM"
-    }
-  },
-
-
-
-
-  {
-    "Id": 29,
-    "BackRes": [
-      false,
-      true,
-      false,
-      false
-    ],
-    "Color": "BLUE",
-    "Points": 1,
-    "HR": {
-      "type": "CornerState",
-      "value": "ABSENT"
-    },
-    "HL": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    },
-    "LR": {
-      "type": "Resources",
-      "value": "ANIMAL_KINGDOM"
-    },
-    "LL": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    }
-  },
-
-
-  {
-    "Id": 30,
-    "BackRes": [
-      false,
-      true,
-      false,
-      false
-    ],
-    "Color": "BLUE",
-    "Points": 1,
-    "HR": {
-      "type": "Resources",
-      "value": "ANIMAL_KINGDOM"
-    },
-    "HL": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    },
-    "LR": {
-      "type": "CornerState",
-      "value": "ABSENT"
-    },
-    "LL": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    }
-  },
-
-
-
-  {
-    "Id": 31,
-    "BackRes": [
-      false,
-      false,
-      false,
-      true
-    ],
-    "Color": "PURPLE",
-    "Points": 0,
-    "HR": {
-      "type": "Resources",
-      "value": "INSECT_KINGDOM"
-    },
-    "HL": {
-      "type": "Resources",
-      "value": "INSECT_KINGDOM"
-    },
-    "LR": {
-      "type": "CornerState",
-      "value": "ABSENT"
-    },
-    "LL": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    }
-  },
-
-
-  {
-    "Id": 32,
-    "BackRes": [
-      false,
-      false,
-      false,
-      true
-    ],
-    "Color": "PURPLE",
-    "Points": 0,
-    "HR": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    },
-    "HL": {
-      "type": "CornerState",
-      "value": "ABSENT"
-    },
-    "LR": {
-      "type": "Resources",
-      "value": "INSECT_KINGDOM"
-    },
-    "LL": {
-      "type": "Resources",
-      "value": "INSECT_KINGDOM"
-    }
-  },
-
-
-
-  {
-    "Id": 33,
-    "BackRes": [
-      false,
-      false,
-      false,
-      true
-    ],
-    "Color": "PURPLE",
-    "Points": 0,
-    "HR": {
-      "type": "CornerState",
-      "value": "ABSENT"
-    },
-    "HL": {
-      "type": "Resources",
-      "value": "INSECT_KINGDOM"
-    },
-    "LR": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    },
-    "LL": {
-      "type": "Resources",
-      "value": "INSECT_KINGDOM"
-    }
-  },
-
-  {
-    "Id": 34,
-    "BackRes": [
-      false,
-      false,
-      false,
-      true
-    ],
-    "Color": "PURPLE",
-    "Points": 0,
-    "HR": {
-      "type": "Resources",
-      "value": "INSECT_KINGDOM"
-    },
-    "HL": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    },
-    "LR": {
-      "type": "Resources",
-      "value": "INSECT_KINGDOM"
-    },
-    "LL": {
-      "type": "CornerState",
-      "value": "ABSENT"
-    }
-  },
-
-
-
-
-  {
-    "Id": 35,
-    "BackRes": [
-      false,
-      false,
-      false,
-      true
-    ],
-    "Color": "PURPLE",
-    "Points": 0,
-    "HR": {
-      "type": "Objects",
-      "value": "QUILL"
-    },
-    "HL": {
-      "type": "CornerState",
-      "value": "ABSENT"
-    },
-    "LR": {
-      "type": "Resources",
-      "value": "INSECT_KINGDOM"
-    },
-    "LL": {
-      "type": "Resources",
-      "value": "ANIMAL_KINGDOM"
-    }
-  },
-
-
-  {
-    "Id": 36,
-    "BackRes": [
-      false,
-      false,
-      false,
-      true
-    ],
-    "Color": "PURPLE",
-    "Points": 0,
-    "HR": {
-      "type": "Resources",
-      "value": "INSECT_KINGDOM"
-    },
-    "HL": {
-      "type": "Objects",
-      "value": "MANUSCRIPT"
-    },
-    "LR": {
-      "type": "Resources",
-      "value": "FUNGI_KINGDOM"
-    },
-    "LL": {
-      "type": "CornerState",
-      "value": "ABSENT"
-    }
-  },
-
-
-
-  {
-    "Id": 37,
-    "BackRes": [
-      false,
-      false,
-      false,
-      true
-    ],
-    "Color": "PURPLE",
-    "Points": 0,
-    "HR": {
-      "type": "Resources",
-      "value": "PLANT_KINGDOM"
-    },
-    "HL": {
-      "type": "Resources",
-      "value": "INSECT_KINGDOM"
-    },
-    "LR": {
-      "type": "CornerState",
-      "value": "ABSENT"
-    },
-    "LL": {
-      "type": "Objects",
-      "value": "INKWELL"
-    }
-  },
-
-
-
-  {
-    "Id": 38,
-    "BackRes": [
-      false,
-      false,
-      false,
-      true
-    ],
-    "Color": "PURPLE",
-    "Points": 1,
-    "HR": {
-      "type": "CornerState",
-      "value": "ABSENT"
-    },
-    "HL": {
-      "type": "Resources",
-      "value": "INSECT_KINGDOM"
-    },
-    "LR": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    },
-    "LL": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    }
-  },
-
-
-  {
-    "Id": 39,
-    "BackRes": [
-      false,
-      false,
-      false,
-      true
-    ],
-    "Color": "PURPLE",
-    "Points": 1,
-    "HR": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    },
-    "HL": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    },
-    "LR": {
-      "type": "Resources",
-      "value": "INSECT_KINGDOM"
-    },
-    "LL": {
-      "type": "CornerState",
-      "value": "ABSENT"
-    }
-  },
-
-
-  {
-    "Id": 40,
-    "BackRes": [
-      false,
-      false,
-      false,
-      true
-    ],
-    "Color": "PURPLE",
-    "Points": 1,
-    "HR": {
-      "type": "Resources",
-      "value": "INSECT_KINGDOM"
-    },
-    "HL": {
-      "type": "CornerState",
-      "value": "ABSENT"
-    },
-    "LR": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    },
-    "LL": {
-      "type": "CornerState",
-      "value": "EMPTY"
-    }
-  }
+    {
+      "Id": 4,
+      "BackRes": [
+        false,
+        false,
+        true,
+        false
+      ],
+      "Color": "RED",
+      "Points": 0,
+      "Corners": [
+        {"Res": "FUNGI_KINGDOM", "Orient": "HR"},
+        {"Res": "ABSENT", "Orient": "HL"},
+        {"Res": "FUNGI_KINGDOM", "Orient": "LR"},
+        {"Res": "EMPTY", "Orient": "LL"}
+      ]
+    },
+    {
+      "Id": 5,
+      "BackRes": [
+        false,
+        false,
+        true,
+        false
+      ],
+      "Color": "RED",
+      "Points": 0,
+      "Corners": [
+        {"Res": "QUILL", "Orient": "HR"},
+        {"Res": "EMPTY", "Orient": "HL"},
+        {"Res": "FUNGI_KINGDOM", "Orient": "LR"},
+        {"Res": "PLANT_KINGDOM", "Orient": "LL"}
+      ]
+    },
+    {
+      "Id": 6,
+      "BackRes": [
+        false,
+        false,
+        true,
+        false
+      ],
+      "Color": "RED",
+      "Points": 0,
+      "Corners": [
+        {"Res": "FUNGI_KINGDOM", "Orient": "HR"},
+        {"Res": "INKWELL", "Orient": "HL"},
+        {"Res": "ANIMAL_KINGDOM", "Orient": "LR"},
+        {"Res": "ABSENT", "Orient": "LL"}
+      ]
+    },
+    {
+      "Id": 7,
+      "BackRes": [
+        false,
+        false,
+        true,
+        false
+      ],
+      "Color": "RED",
+      "Points": 0,
+      "Corners": [
+        {"Res": "INSECT_KINGDOM", "Orient": "HR"},
+        {"Res": "FUNGI_KINGDOM", "Orient": "HL"},
+        {"Res": "ABSENT", "Orient": "LR"},
+        {"Res": "MANUSCRIPT", "Orient": "LL"}
+      ]
+    },
+    {
+      "Id": 8,
+      "BackRes": [
+        false,
+        false,
+        true,
+        false
+      ],
+      "Color": "RED",
+      "Points": 1,
+      "Corners": [
+        {"Res": "FUNGI_KINGDOM", "Orient": "HR"},
+        {"Res": "EMPTY", "Orient": "HL"},
+        {"Res": "ABSENT", "Orient": "LR"},
+        {"Res": "EMPTY", "Orient": "LL"}
+      ]
+    },
+    {
+      "Id": 9,
+      "BackRes": [
+        false,
+        false,
+        true,
+        false
+      ],
+      "Color": "RED",
+      "Points": 1,
+      "Corners": [
+        {"Res": "ABSENT", "Orient": "HR"},
+        {"Res": "FUNGI_KINGDOM", "Orient": "HL"},
+        {"Res": "EMPTY", "Orient": "LR"},
+        {"Res": "EMPTY", "Orient": "LL"}
+      ]
+    },
+    {
+      "Id": 10,
+      "BackRes": [
+        false,
+        false,
+        true,
+        false
+      ],
+      "Color": "RED",
+      "Points": 1,
+      "Corners": [
+        {"Res": "EMPTY", "Orient": "HR"},
+        {"Res": "ABSENT", "Orient": "HL"},
+        {"Res": "EMPTY", "Orient": "LR"},
+        {"Res": "FUNGI_KINGDOM", "Orient": "LL"}
+      ]
+    },
+    {
+      "Id": 11,
+      "BackRes": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "Color": "GREEN",
+      "Points": 0,
+      "Corners": [
+        {"Res": "EMPTY", "Orient": "HR"},
+        {"Res": "PLANT_KINGDOM", "Orient": "HL"},
+        {"Res": "ABSENT", "Orient": "LR"},
+        {"Res": "PLANT_KINGDOM", "Orient": "LL"}
+      ]
+    },
+    {
+      "Id": 12,
+      "BackRes": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "Color": "GREEN",
+      "Points": 0,
+      "Corners": [
+        {"Res": "PLANT_KINGDOM", "Orient": "HR"},
+        {"Res": "PLANT_KINGDOM", "Orient": "HL"},
+        {"Res": "EMPTY", "Orient": "LR"},
+        {"Res": "ABSENT", "Orient": "LL"}
+      ]
+    },
+
+    {
+      "Id": 13,
+      "BackRes": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "Color": "GREEN",
+      "Points": 0,
+      "Corners" : [
+        {"Res": "ABSENT", "Orient":  "HR"},
+        {"Res": "EMPTY", "Orient":  "HL"},
+        {"Res": "PLANT_KINGDOM", "Orient":  "LR"},
+        {"Res": "PLANT_KINGDOM", "Orient":  "LL"}
+      ]
+    },
+
+
+     {
+        "Id": 14,
+        "BackRes": [
+          true,
+          false,
+          false,
+          false
+        ],
+        "Color": "GREEN",
+        "Points": 0,
+        "Corners": [
+          {"Res": "PLANT_KINGDOM", "Orient": "HR"},
+          {"Res": "ABSENT", "Orient": "HL"},
+          {"Res": "PLANT_KINGDOM", "Orient": "LR"},
+          {"Res": "EMPTY", "Orient": "LL"}
+        ]
+      },
+      {
+        "Id": 15,
+        "BackRes": [
+          true,
+          false,
+          false,
+          false
+        ],
+        "Color": "GREEN",
+        "Points": 0,
+        "Corners": [
+          {"Res": "INSECT_KINGDOM", "Orient": "HR"},
+          {"Res": "ABSENT", "Orient": "HL"},
+          {"Res": "PLANT_KINGDOM", "Orient": "LR"},
+          {"Res": "QUILL", "Orient": "LL"}
+        ]
+      },
+      {
+        "Id": 16,
+        "BackRes": [
+          true,
+          false,
+          false,
+          false
+        ],
+        "Color": "GREEN",
+        "Points": 0,
+        "Corners": [
+          {"Res": "PLANT_KINGDOM", "Orient": "HR"},
+          {"Res": "FUNGI_KINGDOM", "Orient": "HL"},
+          {"Res": "INKWELL", "Orient": "LR"},
+          {"Res": "ABSENT", "Orient": "LL"}
+        ]
+      },
+      {
+        "Id": 17,
+        "BackRes": [
+          true,
+          false,
+          false,
+          false
+        ],
+        "Color": "GREEN",
+        "Points": 0,
+        "Corners": [
+          {"Res": "ABSENT", "Orient": "HR"},
+          {"Res": "MANUSCRIPT", "Orient": "HL"},
+          {"Res": "ANIMAL_KINGDOM", "Orient": "LR"},
+          {"Res": "PLANT_KINGDOM", "Orient": "LL"}
+        ]
+      },
+      {
+        "Id": 18,
+        "BackRes": [
+          true,
+          false,
+          false,
+          false
+        ],
+        "Color": "GREEN",
+        "Points": 1,
+        "Corners": [
+          {"Res": "EMPTY", "Orient": "HR"},
+          {"Res": "EMPTY", "Orient": "HL"},
+          {"Res": "ABSENT", "Orient": "LR"},
+          {"Res": "PLANT_KINGDOM", "Orient": "LL"}
+        ]
+      },
+      {
+        "Id": 19,
+        "BackRes": [
+          true,
+          false,
+          false,
+          false
+        ],
+        "Color": "GREEN",
+        "Points": 1,
+        "Corners": [
+          {"Res": "EMPTY", "Orient": "HR"},
+          {"Res": "EMPTY", "Orient": "HL"},
+          {"Res": "PLANT_KINGDOM", "Orient": "LR"},
+          {"Res": "ABSENT", "Orient": "LL"}
+        ]
+      },
+      {
+        "Id": 20,
+        "BackRes": [
+          true,
+          false,
+          false,
+          false
+        ],
+        "Color": "GREEN",
+        "Points": 1,
+        "Corners": [
+          {"Res": "PLANT_KINGDOM", "Orient": "HR"},
+          {"Res": "ABSENT", "Orient": "HL"},
+          {"Res": "EMPTY", "Orient": "LR"},
+          {"Res": "EMPTY", "Orient": "LL"}
+        ]
+      },
+      {
+        "Id": 21,
+        "BackRes": [
+          false,
+          true,
+          false,
+          false
+        ],
+        "Color": "BLUE",
+        "Points": 0,
+        "Corners": [
+          {"Res": "ANIMAL_KINGDOM", "Orient": "HR"},
+          {"Res": "ANIMAL_KINGDOM", "Orient": "HL"},
+          {"Res": "EMPTY", "Orient": "LR"},
+          {"Res": "ABSENT", "Orient": "LL"}
+        ]
+      },
+      {
+        "Id": 22,
+        "BackRes": [
+          false,
+          true,
+          false,
+          false
+        ],
+        "Color": "BLUE",
+        "Points": 0,
+        "Corners": [
+          {"Res": "ABSENT", "Orient": "HR"},
+          {"Res": "ABSENT", "Orient": "HL"},
+          {"Res": "ANIMAL_KINGDOM", "Orient": "LR"},
+          {"Res": "ANIMAL_KINGDOM", "Orient": "LL"}
+        ]
+      },
+      {
+        "Id": 23,
+        "BackRes": [
+          false,
+          true,
+          false,
+          false
+        ],
+        "Color": "BLUE",
+        "Points": 0,
+        "Corners": [
+          {"Res": "ABSENT", "Orient": "HR"},
+          {"Res": "ANIMAL_KINGDOM", "Orient": "HL"},
+          {"Res": "EMPTY", "Orient": "LR"},
+          {"Res": "ANIMAL_KINGDOM", "Orient": "LL"}
+        ]
+      },
+
+      {
+        "Id": 24,
+        "BackRes": [
+          false,
+          true,
+          false,
+          false
+        ],
+        "Color": "BLUE",
+        "Points": 0,
+        "Corners": [
+          {"Res": "ANIMAL_KINGDOM", "Orient": "HR"},
+          {"Res": "EMPTY", "Orient": "HL"},
+          {"Res": "ANIMAL_KINGDOM", "Orient": "LR"},
+          {"Res": "ABSENT", "Orient": "LL"}
+        ]
+      },
+
+      {
+          "Id": 25,
+          "BackRes": [
+            false,
+            true,
+            false,
+            false
+          ],
+          "Color": "BLUE",
+          "Points": 0,
+          "Corners": [
+            {"Res": "INSECT_KINGDOM", "Orient": "HR"},
+            {"Res": "ABSENT", "Orient": "HL"},
+            {"Res": "ANIMAL_KINGDOM", "Orient": "LR"},
+            {"Res": "Inkwell", "Orient": "LL"}
+          ]
+        },
+        {
+          "Id": 26,
+          "BackRes": [
+            false,
+            true,
+            false,
+            false
+          ],
+          "Color": "BLUE",
+          "Points": 0,
+          "Corners": [
+            {"Res": "ANIMAL_KINGDOM", "Orient": "HR"},
+            {"Res": "PLANT_KINGDOM", "Orient": "HL"},
+            {"Res": "MANUSCRIPT", "Orient": "LR"},
+            {"Res": "ABSENT", "Orient": "LL"}
+          ]
+        },
+        {
+          "Id": 27,
+          "BackRes": [
+            false,
+            true,
+            false,
+            false
+          ],
+          "Color": "BLUE",
+          "Points": 0,
+          "Corners": [
+            {"Res": "ABSENT", "Orient": "HR"},
+            {"Res": "QUILL", "Orient": "HL"},
+            {"Res": "FUNGI_KINGDOM", "Orient": "LR"},
+            {"Res": "ANIMAL_KINGDOM", "Orient": "LL"}
+          ]
+        },
+        {
+          "Id": 28,
+          "BackRes": [
+            false,
+            true,
+            false,
+            false
+          ],
+          "Color": "BLUE",
+          "Points": 1,
+          "Corners": [
+            {"Res": "EMPTY", "Orient": "HR"},
+            {"Res": "ABSENT", "Orient": "HL"},
+            {"Res": "EMPTY", "Orient": "LR"},
+            {"Res": "ANIMAL_KINGDOM", "Orient": "LL"}
+          ]
+        },
+        {
+          "Id": 29,
+          "BackRes": [
+            false,
+            true,
+            false,
+            false
+          ],
+          "Color": "BLUE",
+          "Points": 1,
+          "Corners": [
+            {"Res": "ABSENT", "Orient": "HR"},
+            {"Res": "EMPTY", "Orient": "HL"},
+            {"Res": "ANIMAL_KINGDOM", "Orient": "LR"},
+            {"Res": "EMPTY", "Orient": "LL"}
+          ]
+        },
+        {
+          "Id": 30,
+          "BackRes": [
+            false,
+            true,
+            false,
+            false
+          ],
+          "Color": "BLUE",
+          "Points": 1,
+          "Corners": [
+            {"Res": "ANIMAL_KINGDOM", "Orient": "HR"},
+            {"Res": "EMPTY", "Orient": "HL"},
+            {"Res": "ABSENT", "Orient": "LR"},
+            {"Res": "EMPTY", "Orient": "LL"}
+          ]
+        },
+        {
+          "Id": 31,
+          "BackRes": [
+            false,
+            false,
+            false,
+            true
+          ],
+          "Color": "PURPLE",
+          "Points": 0,
+          "Corners": [
+            {"Res": "INSECT_KINGDOM", "Orient": "HR"},
+            {"Res": "INSECT_KINGDOM", "Orient": "HL"},
+            {"Res": "ABSENT", "Orient": "LR"},
+            {"Res": "EMPTY", "Orient": "LL"}
+          ]
+        },
+        {
+          "Id": 32,
+          "BackRes": [
+            false,
+            false,
+            false,
+            true
+          ],
+          "Color": "PURPLE",
+          "Points": 0,
+          "Corners": [
+            {"Res": "EMPTY", "Orient": "HR"},
+            {"Res": "ABSENT", "Orient": "HL"},
+            {"Res": "INSECT_KINGDOM", "Orient": "LR"},
+            {"Res": "INSECT_KINGDOM", "Orient": "LL"}
+          ]
+        },
+        {
+          "Id": 33,
+          "BackRes": [
+            false,
+            false,
+            false,
+            true
+          ],
+          "Color": "PURPLE",
+          "Points": 0,
+          "Corners": [
+            {"Res": "ABSENT", "Orient": "HR"},
+            {"Res": "INSECT_KINGDOM", "Orient": "HL"},
+            {"Res": "EMPTY", "Orient": "LR"},
+            {"Res": "INSECT_KINGDOM", "Orient": "LL"}
+          ]
+        },
+        {
+          "Id": 34,
+          "BackRes": [
+            false,
+            false,
+            false,
+            true
+          ],
+          "Color": "PURPLE",
+          "Points": 0,
+          "Corners": [
+            {"Res": "INSECT_KINGDOM", "Orient": "HR"},
+            {"Res": "EMPTY", "Orient": "HL"},
+            {"Res": "INSECT_KINGDOM", "Orient": "LR"},
+            {"Res": "ABSENT", "Orient": "LL"}
+          ]
+        },
+        {
+          "Id": 35,
+          "BackRes": [
+            false,
+            false,
+            false,
+            true
+          ],
+          "Color": "PURPLE",
+          "Points": 0,
+          "Corners": [
+            {"Res": "QUILL", "Orient": "HR"},
+            {"Res": "ABSENT", "Orient": "HL"},
+            {"Res": "INSECT_KINGDOM", "Orient": "LR"},
+            {"Res": "ANIMAL_KINGDOM", "Orient": "LL"}
+          ]
+        },
+        {
+          "Id": 36,
+          "BackRes": [
+            false,
+            false,
+            false,
+            true
+          ],
+          "Color": "PURPLE",
+          "Points": 0,
+          "Corners": [
+            {"Res": "INSECT_KINGDOM", "Orient": "HR"},
+            {"Res": "MANUSCRIPT", "Orient": "HL"},
+            {"Res": "FUNGI_KINGDOM", "Orient": "LR"},
+            {"Res": "ABSENT", "Orient": "LL"}
+          ]
+        },
+        {
+          "Id": 37,
+          "BackRes": [
+            false,
+            false,
+            false,
+            true
+          ],
+          "Color": "PURPLE",
+          "Points": 0,
+          "Corners": [
+            {"Res": "PLANT_KINGDOM", "Orient": "HR"},
+            {"Res": "INSECT_KINGDOM", "Orient": "HL"},
+            {"Res": "ABSENT", "Orient": "LR"},
+            {"Res": "INKWELL", "Orient": "LL"}
+          ]
+        },
+        {
+          "Id": 38,
+          "BackRes": [
+            false,
+            false,
+            false,
+            true
+          ],
+          "Color": "PURPLE",
+          "Points": 1,
+          "Corners": [
+            {"Res": "ABSENT", "Orient": "HR"},
+            {"Res": "INSECT_KINGDOM", "Orient": "HL"},
+            {"Res": "EMPTY", "Orient": "LR"},
+            {"Res": "EMPTY", "Orient": "LL"}
+          ]
+        },
+        {
+          "Id": 39,
+          "BackRes": [
+            false,
+            false,
+            false,
+            true
+          ],
+          "Color": "PURPLE",
+          "Points": 1,
+          "Corners": [
+            {"Res": "EMPTY", "Orient": "HR"},
+            {"Res": "EMPTY", "Orient": "HL"},
+            {"Res": "INSECT_KINGDOM", "Orient": "LR"},
+            {"Res": "ABSENT", "Orient": "LL"}
+          ]
+        },
+        {
+          "Id": 40,
+          "BackRes": [
+            false,
+            false,
+            false,
+            true
+          ],
+          "Color": "PURPLE",
+          "Points": 1,
+          "Corners": [
+            {"Res": "INSECT_KINGDOM", "Orient": "HR"},
+            {"Res": "ABSENT", "Orient": "HL"},
+            {"Res": "EMPTY", "Orient": "LR"},
+            {"Res": "EMPTY", "Orient": "LL"}
+          ]
+        }
 ]

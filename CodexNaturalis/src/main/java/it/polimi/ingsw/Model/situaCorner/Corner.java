@@ -29,7 +29,7 @@ public class   Corner {
     }
 
     public String toString() {
-        return "Orientation: " + Orient + ", Resource: " + Res;
+        return "Orientation: " + Orient + ", CardRes is: " + Res;
     }
     public boolean equals(Object obj) {
         if (this == obj) {
