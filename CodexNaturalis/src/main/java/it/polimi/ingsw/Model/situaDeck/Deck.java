@@ -40,9 +40,13 @@ public class Deck {
                     case "Gold":
                         this.cards.add(gson.fromJson(new FileReader(json), GoldCard.class));
                         break;
-                    case "Goal":
+                    case "CompositionGoal":
                         this.cards.add(gson.fromJson(new FileReader(json), CompositionGoalCard.class));
+                        break;
+                    case "ObjectsGoal":
                         this.cards.add(gson.fromJson(new FileReader(json), ObjectsGoalCard.class));
+                        break;
+                    case "ResourceGoal":
                         this.cards.add(gson.fromJson(new FileReader(json), ResourceGoalCard.class));
                         break;
 
@@ -63,6 +67,9 @@ public class Deck {
     }
     public void shuffle(){
         Collections.shuffle(cards);
+    }
+    public void add(GoalCard card){
+        cards.add(card);
     }
     //si pesca attraverso il controller così da non dover gestire
 }
