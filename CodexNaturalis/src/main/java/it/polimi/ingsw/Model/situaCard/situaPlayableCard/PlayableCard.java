@@ -13,7 +13,7 @@ public abstract class PlayableCard extends Card{
     private final boolean[] BackRes;
     private LinkedList<Corner> Corners;
 
-    public PlayableCard(int id, boolean[] robo, LinkedList<Corner> Corners){
+    public PlayableCard(int id, boolean[] backRes, LinkedList<Corner> Corners){
 
         super(id);
         this.Corners = new LinkedList<>();
@@ -26,7 +26,7 @@ public abstract class PlayableCard extends Card{
         BackRes = new boolean[4];
 
         for(int i=0; i<4; i++){
-            BackRes[i] = robo[i];
+            BackRes[i] = backRes[i];
         }
     }
 
