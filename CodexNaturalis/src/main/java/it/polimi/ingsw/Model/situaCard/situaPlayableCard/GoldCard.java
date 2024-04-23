@@ -27,12 +27,15 @@ public class GoldCard extends ResourceCard {
      *
      * @param id the specific GoldCard's identifier
      * @param R the array of 4 positions, each rappresentative of a resource (in the same order of the enum "Resources"),
-     *          containing in each position the number of that resource that the player must have
-     * @param Corners
-     * @param c
-     * @param p
-     * @param requirementsInput
-     * @param pointsC
+     *          containing in each position the number of that resource that the GoldCard has in its back.
+     * @param Corners the List of four corners that each GoldCard has
+     * @param c the GoldCard's color
+     * @param p the GoldCard's points
+     * @param requirementsInput the array of 4 positions, each rappresentative of a resource (in the same order of the enum "Resources"),
+     *      *          containing in each position the number of that resource that the player must have to deploy the card on his playing field
+     * @param pointsC the condition that can be positional ("CORNERS"), based on a number of objects (OBJECTS_QUILL,OBJECTS_INKWEL or OBJECTS_MANUSCRIPT)
+     *                or nothing ("FREE"). If the player meets this condition, he can get a certain number of points calculated by pointsCalc().
+     *
      */
     public GoldCard(int id, boolean[] R, LinkedList<Corner> Corners, CardColor c, int p, int[] requirementsInput, PointsCondition pointsC) {
         super(id, R, c, p, Corners);
@@ -47,14 +50,32 @@ public class GoldCard extends ResourceCard {
         this.PointsC = pointsC;
     }
 
+    /**
+     *
+     * @return the array of 4 positions, each rappresentative of a resource (in the same order of the enum "Resources"),
+     *         containing in each position the number of that resource that the player must have to deploy the card on his playing field
+     */
     public int[] getRequirements() {
         return requirements;
     }
+
+    /**
+     * @return the condition that can be positional ("CORNERS"), based on a number of objects (OBJECTS_QUILL,OBJECTS_INKWEL or OBJECTS_MANUSCRIPT)
+     *         or nothing ("FREE"). If the player meets this condition, he can get a certain number of points calculated by pointsCalc().
+     */
     public PointsCondition getPointsCondition() {
         return PointsC;
     }
 
 
+    /**
+     *
+     *Determines whether the player has the necessary resources, as described in the requirements, to place the GoldCard in the playing field.
+     * Returns 1 if and only if the player has enough resources.
+     *
+     * @param p the player who wants to place the card on his field
+     * @return a boolean that's 1 if the player can place the card
+     */
     public boolean RequirementsOk(Player p) {
         boolean ok=true;
         for (int i=0; i<4; i++) {
@@ -79,6 +100,16 @@ public class GoldCard extends ResourceCard {
         return ok;
     }
 
+
+    /**
+     * Calculates the points that the player makes if he meets the resource requirements and places the card.
+     * If the condition type of the GoldCard is positional, he gets point for each corner he covers with the GoldCard placement,
+     * if the condition concerns an object, the player gets 1 point for each object of that type he owns, including the one on the goldCard.
+     * Finally, if the condition is free, simply return the GoldCard's points.
+     *
+     * @param p the player who places the card and whose points we calculate
+     * @return the total points the player makes after placing the card
+     */
     //TODO PointsCalc() SE IL POINTSCONDITION è CORNERS
     //IO CONSIDERO CHE QUESTO POINTSCALC VIENE CHIAMATO QUANDO LA CARTA IN QUESTIONE
     //E' GIA' STATA POSIZIONATA E PERCIO' CONTO COME PUNTI ANCHE GLI OGGETTI CONTENUTI IN LEI
@@ -96,6 +127,17 @@ public class GoldCard extends ResourceCard {
         return PointsTot;
     }
 
+    /**
+     * * Returns a string representation of the GoldCard object.
+     *  * This representation includes the following information:
+     *  * - The ID of the GoldCard.
+     *  * - The color of the GoldCard.
+     *  * - The number of points associated with the GoldCard.
+     *  * - The array of resources at the back of the GoldCard.
+     *  * - The resources present at each corner of the GoldCard, along with their orientations.
+     *  *
+     *  * @return A string containing the ID, color, points, back resources, and corner resources of the GoldCard.
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

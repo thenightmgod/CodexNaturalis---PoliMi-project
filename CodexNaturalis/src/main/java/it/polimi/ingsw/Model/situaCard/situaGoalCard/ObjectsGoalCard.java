@@ -14,15 +14,18 @@ public class ObjectsGoalCard extends GoalCard {
     //richiede 2 QUILL ecc...
 
     /**
-     * Constructs a new ObjectGoalCard with its id, points and the info about how many and which objects the player needs to get the goal points.
+     * Constructs a new ObjectsGoalCard with the specified identifier, points, and object requirements.
      *
-     * @param id
-     * @param points
-     * @param arrayInput The array tells how many and which objects the player needs to get the goal points.
-     *                   The first position is for the Quill, the Inkwell is in the second and the Manuscript in the third.
-     *                   In each given position there's the required number of objects that the position represents.
+     * @param id The unique identifier of the ObjectsGoalCard.
+     * @param points The number of points associated with the ObjectsGoalCard.
+     * @param arrayInput An array representing the required number of objects for each type (Quill, Inkwell, Manuscript).
+     *                   The array must be of size 3, where:
+     *                   - The first position represents the number of Quill objects required.
+     *                   - The second position represents the number of Inkwell objects required.
+     *                   - The third position represents the number of Manuscript objects required.
+     * @throws IllegalArgumentException if the size of the arrayInput is not equal to 3.
      */
-    public ObjectsGoalCard (int id, int points, int[] arrayInput) {
+    public ObjectsGoalCard(int id, int points, int[] arrayInput) {
         super(id, points);
         if (arrayInput.length != 3) {
             throw new IllegalArgumentException("L'array di input deve essere di dimensione 3");
@@ -37,21 +40,17 @@ public class ObjectsGoalCard extends GoalCard {
     /**
      * Get the array with the info about how many and which objects the GoalCard requires to give points.
      *
-     * @return the array
+     * @return the array with the info about how many and which objects the GoalCard requires to give points.
      */
     public int[] getObj() {
         return obj;
     }
 
     /**
-     * Calculates how many points the specific player has earned
-     * based on the number of the various Objects he owns
+     * Calculates the number of points earned by the specified player based on the achievement of Objects' Goals.
      *
-     *
-     *
-     *
-     * @param player The player whose score due to the achievement of Objects' Goals we want to calculate
-     * @return
+     * @param player The player whose score due to the achievement of Objects' Goals we want to calculate.
+     * @return The total number of points earned by the player.
      */
     public int pointsCalc(Player player) {
         int totalPoints = 0;
@@ -74,6 +73,4 @@ public class ObjectsGoalCard extends GoalCard {
         }
         return totalPoints;
     }
-
-
 }

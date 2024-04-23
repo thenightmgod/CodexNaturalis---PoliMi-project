@@ -8,24 +8,52 @@ import it.polimi.ingsw.Model.situaCorner.Resources;
 import java.util.LinkedList;
 import java.util.Arrays;
 
+/**
+ * Represents a Resource Card in the game.
+ * Extends the PlayableCard class.
+ */
 public class ResourceCard extends PlayableCard {
     private final CardColor Color;
     private final int Points;
-    public ResourceCard(int id, boolean[] R, CardColor c, int p, LinkedList<Corner> Corners){
+
+    /**
+     * Constructs a new ResourceCard.
+     *
+     * @param id      The unique identifier of the ResourceCard.
+     * @param R       The array representing the resources at the back of the card.
+     * @param c       The color of the ResourceCard.
+     * @param p       The points associated with the ResourceCard.
+     * @param Corners The list of corners for the ResourceCard.
+     */
+    public ResourceCard(int id, boolean[] R, CardColor c, int p, LinkedList<Corner> Corners) {
         super(id, R, Corners);
-        this.Color=c;
-        this.Points=p;
+        this.Color = c;
+        this.Points = p;
     }
 
-
+    /**
+     * Gets the color of the ResourceCard.
+     *
+     * @return The color of the ResourceCard.
+     */
     public CardColor getColor() {
         return Color;
     }
 
+    /**
+     * Gets the points associated with the ResourceCard.
+     *
+     * @return The points of the ResourceCard.
+     */
     public int getPoints() {
         return Points;
     }
 
+    /**
+     * Returns a string representation of the ResourceCard.
+     *
+     * @return A string containing the ID, color, points, back resources, and corners of the ResourceCard.
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -35,15 +63,15 @@ public class ResourceCard extends PlayableCard {
         sb.append("BackRes: ").append(getBackRes()).append("\n");
         sb.append("Corners:").append("\n");
 
-        // Itera su ogni valore di Orientation
+        // Iterates over each Orientation value
         for (Orientation orientation : Orientation.values()) {
-            // Ottieni l'angolo per l'orientamento corrente
+            // Gets the corner for the current orientation
             Corner corner = getCorner(orientation);
 
-            // Aggiungi le informazioni sull'angolo alla stringa di output
+            // Adds the corner information to the output string
             sb.append(orientation).append(": ").append(corner.getRes()).append("\n");
         }
         return sb.toString();
     }
-
 }
+
