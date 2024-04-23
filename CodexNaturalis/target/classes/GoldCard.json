@@ -1,0 +1,30 @@
+[
+  {
+    "Id": 41,
+    "BackRes": [false, false, true, false],
+    "PointsC": "OBJECTS_QUILL",
+    "requirements": [0,1,2,0],
+    "Color": "RED",
+    "Points": 1,
+    "Corners": [
+      {"Res": "EMPTY", "Orient": "HR"},
+      {"Res": "ABSENT", "Orient": "HL"},
+      {"Res": "QUILL", "Orient": "LR"},
+      {"Res": "EMPTY", "Orient": "LL"}
+    ]
+  },
+  {
+    "Id": 42,
+    "BackRes": [false, false, true, false],
+    "PointsC": "OBJECTS_INKWELL",
+    "requirements": [1,0,2,0],
+    "Color": "RED",
+    "Points": 1,
+    "Corners": [
+      {"Res": "INKWELL", "Orient": "HR"},
+      {"Res": "EMPTY", "Orient": "HL"},
+      {"Res": "EMPTY", "Orient": "LR"},
+      {"Res": "ABSENT", "Orient": "LL"}
+    ]
+  }
+]

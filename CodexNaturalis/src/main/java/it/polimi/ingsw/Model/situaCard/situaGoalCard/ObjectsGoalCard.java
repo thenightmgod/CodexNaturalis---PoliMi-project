@@ -3,12 +3,25 @@ package it.polimi.ingsw.Model.situaCard.situaGoalCard;
 import it.polimi.ingsw.Model.situaPlayer.Player;
 import it.polimi.ingsw.Model.situaCorner.Objects;
 
+/**
+ * Represents the Goal Card which specific Goal is the achievement of a
+ * certain number of one of the three objects on the player's playing field.
+ */
 public class ObjectsGoalCard extends GoalCard {
     private final int[] obj;
     //la prima posizione è la QUILL, la seconda è la INKWELL, la terza MANUSCRIPT,
     // quando le istanzio metto un '2' al primo posto se la carta obiettivo
     //richiede 2 QUILL ecc...
 
+    /**
+     * Constructs a new ObjectGoalCard with its id, points and the info about how many and which objects the player needs to get the goal points.
+     *
+     * @param id
+     * @param points
+     * @param arrayInput The array tells how many and which objects the player needs to get the goal points.
+     *                   The first position is for the Quill, the Inkwell is in the second and the Manuscript in the third.
+     *                   In each given position there's the required number of objects that the position represents.
+     */
     public ObjectsGoalCard (int id, int points, int[] arrayInput) {
         super(id, points);
         if (arrayInput.length != 3) {
@@ -21,20 +34,26 @@ public class ObjectsGoalCard extends GoalCard {
         }
     }
 
-    @Override
-    public int getId() {
-        return super.getId();
-    }
-    @Override
-    public int getPoints() {
-        return super.getPoints();
-    }
-
+    /**
+     * Get the array with the info about how many and which objects the GoalCard requires to give points.
+     *
+     * @return the array
+     */
     public int[] getObj() {
         return obj;
     }
 
-    public int PointsCalc(Player player) {
+    /**
+     * Calculates how many points the specific player has earned
+     * based on the number of the various Objects he owns
+     *
+     *
+     *
+     *
+     * @param player The player whose score due to the achievement of Objects' Goals we want to calculate
+     * @return
+     */
+    public int pointsCalc(Player player) {
         int totalPoints = 0;
 
         if (this.getPoints() == 3) {
@@ -58,4 +77,3 @@ public class ObjectsGoalCard extends GoalCard {
 
 
 }
-
