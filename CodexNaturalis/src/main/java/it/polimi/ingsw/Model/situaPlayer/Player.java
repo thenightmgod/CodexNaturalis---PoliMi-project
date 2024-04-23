@@ -142,6 +142,5 @@ public class Player {
     }
 
     public void drawCard(Deck d){ //dal controller si potrà scegliere solo tra ResourceDeck e GoldDeck
-        PlayableCard c = (PlayableCard)d.getCards().getFirst(); //da rivedere
     }
 }
