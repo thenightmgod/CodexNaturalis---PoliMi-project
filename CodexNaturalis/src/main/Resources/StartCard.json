@@ -2,7 +2,6 @@
   {
     "Id": 81,
     "BackRes": [false, false, false, true],
-    "Points": 0,
     "Corners": [
       {"Res": "PLANT_KINGDOM", "Orient": "HR"},
       {"Res": "EMPTY", "Orient": "HL"},
@@ -13,7 +12,6 @@
   {
     "Id": 82,
     "BackRes": [false, false, true, false],
-    "Points": 0,
     "Corners": [
       {"Res": "EMPTY", "Orient": "HR"},
       {"Res": "ANIMAL_KINGDOM", "Orient": "HL"},
@@ -24,7 +22,6 @@
   {
     "Id": 83,
     "BackRes": [true, false, true, false],
-    "Points": 0,
     "Corners": [
       {"Res": "EMPTY", "Orient": "HR"},
       {"Res": "EMPTY", "Orient": "HL"},
@@ -35,7 +32,6 @@
   {
     "Id": 84,
     "BackRes": [false, true, false, true],
-    "Points": 0,
     "Corners": [
       {"Res": "EMPTY", "Orient": "HR"},
       {"Res": "EMPTY", "Orient": "HL"},
@@ -46,7 +42,6 @@
   {
     "Id": 85,
     "BackRes": [true, true, false, true],
-    "Points": 0,
     "Corners": [
       {"Res": "EMPTY", "Orient": "HR"},
       {"Res": "EMPTY", "Orient": "HL"},
@@ -57,7 +52,6 @@
   {
     "Id": 86,
     "BackRes": [true, true, true, false],
-    "Points": 0,
     "Corners": [
       {"Res": "EMPTY", "Orient": "HR"},
       {"Res": "EMPTY", "Orient": "HL"},
