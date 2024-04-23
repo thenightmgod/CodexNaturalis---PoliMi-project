@@ -74,10 +74,15 @@ public class Deck {
         cards.add(card);
     }
 
-    public void giveCard(Player p){
-        Card card = getCards().getFirst();
+    public void giveCard(Player p, int i){ //dovrebbe passare anche un int da 0 a 2
+        Card card = getCards().get(i);
         getCards().removeFirst();
         p.getHand().add((PlayableCard)card);
+    }
+    public Card getGoalCard(){
+        Card c = cards.getFirst();
+        cards.remove(c);
+        return c;
     }
     //si pesca attraverso il controller così da non dover gestire differenze tra Resource e Gold deck
 }

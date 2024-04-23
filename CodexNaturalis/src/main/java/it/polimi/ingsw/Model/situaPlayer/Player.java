@@ -54,6 +54,10 @@ public class Player {
         return PointsCounter;
     }
 
+    public void setPlayerGoal(GoalCard card){
+        PlayerGoal = card;
+    }
+
     public int getResourceCounter(Resources R) {
         if (R == PLANT_KINGDOM)
             return ResourceCounter[0];
@@ -74,9 +78,8 @@ public class Player {
             return ObjectCounter[2];
     }
 
-    public ResourceCard draw(Deck d) {
-        //todo dopo il deck
-        return null;
+    public void placeStartCard(StartCard c){
+        //TODO
     }
 
     public void placeCard(PlayableCard c, Position p) {
