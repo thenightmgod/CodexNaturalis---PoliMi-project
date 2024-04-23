@@ -2,6 +2,7 @@ package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Model.situaCard.situaGoalCard.GoalCard;
 import it.polimi.ingsw.Model.situaCard.situaPlayableCard.PlayableCard;
+import it.polimi.ingsw.Model.situaCard.situaPlayableCard.StartCard;
 import it.polimi.ingsw.Model.situaDeck.*;
 import it.polimi.ingsw.Model.situaPlayer.FB;
 import it.polimi.ingsw.Model.situaPlayer.Player;
@@ -42,7 +43,7 @@ public class Room {
             giveStartCards(face, turn);
         }
         giveHands(); //dà le mano ai giocatori
-        commmonGoals();
+        commonGoals();
         for (Player turn : Turns){
             boolean choice = true; //in realtà gliela passa il controller di nuovo
             pickGoalCard(turn, choice);
@@ -58,18 +59,14 @@ public class Room {
     public boolean getFirstRound() {
         return FirstRound;
     }
-    /*public void drawCard(Player player, Deck deck){
-        player.drawCard(deck);
-    }*/
+
     public Player getTurn(){  //controller gestisce i turni e passa alla room il turno corrente
         return this.PlayerTurn;
     }
     public void placeCard(Player player, PlayableCard card, Position p){
         player.placeCard(card, p);
     }
-    public void drawCard(){
-        //TODO, prima fare i decks
-    }
+
     public void pickGoalCard(Player player, boolean choice){
         GoalCard A = (GoalCard) GoalDeck.getGoalCard();
         GoalCard C = (GoalCard) GoalDeck.getGoalCard();
@@ -106,9 +103,9 @@ public class Room {
     }
     public void giveStartCards(FB face, Player p){
         StartDeck.giveCard(p, 0);
-        p.placeCard(p.getHand().get(0), new Position(face, 0, 0));
+        p.placeStartCard((StartCard) p.getHand().getFirst(), face);
     }
-    public void commmonGoals(){
+    public void commonGoals(){
         GoalCard Goal_1= (GoalCard)GoalDeck.getCards().get(0);
         GoalCard Goal_2= (GoalCard)GoalDeck.getCards().get(1);
         CommonGoals.add(Goal_1);

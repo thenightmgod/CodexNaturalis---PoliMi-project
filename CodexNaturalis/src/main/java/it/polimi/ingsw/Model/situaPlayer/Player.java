@@ -78,8 +78,43 @@ public class Player {
             return ObjectCounter[2];
     }
 
-    public void placeStartCard(StartCard c){
-        //TODO
+    public void placeStartCard(StartCard c, FB face){
+        HashMap<Position, PlayableCard> x = this.PlayerField.getField();
+        this.PlayerField.getField().put(new Position(face, 0, 0), c);
+        if(face.equals(FB.FRONT)){
+            LinkedList<Resources> Res = c.getBackRes();
+            for(Resources elemento : Res){
+                if(elemento.equals(PLANT_KINGDOM))
+                    this.ResourceCounter[0]++;
+                if(elemento.equals(ANIMAL_KINGDOM))
+                    this.ResourceCounter[1]++;
+                if(elemento.equals(FUNGI_KINGDOM))
+                    this.ResourceCounter[2]++;
+                if(elemento.equals(INSECT_KINGDOM))
+                    this.ResourceCounter[3]++;
+            }
+            for(Orientation Orien : Orientation.values()){
+                c.getCorner(Orien).setRes(EMPTY);
+            }
+        }
+        else{
+            for(Orientation Orien : Orientation.values()){
+                switch (c.getCorner(Orien).getRes()){
+                    case PLANT_KINGDOM -> this.ResourceCounter[0]++;
+                    case ANIMAL_KINGDOM -> this.ResourceCounter[1]++;
+                    case FUNGI_KINGDOM -> this.ResourceCounter[2]++;
+                    case INSECT_KINGDOM -> this.ResourceCounter[3]++;
+                    case QUILL -> this.ObjectCounter[0]++;
+                    case INKWELL -> this.ObjectCounter[1]++;
+                    case MANUSCRIPT -> this.ObjectCounter[2]++;
+                    default ->{
+                        break;
+                    }
+                }
+            }
+        }
+        this.PlayerField.updateFreePositions(new Position(0, 0));
+        this.Hand.remove(c);
     }
 
     public void placeCard(PlayableCard c, Position p) {
@@ -135,7 +170,7 @@ public class Player {
             }
         }
         this.PlayerField.updateFreePositions(p); //updato poi le posizioni libere
-        Hand.remove(c); //tolgo la carta dalla mano
+        this.Hand.remove(c); //tolgo la carta dalla mano
         return;
     }
     public LinkedList<PlayableCard> getHand(){
