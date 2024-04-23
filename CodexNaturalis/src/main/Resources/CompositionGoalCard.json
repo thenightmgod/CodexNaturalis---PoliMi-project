@@ -1,0 +1,50 @@
+[
+  {
+    "Id": 87,
+    "Points": 2,
+    "comp": "DIAGONAL_UP",
+    "color": "RED"
+  },
+  {
+    "Id": 88,
+    "Points": 2,
+    "comp": "DIAGONAL_DOWN",
+    "color": "GREEN"
+  },
+  {
+    "Id": 89,
+    "Points": 2,
+    "comp": "DIAGONAL_UP",
+    "color": "BLUE"
+  },
+  {
+    "Id": 90,
+    "Points": 2,
+    "comp": "DIAGONAL_DOWN",
+    "color": "PURPLE"
+  },
+  {
+    "Id": 91,
+    "Points": 3,
+    "comp": "L",
+    "color": "RED"
+  },
+  {
+    "Id": 92,
+    "Points": 3,
+    "comp": "REVERSE_L",
+    "color": "GREEN"
+  },
+  {
+    "Id": 93,
+    "Points": 3,
+    "comp": "T",
+    "color": "BLUE"
+  },
+  {
+    "Id": 94,
+    "Points": 3,
+    "comp": "REVERSE_T",
+    "color": "PURPLE"
+  }
+]
