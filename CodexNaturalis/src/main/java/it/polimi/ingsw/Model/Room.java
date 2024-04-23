@@ -33,6 +33,10 @@ public class Room {
         this.Turns = new Player[numPlayers];
     }
 
+    public void initializeGame() {
+        createDecks(); //carte a terra si prendono dalle prime 3 posizioni di Resource e Gold deck
+        giveHands();
+    }
     public int getRoomId() {
         return RoomId;
     }
@@ -42,9 +46,9 @@ public class Room {
     public boolean getFirstRound() {
         return FirstRound;
     }
-    public void drawCard(Player player, Deck deck){
+    /*public void drawCard(Player player, Deck deck){
         player.drawCard(deck);
-    }
+    }*/
     public Player getTurn(){  //controller gestisce i turni e passa alla room il turno corrente
         return this.PlayerTurn;
     }
@@ -57,7 +61,7 @@ public class Room {
     public void pickGoalCard(Player player, GoalCard A, GoalCard B, boolean choice){
         player.pickGoalCard(A, B, choice);
     }
-    public void initializeGame() {
+    public void createDecks(){
         this.StartDeck = new StartDeck();
         this.ResourceDeck = new ResourceDeck();
         this.GoldDeck = new GoldDeck();
@@ -72,6 +76,17 @@ public class Room {
         }
         for(int i=0; i<4; i++){
             this.GoalDeck.add((GoalCard)temp3.getCards().get(i));
+        }
+        StartDeck.shuffle();
+        ResourceDeck.shuffle();
+        GoldDeck.shuffle();
+        GoalDeck.shuffle();
+    }
+    public void giveHands(){
+        for (Player turn : Turns) {
+            ResourceDeck.giveCard(turn);
+            ResourceDeck.giveCard(turn);
+            GoldDeck.giveCard(turn);
         }
     }
 }

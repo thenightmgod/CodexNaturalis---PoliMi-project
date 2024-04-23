@@ -7,11 +7,13 @@ import it.polimi.ingsw.Model.situaCard.situaGoalCard.GoalCard;
 import it.polimi.ingsw.Model.situaCard.situaGoalCard.ObjectsGoalCard;
 import it.polimi.ingsw.Model.situaCard.situaGoalCard.ResourceGoalCard;
 import it.polimi.ingsw.Model.situaCard.situaPlayableCard.GoldCard;
+import it.polimi.ingsw.Model.situaCard.situaPlayableCard.PlayableCard;
 import it.polimi.ingsw.Model.situaCard.situaPlayableCard.ResourceCard;
 import it.polimi.ingsw.Model.situaCard.situaPlayableCard.StartCard;
 import it.polimi.ingsw.Model.situaCorner.CardRes;
 import it.polimi.ingsw.Model.situaCorner.CardResDeserializer;
 import it.polimi.ingsw.Model.situaCorner.Resources;
+import it.polimi.ingsw.Model.situaPlayer.Player;
 
 import java.io.FileReader;
 import java.util.LinkedList;
@@ -71,6 +73,12 @@ public class Deck {
     public void add(GoalCard card){
         cards.add(card);
     }
-    //si pesca attraverso il controller così da non dover gestire
+
+    public void giveCard(Player p){
+        Card card = getCards().getFirst();
+        getCards().removeFirst();
+        p.getHand().add((PlayableCard)card);
+    }
+    //si pesca attraverso il controller così da non dover gestire differenze tra Resource e Gold deck
 }
 

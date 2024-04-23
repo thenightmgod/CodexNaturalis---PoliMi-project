@@ -22,7 +22,7 @@ public class Player {
     private int PointsCounter;
     private int[] ResourceCounter;
     private int[] ObjectCounter;
-    private PlayableCard[] Hand;
+    private LinkedList<PlayableCard> Hand;
     private GoalCard PlayerGoal;
     private PlayingField PlayerField;
 
@@ -31,7 +31,7 @@ public class Player {
         Color = color;
         PointsCounter = 0;
         ResourceCounter = new int[4];
-        Hand = new PlayableCard[3];
+        Hand = new LinkedList<>();
         for(int i=0; i<4; i++){
             ResourceCounter[i]=0;
         }
@@ -132,7 +132,11 @@ public class Player {
             }
         }
         this.PlayerField.updateFreePositions(p); //updato poi le posizioni libere
+        Hand.remove(c); //tolgo la carta dalla mano
         return;
+    }
+    public LinkedList<PlayableCard> getHand(){
+        return Hand;
     }
 
     public void pickGoalCard(GoalCard A, GoalCard B, boolean choice) { //tanto la scelta avviene nel controller
@@ -141,6 +145,4 @@ public class Player {
         else this.PlayerGoal = B;
     }
 
-    public void drawCard(Deck d){ //dal controller si potrà scegliere solo tra ResourceDeck e GoldDeck
-    }
 }
