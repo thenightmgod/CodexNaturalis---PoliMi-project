@@ -1,6 +1,8 @@
 package it.polimi.ingsw.Model.situaPlayer;
 
 import it.polimi.ingsw.Model.situaCard.situaPlayableCard.PlayableCard;
+import it.polimi.ingsw.Model.situaCorner.CardRes;
+import it.polimi.ingsw.Model.situaCorner.Corner;
 import it.polimi.ingsw.Model.situaCorner.Orientation;
 
 import java.util.*;
@@ -60,9 +62,11 @@ public class PlayingField {
             if(!Field.containsKey(front)){
                 //Orientation Lazzaro = getOppFromCorner(o);  angolo da non controllare ma sti cazzi
                 for(Orientation Orien : Orientation.values()) {//per tutti gli altri
-                    Position toCheck = getPosFromCorner(front, Orien);  // posizione da checkare
+                    Position toCheck = getPosFromCorner(front, Orien);  // una delle 4 posizioni che circondano la potenziale freeposition
                     if (Field.containsKey(toCheck)) {   //se c'è carta alla posizione di fronte all'angolo
-                        if ((Field.get(toCheck).getCorner(getOppFromCorner(Orien))).getRes().equals(ABSENT)) //vediamo se l'angolo opposto a quello che stiamo controllando, nella carta in pos toCheck ha effettivamente l'angolo
+                        Orientation opposto = getOppFromCorner(Orien);
+                        Corner diFronte = Field.get(toCheck).getCorner(opposto); //corner di fronte
+                        if (diFronte.getRes().equals(ABSENT))  //vediamo se l'angolo opposto a quello che stiamo controllando, nella carta in pos toCheck ha effettivamente l'angolo
                             return;
                     }
                 }

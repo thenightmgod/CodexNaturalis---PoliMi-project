@@ -46,7 +46,8 @@ class PlayingFieldTest {
         sestoHR = new Corner(EMPTY, Orientation.HR);
         sestoHL = new Corner(EMPTY, Orientation.HL);
         sestoLR = new Corner(EMPTY, Orientation.LR);
-        sestoLL = new Corner(ABSENT, Orientation.LL);
+        sestoLL = new Corner(EMPTY, Orientation.LL);
+
 
         quintoHR = new Corner(EMPTY, Orientation.HR);
         quintoHL = new Corner(EMPTY, Orientation.HL);
@@ -120,10 +121,10 @@ class PlayingFieldTest {
         CornersQuinto.addLast(quintoLR);
         CornersQuinto.addLast(quintoLL);
 
-        CornersSesto.addLast(quintoHR);
-        CornersSesto.addLast(quintoHL);
-        CornersSesto.addLast(quintoLR);
-        CornersSesto.addLast(quintoLL);
+        CornersSesto.addLast(sestoHR);
+        CornersSesto.addLast(sestoHL);
+        CornersSesto.addLast(sestoLR);
+        CornersSesto.addLast(sestoLL);
 
         Position primo = new Position (1,1);
         Position secondo = new Position (0,2);
