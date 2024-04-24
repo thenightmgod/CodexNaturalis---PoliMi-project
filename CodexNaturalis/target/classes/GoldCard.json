@@ -26,5 +26,527 @@
       {"Res": "EMPTY", "Orient": "LR"},
       {"Res": "ABSENT", "Orient": "LL"}
     ]
+  },
+
+  {
+    "Id": 43,
+    "BackRes": [false, false, true, false],
+    "PointsC": "OBJECTS_MANUSCRIPT",
+    "requirements": [0,0,2,1],
+    "Color": "RED",
+    "Points": 1,
+    "Corners": [
+      {"Res": "EMPTY", "Orient": "HR"},
+      {"Res": "MANUSCRIPT", "Orient": "HL"},
+      {"Res": "ABSENT", "Orient": "LR"},
+      {"Res": "EMPTY", "Orient": "LL"}
+    ]
+  },
+  {
+    "Id": 44,
+    "BackRes": [false, false, true, false],
+    "PointsC": "CORNERS",
+    "requirements": [0,1,3,0],
+    "Color": "RED",
+    "Points": 2,
+    "Corners": [
+      {"Res": "EMPTY", "Orient": "HR"},
+      {"Res": "EMPTY", "Orient": "HL"},
+      {"Res": "EMPTY", "Orient": "LR"},
+      {"Res": "ABSENT", "Orient": "LL"}
+    ]
+  },
+  {  "Id": 45,
+    "BackRes": [false, false, true, false],
+    "PointsC": "CORNERS",
+    "requirements": [1,0,3,0],
+    "Color": "RED",
+    "Points": 2,
+    "Corners": [
+      {"Res": "EMPTY", "Orient": "HR"},
+      {"Res": "EMPTY", "Orient": "HL"},
+      {"Res": "ABSENT", "Orient": "LR"},
+      {"Res": "EMPTY", "Orient": "LL"}
+    ]
+  },
+  {  "Id": 46,
+    "BackRes": [false, false, true, false],
+    "PointsC": "CORNERS",
+    "requirements": [0,0,3,1],
+    "Color": "RED",
+    "Points": 2,
+    "Corners": [
+      {"Res": "ABSENT", "Orient": "HR"},
+      {"Res": "EMPTY", "Orient": "HL"},
+      {"Res": "EMPTY", "Orient": "LR"},
+      {"Res": "EMPTY", "Orient": "LL"}
+    ]
+  },
+  {  "Id": 47,
+    "BackRes": [false, false, true, false],
+    "PointsC": "FREE",
+    "requirements": [0,0,3,0],
+    "Color": "RED",
+    "Points": 3,
+    "Corners": [
+      {"Res": "ABSENT", "Orient": "HR"},
+      {"Res": "EMPTY", "Orient": "HL"},
+      {"Res": "ABSENT", "Orient": "LR"},
+      {"Res": "INKWELL", "Orient": "LL"}
+    ]
+  },
+  {  "Id": 48,
+    "BackRes": [false, false, true, false],
+    "PointsC": "FREE",
+    "requirements": [0,0,3,0],
+    "Color": "RED",
+    "Points": 3,
+    "Corners": [
+      {"Res": "EMPTY", "Orient": "HR"},
+      {"Res": "QUILL", "Orient": "HL"},
+      {"Res": "ABSENT", "Orient": "LR"},
+      {"Res": "ABSENT", "Orient": "LL"}
+    ]
+  },
+
+  {  "Id": 49,
+    "BackRes": [false, false, true, false],
+    "PointsC": "FREE",
+    "requirements": [0,0,3,0],
+    "Color": "RED",
+    "Points": 3,
+    "Corners": [
+      {"Res": "MANUSCRIPT", "Orient": "HR"},
+      {"Res": "ABSENT", "Orient": "HL"},
+      {"Res": "ABSENT", "Orient": "LR"},
+      {"Res": "EMPTY", "Orient": "LL"}
+    ]
+  },
+  {  "Id": 50,
+    "BackRes": [false, false, true, false],
+    "PointsC": "FREE",
+    "requirements": [0,0,5,0],
+    "Color": "RED",
+    "Points": 5,
+    "Corners": [
+      {"Res": "ABSENT", "Orient": "HR"},
+      {"Res": "EMPTY", "Orient": "HL"},
+      {"Res": "ABSENT", "Orient": "LR"},
+      {"Res": "EMPTY", "Orient": "LL"}
+    ]
+  },
+  {  "Id": 51,
+    "BackRes": [true, false, false, false],
+    "PointsC": "OBJECTS_QUILL",
+    "requirements": [2,0,0,1],
+    "Color": "GREEN",
+    "Points": 1,
+    "Corners": [
+      {"Res": "EMPTY", "Orient": "HR"},
+      {"Res": "QUILL", "Orient": "HL"},
+      {"Res": "ABSENT", "Orient": "LR"},
+      {"Res": "EMPTY", "Orient": "LL"}
+    ]
+  },
+  {  "Id": 52,
+    "BackRes": [true, false, false, false],
+    "PointsC": "OBJECTS_MANUSCRIPT",
+    "requirements": [2,0,1,0],
+    "Color": "GREEN",
+    "Points": 1,
+    "Corners": [
+      {"Res": "MANUSCRIPT", "Orient": "HR"},
+      {"Res": "EMPTY", "Orient": "HL"},
+      {"Res": "EMPTY", "Orient": "LR"},
+      {"Res": "ABSENT", "Orient": "LL"}
+    ]
+  },
+  {  "Id": 53,
+    "BackRes": [true, false, false, false],
+    "PointsC": "OBJECTS_INKWELL",
+    "requirements": [2,1,0,0],
+    "Color": "GREEN",
+    "Points": 1,
+    "Corners": [
+      {"Res": "ABSENT", "Orient": "HR"},
+      {"Res": "EMPTY", "Orient": "HL"},
+      {"Res": "EMPTY", "Orient": "LR"},
+      {"Res": "INKWELL", "Orient": "LL"}
+    ]
+  },
+
+  {  "Id": 54,
+    "BackRes": [true, false, false, false],
+    "PointsC": "CORNERS",
+    "requirements": [3,0,0,1],
+    "Color": "GREEN",
+    "Points": 2,
+    "Corners": [
+      {"Res": "EMPTY", "Orient": "HR"},
+      {"Res": "ABSENT", "Orient": "HL"},
+      {"Res": "EMPTY", "Orient": "LR"},
+      {"Res": "EMPTY", "Orient": "LL"}
+    ]
+  },
+
+  {  "Id": 55,
+    "BackRes": [true, false, false, false],
+    "PointsC": "CORNERS",
+    "requirements": [3,1,0,0],
+    "Color": "GREEN",
+    "Points": 2,
+    "Corners": [
+      {"Res": "EMPTY", "Orient": "HR"},
+      {"Res": "EMPTY", "Orient": "HL"},
+      {"Res": "ABSENT", "Orient": "LR"},
+      {"Res": "EMPTY", "Orient": "LL"}
+    ]
+  },
+
+  {  "Id": 56,
+    "BackRes": [true, false, false, false],
+    "PointsC": "CORNERS",
+    "requirements": [3,0,1,0],
+    "Color": "GREEN",
+    "Points": 2,
+    "Corners": [
+      {"Res": "ABSENT", "Orient": "HR"},
+      {"Res": "EMPTY", "Orient": "HL"},
+      {"Res": "EMPTY", "Orient": "LR"},
+      {"Res": "EMPTY", "Orient": "LL"}
+    ]
+  },
+
+  {  "Id": 57,
+    "BackRes": [true, false, false, false],
+    "PointsC": "FREE",
+    "requirements": [3,0,0,0],
+    "Color": "GREEN",
+    "Points": 3,
+    "Corners": [
+      {"Res": "ABSENT", "Orient": "HR"},
+      {"Res": "EMPTY", "Orient": "HL"},
+      {"Res": "ABSENT", "Orient": "LR"},
+      {"Res": "QUILL", "Orient": "LL"}
+    ]
+  },
+  {  "Id": 58,
+    "BackRes": [true, false, false, false],
+    "PointsC": "FREE",
+    "requirements": [3,0,0,0],
+    "Color": "GREEN",
+    "Points": 3,
+    "Corners": [
+      {"Res": "EMPTY", "Orient": "HR"},
+      {"Res": "MANUSCRIPT", "Orient": "HL"},
+      {"Res": "ABSENT", "Orient": "LR"},
+      {"Res": "ABSENT", "Orient": "LL"}
+    ]
+  },
+  {  "Id": 59,
+    "BackRes": [true, false, false, false],
+    "PointsC": "FREE",
+    "requirements": [3,0,0,0],
+    "Color": "GREEN",
+    "Points": 3,
+    "Corners": [
+      {"Res": "INKWELL", "Orient": "HR"},
+      {"Res": "ABSENT", "Orient": "HL"},
+      {"Res": "EMPTY", "Orient": "LR"},
+      {"Res": "ABSENT", "Orient": "LL"}
+    ]
+  },
+  {  "Id": 60,
+    "BackRes": [true, false, false, false],
+    "PointsC": "FREE",
+    "requirements": [5,0,0,0],
+    "Color": "GREEN",
+    "Points": 5,
+    "Corners": [
+      {"Res": "EMPTY", "Orient": "HR"},
+      {"Res": "EMPTY", "Orient": "HL"},
+      {"Res": "ABSENT", "Orient": "LR"},
+      {"Res": "ABSENT", "Orient": "LL"}
+    ]
+  },
+
+  {  "Id": 61,
+    "BackRes": [false, true, false, false],
+    "PointsC": "OBJECTS_INKWELL",
+    "requirements": [0,2,0,1],
+    "Color": "BLUE",
+    "Points": 1,
+    "Corners": [
+      {"Res": "EMPTY", "Orient": "HR"},
+      {"Res": "INKWELL", "Orient": "HL"},
+      {"Res": "ABSENT", "Orient": "LR"},
+      {"Res": "EMPTY", "Orient": "LL"}
+    ]
+  },
+
+  {  "Id": 62,
+    "BackRes": [false, true, false, false],
+    "PointsC": "OBJECTS_MANUSCRIPT",
+    "requirements": [1,2,0,0],
+    "Color": "BLUE",
+    "Points": 1,
+    "Corners": [
+      {"Res": "EMPTY", "Orient": "HR"},
+      {"Res": "ABSENT", "Orient": "HL"},
+      {"Res": "MANUSCRIPT", "Orient": "LR"},
+      {"Res": "EMPTY", "Orient": "LL"}
+    ]
+  },
+
+  {  "Id": 63,
+    "BackRes": [false, true, false, false],
+    "PointsC": "OBJECTS_QUILL",
+    "requirements": [0,2,1,0],
+    "Color": "BLUE",
+    "Points": 1,
+    "Corners": [
+      {"Res": "ABSENT", "Orient": "HR"},
+      {"Res": "EMPTY", "Orient": "HL"},
+      {"Res": "EMPTY", "Orient": "LR"},
+      {"Res": "QUILL", "Orient": "LL"}
+    ]
+  },
+
+  {  "Id": 64,
+    "BackRes": [false, true, false, false],
+    "PointsC": "CORNERS",
+    "requirements": [0,3,0,1],
+    "Color": "BLUE",
+    "Points": 2,
+    "Corners": [
+      {"Res": "EMPTY", "Orient": "HR"},
+      {"Res": "EMPTY", "Orient": "HL"},
+      {"Res": "EMPTY", "Orient": "LR"},
+      {"Res": "ABSENT", "Orient": "LL"}
+    ]
+  },
+
+  {  "Id": 65,
+    "BackRes": [false, true, false, false],
+    "PointsC": "CORNERS",
+    "requirements": [0,3,1,0],
+    "Color": "BLUE",
+    "Points": 2,
+    "Corners": [
+      {"Res": "ABSENT", "Orient": "HR"},
+      {"Res": "EMPTY", "Orient": "HL"},
+      {"Res": "EMPTY", "Orient": "LR"},
+      {"Res": "EMPTY", "Orient": "LL"}
+    ]
+  },
+
+  {  "Id": 66,
+    "BackRes": [false, true, false, false],
+    "PointsC": "CORNERS",
+    "requirements": [1,3,0,0],
+    "Color": "BLUE",
+    "Points": 2,
+    "Corners": [
+      {"Res": "EMPTY", "Orient": "HR"},
+      {"Res": "ABSENT", "Orient": "HL"},
+      {"Res": "EMPTY", "Orient": "LR"},
+      {"Res": "EMPTY", "Orient": "LL"}
+    ]
+  },
+
+  {  "Id": 67,
+    "BackRes": [false, true, false, false],
+    "PointsC": "FREE",
+    "requirements": [0,3,0,0],
+    "Color": "BLUE",
+    "Points": 3,
+    "Corners": [
+      {"Res": "ABSENT", "Orient": "HR"},
+      {"Res": "EMPTY", "Orient": "HL"},
+      {"Res": "ABSENT", "Orient": "LR"},
+      {"Res": "MANUSCRIPT", "Orient": "LL"}
+    ]
+  },
+
+  {  "Id": 68,
+    "BackRes": [false, true, false, false],
+    "PointsC": "FREE",
+    "requirements": [0,3,0,0],
+    "Color": "BLUE",
+    "Points": 3,
+    "Corners": [
+      {"Res": "INKWELL", "Orient": "HR"},
+      {"Res": "EMPTY", "Orient": "HL"},
+      {"Res": "ABSENT", "Orient": "LR"},
+      {"Res": "ABSENT", "Orient": "LL"}
+    ]
+  },
+
+  {  "Id": 69,
+    "BackRes": [false, true, false, false],
+    "PointsC": "FREE",
+    "requirements": [0,3,0,0],
+    "Color": "BLUE",
+    "Points": 3,
+    "Corners": [
+      {"Res": "EMPTY", "Orient": "HR"},
+      {"Res": "ABSENT", "Orient": "HL"},
+      {"Res": "QUILL", "Orient": "LR"},
+      {"Res": "ABSENT", "Orient": "LL"}
+    ]
+  },
+
+  {  "Id": 70,
+    "BackRes": [false, true, false, false],
+    "PointsC": "FREE",
+    "requirements": [0,5,0,0],
+    "Color": "BLUE",
+    "Points": 5,
+    "Corners": [
+      {"Res": "EMPTY", "Orient": "HR"},
+      {"Res": "ABSENT", "Orient": "HL"},
+      {"Res": "EMPTY", "Orient": "LR"},
+      {"Res": "ABSENT", "Orient": "LL"}
+    ]
+  },
+
+  {  "Id": 71,
+    "BackRes": [false, false, false, true],
+    "PointsC": "OBJECTS_QUILL",
+    "requirements": [1,0,0,2],
+    "Color": "PURPLE",
+    "Points": 1,
+    "Corners": [
+      {"Res": "QUILL", "Orient": "HR"},
+      {"Res": "EMPTY", "Orient": "HL"},
+      {"Res": "EMPTY", "Orient": "LR"},
+      {"Res": "ABSENT", "Orient": "LL"}
+    ]
+  },
+
+  {  "Id": 72,
+    "BackRes": [false, false, false, true],
+    "PointsC": "OBJECTS_MANUSCRIPT",
+    "requirements": [0,1,0,2],
+    "Color": "PURPLE",
+    "Points": 1,
+    "Corners": [
+      {"Res": "ABSENT", "Orient": "HR"},
+      {"Res": "EMPTY", "Orient": "HL"},
+      {"Res": "EMPTY", "Orient": "LR"},
+      {"Res": "MANUSCRIPT", "Orient": "LL"}
+    ]
+  },
+
+  {  "Id": 73,
+    "BackRes": [false, false, false, true],
+    "PointsC": "OBJECTS_INKWELL",
+    "requirements": [0,0,1,2],
+    "Color": "PURPLE",
+    "Points": 1,
+    "Corners": [
+      {"Res": "EMPTY", "Orient": "HR"},
+      {"Res": "ABSENT", "Orient": "HL"},
+      {"Res": "INKWELL", "Orient": "LR"},
+      {"Res": "EMPTY", "Orient": "LL"}
+    ]
+  },
+
+  {  "Id": 74,
+    "BackRes": [false, false, false, true],
+    "PointsC": "CORNERS",
+    "requirements": [0,1,0,3],
+    "Color": "PURPLE",
+    "Points": 2,
+    "Corners": [
+      {"Res": "EMPTY", "Orient": "HR"},
+      {"Res": "EMPTY", "Orient": "HL"},
+      {"Res": "EMPTY", "Orient": "LR"},
+      {"Res": "ABSENT", "Orient": "LL"}
+    ]
+  },
+
+  {  "Id": 75,
+    "BackRes": [false, false, false, true],
+    "PointsC": "CORNERS",
+    "requirements": [1,0,0,3],
+    "Color": "PURPLE",
+    "Points": 2,
+    "Corners": [
+      {"Res": "EMPTY", "Orient": "HR"},
+      {"Res": "EMPTY", "Orient": "HL"},
+      {"Res": "ABSENT", "Orient": "LR"},
+      {"Res": "EMPTY", "Orient": "LL"}
+    ]
+  },
+
+  {  "Id": 76,
+    "BackRes": [false, false, false, true],
+    "PointsC": "CORNERS",
+    "requirements": [0,0,1,3],
+    "Color": "PURPLE",
+    "Points": 2,
+    "Corners": [
+      {"Res": "ABSENT", "Orient": "HR"},
+      {"Res": "EMPTY", "Orient": "HL"},
+      {"Res": "EMPTY", "Orient": "LR"},
+      {"Res": "EMPTY", "Orient": "LL"}
+    ]
+  },
+
+  {  "Id": 77,
+    "BackRes": [false, false, false, true],
+    "PointsC": "FREE",
+    "requirements": [0,0,0,3],
+    "Color": "PURPLE",
+    "Points": 3,
+    "Corners": [
+      {"Res": "ABSENT", "Orient": "HR"},
+      {"Res": "INKWELL", "Orient": "HL"},
+      {"Res": "ABSENT", "Orient": "LR"},
+      {"Res": "EMPTY", "Orient": "LL"}
+    ]
+  },
+
+  {  "Id": 78,
+    "BackRes": [false, false, false, true],
+    "PointsC": "FREE",
+    "requirements": [0,0,0,3],
+    "Color": "PURPLE",
+    "Points": 3,
+    "Corners": [
+      {"Res": "MANUSCRIPT", "Orient": "HR"},
+      {"Res": "EMPTY", "Orient": "HL"},
+      {"Res": "ABSENT", "Orient": "LR"},
+      {"Res": "ABSENT", "Orient": "LL"}
+    ]
+  },
+
+  {  "Id": 79,
+    "BackRes": [false, false, false, true],
+    "PointsC": "FREE",
+    "requirements": [0,0,0,3],
+    "Color": "PURPLE",
+    "Points": 3,
+    "Corners": [
+      {"Res": "ABSENT", "Orient": "HR"},
+      {"Res": "ABSENT", "Orient": "HL"},
+      {"Res": "EMPTY", "Orient": "LR"},
+      {"Res": "QUILL", "Orient": "LL"}
+    ]
+  },
+
+  {  "Id": 80,
+    "BackRes": [false, false, false, true],
+    "PointsC": "FREE",
+    "requirements": [0,0,0,5],
+    "Color": "PURPLE",
+    "Points": 5,
+    "Corners": [
+      {"Res": "EMPTY", "Orient": "HR"},
+      {"Res": "EMPTY", "Orient": "HL"},
+      {"Res": "ABSENT", "Orient": "LR"},
+      {"Res": "ABSENT", "Orient": "LL"}
+    ]
   }
 ]

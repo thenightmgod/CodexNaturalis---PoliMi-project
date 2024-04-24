@@ -9,14 +9,14 @@ import static it.polimi.ingsw.Model.situaCorner.CornerState.ABSENT;
 public class PlayingField {
 
     private HashMap<Position, PlayableCard> Field;
-    private Set<Position> FreePositions;
+    private LinkedList<Position> FreePositions;
 
     public PlayingField(){
         Field = new HashMap<>();
-        FreePositions = new LinkedHashSet<Position>();
+        FreePositions = new LinkedList<Position>();
     }
 
-    public Set<Position> getFreePositions(){
+    public LinkedList<Position> getFreePositions(){
         return FreePositions;
     }
 
@@ -53,15 +53,15 @@ public class PlayingField {
     public void checkCorners(Position p, Orientation o) {
         if (Field.get(p).getCorner(o).getRes().equals(ABSENT)) {
             Position x = getPosFromCorner(p, o);
-            Field.remove(x);
+            FreePositions.remove(x);
         }
         else {
             Position front = getPosFromCorner(p, o);
             if(!Field.containsKey(front)){
                 //Orientation Lazzaro = getOppFromCorner(o);  angolo da non controllare ma sti cazzi
-                for(Orientation Orien : Orientation.values()) {           //per tutti gli altri
-                    if (Field.containsKey(getPosFromCorner(front, Orien))) {   //se c'è carta alla posizione di fronte all'angolo
-                        Position toCheck = getPosFromCorner(front, Orien);    // posizione da checkare
+                for(Orientation Orien : Orientation.values()) {//per tutti gli altri
+                    Position toCheck = getPosFromCorner(front, Orien);  // posizione da checkare
+                    if (Field.containsKey(toCheck)) {   //se c'è carta alla posizione di fronte all'angolo
                         if ((Field.get(toCheck).getCorner(getOppFromCorner(Orien))).getRes().equals(ABSENT)) //vediamo se l'angolo opposto a quello che stiamo controllando, nella carta in pos toCheck ha effettivamente l'angolo
                             return;
                     }
