@@ -14,9 +14,11 @@ import java.util.LinkedList;
 import java.util.Set;
 
 public class Room {
-    private int RoomId;
+    private final int RoomId;
     private boolean LastRound;
-    private Player PlayerTurn;
+    private boolean Twenty;
+    private LinkedList<Player> Players;
+    private Player Turn;
     private boolean FirstRound;
     private ResourceDeck ResourceDeck;
     private GoldDeck GoldDeck;
@@ -25,15 +27,29 @@ public class Room {
     private Set<GoalCard> CommonGoals;
     private Player[] Turns;
 
-    public Room(int RoomId, Player FirstTurn, int numPlayers){
-        //todo inizializzatore
+    public Room(int RoomId, LinkedList<Player> Players){
         this.RoomId = RoomId;
         this.LastRound = false;
+        this.Twenty = false;
         this.FirstRound = true;
-        this.PlayerTurn = FirstTurn;
+        this.Players = Players;
+        this.Turn = Players.getFirst();
         this.CommonGoals = new HashSet<>();
-        this.Turns = new Player[numPlayers];
-        //i giocatori vanno creati passando nome e colore da controller
+        this.Turns = new Player[Players.size()];
+        //i giocatori vanno creati passando nome e colore da controller arrivano già in ordine
+    }
+
+    public void setTwentyFlag(){ //vede se il punteggio di qualcuno è >= 20 per mettere lastRound=true
+            for(Player p : Players){
+                if(p.getPointsCounter()>=20)
+                    this.Twenty = true;
+            }
+    }
+
+    public void setLastRound(){
+        if(Twenty)
+            if(Turn.equals(Players.getFirst()))
+                this.LastRound = true;
     }
 
     public void initializeGame() {
@@ -48,7 +64,6 @@ public class Room {
             boolean choice = true; //in realtà gliela passa il controller di nuovo
             pickGoalCard(turn, choice);
         }
-        //va shufflato l'array dei player
     }
     public int getRoomId() {
         return RoomId;
@@ -60,12 +75,12 @@ public class Room {
         return FirstRound;
     }
 
-    public Player getTurn(){  //controller gestisce i turni e passa alla room il turno corrente
-        return this.PlayerTurn;
+    public LinkedList<Player> getTurns(){  //controller gestisce i turni e passa alla room il turno corrente
+        return this.Players;
     }
     public void placeCard(Player player, PlayableCard card, Position p){
         player.placeCard(card, p);
-    }
+    } //per il collegamento col controller
 
     public void pickGoalCard(Player player, boolean choice){
         GoalCard A = (GoalCard) GoalDeck.getGoalCard();

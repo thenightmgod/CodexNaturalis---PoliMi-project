@@ -17,6 +17,7 @@ import static it.polimi.ingsw.Model.situaCorner.Resources.FUNGI_KINGDOM;
 import static it.polimi.ingsw.Model.situaCorner.Resources.INSECT_KINGDOM;
 
 public class Player {
+    //bisogna fare override della equals
     private final String Name;
     private final PlayerColor Color;
     private int PointsCounter;
