@@ -22,8 +22,19 @@ import java.util.Collections;
 import java.util.Objects;
 
 
+/**
+ * Represents a deck of cards in the game. Each deck can contain various types of cards, such as Resource, Start, Gold, CompositionGoal, ObjectsGoal, or ResourceGoal cards.
+ * The deck is initialized based on the type specified, loading card data from a corresponding JSON file.
+ */
 public class Deck {
     private List<Card> cards;
+
+    /**
+     * Constructs a new deck based on the specified type.
+     * The deck is initialized by loading card data from a JSON file corresponding to the specified type.
+     *
+     * @param type The type of cards in the deck (e.g., "Resource", "Start", "Gold", "CompositionGoal", "ObjectsGoal", or "ResourceGoal").
+     */
 
     public Deck(String type) {
         String json = "src/main/Resources/"+type+"Card.json";
@@ -59,26 +70,60 @@ public class Deck {
         catch (Exception ignored) {}
 
     }
-
+    /**
+     * Retrieves the list of cards in the deck.
+     *
+     * @return The list of cards in the deck.
+     */
     public List<Card> getCards() {
         return cards;
     }
 
+    /**
+     * Retrieves the size of the deck.
+     *
+     * @return The number of cards in the deck.
+     */
+
     public int getSize(){
         return cards.size();
     }
+
+    /**
+     * Shuffles the cards in the deck.
+     */
     public void shuffle(){
         Collections.shuffle(cards);
     }
+
+
+    /**
+     * Adds a GoalCard to the deck.
+     *
+     * @param card The GoalCard to add to the deck.
+     */
     public void add(GoalCard card){
         cards.add(card);
     }
 
+    /**
+     * Gives a card from the deck to a player.
+     * The card is removed from the deck and added to the player's hand.
+     *
+     * @param p The player to whom the card is given.
+     * @param i The index of the card to give.
+     */
     public void giveCard(Player p, int i){ //dovrebbe passare anche un int da 0 a 2
         Card card = getCards().get(i);
         getCards().removeFirst();
         p.getHand().add((PlayableCard)card);
     }
+
+    /**
+     * Retrieves and removes the top card (goal card) from the deck.
+     *
+     * @return The top card (goal card) from the deck.
+     */
     public Card getGoalCard(){
         Card c = cards.getFirst();
         cards.remove(c);

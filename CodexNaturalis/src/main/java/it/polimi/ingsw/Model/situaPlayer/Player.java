@@ -16,6 +16,10 @@ import static it.polimi.ingsw.Model.situaCorner.Resources.PLANT_KINGDOM;
 import static it.polimi.ingsw.Model.situaCorner.Resources.FUNGI_KINGDOM;
 import static it.polimi.ingsw.Model.situaCorner.Resources.INSECT_KINGDOM;
 
+
+/**
+ * Represents a player in the game. Each player has a name, a color, and keeps track of their points, resources, objects, hand, player goal, and playing field.
+ */
 public class Player {
     //bisogna fare override della equals
     private final String Name;
@@ -26,6 +30,13 @@ public class Player {
     private LinkedList<PlayableCard> Hand;
     private GoalCard PlayerGoal;
     private PlayingField PlayerField;
+
+    /**
+     * Constructs a player with a given name and color.
+     *
+     * @param name  The name of the player.
+     * @param color The color assigned to the player.
+     */
 
     public Player(String name, PlayerColor color) {
         Name = name;
@@ -43,22 +54,50 @@ public class Player {
         PlayerField = new PlayingField();
     }
 
+
+    /**
+     * Retrieves the name of the player.
+     *
+     * @return The name of the player.
+     */
     public String getName() {
         return Name;
     }
 
+
+    /**
+     * Retrieves the color assigned to the player.
+     *
+     * @return The color of the player.
+     */
     public PlayerColor getColor() {
         return Color;
     }
 
+    /**
+     * Retrieves the total points accumulated by the player.
+     *
+     * @return The total points accumulated by the player.
+     */
     public int getPointsCounter() {
         return PointsCounter;
     }
 
+    /**
+     * Sets the goal card for the player.
+     *
+     * @param card The goal card to be set for the player.
+     */
     public void setPlayerGoal(GoalCard card){
         PlayerGoal = card;
     }
 
+    /**
+     * Retrieves the counter for a specific type of resource.
+     *
+     * @param R The resource for which the counter is to be retrieved.
+     * @return The counter for the specified resource.
+     */
     public int getResourceCounter(Resources R) {
         if (R == PLANT_KINGDOM)
             return ResourceCounter[0];
@@ -69,7 +108,12 @@ public class Player {
         else
             return ResourceCounter[3];
     }
-
+    /**
+     * Retrieves the counter for a specific type of object.
+     *
+     * @param O The object for which the counter is to be retrieved.
+     * @return The counter for the specified object.
+     */
     public int getObjectCounter(Objects O) {
         if (O == QUILL)
             return ObjectCounter[0];
@@ -78,6 +122,13 @@ public class Player {
         else
             return ObjectCounter[2];
     }
+
+    /**
+     * Places the start card on the playing field.
+     *
+     * @param c    The start card to be placed.
+     * @param face The face of the card to be placed.
+     */
 
     public void placeStartCard(StartCard c, FB face){
         HashMap<Position, PlayableCard> x = this.PlayerField.getField();
@@ -118,6 +169,13 @@ public class Player {
         this.Hand.remove(c);
     }
 
+
+    /**
+     * Places a card on the playing field at the specified position.
+     *
+     * @param c The card to be placed.
+     * @param p The position at which the card is to be placed.
+     */
     public void placeCard(PlayableCard c, Position p) {
         HashMap<Position, PlayableCard> x = this.PlayerField.getField();
         this.PlayerField.getField().put(p, c);
@@ -174,10 +232,24 @@ public class Player {
         this.Hand.remove(c); //tolgo la carta dalla mano
         return;
     }
+
+    /**
+     * Retrieves the hand of the player.
+     *
+     * @return The hand of the player.
+     */
     public LinkedList<PlayableCard> getHand(){
         return Hand;
     }
 
+
+    /**
+     * Picks a goal card for the player.
+     *
+     * @param A      The first goal card option.
+     * @param B      The second goal card option.
+     * @param choice The choice made by the player (true for option A, false for option B).
+     */
     public void pickGoalCard(GoalCard A, GoalCard B, boolean choice) { //tanto la scelta avviene nel controller
         if (choice)
             this.PlayerGoal = A;
