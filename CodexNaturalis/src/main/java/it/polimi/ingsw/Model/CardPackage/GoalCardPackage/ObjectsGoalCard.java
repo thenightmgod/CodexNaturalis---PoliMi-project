@@ -54,7 +54,6 @@ public class ObjectsGoalCard extends GoalCard {
      */
     public int pointsCalc(Player player) {
         int totalPoints = 0;
-
         if (this.getPoints() == 3) {
             int QuillCount = player.getObjectCounter(Objects.QUILL);
             int InkwellCount = player.getObjectCounter(Objects.INKWELL);

@@ -2,22 +2,8 @@ package it.polimi.ingsw.Model.CardPackage.GoalCardPackage;
 
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
-import it.polimi.ingsw.Model.CornerPackage.Corner;
-import it.polimi.ingsw.Model.CornerPackage.Orientation;
-import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
+
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Assertions.*;
-
-import static it.polimi.ingsw.Model.CornerPackage.CornerState.ABSENT;
-import static it.polimi.ingsw.Model.CornerPackage.CornerState.EMPTY;
-import static org.junit.jupiter.api.Assertions.*;
-
-import it.polimi.ingsw.Model.PlayerPackage.Player;
-import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.CardColor;
-import it.polimi.ingsw.Model.CornerPackage.Resources;
-
-import java.util.LinkedList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -63,9 +49,14 @@ class ObjectsGoalCardTest {
         ObjectsGoalCard carta3 = new ObjectsGoalCard(5, 2,array3);
         ObjectsGoalCard carta4 = new ObjectsGoalCard(6, 2, array4);
 
-        assertEquals(carta1.pointsCalc(player), 9);
-        assertEquals(carta2.pointsCalc(player), 2);
-        assertEquals(carta3.pointsCalc(player), 6);
-        assertEquals(carta4.pointsCalc(player), 4);
+        int t1 = carta1.pointsCalc(player);
+        int t2 = carta2.pointsCalc(player);
+        int t3 = carta3.pointsCalc(player);
+        int t4 = carta4.pointsCalc(player);
+
+        assertEquals(t1, 9);
+        assertEquals(t2, 2);
+        assertEquals(t3, 6);
+        assertEquals(t4, 4);
     }
 }
