@@ -23,4 +23,6 @@ public abstract class Card {
     public int getId() {
         return Id;
     }
+
+
 }

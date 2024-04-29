@@ -85,6 +85,15 @@ public class Deck {
      * @return The number of cards in the deck.
      */
 
+    public Card getCardById(int id){
+        for(int i=0; i<getSize(); i++){
+            if(getCards().get(i).getId()==id){
+                return getCards().get(i);
+            }
+        }
+        return null;
+    }
+
     public int getSize(){
         return cards.size();
     }
@@ -102,7 +111,7 @@ public class Deck {
      *
      * @param card The GoalCard to add to the deck.
      */
-    public void add(GoalCard card){
+    public void add(Card card){
         cards.add(card);
     }
 

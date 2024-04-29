@@ -8,6 +8,8 @@ import it.polimi.ingsw.Model.situaCorner.Resources;
 import it.polimi.ingsw.Model.situaCorner.Objects;
 import it.polimi.ingsw.Model.situaDeck.Deck;
 import it.polimi.ingsw.Model.situaCard.situaGoalCard.GoalCard;
+
+import static it.polimi.ingsw.Model.situaCorner.CornerState.ABSENT;
 import static it.polimi.ingsw.Model.situaCorner.CornerState.EMPTY;
 
 import static it.polimi.ingsw.Model.situaCorner.Objects.*;
@@ -135,6 +137,7 @@ public class Player {
         this.PlayerField.getField().put(new Position(face, 0, 0), c);
         if(face.equals(FB.FRONT)){
             LinkedList<Resources> Res = c.getBackRes();
+            int size = c.getBackRes().size();
             for(Resources elemento : Res){
                 if(elemento.equals(PLANT_KINGDOM))
                     this.ResourceCounter[0]++;
@@ -145,9 +148,34 @@ public class Player {
                 if(elemento.equals(INSECT_KINGDOM))
                     this.ResourceCounter[3]++;
             }
-            for(Orientation Orien : Orientation.values()){
-                c.getCorner(Orien).setRes(EMPTY);
+
+            if(size==3){
+                c.getCorner(Orientation.HR).setRes(EMPTY);
+                c.getCorner(Orientation.HL).setRes(EMPTY);
+                c.getCorner(Orientation.LR).setRes(ABSENT);
+                c.getCorner(Orientation.LL).setRes(ABSENT);
             }
+
+            if(size==2){
+                for(Orientation Orien : Orientation.values()){
+                    c.getCorner(Orien).setRes(EMPTY);
+                }
+            }
+
+            if(size==1 && c.getBackRes().contains(FUNGI_KINGDOM)){
+                c.getCorner(Orientation.HR).setRes(EMPTY);
+                c.getCorner(Orientation.HL).setRes(ANIMAL_KINGDOM);
+                c.getCorner(Orientation.LR).setRes(FUNGI_KINGDOM);
+                c.getCorner(Orientation.LL).setRes(EMPTY);
+            }
+
+            if(size==1 && c.getBackRes().contains(INSECT_KINGDOM)){
+                c.getCorner(Orientation.HR).setRes(PLANT_KINGDOM);
+                c.getCorner(Orientation.HL).setRes(EMPTY);
+                c.getCorner(Orientation.LR).setRes(EMPTY);
+                c.getCorner(Orientation.LL).setRes(INSECT_KINGDOM);
+            }
+
         }
         else{
             for(Orientation Orien : Orientation.values()){
