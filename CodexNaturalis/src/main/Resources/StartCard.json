@@ -4,8 +4,8 @@
     "BackRes": [false, false, false, true],
     "Corners": [
       {"Res": "PLANT_KINGDOM", "Orient": "HR"},
-      {"Res": "EMPTY", "Orient": "HL"},
-      {"Res": "EMPTY", "Orient": "LR"},
+      {"Res": "FUNGI_KINGDOM", "Orient": "HL"},
+      {"Res": "ANIMAL_KINGDOM", "Orient": "LR"},
       {"Res": "INSECT_KINGDOM", "Orient": "LL"}
     ]
   },
@@ -13,50 +13,50 @@
     "Id": 82,
     "BackRes": [false, false, true, false],
     "Corners": [
-      {"Res": "EMPTY", "Orient": "HR"},
-      {"Res": "ANIMAL_KINGDOM", "Orient": "HL"},
-      {"Res": "FUNGI_KINGDOM", "Orient": "LR"},
-      {"Res": "EMPTY", "Orient": "LL"}
+      {"Res": "ANIMAL_KINGDOM", "Orient": "HR"},
+      {"Res": "PLANT_KINGDOM", "Orient": "HL"},
+      {"Res": "INSECT_KINGDOM", "Orient": "LR"},
+      {"Res": "FUNGI_KINGDOM", "Orient": "LL"}
     ]
   },
   {
     "Id": 83,
     "BackRes": [true, false, true, false],
     "Corners": [
-      {"Res": "EMPTY", "Orient": "HR"},
-      {"Res": "EMPTY", "Orient": "HL"},
-      {"Res": "EMPTY", "Orient": "LR"},
-      {"Res": "EMPTY", "Orient": "LL"}
+      {"Res": "ANIMAL_KINGDOM", "Orient": "HR"},
+      {"Res": "INSECT_KINGDOM", "Orient": "HL"},
+      {"Res": "PLANT_KINGDOM", "Orient": "LR"},
+      {"Res": "FUNGI_KINGDOM", "Orient": "LL"}
     ]
   },
   {
     "Id": 84,
     "BackRes": [false, true, false, true],
     "Corners": [
-      {"Res": "EMPTY", "Orient": "HR"},
-      {"Res": "EMPTY", "Orient": "HL"},
-      {"Res": "EMPTY", "Orient": "LR"},
-      {"Res": "EMPTY", "Orient": "LL"}
+      {"Res": "INSECT_KINGDOM", "Orient": "HR"},
+      {"Res": "PLANT_KINGDOM", "Orient": "HL"},
+      {"Res": "FUNGI_KINGDOM", "Orient": "LR"},
+      {"Res": "ANIMAL_KINGDOM", "Orient": "LL"}
     ]
   },
   {
     "Id": 85,
     "BackRes": [true, true, false, true],
     "Corners": [
-      {"Res": "EMPTY", "Orient": "HR"},
-      {"Res": "EMPTY", "Orient": "HL"},
-      {"Res": "ABSENT", "Orient": "LR"},
-      {"Res": "ABSENT", "Orient": "LL"}
+      {"Res": "FUNGI_KINGDOM", "Orient": "HR"},
+      {"Res": "INSECT_KINGDOM", "Orient": "HL"},
+      {"Res": "ANIMAL_KINGDOM", "Orient": "LR"},
+      {"Res": "PLANT_KINGDOM", "Orient": "LL"}
     ]
   },
   {
     "Id": 86,
     "BackRes": [true, true, true, false],
     "Corners": [
-      {"Res": "EMPTY", "Orient": "HR"},
-      {"Res": "EMPTY", "Orient": "HL"},
-      {"Res": "ABSENT", "Orient": "LR"},
-      {"Res": "ABSENT", "Orient": "LL"}
+      {"Res": "ANIMAL_KINGDOM", "Orient": "HR"},
+      {"Res": "FUNGI_KINGDOM", "Orient": "HL"},
+      {"Res": "INSECT_KINGDOM", "Orient": "LR"},
+      {"Res": "PLANT_KINGDOM", "Orient": "LL"}
     ]
   }
 ]
