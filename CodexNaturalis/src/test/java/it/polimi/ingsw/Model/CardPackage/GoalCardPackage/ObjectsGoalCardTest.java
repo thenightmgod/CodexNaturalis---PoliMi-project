@@ -12,6 +12,7 @@ class ObjectsGoalCardTest {
     @Test
     void pointsCalc() {
         Player player = new Player("lazzarone", PlayerColor.YELLOW);
+        //boh
         int[] rescounter = new int[4];
         rescounter[0] = 5; // Piante
         rescounter[1] = 0; // Animali
