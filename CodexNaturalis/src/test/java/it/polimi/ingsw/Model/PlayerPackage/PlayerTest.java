@@ -158,7 +158,7 @@ class PlayerTest {
 
         assertEquals( 0 , player1.getObjectCounter(Objects.MANUSCRIPT));
 
-        boolean terzoRes[] = new boolean[4];  //inizio con la startcard con una backres (fungo)
+        boolean terzoRes[] = new boolean[4];
         terzoRes[0] = false;
         terzoRes[1] = false;
         terzoRes[2] = false;

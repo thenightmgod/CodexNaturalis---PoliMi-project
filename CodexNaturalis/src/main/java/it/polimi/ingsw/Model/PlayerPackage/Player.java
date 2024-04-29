@@ -183,9 +183,6 @@ public class Player {
                     case ANIMAL_KINGDOM -> this.ResourceCounter[1]++;
                     case FUNGI_KINGDOM -> this.ResourceCounter[2]++;
                     case INSECT_KINGDOM -> this.ResourceCounter[3]++;
-                    case QUILL -> this.ObjectCounter[0]++;
-                    case INKWELL -> this.ObjectCounter[1]++;
-                    case MANUSCRIPT -> this.ObjectCounter[2]++;
                     default ->{
                         break;
                     }
@@ -203,7 +200,7 @@ public class Player {
      * @param c The card to be placed.
      * @param p The position at which the card is to be placed.
      */
-    public void placeCard(PlayableCard c, Position p) {
+    public void placeCard(ResourceCard c, Position p) {
         HashMap<Position, PlayableCard> x = this.PlayerField.getField();
         this.PlayerField.getField().put(p, c);
         if(p.getFace().equals(FB.BACK)){
@@ -235,6 +232,7 @@ public class Player {
                     }
                 }
             }
+            this.PointsCounter += c.getPoints();
         }
         for(Orientation Orien : Orientation.values()){
             Position front = PlayerField.getPosFromCorner(p, Orien); //posizioni davanti agli angoli

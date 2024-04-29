@@ -2,6 +2,7 @@ package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
+import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.StartCard;
 import it.polimi.ingsw.Model.DeckPackage.*;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
@@ -126,7 +127,7 @@ public class Room {
      * @param card The card to place.
      * @param p The position to place the card.
      */
-    public void placeCard(Player player, PlayableCard card, Position p){
+    public void placeCard(Player player, ResourceCard card, Position p){
         player.placeCard(card, p);
     } //per il collegamento col controller
 
