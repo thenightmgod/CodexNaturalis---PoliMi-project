@@ -1,5 +1,5 @@
 package it.polimi.ingsw.Model.DeckPackage;
-import it.polimi.ingsw.Model.CardPackage.GoldCardPackage.ResourceGoalCard;
+import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.ResourceGoalCard;
 
 /**
  * Represents a deck of Resource Goal Cards used in the game. Each Resource Goal Card in the deck corresponds

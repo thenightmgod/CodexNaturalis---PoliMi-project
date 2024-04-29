@@ -1,5 +1,5 @@
 package it.polimi.ingsw.Model.DeckPackage;
-import it.polimi.ingsw.Model.CardPackage.GoldCardPackage.ObjectsGoalCard;
+import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.ObjectsGoalCard;
 
 /**
  * Represents a deck of Objects Goal Cards used in the game. Each Objects Goal Card in the deck

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Model.DeckPackage;
 
-import it.polimi.ingsw.Model.CardPackage.GoldCardPackage.CompositionGoalCard;
+import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.CompositionGoalCard;
 
 /**
  * Represents a deck of CompositionGoalCard objects in the game.

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.Model.CardPackage.GoldCardPackage;
+package it.polimi.ingsw.Model.CardPackage.GoalCardPackage;
 
 public enum Composition {
     L,

@@ -6,7 +6,7 @@ import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.*;
 import it.polimi.ingsw.Model.CornerPackage.*;
 import it.polimi.ingsw.Model.CornerPackage.Resources;
 import it.polimi.ingsw.Model.CornerPackage.Objects;
-import it.polimi.ingsw.Model.CardPackage.GoldCardPackage.GoalCard;
+import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 
 import static it.polimi.ingsw.Model.CornerPackage.CornerState.ABSENT;
 import static it.polimi.ingsw.Model.CornerPackage.CornerState.EMPTY;
