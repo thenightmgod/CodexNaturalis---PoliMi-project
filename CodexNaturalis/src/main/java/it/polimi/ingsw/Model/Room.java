@@ -1,14 +1,13 @@
 package it.polimi.ingsw.Model;
 
-import it.polimi.ingsw.Model.situaCard.situaGoalCard.GoalCard;
-import it.polimi.ingsw.Model.situaCard.situaPlayableCard.PlayableCard;
-import it.polimi.ingsw.Model.situaCard.situaPlayableCard.StartCard;
-import it.polimi.ingsw.Model.situaDeck.*;
-import it.polimi.ingsw.Model.situaPlayer.FB;
-import it.polimi.ingsw.Model.situaPlayer.Player;
-import it.polimi.ingsw.Model.situaPlayer.Position;
+import it.polimi.ingsw.Model.CardPackage.GoldCardPackage.GoalCard;
+import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
+import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.StartCard;
+import it.polimi.ingsw.Model.DeckPackage.*;
+import it.polimi.ingsw.Model.PlayerPackage.FB;
+import it.polimi.ingsw.Model.PlayerPackage.Player;
+import it.polimi.ingsw.Model.PlayerPackage.Position;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
