@@ -38,12 +38,12 @@ public class GoldCard extends ResourceCard {
      */
     public GoldCard(int id, boolean[] R, LinkedList<Corner> Corners, CardColor c, int p, int[] requirementsInput, PointsCondition pointsC) {
         super(id, R, c, p, Corners);
-        if (requirementsInput.length != 3) {
-            throw new IllegalArgumentException("L'array di input deve essere di dimensione 3");
+        if (requirementsInput.length != 4) {
+            throw new IllegalArgumentException("L'array di input deve essere di dimensione 4");
         }
-        requirements = new int[3];
+        requirements = new int[4];
         // Copia gli elementi dall'array di requirementsinput a requirements
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             requirements[i] = requirementsInput[i];
         }
         this.PointsC = pointsC;
@@ -78,24 +78,24 @@ public class GoldCard extends ResourceCard {
     public boolean RequirementsOk(Player p) {
         boolean ok=true;
         for (int i=0; i<4; i++) {
-            if (requirements[i]!=0) {
                 if(i==0) {
-                    if(requirements[0] < p.getResourceCounter(Resources.PLANT_KINGDOM))
+                    if(requirements[0] > p.getResourceCounter(Resources.PLANT_KINGDOM))
                         ok=false;
                 }
                 else if (i==1) {
-                    if(requirements[1] < p.getResourceCounter(Resources.ANIMAL_KINGDOM))
+                    if(requirements[1] > p.getResourceCounter(Resources.ANIMAL_KINGDOM))
                         ok=false;
 
                 }
                 else if(i==2) {
-                    if (requirements[2]< p.getResourceCounter(Resources.FUNGI_KINGDOM))
+                    if (requirements[2] > p.getResourceCounter(Resources.FUNGI_KINGDOM))
                         ok=false;
-                }else
-                if (requirements[3]< p.getResourceCounter(Resources.INSECT_KINGDOM))
-                    ok=false;
+                }
+                else if(i==3) {
+                    if (requirements[3] > p.getResourceCounter(Resources.INSECT_KINGDOM))
+                        ok = false;
+                }
             }
-        }
         return ok;
     }
 

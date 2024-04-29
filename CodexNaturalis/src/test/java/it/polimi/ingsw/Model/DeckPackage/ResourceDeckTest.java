@@ -12,8 +12,4 @@ class ResourceDeckTest {
         deck = new ResourceDeck();
     }
 
-    @Test
-    public void getCardById(deck){
-
-    }
 }

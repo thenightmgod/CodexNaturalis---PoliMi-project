@@ -283,4 +283,12 @@ public class Player {
         else this.PlayerGoal = B;
     }
 
+   //set messi per il test di goldcard
+    public void setResourceCounter(int[] resourceCounter) {
+        ResourceCounter = resourceCounter;
+    }
+
+    public void setObjectCounter(int[] objectCounter) {
+        ObjectCounter = objectCounter;
+    }
 }
