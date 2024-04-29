@@ -64,12 +64,15 @@ public class ObjectsGoalCard extends GoalCard {
         } else if (obj[0] == 2) {
             int QuillCount = player.getObjectCounter(Objects.QUILL);
             totalPoints = QuillCount / 2;
+            totalPoints = totalPoints*2;
         } else if (obj[1] == 2) {
             int InkwellCount = player.getObjectCounter(Objects.INKWELL);
             totalPoints = InkwellCount / 2;
+            totalPoints = totalPoints*2;
         } else if (obj[2] == 2) {
             int ManuscriptCount = player.getObjectCounter(Objects.MANUSCRIPT);
             totalPoints = ManuscriptCount / 2;
+            totalPoints = totalPoints*2;
         }
         return totalPoints;
     }
