@@ -4,6 +4,7 @@ import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
 import it.polimi.ingsw.Model.CornerPackage.Corner;
 import it.polimi.ingsw.Model.CornerPackage.Orientation;
+import it.polimi.ingsw.Model.CornerPackage.Resources;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -67,10 +68,10 @@ class PlayingFieldTest {
         boolean quartoRes[] = new boolean[4];
         boolean quintoRes[] = new boolean[4];
         boolean sestoRes[] = new boolean[4];
-        primoRes[0] = true;
+        primoRes[0] = false;
         primoRes[1] = false;
         primoRes[2] = false;
-        primoRes[3] = false;
+        primoRes[3] = true;
         secondoRes[0] = true;
         secondoRes[1] = false;
         secondoRes[2] = false;
@@ -153,6 +154,10 @@ class PlayingFieldTest {
         prova.updateFreePositions(quinto);
 
         assert(posizionilibere.contains(toCheck));
+
+        LinkedList<Resources> Backres = new LinkedList<>();
+        Backres = primores.getBackRes();
+        assert(Backres.contains(Resources.INSECT_KINGDOM));
     }
     @Test
     void getPosFromCornerTest(){
