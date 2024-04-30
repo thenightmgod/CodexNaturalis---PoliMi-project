@@ -29,7 +29,7 @@ public class Room {
     private GoldDeck GoldDeck;
     private Deck GoalDeck;
     private StartDeck StartDeck;
-    private Set<GoalCard> CommonGoals;
+    private LinkedList<GoalCard> CommonGoals;
     private Player[] Turns;
 
 
@@ -45,7 +45,7 @@ public class Room {
         this.FirstRound = true;
         this.Players = Players;
         this.Turn = Players.getFirst();
-        this.CommonGoals = new HashSet<>();
+        this.CommonGoals = new LinkedList<>();
         this.Turns = new Player[Players.size()];
         //i giocatori vanno creati passando nome e colore da controller arrivano già in ordine
     }

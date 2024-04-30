@@ -136,6 +136,26 @@ class PlayerTest {
 
         assertEquals(1, player1.getObjectCounter(Objects.MANUSCRIPT));
 
+        boolean quartoRes[] = new boolean[4];
+        quartoRes[0] = false;
+        quartoRes[1] = false;
+        quartoRes[2] = true;
+        quartoRes[3] = false;
+        Corner quartoHR = new Corner(ABSENT, Orientation.HR);
+        Corner quartoHL = new Corner(EMPTY, Orientation.HL);
+        Corner quartoLR = new Corner(Resources.FUNGI_KINGDOM, Orientation.LR);
+        Corner quartoLL = new Corner(EMPTY, Orientation.LL);
+        LinkedList<Corner> CornersQuarto = new LinkedList<>();
+        CornersQuarto.addLast(quartoHR);
+        CornersQuarto.addLast(quartoHL);
+        CornersQuarto.addLast(quartoLR);
+        CornersQuarto.addLast(quartoLL);
+
+        ResourceCard quarto = new ResourceCard(5, quartoRes, CardColor.RED, 3, CornersQuarto);
+        Position tooo = new Position (FB.FRONT, -1, 1);
+        player1.placeCard(quarto, tooo);
+
+        assertEquals(1, player1.getResourceCounter(Resources.FUNGI_KINGDOM));
 
         boolean secondoRes[] = new boolean[4];  //inizio con la startcard con una backres (fungo)
         secondoRes[0] = false;
@@ -157,6 +177,7 @@ class PlayerTest {
         player1.placeCard(due , z);
 
         assertEquals( 0 , player1.getObjectCounter(Objects.MANUSCRIPT));
+        assertEquals( 0 , player1.getResourceCounter(Resources.FUNGI_KINGDOM));
 
         boolean terzoRes[] = new boolean[4];
         terzoRes[0] = false;
