@@ -55,6 +55,10 @@ public class Player {
         PlayerField = new PlayingField();
     }
 
+    public PlayingField getPlayerField(){
+        return this.PlayerField;
+    }
+
 
     /**
      * Retrieves the name of the player.
