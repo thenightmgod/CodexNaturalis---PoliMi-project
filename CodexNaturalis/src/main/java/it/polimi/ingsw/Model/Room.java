@@ -61,6 +61,10 @@ public class Room {
             }
     }
 
+    public boolean getTwentyFlag() {
+        return this.Twenty;
+    }
+
     /**
      * Sets the last round flag if the twenty points threshold is reached and it's the first player's turn.
      */
@@ -154,7 +158,7 @@ public class Room {
         CompositionGoalDeck temp1 = new CompositionGoalDeck();
         ObjectsGoalDeck temp2 = new ObjectsGoalDeck();
         ResourceGoalDeck temp3 = new ResourceGoalDeck();
-        for(int i=0; i<8; i++){
+        /*for(int i=0; i<8; i++){
             this.GoalDeck.add((GoalCard)temp1.getCards().get(i));
         }
         for(int i=0; i<4; i++){
@@ -162,11 +166,11 @@ public class Room {
         }
         for(int i=0; i<4; i++){
             this.GoalDeck.add((GoalCard)temp3.getCards().get(i));
-        }
+        } */
         StartDeck.shuffle();
         ResourceDeck.shuffle();
         GoldDeck.shuffle();
-        GoalDeck.shuffle();
+        //GoalDeck.shuffle();
     }
 
 
