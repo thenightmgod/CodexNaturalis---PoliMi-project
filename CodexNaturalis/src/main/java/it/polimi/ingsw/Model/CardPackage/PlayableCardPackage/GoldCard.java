@@ -111,7 +111,6 @@ public class GoldCard extends ResourceCard {
      * @param player the player who places the card and whose points we calculate
      * @return the total points the player makes after placing the card
      */
-    //TODO PointsCalc() SE IL POINTSCONDITION è CORNERS
     //IO CONSIDERO CHE QUESTO POINTSCALC VIENE CHIAMATO QUANDO LA CARTA IN QUESTIONE
     //E' GIA' STATA POSIZIONATA E PERCIO' CONTO COME PUNTI ANCHE GLI OGGETTI CONTENUTI IN LEI
     public int PointsCalc(Player player, Position pos) {
