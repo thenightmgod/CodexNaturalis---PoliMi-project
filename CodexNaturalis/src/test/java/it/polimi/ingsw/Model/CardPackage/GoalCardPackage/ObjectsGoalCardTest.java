@@ -55,6 +55,8 @@ class ObjectsGoalCardTest {
         int t3 = carta3.pointsCalc(player);
         int t4 = carta4.pointsCalc(player);
 
+        carta1.getObj();
+
         assertEquals(t1, 9);
         assertEquals(t2, 2);
         assertEquals(t3, 6);
