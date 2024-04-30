@@ -5,6 +5,8 @@ import it.polimi.ingsw.Model.CornerPackage.Objects;
 import it.polimi.ingsw.Model.CornerPackage.Orientation;
 import it.polimi.ingsw.Model.CornerPackage.Resources;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
+import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
+import it.polimi.ingsw.Model.PlayerPackage.Position;
 
 import java.util.LinkedList;
 
@@ -17,8 +19,8 @@ import java.util.LinkedList;
  */
 public class GoldCard extends ResourceCard {
     private final int[] requirements;
-    //requirements è un array da 4 posizioni,in posizione 0 PLANT, posizione 1 ANIMAL, posizione 2 FUNGI, pos.3 INSECT
-    //se per posizionare la carta mi servono 3 funghi e una farfalla, avrò un 3 in pos.2 ed un 1 in posizione 3
+    //requirements è un array da 4 posizioni, in posizione 0 PLANT, posizione 1 ANIMAL, posizione 2 FUNGI, pos.3 INSECT
+    //se per posizionare la carta mi servono 3 funghi e una farfalla, avrò un 3 in pos.2 e un 1 in posizione 3
     private final PointsCondition PointsC;
 
     /**
@@ -106,37 +108,34 @@ public class GoldCard extends ResourceCard {
      * if the condition concerns an object, the player gets 1 point for each object of that type he owns, including the one on the goldCard.
      * Finally, if the condition is free, simply return the GoldCard's points.
      *
-     * @param p the player who places the card and whose points we calculate
+     * @param player the player who places the card and whose points we calculate
      * @return the total points the player makes after placing the card
      */
     //TODO PointsCalc() SE IL POINTSCONDITION è CORNERS
     //IO CONSIDERO CHE QUESTO POINTSCALC VIENE CHIAMATO QUANDO LA CARTA IN QUESTIONE
     //E' GIA' STATA POSIZIONATA E PERCIO' CONTO COME PUNTI ANCHE GLI OGGETTI CONTENUTI IN LEI
-    public int PointsCalc(Player p) {
+    public int PointsCalc(Player player, Position pos) {
         int PointsTot=0;
-        if (this.PointsC==PointsCondition.FREE){
-            PointsTot= this.getPoints();
-        }else if (this.PointsC==PointsCondition.OBJECTS_QUILL) {
-            PointsTot= (this.getPoints() * p.getObjectCounter(Objects.QUILL));
-        }else if (this.PointsC==PointsCondition.OBJECTS_INKWELL) {
-            PointsTot= (this.getPoints() * p.getObjectCounter(Objects.INKWELL));
-        }else if (this.PointsC==PointsCondition.OBJECTS_MANUSCRIPT) {
-            PointsTot= (this.getPoints() * p.getObjectCounter(Objects.MANUSCRIPT));
+        switch(PointsC){
+            case FREE -> PointsTot = this.getPoints();
+            case OBJECTS_QUILL -> PointsTot = this.getPoints() * player.getObjectCounter(Objects.QUILL);
+            case OBJECTS_INKWELL -> PointsTot = this.getPoints() * player.getObjectCounter(Objects.INKWELL);
+            case OBJECTS_MANUSCRIPT -> PointsTot = this.getPoints() * player.getObjectCounter(Objects.MANUSCRIPT);
+            case CORNERS -> PointsTot = PointsCorner(player, pos, PointsTot);
+        };
+        return PointsTot;
+    }
+
+    int PointsCorner(Player player, Position pos, int PointsTot){
+        PlayingField field = player.getPlayerField();
+        for(Orientation Orien : Orientation.values()) {
+            if (field.getField().containsKey(field.getPosFromCorner(pos, Orien)))
+                PointsTot += 2;
         }
         return PointsTot;
     }
 
-    /**
-     * * Returns a string representation of the GoldCard object.
-     *  * This representation includes the following information:
-     *  * - The ID of the GoldCard.
-     *  * - The color of the GoldCard.
-     *  * - The number of points associated with the GoldCard.
-     *  * - The array of resources at the back of the GoldCard.
-     *  * - The resources present at each corner of the GoldCard, along with their orientations.
-     *  *
-     *  * @return A string containing the ID, color, points, back resources, and corner resources of the GoldCard.
-     */
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -154,6 +153,19 @@ public class GoldCard extends ResourceCard {
 
         return sb.toString();
     }
+
+    /**
+     * * Returns a string representation of the GoldCard object.
+     *  * This representation includes the following information:
+     *  * - The ID of the GoldCard.
+     *  * - The color of the GoldCard.
+     *  * - The number of points associated with the GoldCard.
+     *  * - The array of resources at the back of the GoldCard.
+     *  * - The resources present at each corner of the GoldCard, along with their orientations.
+     *  *
+     *  * @return A string containing the ID, color, points, back resources, and corner resources of the GoldCard.
+     */
+
 
 }
 
