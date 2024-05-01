@@ -10,8 +10,8 @@
     ],
     "FrontCorners": [
       {"Res": "PLANT_KINGDOM", "Orient": "HR"},
-      {"Res": "EMPTY_KINGDOM", "Orient": "HL"},
-      {"Res": "EMPTY_KINGDOM", "Orient": "LR"},
+      {"Res": "EMPTY", "Orient": "HL"},
+      {"Res": "EMPTY", "Orient": "LR"},
       {"Res": "INSECT_KINGDOM", "Orient": "LL"}
     ]
   },
