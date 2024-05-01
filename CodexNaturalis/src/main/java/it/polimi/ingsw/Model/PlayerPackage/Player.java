@@ -140,7 +140,6 @@ public class Player {
         this.PlayerField.getField().put(new Position(face, 0, 0), c);
         if(face.equals(FB.FRONT)){
             LinkedList<Resources> Res = c.getBackRes();
-            int size = c.getBackRes().size();
             for(Resources elemento : Res){
                 if(elemento.equals(PLANT_KINGDOM))
                     this.ResourceCounter[0]++;
@@ -152,37 +151,22 @@ public class Player {
                     this.ResourceCounter[3]++;
             }
 
-            if(size==3){
-                c.getCorner(Orientation.HR).setRes(EMPTY);
-                c.getCorner(Orientation.HL).setRes(EMPTY);
-                c.getCorner(Orientation.LR).setRes(ABSENT);
-                c.getCorner(Orientation.LL).setRes(ABSENT);
-            }
-
-            if(size==2){
-                for(Orientation Orien : Orientation.values()){
-                    c.getCorner(Orien).setRes(EMPTY);
+            for(Orientation Orien : Orientation.values()){
+                switch (c.getCorner(Orien).getRes()){
+                    case PLANT_KINGDOM -> this.ResourceCounter[0]++;
+                    case ANIMAL_KINGDOM -> this.ResourceCounter[1]++;
+                    case FUNGI_KINGDOM -> this.ResourceCounter[2]++;
+                    case INSECT_KINGDOM -> this.ResourceCounter[3]++;
+                    default ->{
+                        break;
+                    }
                 }
-            }
-
-            if(size==1 && c.getBackRes().contains(FUNGI_KINGDOM)){
-                c.getCorner(Orientation.HR).setRes(EMPTY);
-                c.getCorner(Orientation.HL).setRes(ANIMAL_KINGDOM);
-                c.getCorner(Orientation.LR).setRes(FUNGI_KINGDOM);
-                c.getCorner(Orientation.LL).setRes(EMPTY);
-            }
-
-            if(size==1 && c.getBackRes().contains(INSECT_KINGDOM)){
-                c.getCorner(Orientation.HR).setRes(PLANT_KINGDOM);
-                c.getCorner(Orientation.HL).setRes(EMPTY);
-                c.getCorner(Orientation.LR).setRes(EMPTY);
-                c.getCorner(Orientation.LL).setRes(INSECT_KINGDOM);
             }
 
         }
         else{
             for(Orientation Orien : Orientation.values()){
-                switch (c.getCorner(Orien).getRes()){
+                switch (c.getBackCorner(Orien).getRes()){
                     case PLANT_KINGDOM -> this.ResourceCounter[0]++;
                     case ANIMAL_KINGDOM -> this.ResourceCounter[1]++;
                     case FUNGI_KINGDOM -> this.ResourceCounter[2]++;
