@@ -35,4 +35,13 @@ public class StartCard extends PlayableCard {
         this.BackCorners.add(new Corner(BackCorners.get(2).getRes(), BackCorners.get(2).getOrientation()));
         this.BackCorners.add(new Corner(BackCorners.get(3).getRes(), BackCorners.get(3).getOrientation()));
     }
+
+    public Corner getBackCorner(Orientation Orient){
+        return switch(Orient){
+            case HR -> this.BackCorners.get(0);
+            case HL -> this.BackCorners.get(1);
+            case LR -> this.BackCorners.get(2);
+            case LL -> this.BackCorners.get(3);
+        };
+    }
 }
