@@ -123,21 +123,21 @@ public class CompositionGoalCard extends GoalCard {
             int y = pos.get(i).getY();
             ResourceCard card = (ResourceCard) field.getField().get(pos.get(i));
             if(!card.getColor().equals(CardColor.GREEN) || ((ResourceCard) field.getField().get(pos.get(i))).getCheck())
-                break;
+                continue;
             else{//aggiungi check
-                Position under = new Position(x, y-1);
+                Position under = new Position(x, y-2);
                 if(!pos.contains(under))
-                    break;
+                    continue;
                 else{
                     if(!((ResourceCard) field.getField().get(under)).getColor().equals(CardColor.GREEN) || ((ResourceCard) field.getField().get(under)).getCheck())
-                        break;
+                        continue;
                     else{
-                        Position undleft = new Position(x-1, y-2);
+                        Position undleft = new Position(under.getX()-1, under.getY()-1);
                         if(!pos.contains(undleft))
-                            break;
+                            continue;
                         else{
                             if(!((ResourceCard) field.getField().get(undleft)).getColor().equals(CardColor.PURPLE) || ((ResourceCard) field.getField().get(undleft)).getCheck())
-                                break;
+                                continue;
                             else{
                                 Points += 3;
                                 ((ResourceCard) field.getField().get(pos.get(i))).setCheck();
@@ -162,22 +162,22 @@ public class CompositionGoalCard extends GoalCard {
             int x = pos.get(i).getX();
             int y = pos.get(i).getY();
             ResourceCard card = (ResourceCard) field.getField().get(pos.get(i));
-            if(!card.getColor().equals(CardColor.BLUE) || ((ResourceCard) field.getField().get(pos.get(i))).getCheck())
-                break;
+            if(!card.getColor().equals(CardColor.RED) || ((ResourceCard) field.getField().get(pos.get(i))).getCheck())
+                continue;
             else{//aggiungi check
                 Position undleft = new Position(x-1, y-1);
                 if(!pos.contains(undleft))
-                    break;
+                    continue;
                 else{
                     if(!((ResourceCard) field.getField().get(undleft)).getColor().equals(CardColor.BLUE) || ((ResourceCard) field.getField().get(undleft)).getCheck())
-                        break;
+                        continue;
                     else{
-                        Position under = new Position(x-1, y-2);
+                        Position under = new Position(x-1, y-3);
                         if(!pos.contains(under))
-                            break;
+                            continue;
                         else{
                             if(!((ResourceCard) field.getField().get(under)).getColor().equals(CardColor.BLUE) || ((ResourceCard) field.getField().get(under)).getCheck())
-                                break;
+                                continue;
                             else{
                                 Points += 3;
                                 ((ResourceCard) field.getField().get(pos.get(i))).setCheck();
@@ -203,21 +203,21 @@ public class CompositionGoalCard extends GoalCard {
             int y = pos.get(i).getY();
             ResourceCard card = (ResourceCard) field.getField().get(pos.get(i));
             if(!card.getColor().equals(CardColor.BLUE) || ((ResourceCard) field.getField().get(pos.get(i))).getCheck())
-                break;
+                continue;
             else{//aggiungi check
                 Position undright = new Position(x+1, y-1);
                 if(!pos.contains(undright))
-                    break;
+                    continue;
                 else{
                     if(!((ResourceCard) field.getField().get(undright)).getColor().equals(CardColor.PURPLE) || ((ResourceCard) field.getField().get(undright)).getCheck())
-                        break;
+                        continue;
                     else{
-                        Position under = new Position(x+1, y-2);
+                        Position under = new Position(x+1, y-3);
                         if(!pos.contains(under))
-                            break;
+                            continue;
                         else{
                             if(!((ResourceCard) field.getField().get(under)).getColor().equals(CardColor.PURPLE  ) || ((ResourceCard) field.getField().get(under)).getCheck())
-                                break;
+                                continue;
                             else{
                                 Points += 3;
                                 ((ResourceCard) field.getField().get(pos.get(i))).setCheck();
@@ -243,23 +243,23 @@ public class CompositionGoalCard extends GoalCard {
             int y = pos.get(i).getY();
             ResourceCard card = (ResourceCard) field.getField().get(pos.get(i));
             if(!card.getColor().equals(color) || ((ResourceCard) field.getField().get(pos.get(i))).getCheck())
-                break;
+                continue;
             else{//aggiungi check
                 Position topright = new Position(x+1, y+1);
                 if(!pos.contains(topright))
-                    break;
+                    continue;
                 else{
                     if(!((ResourceCard) field.getField().get(topright)).getColor().equals(color) || ((ResourceCard) field.getField().get(topright)).getCheck())
-                        break;
+                        continue;
                     else{
                         Position toprightright = new Position(x+2, y+2);
                         if(!pos.contains(toprightright))
-                            break;
+                            continue;
                         else{
                             if(!((ResourceCard) field.getField().get(toprightright)).getColor().equals(color) || ((ResourceCard) field.getField().get(toprightright)).getCheck())
-                                break;
+                                continue;
                             else{
-                                Points += 3;
+                                Points += 2;
                                 ((ResourceCard) field.getField().get(pos.get(i))).setCheck();
                                 ((ResourceCard) field.getField().get(topright)).setCheck();
                                 ((ResourceCard) field.getField().get(toprightright)).setCheck();
@@ -283,23 +283,23 @@ public class CompositionGoalCard extends GoalCard {
             int y = pos.get(i).getY();
             ResourceCard card = (ResourceCard) field.getField().get(pos.get(i));
             if(!card.getColor().equals(color) || ((ResourceCard) field.getField().get(pos.get(i))).getCheck())
-                break;
+                continue;
             else{//aggiungi check
-                Position undright = new Position(x-1, y-1);
+                Position undright = new Position(x-1, y+1);
                 if(!pos.contains(undright))
-                    break;
+                    continue;
                 else{
                     if(!((ResourceCard) field.getField().get(undright)).getColor().equals(color) || ((ResourceCard) field.getField().get(undright)).getCheck())
-                        break;
+                        continue;
                     else{
-                        Position undrightright = new Position(x-2, y-2);
+                        Position undrightright = new Position(x-2, y+2);
                         if(!pos.contains(undrightright))
-                            break;
+                            continue;
                         else{
                             if(!((ResourceCard) field.getField().get(undrightright)).getColor().equals(color) || ((ResourceCard) field.getField().get(undrightright)).getCheck())
-                                break;
+                                continue;
                             else{
-                                Points += 3;
+                                Points += 2;
                                 ((ResourceCard) field.getField().get(pos.get(i))).setCheck();
                                 ((ResourceCard) field.getField().get(undright)).setCheck();
                                 ((ResourceCard) field.getField().get(undrightright)).setCheck();
