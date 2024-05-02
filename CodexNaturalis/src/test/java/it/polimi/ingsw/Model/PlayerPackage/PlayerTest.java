@@ -18,7 +18,7 @@ import static it.polimi.ingsw.Model.CornerPackage.CornerState.ABSENT;
 import static it.polimi.ingsw.Model.CornerPackage.CornerState.EMPTY;
 import static org.junit.jupiter.api.Assertions.*;
 
-/* class PlayerTest {
+class PlayerTest {
     @Test
     void placeStartcardTest(){
         Player player1 = new Player("Lazzarone", PlayerColor.RED);
@@ -28,20 +28,31 @@ import static org.junit.jupiter.api.Assertions.*;
         primoRes[1] = false;
         primoRes[2] = true;
         primoRes[3] = false;
+        Corner primoHRfront = new Corner(EMPTY, Orientation.HR);
+        Corner primoHLfront = new Corner(Resources.ANIMAL_KINGDOM, Orientation.HL);
+        Corner primoLRfront = new Corner(Resources.FUNGI_KINGDOM, Orientation.LR);
+        Corner primoLLfront = new Corner(EMPTY, Orientation.LL);
         Corner primoHR = new Corner(Resources.ANIMAL_KINGDOM, Orientation.HR);
         Corner primoHL = new Corner(Resources.PLANT_KINGDOM, Orientation.HL);
         Corner primoLR = new Corner(Resources.INSECT_KINGDOM, Orientation.LR);
         Corner primoLL = new Corner(Resources.FUNGI_KINGDOM, Orientation.LL);
         LinkedList<Corner> CornersPrimo = new LinkedList<>();
+        LinkedList<Corner> CornersPrimofront = new LinkedList<>();
         CornersPrimo.addLast(primoHR);
         CornersPrimo.addLast(primoHL);
         CornersPrimo.addLast(primoLR);
         CornersPrimo.addLast(primoLL);
 
-        StartCard startcard1 = new StartCard(5, primoRes, CornersPrimo);
+        CornersPrimofront.addLast(primoHRfront);
+        CornersPrimofront.addLast(primoHLfront);
+        CornersPrimofront.addLast(primoLRfront);
+        CornersPrimofront.addLast(primoLLfront);
+
+        StartCard startcard1 = new StartCard(5, primoRes, CornersPrimo, CornersPrimofront);
 
         player1.placeStartCard(startcard1, FB.FRONT);
-        assertEquals(1, player1.getResourceCounter(Resources.FUNGI_KINGDOM));
+        assertEquals(2, player1.getResourceCounter(Resources.FUNGI_KINGDOM));
+        assertEquals(1, player1.getResourceCounter(Resources.ANIMAL_KINGDOM));
         assertEquals(Resources.ANIMAL_KINGDOM, startcard1.getCorner(Orientation.HL).getRes());
 
         boolean secondoRes[] = new boolean[4];  //inizio con la startcard con una backres (insect)
@@ -49,23 +60,33 @@ import static org.junit.jupiter.api.Assertions.*;
         secondoRes[1] = false;
         secondoRes[2] = false;
         secondoRes[3] = true;
-        Corner secondoHR = new Corner(Resources.ANIMAL_KINGDOM, Orientation.HR);
-        Corner secondoHL = new Corner(Resources.PLANT_KINGDOM, Orientation.HL);
-        Corner secondoLR = new Corner(Resources.INSECT_KINGDOM, Orientation.LR);
-        Corner secondoLL = new Corner(Resources.FUNGI_KINGDOM, Orientation.LL);
+        Corner secondoHR = new Corner(Resources.PLANT_KINGDOM, Orientation.HR);
+        Corner secondoHL = new Corner(Resources.FUNGI_KINGDOM, Orientation.HL);
+        Corner secondoLR = new Corner(Resources.ANIMAL_KINGDOM, Orientation.LR);
+        Corner secondoLL = new Corner(Resources.INSECT_KINGDOM, Orientation.LL);
+
+        Corner secondoHRfront = new Corner(Resources.PLANT_KINGDOM, Orientation.HR);
+        Corner secondoHLfront = new Corner(EMPTY, Orientation.HL);
+        Corner secondoLRfront = new Corner(EMPTY, Orientation.LR);
+        Corner secondoLLfront = new Corner(Resources.INSECT_KINGDOM, Orientation.LL);
         LinkedList<Corner> CornersSecondo = new LinkedList<>();
+        LinkedList<Corner> CornersSecondofront = new LinkedList<>();
         CornersSecondo.addLast(primoHR);
         CornersSecondo.addLast(primoHL);
         CornersSecondo.addLast(primoLR);
         CornersSecondo.addLast(primoLL);
+        CornersSecondofront.addLast(primoHR);
+        CornersSecondofront.addLast(primoHL);
+        CornersSecondofront.addLast(primoLR);
+        CornersSecondofront.addLast(primoLL);
 
-        StartCard startcard2 = new StartCard(6, secondoRes, CornersSecondo);
+        StartCard startcard2 = new StartCard(6, secondoRes, CornersSecondo, CornersSecondofront);
 
         player1.placeStartCard(startcard2, FB.BACK);
         assertEquals(1, player1.getResourceCounter(Resources.PLANT_KINGDOM));
-        player1.placeStartCard(startcard2, FB.FRONT);
-        assertEquals(Resources.PLANT_KINGDOM, startcard2.getCorner(Orientation.HR).getRes());
-
+        assertEquals(1, player1.getResourceCounter(Resources.INSECT_KINGDOM));
+        assertEquals(2, player1.getResourceCounter(Resources.ANIMAL_KINGDOM));
+        assertEquals(3, player1.getResourceCounter(Resources.FUNGI_KINGDOM));
 
 
         Player player2 = new Player("Lazzaro", PlayerColor.GREEN);
@@ -79,15 +100,28 @@ import static org.junit.jupiter.api.Assertions.*;
         Corner terzoHL = new Corner(Resources.PLANT_KINGDOM, Orientation.HL);
         Corner terzoLR = new Corner(Resources.INSECT_KINGDOM, Orientation.LR);
         Corner terzoLL = new Corner(Resources.FUNGI_KINGDOM, Orientation.LL);
+        Corner terzoHRfront = new Corner(EMPTY, Orientation.HR);
+        Corner terzoHLfront = new Corner(EMPTY, Orientation.HL);
+        Corner terzoLRfront = new Corner(EMPTY, Orientation.LR);
+        Corner terzoLLfront = new Corner(EMPTY, Orientation.LL);
         LinkedList<Corner> CornersTerzo = new LinkedList<>();
-        CornersTerzo.addLast(primoHR);
-        CornersTerzo.addLast(primoHL);
-        CornersTerzo.addLast(primoLR);
-        CornersTerzo.addLast(primoLL);
+        LinkedList<Corner> CornersTerzofront = new LinkedList<>();
+        CornersTerzo.addLast(terzoHR);
+        CornersTerzo.addLast(terzoHL);
+        CornersTerzo.addLast(terzoLR);
+        CornersTerzo.addLast(terzoLL);
+        CornersTerzofront.addLast(terzoHRfront);
+        CornersTerzofront.addLast(terzoHLfront);
+        CornersTerzofront.addLast(terzoLRfront);
+        CornersTerzofront.addLast(terzoLLfront);
 
-        StartCard startcard3 = new StartCard(7, terzoRes, CornersTerzo);
+
+        StartCard startcard3 = new StartCard(7, terzoRes, CornersTerzo, CornersTerzofront);
         player2.placeStartCard(startcard3, FB.FRONT);
         assertEquals(EMPTY, startcard3.getCorner(Orientation.HL).getRes());
+        assertEquals(1, player2.getResourceCounter(Resources.PLANT_KINGDOM));
+        assertEquals(1, player2.getResourceCounter(Resources.FUNGI_KINGDOM));
+
 
         Player player3 = new Player("Lazzaronissimo", PlayerColor.GREEN);
 
@@ -100,16 +134,27 @@ import static org.junit.jupiter.api.Assertions.*;
         Corner quartoHL = new Corner(Resources.PLANT_KINGDOM, Orientation.HL);
         Corner quartoLR = new Corner(Resources.INSECT_KINGDOM, Orientation.LR);
         Corner quartoLL = new Corner(Resources.FUNGI_KINGDOM, Orientation.LL);
+        Corner quartoHRfront = new Corner(EMPTY, Orientation.HR);
+        Corner quartoHLfront = new Corner(EMPTY, Orientation.HL);
+        Corner quartoLRfront = new Corner(ABSENT, Orientation.LR);
+        Corner quartoLLfront = new Corner(ABSENT, Orientation.LL);
         LinkedList<Corner> CornersQuarto = new LinkedList<>();
+        LinkedList<Corner> CornersQuartofront = new LinkedList<>();
         CornersQuarto.addLast(quartoHR);
         CornersQuarto.addLast(quartoHL);
         CornersQuarto.addLast(quartoLR);
         CornersQuarto.addLast(quartoLL);
+        CornersQuartofront.addLast(quartoHRfront);
+        CornersQuartofront.addLast(quartoHLfront);
+        CornersQuartofront.addLast(quartoLRfront);
+        CornersQuartofront.addLast(quartoLLfront);
 
-        StartCard startcard4 = new StartCard(8, quartoRes, CornersQuarto);
+        StartCard startcard4 = new StartCard(8, quartoRes, CornersQuarto, CornersQuartofront);
         player3.placeStartCard(startcard4, FB.FRONT);
         assertEquals(EMPTY, startcard4.getCorner(Orientation.HL).getRes());
         assertEquals(ABSENT, startcard4.getCorner(Orientation.LL).getRes());
+        assertEquals(1, player3.getResourceCounter(Resources.PLANT_KINGDOM));
+        assertEquals(1, player3.getResourceCounter(Resources.FUNGI_KINGDOM));
     }
     @Test
     void placecardTest(){
@@ -201,4 +246,3 @@ import static org.junit.jupiter.api.Assertions.*;
         assertEquals(1, player1.getResourceCounter(Resources.INSECT_KINGDOM));
     }
 }
-*/
