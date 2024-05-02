@@ -88,6 +88,10 @@ public class Player {
         return PointsCounter;
     }
 
+    public void addPoints(int points){
+        this.PointsCounter += points;
+    }
+
     /**
      * Sets the goal card for the player.
      *
@@ -95,6 +99,10 @@ public class Player {
      */
     public void setPlayerGoal(GoalCard card){
         PlayerGoal = card;
+    }
+
+    public GoalCard getPlayerGoal(){
+        return PlayerGoal;
     }
 
     /**

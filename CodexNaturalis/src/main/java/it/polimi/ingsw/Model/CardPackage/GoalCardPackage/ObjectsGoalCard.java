@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Model.CardPackage.GoalCardPackage;
 
+import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.CardColor;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.CornerPackage.Objects;
 
@@ -49,27 +50,27 @@ public class ObjectsGoalCard extends GoalCard {
     /**
      * Calculates the number of points earned by the specified player based on the achievement of Objects' Goals.
      *
-     * @param player The player whose score due to the achievement of Objects' Goals we want to calculate.
+     * @param p The player whose score due to the achievement of Objects' Goals we want to calculate.
      * @return The total number of points earned by the player.
      */
-    public int pointsCalc(Player player) {
+    public int pointsCalc(Player p) {
         int totalPoints = 0;
         if (this.getPoints() == 3) {
-            int QuillCount = player.getObjectCounter(Objects.QUILL);
-            int InkwellCount = player.getObjectCounter(Objects.INKWELL);
-            int ManuscriptCount = player.getObjectCounter(Objects.MANUSCRIPT);
+            int QuillCount = p.getObjectCounter(Objects.QUILL);
+            int InkwellCount = p.getObjectCounter(Objects.INKWELL);
+            int ManuscriptCount = p.getObjectCounter(Objects.MANUSCRIPT);
             int totalGroups = Math.min(QuillCount, Math.min(InkwellCount, ManuscriptCount));
             totalPoints = totalGroups * 3;
         } else if (obj[0] == 2) {
-            int QuillCount = player.getObjectCounter(Objects.QUILL);
+            int QuillCount = p.getObjectCounter(Objects.QUILL);
             totalPoints = QuillCount / 2;
             totalPoints = totalPoints*2;
         } else if (obj[1] == 2) {
-            int InkwellCount = player.getObjectCounter(Objects.INKWELL);
+            int InkwellCount = p.getObjectCounter(Objects.INKWELL);
             totalPoints = InkwellCount / 2;
             totalPoints = totalPoints*2;
         } else if (obj[2] == 2) {
-            int ManuscriptCount = player.getObjectCounter(Objects.MANUSCRIPT);
+            int ManuscriptCount = p.getObjectCounter(Objects.MANUSCRIPT);
             totalPoints = ManuscriptCount / 2;
             totalPoints = totalPoints*2;
         }

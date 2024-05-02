@@ -14,7 +14,6 @@ import java.util.LinkedList;
  */
 public abstract class PlayableCard extends Card{
 
-    private boolean Check;
     private final boolean[] BackRes;
     private LinkedList<Corner> Corners;
 
@@ -43,8 +42,6 @@ public abstract class PlayableCard extends Card{
         for(int i=0; i<4; i++){
             BackRes[i] = backRes[i];
         }
-
-        Check = false;
     }
 
 
@@ -69,13 +66,6 @@ public abstract class PlayableCard extends Card{
 
     }
 
-    public void setCheck(){
-        Check = true;
-    }
-
-    public boolean getCheck(){
-        return Check;
-    }
     /**
      * Returns the corner located at the specified position.
      *

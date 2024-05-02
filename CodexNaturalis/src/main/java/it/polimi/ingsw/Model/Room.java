@@ -1,6 +1,9 @@
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.CompositionGoalCard;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
+import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.ObjectsGoalCard;
+import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.ResourceGoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.StartCard;
@@ -209,4 +212,24 @@ public class Room {
         GoalDeck.getCards().remove(Goal_1);
         GoalDeck.getCards().remove(Goal_2);
     }
+
+    public void checkGoals(Player p, LinkedList<GoalCard> commonGoals){
+        LinkedList<GoalCard> toCheck = new LinkedList<>(commonGoals);
+        toCheck.add(p.getPlayerGoal());
+        for(int i=0; i<3; i++){
+            if(toCheck.get(i).getId() >= 87 && toCheck.get(i).getId() <= 94) {
+                CompositionGoalCard nostra = (CompositionGoalCard) toCheck.get(i);
+                p.addPoints(nostra.pointsCalc(p, nostra.getColor()));
+            }
+            if(toCheck.get(i).getId() >= 95 && toCheck.get(i).getId() <= 98) {
+                ResourceGoalCard nostra = (ResourceGoalCard) toCheck.get(i);
+                p.addPoints(nostra.pointsCalc(p));
+            }
+            if(toCheck.get(i).getId() >= 99 && toCheck.get(i).getId() <= 102) {
+                ObjectsGoalCard nostra = (ObjectsGoalCard) toCheck.get(i);
+                p.addPoints(nostra.pointsCalc(p));
+            }
+        }
+    }
+
 }

@@ -14,6 +14,8 @@ public class ResourceCard extends PlayableCard {
     private final CardColor Color;
     private final int Points;
 
+    private boolean Check;
+
     /**
      * Constructs a new ResourceCard.
      *
@@ -27,6 +29,7 @@ public class ResourceCard extends PlayableCard {
         super(id, R, Corners);
         this.Color = c;
         this.Points = p;
+        this.Check = false;
     }
 
     /**
@@ -52,6 +55,14 @@ public class ResourceCard extends PlayableCard {
      *
      * @return A string containing the ID, color, points, back resources, and corners of the ResourceCard.
      */
+
+    public void setCheck(){
+        Check = true;
+    }
+
+    public boolean getCheck(){
+        return Check;
+    }
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

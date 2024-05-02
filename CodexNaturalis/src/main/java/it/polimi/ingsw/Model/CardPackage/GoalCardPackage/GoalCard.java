@@ -1,6 +1,8 @@
 package it.polimi.ingsw.Model.CardPackage.GoalCardPackage;
 
 import it.polimi.ingsw.Model.CardPackage.Card;
+import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.CardColor;
+import it.polimi.ingsw.Model.PlayerPackage.Player;
 
 /**
  * Represent the generic GoalCard. The GoalDeck contains 16 of them.
@@ -18,6 +20,14 @@ public abstract class GoalCard extends Card {
     public GoalCard(int id, int p) {
         super(id);
         this.points=p;
+    }
+
+    public int pointsCalc(Player player, CardColor c){
+        return 0;
+    }
+
+    public int pointsCalc(Player p){
+        return 0;
     }
 
     /**

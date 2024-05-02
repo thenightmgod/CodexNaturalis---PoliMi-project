@@ -8,6 +8,7 @@ import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,6 +36,10 @@ public class CompositionGoalCard extends GoalCard {
         super(id,points);
         this.comp=c;
         this.color=color;
+    }
+
+    public CardColor getColor(){
+        return color;
     }
 
     /**
@@ -69,41 +74,242 @@ public class CompositionGoalCard extends GoalCard {
 
     public int pointsL(Player p){
         int Points = 0;
-        int quanti = 0;
         PlayingField field = p.getPlayerField();
         List<Position> pos = new ArrayList<>(field.getField().keySet().stream().toList());
         pos.remove(new Position(0, 0));
+        pos.sort(Comparator.comparing(Position :: getY));
         for(int i=0; i < pos.size(); i++){
+            int x = pos.get(i).getX();
+            int y = pos.get(i).getY();
             ResourceCard card = (ResourceCard) field.getField().get(pos.get(i));
-            /*if(!card.getCheck()){
-                if(card.
-            } */
+            if(!card.getColor().equals(CardColor.RED) || ((ResourceCard) field.getField().get(pos.get(i))).getCheck())
+                break;
+            else{//aggiungi check
+                Position under = new Position(x, y-1);
+                if(!pos.contains(under))
+                    break;
+                else{
+                    if(!((ResourceCard) field.getField().get(under)).getColor().equals(CardColor.RED) || ((ResourceCard) field.getField().get(under)).getCheck())
+                        break;
+                    else{
+                        Position undright = new Position(x+1, y-2);
+                        if(!pos.contains(undright))
+                            break;
+                        else{
+                            if(!((ResourceCard) field.getField().get(undright)).getColor().equals(CardColor.GREEN) || ((ResourceCard) field.getField().get(undright)).getCheck())
+                                break;
+                            else{
+                                Points += 3;
+                                ((ResourceCard) field.getField().get(pos.get(i))).setCheck();
+                                ((ResourceCard) field.getField().get(under)).setCheck();
+                                ((ResourceCard) field.getField().get(undright)).setCheck();
+                            }
+                        }
+                    }
+                }
+            }
         }
-        return Points;
+       return Points;
     }
 
     public int pointsRL(Player p){
         int Points = 0;
+        PlayingField field = p.getPlayerField();
+        List<Position> pos = new ArrayList<>(field.getField().keySet().stream().toList());
+        pos.remove(new Position(0, 0));
+        pos.sort(Comparator.comparing(Position :: getY));
+        for(int i=0; i < pos.size(); i++){
+            int x = pos.get(i).getX();
+            int y = pos.get(i).getY();
+            ResourceCard card = (ResourceCard) field.getField().get(pos.get(i));
+            if(!card.getColor().equals(CardColor.GREEN) || ((ResourceCard) field.getField().get(pos.get(i))).getCheck())
+                break;
+            else{//aggiungi check
+                Position under = new Position(x, y-1);
+                if(!pos.contains(under))
+                    break;
+                else{
+                    if(!((ResourceCard) field.getField().get(under)).getColor().equals(CardColor.GREEN) || ((ResourceCard) field.getField().get(under)).getCheck())
+                        break;
+                    else{
+                        Position undleft = new Position(x-1, y-2);
+                        if(!pos.contains(undleft))
+                            break;
+                        else{
+                            if(!((ResourceCard) field.getField().get(undleft)).getColor().equals(CardColor.PURPLE) || ((ResourceCard) field.getField().get(undleft)).getCheck())
+                                break;
+                            else{
+                                Points += 3;
+                                ((ResourceCard) field.getField().get(pos.get(i))).setCheck();
+                                ((ResourceCard) field.getField().get(under)).setCheck();
+                                ((ResourceCard) field.getField().get(undleft)).setCheck();
+                            }
+                        }
+                    }
+                }
+            }
+        }
         return Points;
     }
 
     public int pointsT(Player p){
         int Points = 0;
+        PlayingField field = p.getPlayerField();
+        List<Position> pos = new ArrayList<>(field.getField().keySet().stream().toList());
+        pos.remove(new Position(0, 0));
+        pos.sort(Comparator.comparing(Position :: getY));
+        for(int i=0; i < pos.size(); i++){
+            int x = pos.get(i).getX();
+            int y = pos.get(i).getY();
+            ResourceCard card = (ResourceCard) field.getField().get(pos.get(i));
+            if(!card.getColor().equals(CardColor.BLUE) || ((ResourceCard) field.getField().get(pos.get(i))).getCheck())
+                break;
+            else{//aggiungi check
+                Position undleft = new Position(x-1, y-1);
+                if(!pos.contains(undleft))
+                    break;
+                else{
+                    if(!((ResourceCard) field.getField().get(undleft)).getColor().equals(CardColor.BLUE) || ((ResourceCard) field.getField().get(undleft)).getCheck())
+                        break;
+                    else{
+                        Position under = new Position(x-1, y-2);
+                        if(!pos.contains(under))
+                            break;
+                        else{
+                            if(!((ResourceCard) field.getField().get(under)).getColor().equals(CardColor.BLUE) || ((ResourceCard) field.getField().get(under)).getCheck())
+                                break;
+                            else{
+                                Points += 3;
+                                ((ResourceCard) field.getField().get(pos.get(i))).setCheck();
+                                ((ResourceCard) field.getField().get(undleft)).setCheck();
+                                ((ResourceCard) field.getField().get(under)).setCheck();
+                            }
+                        }
+                    }
+                }
+            }
+        }
         return Points;
     }
 
     public int pointsRT(Player p){
         int Points = 0;
+        PlayingField field = p.getPlayerField();
+        List<Position> pos = new ArrayList<>(field.getField().keySet().stream().toList());
+        pos.remove(new Position(0, 0));
+        pos.sort(Comparator.comparing(Position :: getY));
+        for(int i=0; i < pos.size(); i++){
+            int x = pos.get(i).getX();
+            int y = pos.get(i).getY();
+            ResourceCard card = (ResourceCard) field.getField().get(pos.get(i));
+            if(!card.getColor().equals(CardColor.BLUE) || ((ResourceCard) field.getField().get(pos.get(i))).getCheck())
+                break;
+            else{//aggiungi check
+                Position undright = new Position(x+1, y-1);
+                if(!pos.contains(undright))
+                    break;
+                else{
+                    if(!((ResourceCard) field.getField().get(undright)).getColor().equals(CardColor.PURPLE) || ((ResourceCard) field.getField().get(undright)).getCheck())
+                        break;
+                    else{
+                        Position under = new Position(x+1, y-2);
+                        if(!pos.contains(under))
+                            break;
+                        else{
+                            if(!((ResourceCard) field.getField().get(under)).getColor().equals(CardColor.PURPLE  ) || ((ResourceCard) field.getField().get(under)).getCheck())
+                                break;
+                            else{
+                                Points += 3;
+                                ((ResourceCard) field.getField().get(pos.get(i))).setCheck();
+                                ((ResourceCard) field.getField().get(undright)).setCheck();
+                                ((ResourceCard) field.getField().get(under)).setCheck();
+                            }
+                        }
+                    }
+                }
+            }
+        }
         return Points;
     }
 
-    public int pointsDU(Player p, CardColor c){
+    public int pointsDU(Player p, CardColor color){
         int Points = 0;
+        PlayingField field = p.getPlayerField();
+        List<Position> pos = new ArrayList<>(field.getField().keySet().stream().toList());
+        pos.remove(new Position(0, 0));
+        pos.sort(Comparator.comparing(Position :: getY));
+        for(int i=0; i < pos.size(); i++){
+            int x = pos.get(i).getX();
+            int y = pos.get(i).getY();
+            ResourceCard card = (ResourceCard) field.getField().get(pos.get(i));
+            if(!card.getColor().equals(color) || ((ResourceCard) field.getField().get(pos.get(i))).getCheck())
+                break;
+            else{//aggiungi check
+                Position topright = new Position(x+1, y+1);
+                if(!pos.contains(topright))
+                    break;
+                else{
+                    if(!((ResourceCard) field.getField().get(topright)).getColor().equals(color) || ((ResourceCard) field.getField().get(topright)).getCheck())
+                        break;
+                    else{
+                        Position toprightright = new Position(x+2, y+2);
+                        if(!pos.contains(toprightright))
+                            break;
+                        else{
+                            if(!((ResourceCard) field.getField().get(toprightright)).getColor().equals(color) || ((ResourceCard) field.getField().get(toprightright)).getCheck())
+                                break;
+                            else{
+                                Points += 3;
+                                ((ResourceCard) field.getField().get(pos.get(i))).setCheck();
+                                ((ResourceCard) field.getField().get(topright)).setCheck();
+                                ((ResourceCard) field.getField().get(toprightright)).setCheck();
+                            }
+                        }
+                    }
+                }
+            }
+        }
         return Points;
     }
 
-    public int pointsDD(Player p, CardColor c){
+    public int pointsDD(Player p, CardColor color){
         int Points = 0;
+        PlayingField field = p.getPlayerField();
+        List<Position> pos = new ArrayList<>(field.getField().keySet().stream().toList());
+        pos.remove(new Position(0, 0));
+        pos.sort(Comparator.comparing(Position :: getY));
+        for(int i=0; i < pos.size(); i++){
+            int x = pos.get(i).getX();
+            int y = pos.get(i).getY();
+            ResourceCard card = (ResourceCard) field.getField().get(pos.get(i));
+            if(!card.getColor().equals(color) || ((ResourceCard) field.getField().get(pos.get(i))).getCheck())
+                break;
+            else{//aggiungi check
+                Position undright = new Position(x-1, y-1);
+                if(!pos.contains(undright))
+                    break;
+                else{
+                    if(!((ResourceCard) field.getField().get(undright)).getColor().equals(color) || ((ResourceCard) field.getField().get(undright)).getCheck())
+                        break;
+                    else{
+                        Position undrightright = new Position(x-2, y-2);
+                        if(!pos.contains(undrightright))
+                            break;
+                        else{
+                            if(!((ResourceCard) field.getField().get(undrightright)).getColor().equals(color) || ((ResourceCard) field.getField().get(undrightright)).getCheck())
+                                break;
+                            else{
+                                Points += 3;
+                                ((ResourceCard) field.getField().get(pos.get(i))).setCheck();
+                                ((ResourceCard) field.getField().get(undright)).setCheck();
+                                ((ResourceCard) field.getField().get(undrightright)).setCheck();
+                            }
+                        }
+                    }
+                }
+            }
+        }
         return Points;
     }
+
 }
