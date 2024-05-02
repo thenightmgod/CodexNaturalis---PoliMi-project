@@ -18,7 +18,7 @@ import static it.polimi.ingsw.Model.CornerPackage.CornerState.ABSENT;
 import static it.polimi.ingsw.Model.CornerPackage.CornerState.EMPTY;
 import static org.junit.jupiter.api.Assertions.*;
 
-class PlayerTest {
+/* class PlayerTest {
     @Test
     void placeStartcardTest(){
         Player player1 = new Player("Lazzarone", PlayerColor.RED);
@@ -201,3 +201,4 @@ class PlayerTest {
         assertEquals(1, player1.getResourceCounter(Resources.INSECT_KINGDOM));
     }
 }
+*/

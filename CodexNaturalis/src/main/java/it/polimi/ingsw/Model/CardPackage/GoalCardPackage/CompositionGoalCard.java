@@ -52,7 +52,7 @@ public class CompositionGoalCard extends GoalCard {
 
 
     /**
-     * For every player, Calculate the points related to the GoalCards' achievement (both the individual one and the common one)
+     * For every player, Calculates the points related to the GoalCards' achievement (both the individual one and the common one)
      *
      *
      * @param p The player whose Points
@@ -83,21 +83,21 @@ public class CompositionGoalCard extends GoalCard {
             int y = pos.get(i).getY();
             ResourceCard card = (ResourceCard) field.getField().get(pos.get(i));
             if(!card.getColor().equals(CardColor.RED) || ((ResourceCard) field.getField().get(pos.get(i))).getCheck())
-                break;
+                continue;
             else{//aggiungi check
-                Position under = new Position(x, y-1);
+                Position under = new Position(x, y-2);
                 if(!pos.contains(under))
-                    break;
+                    continue;
                 else{
                     if(!((ResourceCard) field.getField().get(under)).getColor().equals(CardColor.RED) || ((ResourceCard) field.getField().get(under)).getCheck())
-                        break;
+                        continue;
                     else{
-                        Position undright = new Position(x+1, y-2);
+                        Position undright = new Position(x+1, y-1);
                         if(!pos.contains(undright))
-                            break;
+                            continue;
                         else{
                             if(!((ResourceCard) field.getField().get(undright)).getColor().equals(CardColor.GREEN) || ((ResourceCard) field.getField().get(undright)).getCheck())
-                                break;
+                                continue;
                             else{
                                 Points += 3;
                                 ((ResourceCard) field.getField().get(pos.get(i))).setCheck();
