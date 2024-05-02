@@ -46,6 +46,8 @@ class CompositionGoalCardTest {
             LinkedList<Corner> Corners3 = new LinkedList<>();
             LinkedList<Corner> Corners4 = new LinkedList<>();
             LinkedList<Corner> Corners5 = new LinkedList<>();
+            LinkedList<Corner> Corners6 = new LinkedList<>();
+            LinkedList<Corner> Corners7 = new LinkedList<>();
 
             Corner  zeroHR = new Corner(EMPTY, Orientation.HR);
             Corner  zeroHL = new Corner(ABSENT, Orientation.HL);
@@ -71,6 +73,14 @@ class CompositionGoalCardTest {
             Corner  quintoHL = new Corner(ABSENT, Orientation.HL);
             Corner  quintoLR = new Corner(EMPTY, Orientation.LR);
             Corner  quintoLL = new Corner(EMPTY, Orientation.LL);
+            Corner  sestoHR = new Corner(EMPTY, Orientation.HR);
+            Corner  sestoHL = new Corner(ABSENT, Orientation.HL);
+            Corner  sestoLR = new Corner(EMPTY, Orientation.LR);
+            Corner  sestoLL = new Corner(EMPTY, Orientation.LL);
+            Corner  settimoHR = new Corner(EMPTY, Orientation.HR);
+            Corner  settimoHL = new Corner(ABSENT, Orientation.HL);
+            Corner  settimoLR = new Corner(EMPTY, Orientation.LR);
+            Corner  settimoLL = new Corner(EMPTY, Orientation.LL);
 
             Corners0.addLast(zeroHR);
             Corners0.addLast(zeroHL);
@@ -102,12 +112,24 @@ class CompositionGoalCardTest {
             Corners5.addLast(quintoLR);
             Corners5.addLast(quintoLL);
 
+            Corners6.addLast(sestoHR);
+            Corners6.addLast(sestoHL);
+            Corners6.addLast(sestoLR);
+            Corners6.addLast(sestoLL);
+
+            Corners7.addLast(settimoHR);
+            Corners7.addLast(settimoHL);
+            Corners7.addLast(settimoLR);
+            Corners7.addLast(settimoLL);
+
             boolean Res0[] = new boolean[4];
             boolean Res1[] = new boolean[4];
             boolean Res2[] = new boolean[4];
             boolean Res3[] = new boolean[4];
             boolean Res4[] = new boolean[4];
             boolean Res5[] = new boolean[4];
+            boolean Res6[] = new boolean[4];
+            boolean Res7[] = new boolean[4];
 
             Res0[0] = true;
             Res0[1] = false;
@@ -133,6 +155,14 @@ class CompositionGoalCardTest {
             Res5[1] = false;
             Res5[2] = false;
             Res5[3] = false;
+            Res6[0] = true;
+            Res6[1] = false;
+            Res6[2] = false;
+            Res6[3] = false;
+            Res7[0] = true;
+            Res7[1] = false;
+            Res7[2] = false;
+            Res7[3] = false;
 
             int[] requirements1 = new int[4];
             requirements1[0] = 0;
@@ -155,6 +185,13 @@ class CompositionGoalCardTest {
             requirements3[3] = 0;
             GoldCard carta3 = new GoldCard(3, Res3, Corners3, CardColor.RED, 3, requirements3, PointsCondition.OBJECTS_MANUSCRIPT);
 
+            int[] requirements6 = new int[4];
+            requirements3[0] = 5;
+            requirements3[1] = 0;
+            requirements3[2] = 0;
+            requirements3[3] = 0;
+            GoldCard carta6 = new GoldCard(3, Res6, Corners6, CardColor.RED, 3, requirements6, PointsCondition.OBJECTS_MANUSCRIPT);
+
             int[] requirements4 = new int[4];
             requirements3[0] = 3;
             requirements3[1] = 0;
@@ -168,6 +205,13 @@ class CompositionGoalCardTest {
             requirements3[2] = 0;
             requirements3[3] = 0;
             GoldCard carta5 = new GoldCard(3, Res5, Corners5, CardColor.GREEN, 2, requirements5, PointsCondition.CORNERS);
+
+            int[] requirements7 = new int[4];
+            requirements3[0] = 3;
+            requirements3[1] = 0;
+            requirements3[2] = 0;
+            requirements3[3] = 0;
+            GoldCard carta7 = new GoldCard(3, Res7, Corners7, CardColor.GREEN, 2, requirements7, PointsCondition.CORNERS);
 
             int[] requirements0 = new int[4];
             requirements3[0] = 3;
@@ -184,6 +228,8 @@ class CompositionGoalCardTest {
             Position pos3 = new Position(1, -3);
             Position pos4 = new Position(2, -2);
             Position pos5 = new Position(2, -4);
+            Position pos6 = new Position(1, -5);
+            Position pos7 = new Position(2, -6);
 
             mappa.put(pos0, carta0);
             mappa.put(pos1, carta1);
@@ -191,11 +237,13 @@ class CompositionGoalCardTest {
             mappa.put(pos3, carta3);
             mappa.put(pos4, carta4);
             mappa.put(pos5, carta5);
+            mappa.put(pos6, carta6);
+            mappa.put(pos7, carta7);
 
             CompositionGoalCard GoalRedL = new CompositionGoalCard(91, 3, Composition.L, CardColor.RED);
             int x = GoalRedL.pointsCalc(player, CardColor.RED);
 
-            assertEquals(3, x);
+            assertEquals(6, x);
 
 }
 }

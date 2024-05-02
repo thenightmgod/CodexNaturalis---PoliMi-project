@@ -92,7 +92,7 @@ public class CompositionGoalCard extends GoalCard {
                     if(!((ResourceCard) field.getField().get(under)).getColor().equals(CardColor.RED) || ((ResourceCard) field.getField().get(under)).getCheck())
                         continue;
                     else{
-                        Position undright = new Position(x+1, y-1);
+                        Position undright = new Position(under.getX()+1, under.getY()-1);
                         if(!pos.contains(undright))
                             continue;
                         else{
