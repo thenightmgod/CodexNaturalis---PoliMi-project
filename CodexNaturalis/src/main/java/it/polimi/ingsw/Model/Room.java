@@ -211,6 +211,10 @@ public class Room {
         GoalDeck.getCards().remove(Goal_2);
     }
 
+    public LinkedList<GoalCard> getCommonGoals(){
+        return this.CommonGoals;
+    }
+
     public void checkGoals(Player p, LinkedList<GoalCard> commonGoals){
         LinkedList<GoalCard> toCheck = new LinkedList<>(commonGoals);
         toCheck.add(p.getPlayerGoal());
