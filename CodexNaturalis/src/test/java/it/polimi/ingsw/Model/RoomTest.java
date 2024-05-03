@@ -2,6 +2,10 @@ package it.polimi.ingsw.Model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.*;
+import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.CardColor;
+import it.polimi.ingsw.Model.CornerPackage.Objects;
+import it.polimi.ingsw.Model.CornerPackage.Resources;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,4 +35,36 @@ class RoomTest {
 
         r1.createDecks();
     }
+    @Test
+    void CommonGoalsTest(){
+        LinkedList<Player> players = new LinkedList<>();
+        Player p1 = new Player("LOLLO", PlayerColor.GREEN);
+        Player p2 = new Player("PIE", PlayerColor.RED);
+        Player p3 = new Player("NINA", PlayerColor.YELLOW);
+        Player p4 = new Player("HAMIN", PlayerColor.BLUE);
+        players.addLast(p1);
+        players.addLast(p2);
+        players.addLast(p3);
+        players.addLast(p4);
+        Room r1 = new Room(5, players);
+
+        LinkedList<GoalCard> commongoals = new LinkedList<>();
+
+        int array1[] = new int[3];
+        array1[0] = 0;
+        array1[1] = 0;
+        array1[2] = 2;
+
+        CompositionGoalCard GoalRL = new CompositionGoalCard(88, 2, Composition.REVERSE_L, CardColor.GREEN);
+        ResourceGoalCard GoalBlue = new ResourceGoalCard(97, 3, Resources.ANIMAL_KINGDOM);
+        ObjectsGoalCard amidogol = new ObjectsGoalCard(100, 2, array1);
+
+        commongoals.addLast(GoalRL);
+        commongoals.addLast(GoalBlue);
+
+        p4.setPlayerGoal(amidogol);
+
+        r1.checkGoals(p4, commongoals);
+    }
+
 }

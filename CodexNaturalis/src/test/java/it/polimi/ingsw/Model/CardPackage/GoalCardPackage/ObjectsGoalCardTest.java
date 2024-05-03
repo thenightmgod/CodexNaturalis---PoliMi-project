@@ -50,6 +50,8 @@ class ObjectsGoalCardTest {
         ObjectsGoalCard carta3 = new ObjectsGoalCard(5, 2,array3);
         ObjectsGoalCard carta4 = new ObjectsGoalCard(6, 2, array4);
 
+        carta1.getId();
+
         int t1 = carta1.pointsCalc(player);
         int t2 = carta2.pointsCalc(player);
         int t3 = carta3.pointsCalc(player);

@@ -16,8 +16,6 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
-
-
 /**
  * Represents a game room where players participate.
  */
@@ -231,5 +229,4 @@ public class Room {
             }
         }
     }
-
 }
