@@ -2,8 +2,10 @@ package it.polimi.ingsw.Controller;
 
 //questo controlla un game specifico
 
+import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
+import it.polimi.ingsw.Model.PlayerPackage.Position;
 import it.polimi.ingsw.Model.Room;
 import it.polimi.ingsw.View.GameView;
 
@@ -46,5 +48,16 @@ public class GameController {
         }
     }
 
-    public void placeCard(Player p, )
+    public LinkedList<Position> showFreePositions(Player p){ //questa va passata al client per far scegliere posizioni
+        return p.getPlayerField().getFreePositions();
+        //e si updata la view
+    }
+
+    public void placeCard(Player player, ResourceCard c, Position p){
+        Game.placeCard(player, c, p);
+    }
+
+    public void placeStartCard(Player p, ){
+        //capiamo lo sbatti del controller
+    }
 }

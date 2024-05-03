@@ -3,7 +3,7 @@ package it.polimi.ingsw.View;
 import it.polimi.ingsw.Controller.GameController;
 
 public interface GameView {
-    void update();
+    public void update();
 
-    void update(GameController controller);
+    public void update(GameController controller);
 }

@@ -82,8 +82,7 @@ public class Room {
     public void initializeGame() {
         createDecks(); //carte a terra si prendono dalle prime 3 posizioni di Resource e Gold deck
         for (Player turn : Turns){
-            FB face = FB.FRONT; //in realtà il controller deve darmi la posizione, ma non esiste ancora
-            giveStartCards(face, turn);
+            giveStartCards(turn);
         }
         giveHands(); //dà le mano ai giocatori
         commonGoals();
@@ -193,8 +192,9 @@ public class Room {
      * @param face The face of the start card.
      * @param p The player receiving the start card.
      */
-    public void giveStartCards(FB face, Player p){
+    public void giveStartCards(Player p){
         StartDeck.giveCard(p, 0);
+        FB face =
         p.placeStartCard((StartCard) p.getHand().getFirst(), face);
     }
 
