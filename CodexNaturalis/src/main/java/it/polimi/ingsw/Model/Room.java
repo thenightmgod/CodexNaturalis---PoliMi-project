@@ -34,6 +34,9 @@ public class Room {
     private Player[] Turns;
 
 
+    //la initialize game è stata divisa in più funzioni per evitare sbatti su input da client
+    // (non so se ha senso, ma c'est la vie)
+
     /**
      * Constructs a game room with the specified room identifier and list of players.
      * @param RoomId The unique identifier of the room.
@@ -73,23 +76,6 @@ public class Room {
         if(Twenty)
             if(Turn.equals(Players.getFirst()))
                 this.LastRound = true;
-    }
-
-
-    /**
-     * Initializes the game by creating decks, distributing start cards and goals, and setting common goals.
-     */
-    public void initializeGame() {
-        createDecks(); //carte a terra si prendono dalle prime 3 posizioni di Resource e Gold deck
-        for (Player turn : Turns){
-            giveStartCards(turn);
-        }
-        giveHands(); //dà le mano ai giocatori
-        commonGoals();
-        for (Player turn : Turns){
-            boolean choice = true; //in realtà gliela passa il controller di nuovo
-            pickGoalCard(turn, choice);
-        }
     }
 
     /**
@@ -138,15 +124,20 @@ public class Room {
     /**
      * Picks a goal card for the specified player based on their choice.
      * @param player The player picking the goal card.
-     * @param choice The choice made by the player.
+     * @param card The one chosen by the player.
      */
 
-    public void pickGoalCard(Player player, boolean choice){
-        GoalCard A = (GoalCard) GoalDeck.getGoalCard();
-        GoalCard C = (GoalCard) GoalDeck.getGoalCard();
-        if(choice) player.setPlayerGoal(A);
-        else player.setPlayerGoal(C);
+    public void pickGoalCard(Player player, GoalCard card){
+        player.setPlayerGoal(card);
     }
+
+    public LinkedList<GoalCard> show2GoalCards(Player player){
+        LinkedList<GoalCard> obj = new LinkedList<>();
+        obj.add((GoalCard) GoalDeck.getGoalCard());
+        obj.add((GoalCard) GoalDeck.getGoalCard());
+        return obj;
+    }
+
 
     /**
      * Creates all decks required for the game and shuffles them.
@@ -189,12 +180,11 @@ public class Room {
 
     /**
      * Distributes start cards to players.
-     * @param face The face of the start card.
+     //* @param  face The face of the start card.
      * @param p The player receiving the start card.
      */
-    public void giveStartCards(Player p){
+    public void giveStartCards(Player p, FB face){
         StartDeck.giveCard(p, 0);
-        FB face =
         p.placeStartCard((StartCard) p.getHand().getFirst(), face);
     }
 

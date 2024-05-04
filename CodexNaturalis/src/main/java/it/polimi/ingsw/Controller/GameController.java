@@ -2,7 +2,12 @@ package it.polimi.ingsw.Controller;
 
 //questo controlla un game specifico
 
+import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.Composition;
+import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.CompositionGoalCard;
+import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
+import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.CardColor;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
+import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
@@ -34,12 +39,47 @@ public class GameController {
         this.Game = new Room(RoomId, Players);
     }
 
-    public void initializeGame(){
-        this.Game.initializeGame();
+    public void initalizeGame(){
+        createDecks();
+        for(Player p: Players){
+            //arriva roba dal client
+            FB face = FB.FRONT;
+            giveStartCard(p, face);
+        }
+        giveHands();
+        commonGoals();
+        for(Player p: Players){
+            //si manda roba al client con la show2GoalCards(p);
+            //arriva roba dal client
+            GoalCard card = new CompositionGoalCard(3, 3, Composition.T, CardColor.GREEN);
+            //ovviamente sta carta non ha alcun senso, deve arrivare dal client
+            chooseGoalCard(p, card);
+        }
+    }
+
+    public void createDecks(){
+        this.Game.createDecks();
+    }
+
+    public void giveStartCard(Player p, FB face){//ovviamente la face viene passata dal client
+        this.Game.giveStartCards(p, face);
+    }
+
+    public void giveHands(){
+        this.Game.giveHands();
     }
 
     public void commonGoals(){
         this.Game.commonGoals();
+    }
+
+    public LinkedList<GoalCard> show2GoalCards(Player p){ //mostra le carte obiettivo da poter scegliere al lazzaro
+        return this.Game.show2GoalCards(p);
+        //e si updata la view
+    }
+
+    public void chooseGoalCard(Player p, GoalCard card){
+        this.Game.pickGoalCard(p, card);
     }
 
     public void checkGoals(){
@@ -48,16 +88,19 @@ public class GameController {
         }
     }
 
+    //la place card effettiva si compone di questi due passaggi
+
     public LinkedList<Position> showFreePositions(Player p){ //questa va passata al client per far scegliere posizioni
         return p.getPlayerField().getFreePositions();
         //e si updata la view
     }
 
-    public void placeCard(Player player, ResourceCard c, Position p){
-        Game.placeCard(player, c, p);
+    public void placeCard(Player player, ResourceCard c, Position p){ //p passata dal client
+        this.Game.placeCard(player, c, p);
     }
 
-    public void placeStartCard(Player p, ){
-        //capiamo lo sbatti del controller
+    public ResourceCard pickCard(Player player){
+
     }
+
 }
