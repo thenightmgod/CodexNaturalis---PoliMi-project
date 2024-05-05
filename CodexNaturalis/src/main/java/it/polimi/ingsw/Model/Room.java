@@ -50,10 +50,28 @@ public class Room {
         this.Players = Players;
         this.Turn = Players.getFirst();
         this.CommonGoals = new LinkedList<>();
-        this.Turns = new Player[Players.size()];
         //i giocatori vanno creati passando nome e colore da controller arrivano già in ordine
     }
 
+    public LinkedList<Player> getPlayers(){
+        return Players;
+    }
+
+    public void setTurn(Player player){
+        this.Turn = player;
+    }
+
+    public Player getTurn(){
+        return Turn;
+    }
+
+    public ResourceDeck getResourceDeck(){
+        return this.ResourceDeck;
+    }
+
+    public GoldDeck getGoldDeck(){
+        return this.GoldDeck;
+    }
 
     /**
      * Sets the flag indicating whether the game has reached the twenty points threshold.
@@ -113,12 +131,11 @@ public class Room {
 
     /**
      * Places a card on the playing field for the specified player at the given position.
-     * @param player The player placing the card.
      * @param card The card to place.
      * @param p The position to place the card.
      */
-    public void placeCard(Player player, ResourceCard card, Position p){
-        player.placeCard(card, p);
+    public void placeCard(ResourceCard card, Position p){
+        Turn.placeCard(card, p);
     } //per il collegamento col controller
 
     /**

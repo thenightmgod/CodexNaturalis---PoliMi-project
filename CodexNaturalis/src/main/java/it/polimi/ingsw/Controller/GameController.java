@@ -6,7 +6,9 @@ import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.Composition;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.CompositionGoalCard;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.CardColor;
+import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
+import it.polimi.ingsw.Model.DeckPackage.Deck;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
@@ -92,15 +94,53 @@ public class GameController {
 
     public LinkedList<Position> showFreePositions(Player p){ //questa va passata al client per far scegliere posizioni
         return p.getPlayerField().getFreePositions();
-        //e si updata la view
+        //e si updata il client
     }
 
-    public void placeCard(Player player, ResourceCard c, Position p){ //p passata dal client
-        this.Game.placeCard(player, c, p);
+    public void placeCard(ResourceCard c, Position p){ //p passata dal client
+        this.Game.placeCard(c, p);
     }
 
-    public ResourceCard pickCard(Player player){
+    // ci serve una funzione che chiede al client un intero da 0 a 2? boh
+    // da client si sceglie deck che è già lì(?) e intero, non bisogna passare molto
+    public void pickResCard(int i){ //l'intero deve arrivare dal client
+        this.Game.getResourceDeck().giveCard(this.Game.getTurn(), i);
+        changeTurns();
+    }
 
+    public void pickGoldCard(int i){
+        this.Game.getGoldDeck().giveCard(this.Game.getTurn(), i);
+        changeTurns();
+    }
+
+    public void changeTurns(){
+        Player now = this.Game.getTurn();
+        int size = Players.size();
+        switch(size){
+            case 2 -> {
+                if(now.equals(Players.getFirst()))
+                    this.Game.setTurn(Players.get(1));
+                this.Game.setTurn(Players.getFirst());
+            }
+            case 3 -> {
+                if(now.equals(Players.getFirst()))
+                    this.Game.setTurn(Players.get(1));
+                else if(now.equals(Players.get(1)))
+                    this.Game.setTurn(Players.get(2));
+                else this.Game.setTurn(Players.getFirst());
+            }
+            case 4 -> {
+                if(now.equals(Players.getFirst()))
+                    this.Game.setTurn(Players.get(1));
+                else if(now.equals(Players.get(1)))
+                    this.Game.setTurn(Players.get(2));
+                else if (now.equals(Players.get(2)))
+                    this.Game.setTurn(Players.get(3));
+                else this.Game.setTurn(Players.getFirst());
+            }
+        }
     }
 
 }
+
+
