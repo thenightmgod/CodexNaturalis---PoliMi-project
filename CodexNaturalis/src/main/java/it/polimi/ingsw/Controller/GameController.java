@@ -20,13 +20,24 @@ import java.util.LinkedList;
 
 public class GameController {
 
-    Room Game;
-    int RoomId;
+    private GameState State;
+    private Room Game;
+    private final int RoomId;
     LinkedList<Player> Players;
     public GameController(int id){
+        this.State = GameState.WAITING;
         this.RoomId = id;
         this.Players = new LinkedList<>();
     }
+
+    public int getRoomId(){
+        return this.RoomId;
+    }
+
+    public int getHowManyPlayers(){
+        return this.Players.size();
+    }
+
 
     public void addPlayer(String name, PlayerColor color){  //non possono esserci più di 4 giocatori
         if(this.Players.size() < 4) {
@@ -55,6 +66,8 @@ public class GameController {
             //ovviamente sta carta non ha alcun senso, deve arrivare dal client
             chooseGoalCard(p, card);
         }
+
+        this.State = GameState.RUNNING;
     }
 
     public void createDecks(){
@@ -86,6 +99,10 @@ public class GameController {
         for(Player p : Players){
             this.Game.checkGoals(p, Game.getCommonGoals());
         }
+    }
+
+    public GameState getState(){
+        return this.State;
     }
 
     //la place card effettiva si compone di questi due passaggi

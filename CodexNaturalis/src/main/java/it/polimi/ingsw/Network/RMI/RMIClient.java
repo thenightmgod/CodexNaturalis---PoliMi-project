@@ -1,5 +1,7 @@
 package it.polimi.ingsw.Network.RMI;
 
+import it.polimi.ingsw.Network.CommonClient;
+
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -7,12 +9,13 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
 
-public class RMIClient extends UnicastRemoteObject implements VirtualView {
+public class RMIClient extends UnicastRemoteObject implements VirtualView, CommonClient {
 
     final VirtualServer server;
 
     public RMIClient(VirtualServer server) throws RemoteException{
         this.server = server;
+        this.runClient();
     }
 
     private void run() throws RemoteException {
@@ -21,7 +24,14 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
 
     private void runClient() throws RemoteException{
         Scanner scan = new Scanner(System.in);
-        int command
+        while (true) {
+            System.out.println("> ");
+            int command = scan.nextInt();
+
+            if(command == 0){
+
+            }
+        }
     }
 
     public static void main(String[] args) throws RemoteException, NotBoundException {
