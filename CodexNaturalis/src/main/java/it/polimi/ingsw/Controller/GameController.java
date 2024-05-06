@@ -21,12 +21,10 @@ import java.util.LinkedList;
 public class GameController {
 
     Room Game;
-    GameView View;
     int RoomId;
     LinkedList<Player> Players;
-    public GameController(int id, GameView Sunglasses){
+    public GameController(int id){
         this.RoomId = id;
-        this.View = Sunglasses;
         this.Players = new LinkedList<>();
     }
 
@@ -41,7 +39,7 @@ public class GameController {
         this.Game = new Room(RoomId, Players);
     }
 
-    public void initalizeGame(){
+    public void initializeGame(){
         createDecks();
         for(Player p: Players){
             //arriva roba dal client
@@ -104,12 +102,18 @@ public class GameController {
     // ci serve una funzione che chiede al client un intero da 0 a 2? boh
     // da client si sceglie deck che è già lì(?) e intero, non bisogna passare molto
     public void pickResCard(int i){ //l'intero deve arrivare dal client
+        declareWinner();
         this.Game.getResourceDeck().giveCard(this.Game.getTurn(), i);
+        this.Game.setTwentyFlag();
+        this.Game.setLastRound();
         changeTurns();
     }
 
     public void pickGoldCard(int i){
+        declareWinner();
         this.Game.getGoldDeck().giveCard(this.Game.getTurn(), i);
+        this.Game.setTwentyFlag();
+        this.Game.setLastRound();
         changeTurns();
     }
 
@@ -139,6 +143,11 @@ public class GameController {
                 else this.Game.setTurn(Players.getFirst());
             }
         }
+    }
+
+    public void declareWinner(){
+        checkGoals();
+        this.Game.declareWinner();
     }
 
 }

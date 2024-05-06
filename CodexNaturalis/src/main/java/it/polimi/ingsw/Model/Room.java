@@ -31,8 +31,7 @@ public class Room {
     private Deck GoalDeck;
     private StartDeck StartDeck;
     private LinkedList<GoalCard> CommonGoals;
-    private Player[] Turns;
-
+    private Player Winner;
 
     //la initialize game è stata divisa in più funzioni per evitare sbatti su input da client
     // (non so se ha senso, ma c'est la vie)
@@ -50,6 +49,7 @@ public class Room {
         this.Players = Players;
         this.Turn = Players.getFirst();
         this.CommonGoals = new LinkedList<>();
+
         //i giocatori vanno creati passando nome e colore da controller arrivano già in ordine
     }
 
@@ -77,10 +77,8 @@ public class Room {
      * Sets the flag indicating whether the game has reached the twenty points threshold.
      */
     public void setTwentyFlag(){ //vede se il punteggio di qualcuno è >= 20 per mettere lastRound=true
-            for(Player p : Players){
-                if(p.getPointsCounter()>=20)
-                    this.Twenty = true;
-            }
+        if(Turn.getPointsCounter()>=20)
+            this.Twenty = true;
     }
 
     public boolean getTwentyFlag() {
@@ -188,7 +186,7 @@ public class Room {
      * The first two cards remain fixed.
      */
     public void giveHands(){ //rimangono così fisse le prime 2
-        for (Player turn : Turns) {
+        for (Player turn : Players) {
             ResourceDeck.giveCard(turn, 2);
             ResourceDeck.giveCard(turn, 2);
             GoldDeck.giveCard(turn, 2);
@@ -216,6 +214,12 @@ public class Room {
         CommonGoals.add(Goal_2);
         GoalDeck.getCards().remove(Goal_1);
         GoalDeck.getCards().remove(Goal_2);
+    }
+
+    public void declareWinner(){
+        if(getLastRound() && getTurn().equals(this.Players.getLast())){
+            //Winner = Players.stream().max(x.getPointsCounter()).collect(Collectorsto)
+        }
     }
 
     public LinkedList<GoalCard> getCommonGoals(){
