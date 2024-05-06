@@ -6,6 +6,12 @@ package it.polimi.ingsw.Model.CornerPackage;
  * An angle can be either EMPTY or ABSENT.
  */
 public enum CornerState implements CardRes {
+    /**
+     * Empty is when the angle does not contain any resource or object.
+     */
     EMPTY, // Represents an empty corner.
+    /**
+     * Absent is when the angle is not present.
+     */
     ABSENT // Represents a corner that is absent.
 }

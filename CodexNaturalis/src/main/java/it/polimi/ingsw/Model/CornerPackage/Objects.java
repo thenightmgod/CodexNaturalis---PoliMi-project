@@ -4,12 +4,10 @@ package it.polimi.ingsw.Model.CornerPackage;
  * Represents specific objects that can be possessed by a corner.
  * These objects are implementations of the abstract interface CardRes.
  */
-
 public enum Objects implements CardRes {
     QUILL,
     INKWELL,
     MANUSCRIPT;
-
 
     /**
      * Compares two CardRes objects for equality.
@@ -21,7 +19,6 @@ public enum Objects implements CardRes {
     public static boolean equals(CardRes res, CardRes res1) {
         return res1.equals(res);
     }
-
 
     /**
      * Generates a hash code value for a CardRes object.
