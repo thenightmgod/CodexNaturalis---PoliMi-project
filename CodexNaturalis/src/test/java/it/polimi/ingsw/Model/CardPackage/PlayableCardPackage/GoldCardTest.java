@@ -20,6 +20,10 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 public class GoldCardTest {
+    /**
+     * This test is composed by an inizialazation of all the elements needed to call the RequirementsOK function on the player,
+     * and an assertion to check if all the requirements needed to place the card are respected.
+     */
     @Test
     void RequirementsOk() {
         Player player = new Player("lazzaro", PlayerColor.YELLOW);
@@ -107,6 +111,10 @@ public class GoldCardTest {
         assertTrue(carta2.RequirementsOk(player));
         assertTrue(carta3.RequirementsOk(player));
     }
+    /**
+     * This test is composed by an inizialazation of all the elements needed to call the Pointscalc function on the GoldCard
+     * and an assertion to check if the Card gives the player the right points.
+     */
     @Test
     void PointsCalc(){
         Player player = new Player("lazzarone", PlayerColor.YELLOW);

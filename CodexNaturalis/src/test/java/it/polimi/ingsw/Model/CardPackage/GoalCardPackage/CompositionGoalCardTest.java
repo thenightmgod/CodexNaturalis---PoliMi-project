@@ -20,9 +20,13 @@ import static it.polimi.ingsw.Model.CornerPackage.CornerState.ABSENT;
 import static it.polimi.ingsw.Model.CornerPackage.CornerState.EMPTY;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Each one of the tests is composed by an initialization of all the elements needed to call the PointsCalc function
+ * on the CompositionGoalCard and an assertion of what the results are expected to be.
+ */
 class CompositionGoalCardTest {
     @Test
-    void pointsCalc() {
+    void pointsCalcL() {
         Player player = new Player("lazzarone", PlayerColor.YELLOW);
 
         int[] rescounter = new int[4];
@@ -246,9 +250,8 @@ class CompositionGoalCardTest {
         assertEquals(6, x);
 
     }
-
     @Test
-    void pointsCalc2() {
+    void pointsCalcRL() {
         Player player = new Player("lazzarone", PlayerColor.YELLOW);
 
         int[] rescounter = new int[4];
@@ -471,9 +474,8 @@ class CompositionGoalCardTest {
 
         assertEquals(6, x);
     }
-
     @Test
-    void pointsCalc3() {
+    void pointsCalcRT() {
         Player player = new Player("lazzarone", PlayerColor.YELLOW);
 
         int[] rescounter = new int[4];
@@ -697,7 +699,7 @@ class CompositionGoalCardTest {
         assertEquals(6, x);
     }
     @Test
-    void pointsCalc4() {
+    void pointsCalcT() {
         Player player = new Player("lazzarone", PlayerColor.YELLOW);
 
         int[] rescounter = new int[4];
@@ -921,7 +923,7 @@ class CompositionGoalCardTest {
         assertEquals(6, x);
     }
     @Test
-    void pointsCalc5() {
+    void pointsCalcDiagonalUp() {
         Player player = new Player("lazzarone", PlayerColor.YELLOW);
 
         int[] rescounter = new int[4];
@@ -1144,9 +1146,8 @@ class CompositionGoalCardTest {
 
         assertEquals(4, x);
     }
-
     @Test
-    void pointsCalc6() {
+    void pointsCalcDiagonalDown() {
         Player player = new Player("lazzarone", PlayerColor.YELLOW);
 
         int[] rescounter = new int[4];
