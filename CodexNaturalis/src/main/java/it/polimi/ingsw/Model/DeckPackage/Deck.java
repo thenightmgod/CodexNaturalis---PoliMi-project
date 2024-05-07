@@ -123,7 +123,7 @@ public class Deck {
      */
     public void giveCard(Player p, int i){ //dovrebbe passare anche un int da 0 a 2
         Card card = getCards().get(i);
-        getCards().removeFirst();
+        getCards().remove(i);
         p.getHand().add((PlayableCard)card);
     }
 

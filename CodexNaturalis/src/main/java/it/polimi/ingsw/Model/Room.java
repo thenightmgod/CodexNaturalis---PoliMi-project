@@ -199,7 +199,8 @@ public class Room {
      */
     public void giveStartCards(Player p, FB face){
         StartDeck.giveCard(p, 0);
-        p.placeStartCard((StartCard) p.getHand().getFirst(), face);
+        StartCard sc = (StartCard) p.getHand().getFirst();
+        p.placeStartCard(sc, face);
     }
 
     /**

@@ -18,7 +18,7 @@ class GameControllerTest {
 
     @Test
     void Controller() {
-        GameController beppe = new GameController(5);
+        GameController beppe = new GameController(5, 4);
 
         beppe.addPlayer("prend", PlayerColor.YELLOW);
         beppe.addPlayer("mirko", PlayerColor.GREEN);
@@ -28,5 +28,42 @@ class GameControllerTest {
         beppe.initializeRoom();
 
         beppe.initializeGame();
+
+        beppe.changeTurns();
+        assert(beppe.getGame().getTurn().getName().equals("mirko"));
+        beppe.changeTurns();
+        assert(beppe.getGame().getTurn().getName().equals("nina"));
+
+        GameController beppe2 = new GameController(7, 3);
+
+
+        beppe2.addPlayer("mirko", PlayerColor.GREEN);
+        beppe2.addPlayer("nina", PlayerColor.RED);
+        beppe2.addPlayer("lollo", PlayerColor.BLUE);
+
+        beppe2.initializeRoom();
+
+        beppe2.initializeGame();
+
+        beppe2.changeTurns();
+        assert(beppe2.getGame().getTurn().getName().equals("nina"));
+        beppe2.changeTurns();
+        assert(beppe2.getGame().getTurn().getName().equals("lollo"));
+
+        GameController beppe3 = new GameController(10, 2);
+
+
+        beppe3.addPlayer("nina", PlayerColor.RED);
+        beppe3.addPlayer("lollo", PlayerColor.BLUE);
+
+        beppe3.initializeRoom();
+
+        beppe3.initializeGame();
+
+        beppe3.changeTurns();
+        assert(beppe3.getGame().getTurn().getName().equals("lollo"));
+
+        beppe3.pickResCard(2);
+        beppe3.pickGoldCard(2);
     }
 }

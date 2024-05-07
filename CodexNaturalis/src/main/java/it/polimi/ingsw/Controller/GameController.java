@@ -32,6 +32,10 @@ public class GameController {
         this.Players = new LinkedList<>();
     }
 
+    public Room getGame() {
+        return Game;
+    }
+
     public int getRoomId(){
         return this.RoomId;
     }
@@ -150,8 +154,10 @@ public class GameController {
         int size = Players.size();
         switch(size){
             case 2 -> {
-                if(now.equals(Players.getFirst()))
+                if(now.equals(Players.getFirst())) {
                     this.Game.setTurn(Players.get(1));
+                    break;
+                }
                 this.Game.setTurn(Players.getFirst());
             }
             case 3 -> {

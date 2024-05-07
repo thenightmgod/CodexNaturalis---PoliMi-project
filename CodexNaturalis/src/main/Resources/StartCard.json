@@ -8,7 +8,7 @@
       {"Res": "ANIMAL_KINGDOM", "Orient": "LR"},
       {"Res": "INSECT_KINGDOM", "Orient": "LL"}
     ],
-    "FrontCorners": [
+    "Corners": [
       {"Res": "PLANT_KINGDOM", "Orient": "HR"},
       {"Res": "EMPTY", "Orient": "HL"},
       {"Res": "EMPTY", "Orient": "LR"},
@@ -24,7 +24,7 @@
       {"Res": "INSECT_KINGDOM", "Orient": "LR"},
       {"Res": "FUNGI_KINGDOM", "Orient": "LL"}
     ],
-    "FrontCorners": [
+    "Corners": [
       {"Res": "EMPTY", "Orient": "HR"},
       {"Res": "ANIMAL_KINGDOM", "Orient": "HL"},
       {"Res": "FUNGI_KINGDOM", "Orient": "LR"},
@@ -40,7 +40,7 @@
       {"Res": "PLANT_KINGDOM", "Orient": "LR"},
       {"Res": "FUNGI_KINGDOM", "Orient": "LL"}
     ],
-    "FrontCorners": [
+    "Corners": [
       {"Res": "EMPTY", "Orient": "HR"},
       {"Res": "EMPTY", "Orient": "HL"},
       {"Res": "EMPTY", "Orient": "LR"},
@@ -56,7 +56,7 @@
       {"Res": "FUNGI_KINGDOM", "Orient": "LR"},
       {"Res": "ANIMAL_KINGDOM", "Orient": "LL"}
     ],
-    "FrontCorners": [
+    "Corners": [
       {"Res": "EMPTY", "Orient": "HR"},
       {"Res": "EMPTY", "Orient": "HL"},
       {"Res": "EMPTY", "Orient": "LR"},
@@ -72,7 +72,7 @@
       {"Res": "ANIMAL_KINGDOM", "Orient": "LR"},
       {"Res": "PLANT_KINGDOM", "Orient": "LL"}
     ],
-    "FrontCorners": [
+    "Corners": [
       {"Res": "EMPTY", "Orient": "HR"},
       {"Res": "EMPTY", "Orient": "HL"},
       {"Res": "ABSENT", "Orient": "LR"},
@@ -88,7 +88,7 @@
       {"Res": "INSECT_KINGDOM", "Orient": "LR"},
       {"Res": "PLANT_KINGDOM", "Orient": "LL"}
     ],
-    "FrontCorners": [
+    "Corners": [
       {"Res": "EMPTY", "Orient": "HR"},
       {"Res": "EMPTY", "Orient": "HL"},
       {"Res": "ABSENT", "Orient": "LR"},
