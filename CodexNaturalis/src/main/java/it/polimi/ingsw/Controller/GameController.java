@@ -54,6 +54,13 @@ public class GameController {
         this.Game = new Room(RoomId, Players);
     }
 
+    public void startGame(){
+        if(this.Players.size() == this.numPlayers) {
+            State = GameState.RUNNING;
+            initializeGame();
+        }
+    }
+
     public void initializeGame(){
         createDecks();
         for(Player p: Players){
@@ -70,8 +77,6 @@ public class GameController {
             //ovviamente sta carta non ha alcun senso, deve arrivare dal client
             chooseGoalCard(p, card);
         }
-
-        this.State = GameState.RUNNING;
     }
 
     public void createDecks(){
@@ -166,6 +171,7 @@ public class GameController {
         }
     }
 
+    //come gestire l'ending, se qua o nel client o boh
     public void declareWinner(){
         checkGoals();
         this.Game.declareWinner();
