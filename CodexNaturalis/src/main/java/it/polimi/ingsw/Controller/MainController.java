@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Controller;
 
+import it.polimi.ingsw.Exceptions.RoomFullException;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 
@@ -13,21 +14,17 @@ public class MainController {
         this.controllers = new LinkedList<>();
     }
 
-    public void joinGame(String Name, PlayerColor color){
-        if(controllers.isEmpty()) {
-            GameController now = new GameController(1);
-            controllers.add(now);
-            now.addPlayer(Name, color);
-        }
-        else{
-            GameController now = controllers.getLast();
-            if(now.getHowManyPlayers()==4 || now.getState()==GameState.RUNNING){
-                this.controllers.add(new GameController(controllers.getLast().getRoomId() + 1));
-                controllers.getLast().addPlayer(Name, color);
-            }
-            else{
-                now.addPlayer(Name, color);
-            }
+    public void createGame(String Name, PlayerColor color){
+
+    }
+
+    public void joinGame(String Name, PlayerColor color) throws RoomFullException {
+        try {
+            if(this.controllers.getLast().getHowManyPlayers() == this.controllers.getLast().getNumPlayers())
+                throw new RoomFullException("The room is already full");
+            else this.controllers.getLast().addPlayer(Name, color);
+        } catch (RoomFullException e) {
+            System.out.println(e);
         }
     }
 

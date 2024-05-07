@@ -20,11 +20,13 @@ import java.util.LinkedList;
 
 public class GameController {
 
+    private final int numPlayers;
     private GameState State;
     private Room Game;
     private final int RoomId;
     LinkedList<Player> Players;
-    public GameController(int id){
+    public GameController(int id, int numPlayers){
+        this.numPlayers = numPlayers;
         this.State = GameState.WAITING;
         this.RoomId = id;
         this.Players = new LinkedList<>();
@@ -34,16 +36,18 @@ public class GameController {
         return this.RoomId;
     }
 
+    public int getNumPlayers(){
+        return numPlayers;
+    }
+
     public int getHowManyPlayers(){
         return this.Players.size();
     }
 
 
     public void addPlayer(String name, PlayerColor color){  //non possono esserci più di 4 giocatori
-        if(this.Players.size() < 4) {
-            Player player = new Player(name, color);
-            this.Players.add(player);
-        }
+        Player player = new Player(name, color);
+        this.Players.add(player);
     }
 
     public void initializeRoom(){ //pre inizializzazione è una specie di waiting room
