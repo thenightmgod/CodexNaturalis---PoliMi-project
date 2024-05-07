@@ -2,9 +2,12 @@ package it.polimi.ingsw.Model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import it.polimi.ingsw.Model.CardPackage.Card;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.*;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.CardColor;
+import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.CornerPackage.Objects;
+import it.polimi.ingsw.Model.CornerPackage.Orientation;
 import it.polimi.ingsw.Model.CornerPackage.Resources;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
@@ -33,7 +36,11 @@ class RoomTest {
 
         r1.setTwentyFlag();
 
-        r1.createDecks();
+        r1.initializeGame();
+        LinkedList<Card> carteObbiettivo = r1.getGoalDeck().getCards();
+        GoalCard x = (GoalCard) carteObbiettivo.get(0);
+
+
     }
     @Test
     void CommonGoalsTest(){

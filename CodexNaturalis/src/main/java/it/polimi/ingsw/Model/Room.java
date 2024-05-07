@@ -161,22 +161,21 @@ public class Room {
         this.StartDeck = new StartDeck();
         this.ResourceDeck = new ResourceDeck();
         this.GoldDeck = new GoldDeck();
-        CompositionGoalDeck temp1 = new CompositionGoalDeck();
+        this.GoalDeck = new CompositionGoalDeck();
+
         ObjectsGoalDeck temp2 = new ObjectsGoalDeck();
         ResourceGoalDeck temp3 = new ResourceGoalDeck();
-        /*for(int i=0; i<8; i++){
-            this.GoalDeck.add((GoalCard)temp1.getCards().get(i));
-        }
+
         for(int i=0; i<4; i++){
             this.GoalDeck.add((GoalCard)temp2.getCards().get(i));
         }
         for(int i=0; i<4; i++){
             this.GoalDeck.add((GoalCard)temp3.getCards().get(i));
-        } */
+        }
         StartDeck.shuffle();
         ResourceDeck.shuffle();
         GoldDeck.shuffle();
-        //GoalDeck.shuffle();
+        GoalDeck.shuffle();
     }
 
 
@@ -243,5 +242,21 @@ public class Room {
                 p.addPoints(nostra.pointsCalc(p));
             }
         }
+    }
+
+    public ResourceDeck getResourceDeck() {
+        return ResourceDeck;
+    }
+
+    public GoldDeck getGoldDeck() {
+        return GoldDeck;
+    }
+
+    public Deck getGoalDeck() {
+        return GoalDeck;
+    }
+
+    public StartDeck getStartDeck() {
+        return StartDeck;
     }
 }

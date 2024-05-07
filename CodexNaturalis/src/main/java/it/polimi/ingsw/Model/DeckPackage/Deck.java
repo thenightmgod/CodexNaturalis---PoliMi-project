@@ -14,10 +14,7 @@ import it.polimi.ingsw.Model.CornerPackage.CardResDeserializer;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 
 import java.io.FileReader;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Collections;
-import java.util.Objects;
+import java.util.*;
 
 
 /**
@@ -25,7 +22,7 @@ import java.util.Objects;
  * The deck is initialized based on the type specified, loading card data from a corresponding JSON file.
  */
 public class Deck {
-    private List<Card> cards;
+    private LinkedList<Card> cards;
 
     /**
      * Constructs a new deck based on the specified type.
@@ -37,7 +34,9 @@ public class Deck {
     public Deck(String type) {
         String json = "src/main/Resources/"+type+"Card.json";
         cards = new LinkedList<>();
-        Gson gson = new GsonBuilder().registerTypeAdapter(CardRes.class, new CardResDeserializer()).create();
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(CardRes.class, new CardResDeserializer())
+                .create();
         try {
             LinkedList<Objects> list = gson.fromJson(new FileReader(json), LinkedList.class);
 
@@ -45,22 +44,22 @@ public class Deck {
             for (Object card : list){
                 switch(type){
                     case "Resource":
-                        this.cards.add(gson.fromJson(new FileReader(json), ResourceCard.class));
+                        cards.add((gson.fromJson(card.toString(), ResourceCard.class)));
                         break;
                     case "Start":
-                        this.cards.add(gson.fromJson(new FileReader(json), StartCard.class));
+                        cards.add((gson.fromJson(card.toString(), StartCard.class)));
                         break;
                     case "Gold":
-                        this.cards.add(gson.fromJson(new FileReader(json), GoldCard.class));
+                        cards.add((gson.fromJson(card.toString(), GoldCard.class)));
                         break;
                     case "CompositionGoal":
-                        this.cards.add(gson.fromJson(new FileReader(json), CompositionGoalCard.class));
+                        cards.add((gson.fromJson(card.toString(), CompositionGoalCard.class)));
                         break;
                     case "ObjectsGoal":
-                        this.cards.add(gson.fromJson(new FileReader(json), ObjectsGoalCard.class));
+                        cards.add((gson.fromJson(card.toString(), ObjectsGoalCard.class)));
                         break;
                     case "ResourceGoal":
-                        this.cards.add(gson.fromJson(new FileReader(json), ResourceGoalCard.class));
+                        cards.add((gson.fromJson(card.toString(), ResourceGoalCard.class)));
                         break;
 
                 }
@@ -75,7 +74,7 @@ public class Deck {
      *
      * @return The list of cards in the deck.
      */
-    public List<Card> getCards() {
+    public LinkedList<Card> getCards() {
         return cards;
     }
 
