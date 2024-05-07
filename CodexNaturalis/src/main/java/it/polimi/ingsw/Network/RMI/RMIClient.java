@@ -27,16 +27,15 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
         while (true) {
             System.out.println("> ");
             int command = scan.nextInt();
-
-            if(command == 0){
-
-            }
+            //switch(command){
+              //  case
+            //};
         }
     }
 
-    public static void main(String[] args) throws RemoteException, NotBoundException {
+    public void createClient() throws RemoteException, NotBoundException {
         final String serverName = "CodexServer";
-        Registry registry = LocateRegistry.getRegistry(args[0], 666);
+        Registry registry = LocateRegistry.getRegistry(666);
         VirtualServer server = (VirtualServer) registry.lookup(serverName);
 
         new RMIClient(server);

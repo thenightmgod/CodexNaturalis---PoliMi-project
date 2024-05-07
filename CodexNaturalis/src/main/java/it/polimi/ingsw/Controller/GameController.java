@@ -54,8 +54,9 @@ public class GameController {
         this.Game = new Room(RoomId, Players);
     }
 
-    public void startGame(){
+    public void startGame(){ //in virtual view
         if(this.Players.size() == this.numPlayers) {
+            initializeRoom();
             State = GameState.RUNNING;
             initializeGame();
         }
@@ -64,13 +65,14 @@ public class GameController {
     public void initializeGame(){
         createDecks();
         for(Player p: Players){
-            //arriva roba dal client
             FB face = FB.FRONT;
+            //setStartCardFace dal virtualServer
             giveStartCard(p, face);
         }
         giveHands();
         commonGoals();
         for(Player p: Players){
+            LinkedList<GoalCard> toChoose = show2GoalCards(p);
             //si manda roba al client con la show2GoalCards(p);
             //arriva roba dal client
             GoalCard card = new CompositionGoalCard(3, 3, Composition.T, CardColor.GREEN);
@@ -95,7 +97,7 @@ public class GameController {
         this.Game.commonGoals();
     }
 
-    public LinkedList<GoalCard> show2GoalCards(Player p){ //mostra le carte obiettivo da poter scegliere al lazzaro
+    public LinkedList<GoalCard> show2GoalCards(Player p){ //la chiama il server e la mostra al client
         return this.Game.show2GoalCards(p);
         //e si updata la view
     }
@@ -118,11 +120,11 @@ public class GameController {
 
     public LinkedList<Position> showFreePositions(Player p){ //questa va passata al client per far scegliere posizioni
         return p.getPlayerField().getFreePositions();
-        //e si updata il client
+        //viene chiamata dal server e passata al client
     }
 
-    public void placeCard(ResourceCard c, Position p){ //p passata dal client
-        this.Game.placeCard(c, p);
+    public void placeCard(ResourceCard c, int x, int y, FB face){ //p passata dal client
+        this.Game.placeCard(c, new Position(face, x, y));
     }
 
     // ci serve una funzione che chiede al client un intero da 0 a 2? boh
