@@ -36,11 +36,14 @@ class RoomTest {
 
         r1.setTwentyFlag();
 
-        r1.initializeGame();
-        LinkedList<Card> carteObbiettivo = r1.getGoalDeck().getCards();
-        GoalCard x = (GoalCard) carteObbiettivo.get(0);
+        LinkedList<GoalCard> duecarteGoal = new LinkedList<>();
 
-
+        r1.createDecks();   //creo i deck
+        r1.giveHands();     // distribusico le mani a ogni giocatore
+        r1.commonGoals();   // setto obbittivi comuni
+        duecarteGoal = r1.show2GoalCards(p1);   //mostro due carte obbiettivo
+        r1.pickGoalCard(p1, duecarteGoal.getFirst());   //giocatore picka una carta (o la prima o la seconda della lista)
+        //setup finito
     }
     @Test
     void CommonGoalsTest(){
