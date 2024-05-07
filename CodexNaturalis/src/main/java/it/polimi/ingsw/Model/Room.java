@@ -243,15 +243,6 @@ public class Room {
             }
         }
     }
-
-    public ResourceDeck getResourceDeck() {
-        return ResourceDeck;
-    }
-
-    public GoldDeck getGoldDeck() {
-        return GoldDeck;
-    }
-
     public Deck getGoalDeck() {
         return GoalDeck;
     }
