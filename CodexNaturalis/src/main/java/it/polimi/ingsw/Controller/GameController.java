@@ -14,8 +14,10 @@ import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
 import it.polimi.ingsw.Model.Room;
+import it.polimi.ingsw.Network.RMI.VirtualView;
 import it.polimi.ingsw.View.GameView;
 
+import java.rmi.RemoteException;
 import java.util.LinkedList;
 
 public class GameController {
@@ -24,7 +26,9 @@ public class GameController {
     private GameState State;
     private Room Game;
     private final int RoomId;
-    LinkedList<Player> Players;
+    private LinkedList<Player> Players;
+    private VirtualView View; //bisogna vedere come crearla
+
     public GameController(int id, int numPlayers){
         this.numPlayers = numPlayers;
         this.State = GameState.WAITING;
@@ -48,6 +52,9 @@ public class GameController {
         return this.Players.size();
     }
 
+    public void removePlayer(String name){
+        Players.removeIf(p -> p.getName() == name);
+    }
 
     public void addPlayer(String name, PlayerColor color){  //non possono esserci più di 4 giocatori
         Player player = new Player(name, color);

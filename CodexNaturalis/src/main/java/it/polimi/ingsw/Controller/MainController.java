@@ -2,9 +2,12 @@ package it.polimi.ingsw.Controller;
 
 import it.polimi.ingsw.Exceptions.RoomFullException;
 import it.polimi.ingsw.Exceptions.RoomNotExistsException;
+import it.polimi.ingsw.Exceptions.WrongPlayersNumberException;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
+import it.polimi.ingsw.Network.RMI.VirtualView;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
 //questo controlla game multipli
@@ -15,11 +18,21 @@ public class MainController {
         this.controllers = new LinkedList<>();
     }
 
+    public LinkedList<GameController> getControllers(){
+        return this.controllers;
+    }
 
     //numPlayers arriva da
-    public void createGame(String Name, PlayerColor color, int numPlayers){
-        controllers.add(new GameController(controllers.getLast().getRoomId() + 1, numPlayers));
-        controllers.getLast().addPlayer(Name, color);
+    public void createGame(String Name, PlayerColor color, int numPlayers) throws WrongPlayersNumberException {
+        if(numPlayers<2 || numPlayers>4)
+            throw new WrongPlayersNumberException("the number of players has to be between 2 and 4");
+        else {
+            if(controllers.isEmpty())
+                controllers.add(new GameController(0, numPlayers));
+            else
+                controllers.add(new GameController(controllers.getLast().getRoomId() + 1, numPlayers));
+            controllers.getLast().addPlayer(Name, color);
+        }
     }
 
     public void joinGame(String Name, PlayerColor color) throws RoomFullException, RoomNotExistsException{
@@ -36,5 +49,8 @@ public class MainController {
 
     }
 
+    public void leaveGame(String Name, int RoomId){
+        controllers.get(RoomId).removePlayer(Name);
+    }
 
 }

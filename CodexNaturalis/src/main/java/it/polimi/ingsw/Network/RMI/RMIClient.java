@@ -11,15 +11,11 @@ import java.util.Scanner;
 
 public class RMIClient extends UnicastRemoteObject implements VirtualView, CommonClient {
 
-    final VirtualServer server;
+    final VirtualServer server; //in modo da chiamare tutti i metodi del server
 
     public RMIClient(VirtualServer server) throws RemoteException{
         this.server = server;
         this.runClient();
-    }
-
-    private void run() throws RemoteException {
-        this.server.connect(this);
     }
 
     private void runClient() throws RemoteException{
@@ -47,7 +43,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     }
 
     @Override
-    public void showUpdate(Integer number) throws RemoteException {
+    public void showUpdate() throws RemoteException {
 
     }
 }
