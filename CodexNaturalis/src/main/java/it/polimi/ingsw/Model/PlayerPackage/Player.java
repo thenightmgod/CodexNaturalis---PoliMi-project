@@ -29,7 +29,7 @@ public class Player {
     private int[] ResourceCounter;
     private int[] ObjectCounter;
     private LinkedList<PlayableCard> Hand;
-    private GoalCard PlayerGoal;
+    private LinkedList<GoalCard> PlayerGoal;
     private PlayingField PlayerField;
 
     /**
@@ -95,14 +95,18 @@ public class Player {
     /**
      * Sets the goal card for the player.
      *
-     * @param card The goal card to be set for the player.
      */
-    public void setPlayerGoal(GoalCard card){
-        PlayerGoal = card;
+    public void setPlayerGoal(boolean choice){
+        if(choice) PlayerGoal.remove(0);
+        else PlayerGoal.remove(1);
+    }
+
+    public void addGoalCard(GoalCard card){
+        PlayerGoal.add(card);
     }
 
     public GoalCard getPlayerGoal(){
-        return PlayerGoal;
+        return PlayerGoal.getFirst();
     }
 
     /**
@@ -254,6 +258,10 @@ public class Player {
         return;
     }
 
+    public ResourceCard getCardFromHand(int i){
+        return (ResourceCard) this.Hand.get(i);
+    }
+
     /**
      * Retrieves the hand of the player.
      *
@@ -263,19 +271,6 @@ public class Player {
         return Hand;
     }
 
-
-    /**
-     * Picks a goal card for the player.
-     *
-     * @param A      The first goal card option.
-     * @param B      The second goal card option.
-     * @param choice The choice made by the player (true for option A, false for option B).
-     */
-    public void pickGoalCard(GoalCard A, GoalCard B, boolean choice) { //tanto la scelta avviene nel controller
-        if (choice)
-            this.PlayerGoal = A;
-        else this.PlayerGoal = B;
-    }
 
    //set messi per il test di goldcard
     public void setResourceCounter(int[] resourceCounter) {

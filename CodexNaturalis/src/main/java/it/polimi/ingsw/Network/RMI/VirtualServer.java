@@ -2,6 +2,7 @@ package it.polimi.ingsw.Network.RMI;
 
 import it.polimi.ingsw.Exceptions.RoomFullException;
 import it.polimi.ingsw.Exceptions.RoomNotExistsException;
+import it.polimi.ingsw.Exceptions.WrongIndexException;
 import it.polimi.ingsw.Exceptions.WrongPlayersNumberException;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
@@ -22,12 +23,10 @@ public interface VirtualServer extends Remote {
 
     void leaveGame(String name, VirtualView client);
 
-    void placeCard(VirtualView client, int whichInHand, int x, int y, FB face);
+    void placeCard(VirtualView client, int whichInHand, int x, int y, FB face) throws WrongIndexException;
 
-    void setStartCardFace(FB face); //il player setta la variabile face della sua start card
-
-    // ci dev'essere anche la chooseStartCard()
-
+    void setStartCardFace(boolean face, VirtualView client); //il player setta la variabile face della sua start card
+    void chooseGoalCard(int i, VirtualView client) throws WrongIndexException;
 
 
 }

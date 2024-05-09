@@ -139,11 +139,10 @@ public class Room {
     /**
      * Picks a goal card for the specified player based on their choice.
      * @param player The player picking the goal card.
-     * @param card The one chosen by the player.
      */
 
-    public void pickGoalCard(Player player, GoalCard card){
-        player.setPlayerGoal(card);
+    public void pickGoalCard(Player player, boolean choice){
+        player.setPlayerGoal(choice);
     }
 
     public LinkedList<GoalCard> show2GoalCards(Player player){
@@ -176,6 +175,10 @@ public class Room {
         ResourceDeck.shuffle();
         GoldDeck.shuffle();
         GoalDeck.shuffle();
+        for(int i=0; i<Players.size(); i++){
+            Players.get(i).addGoalCard((GoalCard) this.GoalDeck.getGoalCard());
+            Players.get(i).addGoalCard((GoalCard) this.GoalDeck.getGoalCard());
+        }
     }
 
 
@@ -195,12 +198,11 @@ public class Room {
     /**
      * Distributes start cards to players.
      //* @param  face The face of the start card.
-     * @param p The player receiving the start card.
      */
-    public void giveStartCards(Player p, FB face){
-        StartDeck.giveCard(p, 0);
-        StartCard sc = (StartCard) p.getHand().getFirst();
-        p.placeStartCard(sc, face);
+    public void giveStartCards(FB face){
+        StartDeck.giveCard(this.Turn, 0);
+        StartCard sc = (StartCard) this.Turn.getHand().getFirst();
+        this.Turn.placeStartCard(sc, face);
     }
 
     /**

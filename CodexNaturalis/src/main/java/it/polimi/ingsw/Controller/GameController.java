@@ -2,6 +2,7 @@ package it.polimi.ingsw.Controller;
 
 //questo controlla un game specifico
 
+import it.polimi.ingsw.Exceptions.WrongIndexException;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.Composition;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.CompositionGoalCard;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
@@ -69,35 +70,18 @@ public class GameController {
         if(this.Players.size() == this.numPlayers) {
             initializeRoom();
             State = GameState.RUNNING;
-            initializeGame();
+            //e poi robe col vecchio initialize game
         }
     }
 
-    public void initializeGame(){
-        createDecks();
-        for(Player p: Players){
-            FB face = FB.FRONT;
-            //setStartCardFace dal virtualServer
-            giveStartCard(p, face);
-        }
-        giveHands();
-        commonGoals();
-        for(Player p: Players){
-            LinkedList<GoalCard> toChoose = show2GoalCards(p);
-            //si manda roba al client con la show2GoalCards(p);
-            //arriva roba dal client
-            GoalCard card = new CompositionGoalCard(3, 3, Composition.T, CardColor.GREEN);
-            //ovviamente sta carta non ha alcun senso, deve arrivare dal client
-            chooseGoalCard(p, card);
-        }
-    }
 
     public void createDecks(){
         this.Game.createDecks();
     }
 
-    public void giveStartCard(Player p, FB face){//ovviamente la face viene passata dal client
-        this.Game.giveStartCards(p, face);
+    public void giveStartCard(FB face){//ovviamente la face viene passata dal client
+        this.Game.giveStartCards(face);
+        changeTurns();
     }
 
     public void giveHands(){
@@ -108,13 +92,19 @@ public class GameController {
         this.Game.commonGoals();
     }
 
-    public LinkedList<GoalCard> show2GoalCards(Player p){ //la chiama il server e la mostra al client
+    public LinkedList<GoalCard> show2GoalCards(Player p, int i){ //la chiama il server e la mostra al client
         return this.Game.show2GoalCards(p);
         //e si updata la view
     }
 
-    public void chooseGoalCard(Player p, GoalCard card){
-        this.Game.pickGoalCard(p, card);
+    public void chooseGoalCard(Player p, int i) throws WrongIndexException {
+        if(i<1 || i>2)
+            throw new WrongIndexException("it should be between 1 and 2");
+        else{
+            boolean choice = i != 1;
+            this.Game.pickGoalCard(p, choice);
+        }
+        changeTurns(); //boh dipende dalla logica di gioco
     }
 
     public void checkGoals(){
@@ -134,8 +124,11 @@ public class GameController {
         //viene chiamata dal server e passata al client
     }
 
-    public void placeCard(ResourceCard c, int x, int y, FB face){ //p passata dal client
-        this.Game.placeCard(c, new Position(face, x, y));
+    public void placeCard(int i, int x, int y, FB face) throws WrongIndexException{ //p passata dal client
+    if(i < 1 || i > 3)
+        throw new WrongIndexException("put an index between 1 and 3");
+    else
+        this.Game.placeCard(this.Game.getTurn().getCardFromHand(i), new Position(face, x, y));
     }
 
     // ci serve una funzione che chiede al client un intero da 0 a 2? boh
@@ -192,6 +185,9 @@ public class GameController {
         this.Game.declareWinner();
     }
 
+    public LinkedList<Player> getPlayers(){
+        return this.Players;
+    }
 }
 
 
