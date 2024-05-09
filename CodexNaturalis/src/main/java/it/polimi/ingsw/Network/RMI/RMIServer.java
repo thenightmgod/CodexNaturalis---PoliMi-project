@@ -46,11 +46,13 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer{
     @Override
     public void joinGame(String Name, PlayerColor color) throws RoomFullException, RoomNotExistsException {
         this.controller.joinGame(Name, color);
+        //addare nella mappa
     }
 
     @Override
     public void createGame(String Name, PlayerColor color, int numPlayers) throws WrongPlayersNumberException {
         this.controller.createGame(Name, color, numPlayers);
+        //addare nella mappa
     }
 
     @Override
