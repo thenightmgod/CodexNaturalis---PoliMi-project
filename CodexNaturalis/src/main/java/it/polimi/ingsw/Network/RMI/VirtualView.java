@@ -9,5 +9,4 @@ public interface VirtualView extends Remote {
 
     void reportError(String details) throws RemoteException;
 
-    void showUpdate() throws RemoteException;
 }

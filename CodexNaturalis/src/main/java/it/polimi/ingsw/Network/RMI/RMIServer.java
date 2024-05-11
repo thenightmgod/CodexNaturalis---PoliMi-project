@@ -35,9 +35,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer{
     public void startRMI() throws RemoteException{ //in realtà le eccezioni dovremmo gestirle decentemente
         final String serverName = "CodexServer";
 
-        MainController ok = new MainController();
-        VirtualServer server = new RMIServer(new MainController()); //ci serve un main controller che gestisce la creazione dei giochi
-        VirtualServer stub = (VirtualServer) UnicastRemoteObject.exportObject(server, 666);
+        VirtualServer stub = (VirtualServer) UnicastRemoteObject.exportObject(this, 666);
         Registry registry = LocateRegistry.createRegistry(666);
         registry.rebind(serverName, stub);
         System.out.println("Server buond.");

@@ -20,7 +20,8 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     String name;
     final VirtualServer server; //in modo da chiamare tutti i metodi del server
 
-    public RMIClient(VirtualServer server) throws RemoteException{
+    public RMIClient(VirtualServer server, String name) throws RemoteException{
+        this.name = name;
         this.server = server;
         this.runClient();
     }
@@ -36,35 +37,45 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
         }
     }
 
-    public void createClient() throws RemoteException, NotBoundException {
+    public void createClient(String name) throws RemoteException, NotBoundException {
         final String serverName = "CodexServer";
         Registry registry = LocateRegistry.getRegistry(666);
         VirtualServer server = (VirtualServer) registry.lookup(serverName);
 
-        new RMIClient(server);
+        new RMIClient(server, name);
     }
 
     public void placeCard(int whichInHand, int x, int y, FB face) throws WrongIndexException{
         server.placeCard(this, whichInHand, x, y, face);
     };
 
-    void setStartCardFace(boolean face, VirtualView client){
+    @Override
+    public void setStartCardFace(boolean face, VirtualView client){
         server.setStartCardFace(face, this);
     }
 
-    void leaveGame(String name, VirtualView client){
+    @Override
+    public void leaveGame(String name, VirtualView client){
         server.leaveGame(name, this);
     }
 
-    void chooseGoalCard(int i, VirtualView client) throws WrongIndexException{
+    @Override
+    public void placeCard(VirtualView client, int whichInHand, int x, int y, FB face) throws WrongIndexException {
+
+    }
+
+    @Override
+    public void chooseGoalCard(int i, VirtualView client) throws WrongIndexException{
         server.chooseGoalCard(i, this);
     };
 
-    void createGame(String Name, PlayerColor color, int numPlayers) throws WrongPlayersNumberException{
+    @Override
+    public void createGame(String Name, PlayerColor color, int numPlayers) throws WrongPlayersNumberException{
         server.createGame(Name, color, numPlayers);
     };
 
-    void joinGame(String Name, PlayerColor color) throws RoomFullException, RoomNotExistsException{
+    @Override
+    public void joinGame(String Name, PlayerColor color) throws RoomFullException, RoomNotExistsException{
         server.joinGame(Name, color);
     }
 
@@ -74,7 +85,6 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
 
     }
 
-    @Override
     public void showUpdate() throws RemoteException {
 
     }
