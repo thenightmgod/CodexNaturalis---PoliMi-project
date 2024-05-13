@@ -133,7 +133,7 @@ public class GameController {
             this.Game.placeCard(this.Game.getTurn().getCardFromHand(i), new Position(face, x, y));
         }
         catch(RequirementsNotSatisfied e){
-            //chimare metodo della view che mi fa riscegliere la carta da giocare;
+            //chiamare metodo della view che mi fa riscegliere la carta da giocare;
         }
     }
 

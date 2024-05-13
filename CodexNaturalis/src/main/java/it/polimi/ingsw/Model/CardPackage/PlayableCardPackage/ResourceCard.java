@@ -21,7 +21,6 @@ public class ResourceCard extends PlayableCard {
     private final int Points;
 
     private boolean Check;
-    protected boolean Type;
 
     /**
      * Constructs a new ResourceCard.
@@ -37,7 +36,6 @@ public class ResourceCard extends PlayableCard {
         this.Color = c;
         this.Points = p;
         this.Check = false;
-        this.Type = false;
     }
 
     /**
@@ -72,9 +70,6 @@ public class ResourceCard extends PlayableCard {
         return Check;
     }
 
-    public boolean isType() {
-        return Type;
-    }
 
     @Override
     public String toString() {

@@ -67,7 +67,6 @@ public class Deck {
 
         }
         catch (Exception ignored) {}
-
     }
     /**
      * Retrieves the list of cards in the deck.

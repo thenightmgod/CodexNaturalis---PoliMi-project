@@ -50,7 +50,6 @@ public class GoldCard extends ResourceCard {
             requirements[i] = requirementsInput[i];
         }
         this.PointsC = pointsC;
-        this.Type = true;
     }
 
     /**

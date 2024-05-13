@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import it.polimi.ingsw.Model.CardPackage.Card;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.CornerPackage.Corner;
+import it.polimi.ingsw.Model.CornerPackage.Objects;
 import it.polimi.ingsw.Model.CornerPackage.Orientation;
 import it.polimi.ingsw.Model.CornerPackage.Resources;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
@@ -37,8 +38,8 @@ class GoldDeckTest {
         ResourceGoalDeck rgd = new ResourceGoalDeck();
 
         Player p1 = new Player("Lazz", PlayerColor.RED);
-        rd.giveCard(p1, 0);
+        gd.giveCard(p1, 0);
         LinkedList<PlayableCard> h1 = p1.getHand();
-        assert(h1.get(0).getCorner(Orientation.LL).getRes().equals(Resources.FUNGI_KINGDOM));
+        assert(h1.get(0).getCorner(Orientation.LR).getRes().equals(Objects.QUILL));
     }
 }

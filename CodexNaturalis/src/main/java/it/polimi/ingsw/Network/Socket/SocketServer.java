@@ -16,6 +16,8 @@ public class SocketServer {
     final ServerSocket listenSocket;
     final LinkedList<SocketClientHandler> clients = new LinkedList<>();
 
+    //TODO update broadcast di tutti i client in modo asincrono
+
     public SocketServer(MainController controller, ServerSocket listenSocket){
         this.controller = controller;
         this.listenSocket = listenSocket;
@@ -39,6 +41,13 @@ public class SocketServer {
 
                 SocketClientHandler handler = new SocketClientHandler(this.controller, this, new BufferedReader(socketRx), new PrintWriter(socketTx));
                 clients.add(handler);
+                new Thread(() -> {
+                    try{
+                        handler.runVirtualView();
+                    } catch(IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }).start();
                 //socketRx in un BufferReader per leggerlo piu easy e passarlo al costruttore di clienthandler
                 //fare thread che fa partire la VirtualView di questo handler
             }

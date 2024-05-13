@@ -259,7 +259,7 @@ class PlayerTest {
         Position y = new Position(-1,-1);
         Position z = new Position (1,1);
 
-        Card c1 = rd.getCardById(9);
+        Card c1 = rd.getCardById(1);
         Card c2 = gd.getCardById(43);
         Card c3 = rd.getCardById(31);
 
