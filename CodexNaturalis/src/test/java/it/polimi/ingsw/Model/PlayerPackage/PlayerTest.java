@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Model.PlayerPackage;
 
+import it.polimi.ingsw.Exceptions.RequirementsNotSatisfied;
 import it.polimi.ingsw.Model.CardPackage.Card;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.CardColor;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
@@ -160,7 +161,7 @@ class PlayerTest {
         assertEquals(1, player3.getResourceCounter(Resources.FUNGI_KINGDOM));
     }
     @Test
-    void placecardTest(){
+    void placecardTest() throws RequirementsNotSatisfied {
         Player player1 = new Player("Lazzarone", PlayerColor.RED);
 
         boolean primoRes[] = new boolean[4];  //inizio con la startcard con una backres (fungo)
@@ -249,19 +250,24 @@ class PlayerTest {
         assertEquals(1, player1.getResourceCounter(Resources.INSECT_KINGDOM));
     }
     @Test
-    void pointsCalcTest(){
+    void pointsCalcTest() throws RequirementsNotSatisfied {
         GoldDeck gd = new GoldDeck();
         ResourceDeck rd = new ResourceDeck();
         Player p = new Player("ninaaaaa", PlayerColor.RED);
 
         Position x = new Position(0,0);
         Position y = new Position(-1,-1);
+        Position z = new Position (1,1);
 
         Card c1 = rd.getCardById(9);
         Card c2 = gd.getCardById(43);
+        Card c3 = rd.getCardById(31);
 
-        p.placeCard((PlayableCard) c1, x);
-        p.placeCard((PlayableCard) c2, y);
+        p.placeCard((ResourceCard) c1, x);
+        p.placeCard((ResourceCard) c3, z);
+        p.placeCard((ResourceCard) c2, y);
 
+        int j = p.getPointsCounter();
+        assertEquals(1, j);
     }
 }

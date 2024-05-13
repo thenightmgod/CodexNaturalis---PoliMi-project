@@ -133,13 +133,8 @@ public class Room {
      * @param card The card to place.
      * @param p The position to place the card.
      */
-    public void placeCard(PlayableCard card, Position p){
-        try{
-            Turn.placeCard(card, p);
-        }
-        catch(RequirementsNotSatisfied e){
-
-        }
+    public void placeCard(ResourceCard card, Position p) throws RequirementsNotSatisfied {
+        Turn.placeCard(card, p);
     } //per il collegamento col controller
 
     /**

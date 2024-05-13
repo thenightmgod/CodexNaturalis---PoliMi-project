@@ -2,6 +2,7 @@ package it.polimi.ingsw.Controller;
 
 //questo controlla un game specifico
 
+import it.polimi.ingsw.Exceptions.RequirementsNotSatisfied;
 import it.polimi.ingsw.Exceptions.WrongIndexException;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.Composition;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.CompositionGoalCard;
@@ -128,7 +129,12 @@ public class GameController {
     if(i < 1 || i > 3)
         throw new WrongIndexException("put an index between 1 and 3");
     else
-        this.Game.placeCard(this.Game.getTurn().getCardFromHand(i), new Position(face, x, y));
+        try{
+            this.Game.placeCard(this.Game.getTurn().getCardFromHand(i), new Position(face, x, y));
+        }
+        catch(RequirementsNotSatisfied e){
+            //chimare metodo della view che mi fa riscegliere la carta da giocare;
+        }
     }
 
     // ci serve una funzione che chiede al client un intero da 0 a 2? boh

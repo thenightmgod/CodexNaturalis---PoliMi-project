@@ -201,7 +201,7 @@ public class Player {
      * @param c The card to be placed.
      * @param p The position at which the card is to be placed.
      */
-    public void placeCard(PlayableCard c, Position p) throws RequirementsNotSatisfied {
+    public void placeCard(ResourceCard c, Position p) throws RequirementsNotSatisfied {
         HashMap<Position, PlayableCard> x = this.PlayerField.getField();
 
         if(c.getId()>=41 && c.getId()<81 && !((GoldCard) c).RequirementsOk(this)){
@@ -238,7 +238,7 @@ public class Player {
                     }
                 }
             }
-            if(c.isType()){
+            if(c.getId()>=41 && c.getId()<81){
                 this.PointsCounter += ((GoldCard) c).PointsCalc(this, p);
             }
             else{
