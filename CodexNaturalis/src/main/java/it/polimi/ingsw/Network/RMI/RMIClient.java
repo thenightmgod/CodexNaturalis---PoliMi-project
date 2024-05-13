@@ -4,28 +4,34 @@ import it.polimi.ingsw.Exceptions.RoomFullException;
 import it.polimi.ingsw.Exceptions.RoomNotExistsException;
 import it.polimi.ingsw.Exceptions.WrongIndexException;
 import it.polimi.ingsw.Exceptions.WrongPlayersNumberException;
+import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
+import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
+import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Network.ClientModel;
 import it.polimi.ingsw.Network.CommonClient;
+import it.polimi.ingsw.View.GameView;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class RMIClient extends UnicastRemoteObject implements VirtualView, CommonClient {
 
-    String name;
+    private String name;
+    private GameView view;
     private VirtualServer server; //in modo da chiamare tutti i metodi del server
     private Registry registry;
-    private CommonClient commonClient; //magari sta roba va messa al client generico se lo facciamo
     private ClientModel model;
 
 
     public RMIClient(VirtualServer server, String name) throws RemoteException{
+        this.model = new ClientModel();
         this.name = name;
         this.server = server;
         //andrà runnato this.runClient();
@@ -72,13 +78,44 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
         server.joinGame(Name, color);
     }
 
+    public void drawCard(int whichDeck, int whichOne) throws WrongIndexException {
+        server.drawCard(whichDeck, whichOne, this);
+    }
 
     @Override
-    public void reportError(String details) throws RemoteException {
+    public void showException(String details) throws RemoteException {
+        //farla
+    }
+
+    @Override
+    public void updatePoints(int points, String name) throws RemoteException {
+        //a tutti, ma si updata solo quello del tipo
+    }
+
+    @Override
+    public void showGoals(LinkedList<GoalCard> goals) throws RemoteException {
+        //farla, personale ez
+    }
+
+    @Override
+    public void showHand(LinkedList<PlayableCard> hand) throws RemoteException {
+        //farla, forse sbatti con playablecard
+    }
+
+    @Override
+    public void updateField(String name, PlayingField field) throws RemoteException {
 
     }
 
-    public void showUpdate() throws RemoteException {
+    @Override
+    public void update() throws RemoteException {
 
     }
+
+    @Override
+    public void showOtherField(String player) throws RemoteException {
+
+    }
+
+
 }

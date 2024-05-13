@@ -12,7 +12,9 @@ import it.polimi.ingsw.Model.DeckPackage.*;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
+import it.polimi.ingsw.Network.RMI.VirtualView;
 
+import java.rmi.RemoteException;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
@@ -21,6 +23,8 @@ import java.util.Set;
  * Represents a game room where players participate.
  */
 public class Room {
+
+    private ObserverManager observerManager = new ObserverManager();
     private final int RoomId;
     private boolean LastRound;
     private boolean Twenty;
@@ -42,7 +46,7 @@ public class Room {
      * @param RoomId The unique identifier of the room.
      * @param Players The list of players in the room.
      */
-    public Room(int RoomId, LinkedList<Player> Players){
+    public Room(int RoomId, LinkedList<Player> Players, LinkedList<VirtualView> clients){
         this.RoomId = RoomId;
         this.LastRound = false;
         this.Twenty = false;
@@ -50,7 +54,9 @@ public class Room {
         this.Players = Players;
         this.Turn = Players.getFirst();
         this.CommonGoals = new LinkedList<>();
-
+        for(int i=0; i<this.Players.size(); i++){
+            observerManager.addObserver(clients.get(i), Players.get(i).getName());
+        }
         //i giocatori vanno creati passando nome e colore da controller arrivano già in ordine
     }
 
@@ -119,6 +125,9 @@ public class Room {
         return FirstRound;
     }
 
+    public ObserverManager getObserverManager(){
+        return observerManager;
+    }
 
     /**
      * Retrieves the list of players.
@@ -133,8 +142,11 @@ public class Room {
      * @param card The card to place.
      * @param p The position to place the card.
      */
-    public void placeCard(ResourceCard card, Position p) throws RequirementsNotSatisfied {
+    public void placeCard(ResourceCard card, Position p) throws RequirementsNotSatisfied, RemoteException {
         Turn.placeCard(card, p);
+        observerManager.showNewHand(Turn.getName(), Turn.getHand());
+        observerManager.updateField(Turn.getName(), Turn.getPlayerField());
+        observerManager.updatePoints(Turn.getPointsCounter(), Turn.getName());
     } //per il collegamento col controller
 
     /**
@@ -146,11 +158,10 @@ public class Room {
         player.setPlayerGoal(choice);
     }
 
-    public LinkedList<GoalCard> show2GoalCards(Player player){
-        LinkedList<GoalCard> obj = new LinkedList<>();
-        obj.add((GoalCard) GoalDeck.getGoalCard());
-        obj.add((GoalCard) GoalDeck.getGoalCard());
-        return obj;
+    public void show2GoalCards(Player player) throws RemoteException {
+        player.addGoalCard((GoalCard) GoalDeck.getGoalCard());
+        player.addGoalCard((GoalCard) GoalDeck.getGoalCard());
+        observerManager.showGoals(player.getName(), player.get2goals());
     }
 
 
@@ -188,12 +199,14 @@ public class Room {
      * Distributes hands to each player, giving them a fixed number of cards from the resource and gold decks.
      * The first two cards remain fixed.
      */
-    public void giveHands(){ //rimangono così fisse le prime 2
+    public void giveHands() throws RemoteException { //rimangono così fisse le prime 2
         for (Player turn : Players) {
             ResourceDeck.giveCard(turn, 2);
             ResourceDeck.giveCard(turn, 2);
             GoldDeck.giveCard(turn, 2);
+            observerManager.showNewHand(turn.getName(), turn.getHand());
         }
+
     }
 
     /**

@@ -141,6 +141,10 @@ public class Player {
             return ObjectCounter[2];
     }
 
+    public LinkedList<GoalCard> get2goals(){
+        return PlayerGoal;
+    }
+
     /**
      * Places the start card on the playing field.
      *

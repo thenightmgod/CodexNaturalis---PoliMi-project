@@ -29,7 +29,7 @@ public class GameController {
     private Room Game;
     private final int RoomId;
     private LinkedList<Player> Players;
-    private VirtualView View; //bisogna vedere come crearla
+    private LinkedList<VirtualView> clients;
 
     public GameController(int id, int numPlayers){
         this.numPlayers = numPlayers;
@@ -58,13 +58,14 @@ public class GameController {
         Players.removeIf(p -> p.getName() == name);
     }
 
-    public void addPlayer(String name, PlayerColor color){  //non possono esserci più di 4 giocatori
+    public void addPlayer(String name, PlayerColor color, VirtualView client){  //non possono esserci più di 4 giocatori
         Player player = new Player(name, color);
         this.Players.add(player);
+        this.clients.add(client);
     }
 
     public void initializeRoom(){ //pre inizializzazione è una specie di waiting room
-        this.Game = new Room(RoomId, Players);
+        this.Game = new Room(RoomId, Players, clients);
     }
 
     public void startGame(){ //in virtual view
@@ -85,7 +86,7 @@ public class GameController {
         changeTurns();
     }
 
-    public void giveHands(){
+    public void giveHands() throws RemoteException {
         this.Game.giveHands();
     }
 
@@ -93,10 +94,11 @@ public class GameController {
         this.Game.commonGoals();
     }
 
-    public LinkedList<GoalCard> show2GoalCards(Player p, int i){ //la chiama il server e la mostra al client
-        return this.Game.show2GoalCards(p);
+    /*public void show2GoalCards(Player p, int i) throws RemoteException { //la chiama il server e la mostra al client
+        this.Game.show2GoalCards(p);
         //e si updata la view
-    }
+    }*/
+    //non penso serva perchè è il model che la manda al client
 
     public void chooseGoalCard(Player p, int i) throws WrongIndexException {
         if(i<1 || i>2)
@@ -134,24 +136,28 @@ public class GameController {
         }
         catch(RequirementsNotSatisfied e){
             //chiamare metodo della view che mi fa riscegliere la carta da giocare;
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
         }
     }
 
     // ci serve una funzione che chiede al client un intero da 0 a 2? boh
     // da client si sceglie deck che è già lì(?) e intero, non bisogna passare molto
-    public void pickResCard(int i){ //l'intero deve arrivare dal client
+    public void pickResCard(int i) throws RemoteException { //l'intero deve arrivare dal client
         declareWinner();
         this.Game.getResourceDeck().giveCard(this.Game.getTurn(), i);
         this.Game.setTwentyFlag();
         this.Game.setLastRound();
+        this.Game.getObserverManager().showNewHand(this.Game.getTurn().getName(), this.Game.getTurn().getHand());
         changeTurns();
     }
 
-    public void pickGoldCard(int i){
+    public void pickGoldCard(int i) throws RemoteException {
         declareWinner();
         this.Game.getGoldDeck().giveCard(this.Game.getTurn(), i);
         this.Game.setTwentyFlag();
         this.Game.setLastRound();
+        this.Game.getObserverManager().showNewHand(this.Game.getTurn().getName(), this.Game.getTurn().getHand());
         changeTurns();
     }
 
@@ -195,7 +201,7 @@ public class GameController {
         return this.Players;
     }
 
-    public void drawCard(int i, int whichone) throws WrongIndexException{
+    public void drawCard(int i, int whichone) throws WrongIndexException, RemoteException {
         if(i < 1 || i  > 2)
             throw new WrongIndexException("indice sbagliato, o 1 o 2");
         else{

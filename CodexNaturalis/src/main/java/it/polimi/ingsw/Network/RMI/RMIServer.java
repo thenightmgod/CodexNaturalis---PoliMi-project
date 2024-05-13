@@ -48,16 +48,18 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer{
 
     @Override
     public void joinGame(String Name, PlayerColor color) throws RoomFullException, RoomNotExistsException, RemoteException {
-        GameController c = this.controller.joinGame(Name, color);
         RMIClient client = new RMIClient(this, Name);
+        GameController c = this.controller.joinGame(Name, color, client);
         clients.put(c.getRoomId(), client);
+        //creare room
+        //addare poi il lazzaro nel coso
         //mettere eccezione del nome
     }
 
     @Override
     public void createGame(String Name, PlayerColor color, int numPlayers) throws WrongPlayersNumberException, RemoteException {
-        GameController c = this.controller.createGame(Name, color, numPlayers);
         RMIClient client = new RMIClient(this, Name);
+        GameController c = this.controller.createGame(Name, color, numPlayers, client);
         clients.put(c.getRoomId(), client);
         //eccezione del nome
     }
@@ -94,10 +96,10 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer{
     }
 
     @Override
-    public void drawCard(int i, int whichone, VirtualView client) throws WrongIndexException {
+    public void drawCard(int i, int whichOne, VirtualView client) throws WrongIndexException {
         int k = clients.entrySet().stream().filter(entry -> client.equals(entry.getValue())).map(Map.Entry::getKey).findFirst().orElse(-1);
         GameController controller = this.controller.getControllers().get(k);
-        controller.drawCard(i, whichone);
+        controller.drawCard(i, whichOne);
     }
 
 }
