@@ -14,7 +14,7 @@ import java.util.LinkedList;
 public class SocketServer {
     final MainController controller;
     final ServerSocket listenSocket;
-    final LinkedList<SocketClientHandler> clients = new ArrayList<>();
+    final LinkedList<SocketClientHandler> clients = new LinkedList<>();
 
     public SocketServer(MainController controller, ServerSocket listenSocket){
         this.controller = controller;

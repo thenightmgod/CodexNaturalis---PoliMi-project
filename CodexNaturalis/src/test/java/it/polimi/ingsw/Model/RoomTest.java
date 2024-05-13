@@ -42,7 +42,7 @@ class RoomTest {
         r1.giveHands();     // distribusico le mani a ogni giocatore
         r1.commonGoals();   // setto obbittivi comuni
         duecarteGoal = r1.show2GoalCards(p1);   //mostro due carte obbiettivo
-        r1.pickGoalCard(p1, duecarteGoal.getFirst());   //giocatore picka una carta (o la prima o la seconda della lista)
+        r1.pickGoalCard(p1, true);   //giocatore picka una carta (o la prima o la seconda della lista)
         //setup finito
     }
     @Test
@@ -72,9 +72,8 @@ class RoomTest {
         commongoals.addLast(GoalRL);
         commongoals.addLast(GoalBlue);
 
-        p4.setPlayerGoal(amidogol);
+        p4.setPlayerGoal(true);
 
         r1.checkGoals(p4, commongoals);
     }
-
 }

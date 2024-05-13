@@ -16,6 +16,7 @@ public abstract class PlayableCard extends Card{
 
     private final boolean[] BackRes;
     private LinkedList<Corner> Corners;
+    protected boolean Type;
 
     /**
      * Constructs a new PlayableCard with the specified parameters.
@@ -42,6 +43,7 @@ public abstract class PlayableCard extends Card{
         for(int i=0; i<4; i++){
             BackRes[i] = backRes[i];
         }
+        this.Type = false;
     }
 
 
@@ -81,7 +83,8 @@ public abstract class PlayableCard extends Card{
         };
     }
 
-
-
+    public boolean isType() {
+        return Type;
+    }
 }
 

@@ -2,9 +2,15 @@ package it.polimi.ingsw.Model.CardPackage.PlayableCardPackage;
 
 
 import it.polimi.ingsw.Model.CornerPackage.Corner;
+import it.polimi.ingsw.Model.CornerPackage.Objects;
 import it.polimi.ingsw.Model.CornerPackage.Orientation;
+import it.polimi.ingsw.Model.PlayerPackage.Player;
+import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
+import it.polimi.ingsw.Model.PlayerPackage.Position;
 
 import java.util.LinkedList;
+
+import static it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PointsCondition.*;
 
 /**
  * Represents a Resource Card in the game.
@@ -15,6 +21,7 @@ public class ResourceCard extends PlayableCard {
     private final int Points;
 
     private boolean Check;
+    protected boolean Type;
 
     /**
      * Constructs a new ResourceCard.
@@ -30,6 +37,7 @@ public class ResourceCard extends PlayableCard {
         this.Color = c;
         this.Points = p;
         this.Check = false;
+        this.Type = false;
     }
 
     /**
@@ -63,6 +71,11 @@ public class ResourceCard extends PlayableCard {
     public boolean getCheck(){
         return Check;
     }
+
+    public boolean isType() {
+        return Type;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

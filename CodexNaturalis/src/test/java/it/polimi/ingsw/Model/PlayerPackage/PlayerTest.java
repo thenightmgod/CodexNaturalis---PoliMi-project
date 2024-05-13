@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Model.PlayerPackage;
 
+import it.polimi.ingsw.Model.CardPackage.Card;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.CardColor;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
@@ -8,6 +9,8 @@ import it.polimi.ingsw.Model.CornerPackage.Corner;
 import it.polimi.ingsw.Model.CornerPackage.Objects;
 import it.polimi.ingsw.Model.CornerPackage.Orientation;
 import it.polimi.ingsw.Model.CornerPackage.Resources;
+import it.polimi.ingsw.Model.DeckPackage.GoldDeck;
+import it.polimi.ingsw.Model.DeckPackage.ResourceDeck;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -244,5 +247,21 @@ class PlayerTest {
         player1.placeCard(terzo, y);
 
         assertEquals(1, player1.getResourceCounter(Resources.INSECT_KINGDOM));
+    }
+    @Test
+    void pointsCalcTest(){
+        GoldDeck gd = new GoldDeck();
+        ResourceDeck rd = new ResourceDeck();
+        Player p = new Player("ninaaaaa", PlayerColor.RED);
+
+        Position x = new Position(0,0);
+        Position y = new Position(-1,-1);
+
+        Card c1 = rd.getCardById(9);
+        Card c2 = gd.getCardById(43);
+
+        p.placeCard((PlayableCard) c1, x);
+        p.placeCard((PlayableCard) c2, y);
+
     }
 }

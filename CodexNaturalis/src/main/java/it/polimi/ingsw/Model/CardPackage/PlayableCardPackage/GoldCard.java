@@ -23,6 +23,7 @@ public class GoldCard extends ResourceCard {
     //se per posizionare la carta mi servono 3 funghi e una farfalla, avrò un 3 in pos.2 e un 1 in posizione 3
     private final PointsCondition PointsC;
 
+
     /**
      *Constructs a new GoldCard
      *
@@ -49,6 +50,7 @@ public class GoldCard extends ResourceCard {
             requirements[i] = requirementsInput[i];
         }
         this.PointsC = pointsC;
+        this.Type = true;
     }
 
     /**

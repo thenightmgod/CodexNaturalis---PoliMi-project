@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.Exceptions.RequirementsNotSatisfied;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.CompositionGoalCard;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.ObjectsGoalCard;
@@ -132,8 +133,13 @@ public class Room {
      * @param card The card to place.
      * @param p The position to place the card.
      */
-    public void placeCard(ResourceCard card, Position p){
-        Turn.placeCard(card, p);
+    public void placeCard(PlayableCard card, Position p){
+        try{
+            Turn.placeCard(card, p);
+        }
+        catch(RequirementsNotSatisfied e){
+
+        }
     } //per il collegamento col controller
 
     /**
