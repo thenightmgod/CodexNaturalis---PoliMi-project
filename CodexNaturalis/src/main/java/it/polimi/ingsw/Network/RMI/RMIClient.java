@@ -78,7 +78,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
         server.joinGame(Name, color);
     }
 
-    public void drawCard(int whichDeck, int whichOne) throws WrongIndexException {
+    public void drawCard(int whichDeck, int whichOne) throws WrongIndexException, RemoteException {
         server.drawCard(whichDeck, whichOne, this);
     }
 

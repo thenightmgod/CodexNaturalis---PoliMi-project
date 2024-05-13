@@ -29,6 +29,6 @@ public interface VirtualServer extends Remote {
     void chooseGoalCard(int i, VirtualView client) throws WrongIndexException;
 
     //aggiungere metodo pesca carta e vedere lì come gestirlo
-    void drawCard(int i, int whichone, VirtualView client) throws WrongIndexException;
+    void drawCard(int i, int whichone, VirtualView client) throws WrongIndexException, RemoteException;
 
 }

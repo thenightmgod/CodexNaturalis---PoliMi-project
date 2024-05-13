@@ -96,7 +96,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer{
     }
 
     @Override
-    public void drawCard(int i, int whichOne, VirtualView client) throws WrongIndexException {
+    public void drawCard(int i, int whichOne, VirtualView client) throws WrongIndexException, RemoteException {
         int k = clients.entrySet().stream().filter(entry -> client.equals(entry.getValue())).map(Map.Entry::getKey).findFirst().orElse(-1);
         GameController controller = this.controller.getControllers().get(k);
         controller.drawCard(i, whichOne);
