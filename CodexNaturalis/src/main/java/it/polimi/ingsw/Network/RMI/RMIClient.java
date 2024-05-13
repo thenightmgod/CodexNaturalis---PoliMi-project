@@ -6,6 +6,7 @@ import it.polimi.ingsw.Exceptions.WrongIndexException;
 import it.polimi.ingsw.Exceptions.WrongPlayersNumberException;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
+import it.polimi.ingsw.Network.ClientModel;
 import it.polimi.ingsw.Network.CommonClient;
 
 import java.rmi.NotBoundException;
@@ -18,31 +19,23 @@ import java.util.Scanner;
 public class RMIClient extends UnicastRemoteObject implements VirtualView, CommonClient {
 
     String name;
-    final VirtualServer server; //in modo da chiamare tutti i metodi del server
+    private VirtualServer server; //in modo da chiamare tutti i metodi del server
+    private Registry registry;
+    private CommonClient commonClient; //magari sta roba va messa al client generico se lo facciamo
+    private ClientModel model;
+
 
     public RMIClient(VirtualServer server, String name) throws RemoteException{
         this.name = name;
         this.server = server;
-        this.runClient();
+        //andrà runnato this.runClient();
     }
 
-    private void runClient() throws RemoteException{
-        Scanner scan = new Scanner(System.in);
-        while (true) {
-            System.out.println("> ");
-            int command = scan.nextInt();
-            //switch(command){
-              //  case
-            //};
-        }
-    }
 
-    public void createClient(String name) throws RemoteException, NotBoundException {
+    public void initializeClient(String name) throws RemoteException, NotBoundException {
         final String serverName = "CodexServer";
         Registry registry = LocateRegistry.getRegistry(666);
         VirtualServer server = (VirtualServer) registry.lookup(serverName);
-
-        new RMIClient(server, name);
     }
 
     public void placeCard(int whichInHand, int x, int y, FB face) throws WrongIndexException{
@@ -70,12 +63,12 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     };
 
     @Override
-    public void createGame(String Name, PlayerColor color, int numPlayers) throws WrongPlayersNumberException{
+    public void createGame(String Name, PlayerColor color, int numPlayers) throws WrongPlayersNumberException, RemoteException {
         server.createGame(Name, color, numPlayers);
     };
 
     @Override
-    public void joinGame(String Name, PlayerColor color) throws RoomFullException, RoomNotExistsException{
+    public void joinGame(String Name, PlayerColor color) throws RoomFullException, RoomNotExistsException, RemoteException {
         server.joinGame(Name, color);
     }
 

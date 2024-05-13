@@ -26,37 +26,47 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer{
 
     //come perbacco aggiungo un client alla mappa clients se non riesco a tenere conto
     //del numero della room?
-    HashMap<Integer, VirtualView> clients = new HashMap<>();
+    HashMap<Integer, VirtualView> clients = new HashMap<>(); //aggiungere roba qui dentro
+    int port;
+
 
     public RMIServer(MainController controller) throws RemoteException{
         this.controller = controller;
     }
 
-    public void startRMI() throws RemoteException{ //in realtà le eccezioni dovremmo gestirle decentemente
-        final String serverName = "CodexServer";
+    public void startServer() throws RemoteException{ //in realtà le eccezioni dovremmo gestirle decentemente
 
-        VirtualServer stub = (VirtualServer) UnicastRemoteObject.exportObject(this, 666);
-        Registry registry = LocateRegistry.createRegistry(666);
+        final String serverName = "CodexServer";
+        Registry registry = null;
+        VirtualServer stub = null;
+
+        stub = (VirtualServer) UnicastRemoteObject.exportObject(this, port);
+        registry = LocateRegistry.createRegistry(port);
         registry.rebind(serverName, stub);
         System.out.println("Server buond.");
     }
 
     @Override
-    public void joinGame(String Name, PlayerColor color) throws RoomFullException, RoomNotExistsException {
-        this.controller.joinGame(Name, color);
-        //addare nella mappa
+    public void joinGame(String Name, PlayerColor color) throws RoomFullException, RoomNotExistsException, RemoteException {
+        GameController c = this.controller.joinGame(Name, color);
+        RMIClient client = new RMIClient(this, Name);
+        clients.put(c.getRoomId(), client);
+        //mettere eccezione del nome
     }
 
     @Override
-    public void createGame(String Name, PlayerColor color, int numPlayers) throws WrongPlayersNumberException {
-        this.controller.createGame(Name, color, numPlayers);
-        //addare nella mappa
+    public void createGame(String Name, PlayerColor color, int numPlayers) throws WrongPlayersNumberException, RemoteException {
+        GameController c = this.controller.createGame(Name, color, numPlayers);
+        RMIClient client = new RMIClient(this, Name);
+        clients.put(c.getRoomId(), client);
+        //eccezione del nome
     }
 
     @Override
     public void leaveGame(String name, VirtualView client) {
         int k = clients.entrySet().stream().filter(entry -> client.equals(entry.getValue())).map(Map.Entry::getKey).findFirst().orElse(-1);
-        this.controller.leaveGame(name, k);
+        GameController c = this.controller.leaveGame(name, k);
+        clients.remove(c);
     }
 
     @Override
@@ -76,10 +86,18 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer{
         controller.giveStartCard(f);
     }
 
+    @Override
     public void chooseGoalCard(int i, VirtualView client) throws WrongIndexException {
         int k = clients.entrySet().stream().filter(entry -> client.equals(entry.getValue())).map(Map.Entry::getKey).findFirst().orElse(-1);
         GameController controller = this.controller.getControllers().get(k);
         controller.chooseGoalCard(controller.getGame().getTurn(), i);
+    }
+
+    @Override
+    public void drawCard(int i, int whichone, VirtualView client) throws WrongIndexException {
+        int k = clients.entrySet().stream().filter(entry -> client.equals(entry.getValue())).map(Map.Entry::getKey).findFirst().orElse(-1);
+        GameController controller = this.controller.getControllers().get(k);
+        controller.drawCard(i, whichone);
     }
 
 }

@@ -8,11 +8,13 @@ import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import it.polimi.ingsw.Network.RMI.VirtualView;
 
+import java.rmi.RemoteException;
+
 public interface CommonClient {
 
-    void joinGame(String Name, PlayerColor color) throws RoomFullException, RoomNotExistsException;
+    void joinGame(String Name, PlayerColor color) throws RoomFullException, RoomNotExistsException, RemoteException;
 
-    void createGame(String Name, PlayerColor color, int numPlayers) throws WrongPlayersNumberException;
+    void createGame(String Name, PlayerColor color, int numPlayers) throws WrongPlayersNumberException, RemoteException;
 
     void leaveGame(String name, VirtualView client);
 

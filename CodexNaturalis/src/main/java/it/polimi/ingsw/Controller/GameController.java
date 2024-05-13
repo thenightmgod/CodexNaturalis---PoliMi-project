@@ -188,6 +188,20 @@ public class GameController {
     public LinkedList<Player> getPlayers(){
         return this.Players;
     }
+
+    public void drawCard(int i, int whichone) throws WrongIndexException{
+        if(i < 1 || i  > 2)
+            throw new WrongIndexException("indice sbagliato, o 1 o 2");
+        else{
+            if(whichone < 1 || whichone > 3)
+                throw new WrongIndexException("indice sbagliato, 1, 2 o 3");
+            else{
+                if(i==1)
+                    pickResCard(whichone);
+                else pickGoldCard(whichone);
+            }
+        }
+    }
 }
 
 

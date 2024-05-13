@@ -23,7 +23,7 @@ public class MainController {
     }
 
     //numPlayers arriva da
-    public void createGame(String Name, PlayerColor color, int numPlayers) throws WrongPlayersNumberException {
+    public GameController createGame(String Name, PlayerColor color, int numPlayers) throws WrongPlayersNumberException {
         if(numPlayers<2 || numPlayers>4)
             throw new WrongPlayersNumberException("the number of players has to be between 2 and 4");
         else {
@@ -33,9 +33,10 @@ public class MainController {
                 controllers.add(new GameController(controllers.getLast().getRoomId() + 1, numPlayers));
             controllers.getLast().addPlayer(Name, color);
         }
+        return controllers.getLast();
     }
 
-    public void joinGame(String Name, PlayerColor color) throws RoomFullException, RoomNotExistsException{
+    public GameController joinGame(String Name, PlayerColor color) throws RoomFullException, RoomNotExistsException{
         //come gestire il fatto che debba essere chiamata la createGame se non ne esistono
         //RoomNotExistsException
         if(this.controllers.isEmpty()){
@@ -46,11 +47,12 @@ public class MainController {
                 throw new RoomFullException("The room is already full");
             else this.controllers.getLast().addPlayer(Name, color);
         }
-
+        return controllers.getLast();
     }
 
-    public void leaveGame(String Name, int RoomId){
+    public GameController leaveGame(String Name, int RoomId){
         controllers.get(RoomId).removePlayer(Name);
+        return controllers.get(RoomId);
     }
 
 }

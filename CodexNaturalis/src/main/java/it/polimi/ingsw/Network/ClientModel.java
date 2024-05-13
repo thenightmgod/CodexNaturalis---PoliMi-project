@@ -20,8 +20,9 @@ public class ClientModel {
     private int PointsCounter;
     private LinkedList<GoalCard> CommonGoals;
 
-    //private LinkedList<GoldCard> DrawableGoldCards; poi vediamo come gestirle
-    //private LinkedList<ResourceCard> DrawableResourceCards;
+    //vedere bene come gestirle
+    private LinkedList<GoldCard> DrawableGoldCards;
+    private LinkedList<ResourceCard> DrawableResourceCards;
 
     public ClientModel(){
         Name = null;
