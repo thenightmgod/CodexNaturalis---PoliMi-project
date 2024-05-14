@@ -3,6 +3,7 @@ package it.polimi.ingsw.Model;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
+import it.polimi.ingsw.Model.PlayerPackage.Position;
 import it.polimi.ingsw.Network.RMI.VirtualView;
 
 import java.rmi.RemoteException;
@@ -55,8 +56,8 @@ public class ObserverManager {
             observers.get(s).updateField(name, field);
     }
 
-    public void showFreePositions(String name) throws RemoteException{
-        observers.get(name).showFreePositions(name);
+    public void showFreePositions(String name, LinkedList<Position> freePosition) throws RemoteException{
+        observers.get(name).showFreePositions(name, freePosition);
     }
 
     //eventualmente implementarli

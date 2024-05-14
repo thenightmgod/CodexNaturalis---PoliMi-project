@@ -151,7 +151,7 @@ public class Room {
             observerManager.showNewHand(Turn.getName(), Turn.getHand());
             observerManager.updateField(Turn.getName(), Turn.getPlayerField());
             observerManager.updatePoints(Turn.getPointsCounter(), Turn.getName());
-            observerManager.showFreePositions(Turn.getName());
+            observerManager.showFreePositions(Turn.getName(), Turn.getPlayerField().getFreePositions());
         }
     } //per il collegamento col controller
 

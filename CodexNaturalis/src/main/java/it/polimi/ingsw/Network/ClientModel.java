@@ -24,8 +24,8 @@ public class ClientModel {
     private LinkedList<GoldCard> DrawableGoldCards;
     private LinkedList<ResourceCard> DrawableResourceCards;
 
-    public ClientModel(){
-        Name = null;
+    public ClientModel(String name){
+        Name = name;
         Hand = new LinkedList<>();
         PrivateGoal = null;
         Field = new PlayingField();

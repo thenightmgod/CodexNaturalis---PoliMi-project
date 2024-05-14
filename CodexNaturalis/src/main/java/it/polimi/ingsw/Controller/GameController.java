@@ -123,11 +123,6 @@ public class GameController {
 
     //la place card effettiva si compone di questi due passaggi
 
-    public LinkedList<Position> showFreePositions(Player p){ //questa va passata al client per far scegliere posizioni
-        return p.getPlayerField().getFreePositions();
-        //viene chiamata dal server e passata al client
-    }
-
     public void placeCard(int i, int x, int y, FB face) throws WrongIndexException{ //p passata dal client
     if(i < 1 || i > 3)
         throw new WrongIndexException("put an index between 1 and 3");

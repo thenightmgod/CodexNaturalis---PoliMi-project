@@ -9,6 +9,7 @@ import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
+import it.polimi.ingsw.Model.PlayerPackage.Position;
 import it.polimi.ingsw.Network.ClientModel;
 import it.polimi.ingsw.Network.CommonClient;
 import it.polimi.ingsw.View.GameView;
@@ -31,7 +32,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
 
 
     public RMIClient(VirtualServer server, String name) throws RemoteException{
-        this.model = new ClientModel();
+        this.model = new ClientModel(name);
         this.name = name;
         this.server = server;
         //andrà runnato this.runClient();
@@ -89,28 +90,29 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
 
     @Override
     public void updatePoints(int points, String name) throws RemoteException {
-        //a tutti, ma si updata solo quello del tipo
-
+        //model.setPointsCounter(points);
+        this.view.updatePoints(points, name);
     }
 
     @Override
     public void showGoals(LinkedList<GoalCard> goals) throws RemoteException {
-        //farla, personale ez
+        this.view.showGoals(goals, name);
     }
 
     @Override
     public void showHand(LinkedList<PlayableCard> hand) throws RemoteException {
+        this.view.showHands(hand, name);
         //farla, forse sbatti con playablecard
     }
 
     @Override
     public void updateField(String name, PlayingField field) throws RemoteException {
-
+        this.view.updateField(field, name);
     }
 
     @Override
-    public void showFreePositions(String name) throws RemoteException {
-        //mostrare free positions pre di piazzare una carta
+    public void showFreePositions(String name, LinkedList<Position> freePosition) throws RemoteException {
+        this.view.showFreePosition(name, freePosition);
     }
 
     @Override
