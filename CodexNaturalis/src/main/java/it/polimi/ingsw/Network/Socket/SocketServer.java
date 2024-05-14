@@ -39,6 +39,8 @@ public class SocketServer {
                 OutputStreamWriter socketTx = new OutputStreamWriter(clientSocket.getOutputStream());
 
                 SocketClientHandler handler = new SocketClientHandler(this.controller, this, new BufferedReader(socketRx), new PrintWriter(socketTx));
+                System.out.println("Connection established");
+
                 clients.add(handler);
                 new Thread(() -> {
                     try{

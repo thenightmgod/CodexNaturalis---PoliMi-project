@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Network.Socket;
 
+import com.google.gson.Gson;
 import it.polimi.ingsw.Controller.MainController;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
@@ -26,7 +27,19 @@ public class SocketClientHandler implements VirtualView {
 
 
     public void runVirtualView() throws IOException{
-        //gestisco i messaggi che ricevo da client, per ogni messaggio eseguiro diverse azioni e faccio un updatebroadcast
+        String receivedmessage;
+        while(true) {
+            try {
+                while (input.readLine() != null) {
+                    receivedmessage = input.readLine();
+                    Gson gson = new Gson();
+                    Message message = gson.fromJson(receivedmessage, Message.class);
+                }
+            }
+            catch(RuntimeException | IOException e){
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
