@@ -4,6 +4,7 @@ package it.polimi.ingsw.Controller;
 
 import it.polimi.ingsw.Exceptions.RequirementsNotSatisfied;
 import it.polimi.ingsw.Exceptions.WrongIndexException;
+import it.polimi.ingsw.Exceptions.WrongPositionException;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.Composition;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.CompositionGoalCard;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
@@ -138,6 +139,8 @@ public class GameController {
             //chiamare metodo della view che mi fa riscegliere la carta da giocare;
         } catch (RemoteException e) {
             throw new RuntimeException(e);
+        } catch (WrongPositionException e) {
+            //chiamare metodo della view che mi fa scegliere posizione sensata
         }
     }
 

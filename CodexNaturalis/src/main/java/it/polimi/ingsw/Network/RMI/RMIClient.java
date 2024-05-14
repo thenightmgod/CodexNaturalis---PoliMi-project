@@ -90,6 +90,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     @Override
     public void updatePoints(int points, String name) throws RemoteException {
         //a tutti, ma si updata solo quello del tipo
+
     }
 
     @Override
@@ -105,6 +106,11 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     @Override
     public void updateField(String name, PlayingField field) throws RemoteException {
 
+    }
+
+    @Override
+    public void showFreePositions(String name) throws RemoteException {
+        //mostrare free positions pre di piazzare una carta
     }
 
     @Override

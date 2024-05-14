@@ -23,6 +23,8 @@ public interface VirtualView extends Remote {
 
     void updateField(String name, PlayingField field) throws RemoteException;
 
+    void showFreePositions(String name) throws RemoteException;
+
     void update() throws RemoteException; //update il clientModel
 
     void showOtherField(String player) throws RemoteException;

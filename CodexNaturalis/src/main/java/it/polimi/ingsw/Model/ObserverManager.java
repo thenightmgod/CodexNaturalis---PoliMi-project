@@ -55,10 +55,9 @@ public class ObserverManager {
             observers.get(s).updateField(name, field);
     }
 
-    public void show2GoalCards(String name) throws RemoteException{
-
+    public void showFreePositions(String name) throws RemoteException{
+        observers.get(name).showFreePositions(name);
     }
-
 
     //eventualmente implementarli
     public void message(String name, String mex){};

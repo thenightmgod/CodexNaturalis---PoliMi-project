@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Exceptions.RequirementsNotSatisfied;
+import it.polimi.ingsw.Exceptions.WrongPositionException;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.CompositionGoalCard;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.ObjectsGoalCard;
@@ -142,11 +143,16 @@ public class Room {
      * @param card The card to place.
      * @param p The position to place the card.
      */
-    public void placeCard(ResourceCard card, Position p) throws RequirementsNotSatisfied, RemoteException {
-        Turn.placeCard(card, p);
-        observerManager.showNewHand(Turn.getName(), Turn.getHand());
-        observerManager.updateField(Turn.getName(), Turn.getPlayerField());
-        observerManager.updatePoints(Turn.getPointsCounter(), Turn.getName());
+    public void placeCard(ResourceCard card, Position p) throws RequirementsNotSatisfied, RemoteException, WrongPositionException {
+        if(!Turn.getPlayerField().getField().containsKey(p))
+            throw new WrongPositionException();
+        else {
+            Turn.placeCard(card, p);
+            observerManager.showNewHand(Turn.getName(), Turn.getHand());
+            observerManager.updateField(Turn.getName(), Turn.getPlayerField());
+            observerManager.updatePoints(Turn.getPointsCounter(), Turn.getName());
+            observerManager.showFreePositions(Turn.getName());
+        }
     } //per il collegamento col controller
 
     /**
