@@ -24,6 +24,7 @@ public class SocketClientHandler implements VirtualView {
         this.output = output;
     }
 
+
     public void runVirtualView() throws IOException{
         //gestisco i messaggi che ricevo da client, per ogni messaggio eseguiro diverse azioni e faccio un updatebroadcast
     }

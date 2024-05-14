@@ -21,7 +21,7 @@ import java.util.LinkedList;
 
 public class GoldCardTest {
     /**
-     * This test is composed by an inizialazation of all the elements needed to call the RequirementsOK function on the player,
+     * This test is composed by an inizialization of all the elements needed to call the RequirementsOK function on the player,
      * and an assertion to check if all the requirements needed to place the card are respected.
      */
     @Test

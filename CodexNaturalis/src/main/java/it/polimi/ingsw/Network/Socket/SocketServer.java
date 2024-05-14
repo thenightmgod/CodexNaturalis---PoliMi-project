@@ -16,7 +16,6 @@ public class SocketServer {
     final ServerSocket listenSocket;
     final LinkedList<SocketClientHandler> clients = new LinkedList<>();
 
-    //TODO update broadcast di tutti i client in modo asincrono
 
     public SocketServer(MainController controller, ServerSocket listenSocket){
         this.controller = controller;
