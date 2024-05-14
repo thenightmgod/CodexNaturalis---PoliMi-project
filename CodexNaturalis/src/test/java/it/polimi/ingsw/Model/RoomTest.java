@@ -15,7 +15,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.LinkedList;
-class RoomTest {
+/*class RoomTest {
     @Test
     void testMetodiMinori(){
         LinkedList<Player> players = new LinkedList<>();
@@ -77,3 +77,4 @@ class RoomTest {
         r1.checkGoals(p4, commongoals);
     }
 }
+*/

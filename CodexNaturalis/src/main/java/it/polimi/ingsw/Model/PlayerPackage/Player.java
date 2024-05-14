@@ -45,6 +45,7 @@ public class Player {
         Color = color;
         PointsCounter = 0;
         ResourceCounter = new int[4];
+        this.PlayerGoal = new LinkedList<>();
         Hand = new LinkedList<>();
         for(int i=0; i<4; i++){
             ResourceCounter[i]=0;

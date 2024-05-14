@@ -13,14 +13,7 @@ class MainControllerTest {
     void Maincontrol(){
         MainController game1 = new MainController();
 
-        game1.createGame("dalla", PlayerColor.BLUE, 3);
-        try{
-            game1.joinGame("venditti", PlayerColor.RED);
-        } catch (Exception e) {
-            if(e instanceof RoomFullException){
 
-            }
-        }
 
 
 

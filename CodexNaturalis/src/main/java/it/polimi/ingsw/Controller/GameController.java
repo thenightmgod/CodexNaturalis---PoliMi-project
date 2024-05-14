@@ -37,6 +37,7 @@ public class GameController {
         this.State = GameState.WAITING;
         this.RoomId = id;
         this.Players = new LinkedList<>();
+        this.clients = new LinkedList<>();
     }
 
     public Room getGame() {
