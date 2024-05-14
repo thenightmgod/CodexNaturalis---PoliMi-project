@@ -1,9 +1,6 @@
 package it.polimi.ingsw.Network.RMI;
 
-import it.polimi.ingsw.Exceptions.RoomFullException;
-import it.polimi.ingsw.Exceptions.RoomNotExistsException;
-import it.polimi.ingsw.Exceptions.WrongIndexException;
-import it.polimi.ingsw.Exceptions.WrongPlayersNumberException;
+import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
@@ -17,7 +14,7 @@ public interface VirtualServer extends Remote {
 
     //le funzioni del server che vuole chiamare il client
 
-    void joinGame(String Name, PlayerColor color) throws RoomFullException, RoomNotExistsException, RemoteException;
+    void joinGame(String Name, PlayerColor color) throws RoomFullException, RoomNotExistsException, RemoteException, NameAlreadyTakenException;
 
     void createGame(String Name, PlayerColor color, int numPlayers) throws WrongPlayersNumberException, RemoteException;
 

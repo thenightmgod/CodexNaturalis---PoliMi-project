@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Controller;
 
+import it.polimi.ingsw.Exceptions.NameAlreadyTakenException;
 import it.polimi.ingsw.Exceptions.RoomFullException;
 import it.polimi.ingsw.Exceptions.RoomNotExistsException;
 import it.polimi.ingsw.Exceptions.WrongPlayersNumberException;
@@ -36,13 +37,17 @@ public class MainController {
         return controllers.getLast();
     }
 
-    public GameController joinGame(String Name, PlayerColor color, VirtualView client) throws RoomFullException, RoomNotExistsException{
+    public GameController joinGame(String Name, PlayerColor color, VirtualView client) throws RoomFullException, RoomNotExistsException, NameAlreadyTakenException {
         //come gestire il fatto che debba essere chiamata la createGame se non ne esistono
         //RoomNotExistsException
         if(this.controllers.isEmpty()){
             throw new RoomNotExistsException("there isn't a game to join, create one");
         }
         else {
+            for(Player p : this.controllers.getLast().getPlayers()){
+                if(p.getName() == Name)
+                    throw new NameAlreadyTakenException("the name is already taken");
+            }
             if (this.controllers.getLast().getHowManyPlayers() == this.controllers.getLast().getNumPlayers())
                 throw new RoomFullException("The room is already full");
             else {
