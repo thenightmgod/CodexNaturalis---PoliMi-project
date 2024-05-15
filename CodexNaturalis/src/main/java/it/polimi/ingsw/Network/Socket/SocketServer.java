@@ -41,7 +41,9 @@ public class SocketServer {
                 SocketClientHandler handler = new SocketClientHandler(this.controller, this, new BufferedReader(socketRx), new PrintWriter(socketTx));
                 System.out.println("Connection established");
 
-                clients.add(handler);
+                synchronized (this.clients) {
+                    clients.add(handler);
+                }
                 new Thread(() -> {
                     try{
                         handler.runVirtualView();
@@ -50,7 +52,6 @@ public class SocketServer {
                     }
                 }).start();
                 //socketRx in un BufferReader per leggerlo piu easy e passarlo al costruttore di clienthandler
-                //fare thread che fa partire la VirtualView di questo handler
             }
         }
         catch (IOException e){
