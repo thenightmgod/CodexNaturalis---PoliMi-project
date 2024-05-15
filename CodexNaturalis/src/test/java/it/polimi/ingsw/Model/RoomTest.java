@@ -15,7 +15,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.LinkedList;
-/*class RoomTest {
+class RoomTest {
+    /**
+     * This test checks if various small functions of the Room class works properly, (createDecks, giveHands,
+     * commonGoals, show2GoalCards, pickGoalCard).
+     */
     @Test
     void testMetodiMinori(){
         LinkedList<Player> players = new LinkedList<>();
@@ -45,6 +49,10 @@ import java.util.LinkedList;
         r1.pickGoalCard(p1, true);   //giocatore picka una carta (o la prima o la seconda della lista)
         //setup finito
     }
+    /**
+     * This test is composed of an inizialization of all the elements needed to call the PlaceStartaCard function
+     * on the player, such as the card itself and a player. Then checks if the card is correctly placed.
+     */
     @Test
     void CommonGoalsTest(){
         LinkedList<Player> players = new LinkedList<>();
@@ -77,4 +85,3 @@ import java.util.LinkedList;
         r1.checkGoals(p4, commongoals);
     }
 }
-*/

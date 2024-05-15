@@ -8,8 +8,8 @@ import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.ResourceGoalCard;
 
 import static org.junit.jupiter.api.Assertions.*;
 /**
- * This test is composed by an initialization of all the elements needed to call the PointsCalc function on the
- * ResourceGoalcard and an assertion of what the results are expected to be.
+ * This test is composed of an initialization of all the elements needed to call the PointsCalc function on the
+ * ResourceGoalCard and an assertion of what the results are expected to be.
  */
 class ResourceGoalCardTest {
     @Test

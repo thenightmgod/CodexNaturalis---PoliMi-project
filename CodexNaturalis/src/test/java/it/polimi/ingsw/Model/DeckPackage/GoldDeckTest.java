@@ -16,7 +16,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.LinkedList;
-
+/**
+ * This test first creates all the decks that will be used in a game, and then checks if some of the main methods
+ * that use the Deck Class work.
+ */
 class GoldDeckTest {
     @Before
     void setup(){

@@ -19,6 +19,9 @@ class PlayingFieldTest {
     private static PlayingField prova;
     private static Position z;
     private static Corner primoHR, primoHL, primoLR, primoLL, secondoHR, secondoHL, secondoLR, secondoLL, terzoHR, terzoHL, terzoLL,terzoLR, quartoHR,quartoHL,quartoLR,quartoLL,quintoHR,quintoHL,quintoLL,quintoLR,sestoHR,sestoLL,sestoHL,sestoLR;
+    /**
+     * Contains the initialization steps to make before running each test.
+     */
     @BeforeEach
     void setup(){
         x = new Position(1,1);
@@ -54,6 +57,9 @@ class PlayingFieldTest {
 
 
     }
+    /**
+     * This test checks if the FreePositions array is correctly updated by the function, when a new card is placed.
+     */
     @Test
     void updateFreePositionsTest(){
         LinkedList<Corner> CornersPrimo = new LinkedList<>();
@@ -159,6 +165,9 @@ class PlayingFieldTest {
         Backres = primores.getBackRes();
         assert(Backres.contains(Resources.INSECT_KINGDOM));
     }
+    /**
+     * This test checks if the getPosFromCornerFunction returns the right position when called on a Corner.
+     */
     @Test
     void getPosFromCornerTest(){
         z= prova.getPosFromCorner(x, Orientation.LR);

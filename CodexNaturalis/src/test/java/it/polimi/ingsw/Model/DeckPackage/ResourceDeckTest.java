@@ -12,7 +12,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.LinkedList;
-
+/**
+ * This test first creates the resource deck, and then checks if some of the main methods that use this Class work.
+ */
 class ResourceDeckTest {
     @Test
     void ResourceDeck(){

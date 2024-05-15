@@ -23,6 +23,10 @@ import static it.polimi.ingsw.Model.CornerPackage.CornerState.EMPTY;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
+    /**
+     * This test is composed of an inizialization of all the elements needed to call the PlaceStartCard function
+     * on the player, such as the card itself and a player. Then checks if the card is correctly placed.
+     */
     @Test
     void placeStartcardTest(){
         Player player1 = new Player("Lazzarone", PlayerColor.RED);
@@ -160,6 +164,10 @@ class PlayerTest {
         assertEquals(1, player3.getResourceCounter(Resources.PLANT_KINGDOM));
         assertEquals(1, player3.getResourceCounter(Resources.FUNGI_KINGDOM));
     }
+    /**
+     * This test is composed of an inizialization of all the elements needed to call the PlaceCard function
+     * on the player, such as the card itself and a player. Then checks if the card is correctly placed.
+     */
     @Test
     void placecardTest() throws RequirementsNotSatisfied {
         Player player1 = new Player("Lazzarone", PlayerColor.RED);
@@ -249,6 +257,9 @@ class PlayerTest {
 
         assertEquals(1, player1.getResourceCounter(Resources.INSECT_KINGDOM));
     }
+    /**
+     * This test
+     */
     @Test
     void pointsCalcTest() throws RequirementsNotSatisfied {
         GoldDeck gd = new GoldDeck();

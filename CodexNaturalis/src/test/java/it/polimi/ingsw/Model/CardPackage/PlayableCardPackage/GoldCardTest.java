@@ -21,7 +21,7 @@ import java.util.LinkedList;
 
 public class GoldCardTest {
     /**
-     * This test is composed by an inizialization of all the elements needed to call the RequirementsOK function on the player,
+     * This test is composed of an initialization of all the elements needed to call the RequirementsOK function on the player,
      * and an assertion to check if all the requirements needed to place the card are respected.
      */
     @Test
@@ -112,7 +112,7 @@ public class GoldCardTest {
         assertTrue(carta3.RequirementsOk(player));
     }
     /**
-     * This test is composed by an inizialazation of all the elements needed to call the Pointscalc function on the GoldCard
+     * This test is composed of an initialization of all the elements needed to call the PointsCalc function on the GoldCard
      * and an assertion to check if the Card gives the player the right points.
      */
     @Test

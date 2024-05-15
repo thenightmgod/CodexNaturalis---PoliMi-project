@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 /**
- * This test is composed by an initialization of all the elements needed to call the PointsCalc function on the ObjectsGoalCard
+ * This test is composed of an initialization of all the elements needed to call the PointsCalc function on the ObjectsGoalCard
  * and an assertion of what the results are expected to be.
  */
 class ObjectsGoalCardTest {

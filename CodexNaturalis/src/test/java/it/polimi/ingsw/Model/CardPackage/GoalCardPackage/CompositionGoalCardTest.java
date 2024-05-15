@@ -21,7 +21,7 @@ import static it.polimi.ingsw.Model.CornerPackage.CornerState.EMPTY;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Each one of the tests is composed by an initialization of all the elements needed to call the PointsCalc function
+ * Each one of the tests is composed of an initialization of all the elements needed to call the PointsCalc function
  * on the CompositionGoalCard and an assertion of what the results are expected to be.
  */
 class CompositionGoalCardTest {
