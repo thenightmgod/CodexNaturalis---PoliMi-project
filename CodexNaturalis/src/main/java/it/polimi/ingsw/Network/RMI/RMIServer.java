@@ -9,6 +9,7 @@ import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
 import it.polimi.ingsw.Model.Room;
 
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -44,10 +45,10 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer{
     }
 
     @Override
-    public void joinGame(String Name, PlayerColor color) throws RoomFullException, RoomNotExistsException, RemoteException, NameAlreadyTakenException {
-        RMIClient client = new RMIClient(this, Name);
+    public void joinGame(String Name) throws RoomFullException, RoomNotExistsException, RemoteException, NameAlreadyTakenException, NotBoundException {
+        RMIClient client = new RMIClient(Name);
         try {
-            GameController c = this.controller.joinGame(Name, color, client);
+            GameController c = this.controller.joinGame(Name, client);
             clients.put(c.getRoomId(), client);
 
         } catch(NameAlreadyTakenException e){
@@ -59,9 +60,9 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer{
     }
 
     @Override
-    public void createGame(String Name, PlayerColor color, int numPlayers) throws WrongPlayersNumberException, RemoteException {
-        RMIClient client = new RMIClient(this, Name);
-        GameController c = this.controller.createGame(Name, color, numPlayers, client);
+    public void createGame(String Name, int numPlayers) throws WrongPlayersNumberException, RemoteException, NotBoundException {
+        RMIClient client = new RMIClient(Name);
+        GameController c = this.controller.createGame(Name, numPlayers, client);
         clients.put(c.getRoomId(), client);
         //eccezione del nome
     }

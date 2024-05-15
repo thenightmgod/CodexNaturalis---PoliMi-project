@@ -28,18 +28,18 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     private ClientModel model;
 
 
-    public RMIClient(VirtualServer server, String name) throws RemoteException{
+    public RMIClient( String name) throws RemoteException, NotBoundException {
         this.model = new ClientModel(name);
         this.name = name;
-        this.server = server;
         //andrà runnato this.runClient();
+        initializeClient(name);
     }
 
 
     public void initializeClient(String name) throws RemoteException, NotBoundException {
         final String serverName = "CodexServer";
         Registry registry = LocateRegistry.getRegistry(666);
-        VirtualServer server = (VirtualServer) registry.lookup(serverName);
+        this.server = (VirtualServer) registry.lookup(serverName);
     }
 
     public void placeCard(int whichInHand, int x, int y, FB face) throws WrongIndexException{
@@ -67,14 +67,21 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     };
 
     @Override
-    public void createGame(String Name, PlayerColor color, int numPlayers) throws WrongPlayersNumberException, RemoteException {
-        server.createGame(Name, color, numPlayers);
-    };
+    public void createGame(String Name, int numPlayers) throws WrongPlayersNumberException, RemoteException, NotBoundException {
+        server.createGame(Name, numPlayers);
+    }
 
     @Override
-    public void joinGame(String Name, PlayerColor color) throws RoomFullException, RoomNotExistsException,
-            RemoteException, NameAlreadyTakenException {
-        server.joinGame(Name, color);
+    public void setView(GameView view) {
+        this.view = view;
+    }
+
+    ;
+
+    @Override
+    public void joinGame(String Name) throws RoomFullException, RoomNotExistsException,
+            RemoteException, NameAlreadyTakenException, NotBoundException {
+        server.joinGame(Name);
     }
 
     public void drawCard(int whichDeck, int whichOne) throws WrongIndexException, RemoteException {

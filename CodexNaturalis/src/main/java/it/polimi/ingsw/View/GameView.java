@@ -3,12 +3,18 @@ package it.polimi.ingsw.View;
 import it.polimi.ingsw.Controller.GameController;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
+import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
+import it.polimi.ingsw.Network.RMI.RMIClient;
+import it.polimi.ingsw.Network.RMI.VirtualView;
 
 import java.util.LinkedList;
 
 public interface GameView {
+    
+
+    boolean connectionType = false;
     public void updatePoints(int points, String name);
 
     public void showGoals(LinkedList<GoalCard> goals, String name);
@@ -20,4 +26,6 @@ public interface GameView {
     public void showFreePosition(String name, LinkedList<Position> freePositions);
 
     public void showException(String name, String exception);
+
+    //public void joinGame
 }
