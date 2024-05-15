@@ -1,9 +1,6 @@
 package it.polimi.ingsw.Network;
 
-import it.polimi.ingsw.Exceptions.RoomFullException;
-import it.polimi.ingsw.Exceptions.RoomNotExistsException;
-import it.polimi.ingsw.Exceptions.WrongIndexException;
-import it.polimi.ingsw.Exceptions.WrongPlayersNumberException;
+import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import it.polimi.ingsw.Network.RMI.VirtualView;
@@ -12,7 +9,7 @@ import java.rmi.RemoteException;
 
 public interface CommonClient {
 
-    void joinGame(String Name, PlayerColor color) throws RoomFullException, RoomNotExistsException, RemoteException;
+    void joinGame(String Name, PlayerColor color) throws RoomFullException, RoomNotExistsException, RemoteException, NameAlreadyTakenException;
 
     void createGame(String Name, PlayerColor color, int numPlayers) throws WrongPlayersNumberException, RemoteException;
 

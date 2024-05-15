@@ -1,9 +1,6 @@
 package it.polimi.ingsw.Network.RMI;
 
-import it.polimi.ingsw.Exceptions.RoomFullException;
-import it.polimi.ingsw.Exceptions.RoomNotExistsException;
-import it.polimi.ingsw.Exceptions.WrongIndexException;
-import it.polimi.ingsw.Exceptions.WrongPlayersNumberException;
+import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
@@ -75,7 +72,8 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     };
 
     @Override
-    public void joinGame(String Name, PlayerColor color) throws RoomFullException, RoomNotExistsException, RemoteException {
+    public void joinGame(String Name, PlayerColor color) throws RoomFullException, RoomNotExistsException,
+            RemoteException, NameAlreadyTakenException {
         server.joinGame(Name, color);
     }
 

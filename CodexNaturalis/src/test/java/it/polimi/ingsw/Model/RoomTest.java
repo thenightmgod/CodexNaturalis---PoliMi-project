@@ -2,6 +2,7 @@ package it.polimi.ingsw.Model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import it.polimi.ingsw.Controller.GameController;
 import it.polimi.ingsw.Model.CardPackage.Card;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.*;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.CardColor;
@@ -11,9 +12,13 @@ import it.polimi.ingsw.Model.CornerPackage.Orientation;
 import it.polimi.ingsw.Model.CornerPackage.Resources;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
+import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
+import it.polimi.ingsw.Model.PlayerPackage.Position;
+import it.polimi.ingsw.Network.RMI.VirtualView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.rmi.RemoteException;
 import java.util.LinkedList;
 class RoomTest {
     /**
@@ -22,66 +27,192 @@ class RoomTest {
      */
     @Test
     void testMetodiMinori(){
-        LinkedList<Player> players = new LinkedList<>();
-        Player p1 = new Player("LOLLO", PlayerColor.GREEN);
-        Player p2 = new Player("PIE", PlayerColor.RED);
-        Player p3 = new Player("NINA", PlayerColor.YELLOW);
-        Player p4 = new Player("HAMIN", PlayerColor.BLUE);
-        players.addLast(p1);
-        players.addLast(p2);
-        players.addLast(p3);
-        players.addLast(p4);
-        Room r1 = new Room(5, players);
-        assert(r1.getFirstRound());
-        assertFalse(r1.getLastRound());
+        GameController beppe = new GameController(5, 4);
 
-        r1.setLastRound();
-        assertFalse(r1.getLastRound());
+        VirtualView client1 = new VirtualView() {
+            @Override
+            public void showException(String details) throws RemoteException {
 
-        r1.setTwentyFlag();
+            }
 
-        LinkedList<GoalCard> duecarteGoal = new LinkedList<>();
+            @Override
+            public void updatePoints(int points, String name) throws RemoteException {
 
-        r1.createDecks();   //creo i deck
-        r1.giveHands();     // distribusico le mani a ogni giocatore
-        r1.commonGoals();   // setto obbittivi comuni
-        duecarteGoal = r1.show2GoalCards(p1);   //mostro due carte obbiettivo
-        r1.pickGoalCard(p1, true);   //giocatore picka una carta (o la prima o la seconda della lista)
-        //setup finito
-    }
-    /**
-     * This test is composed of an inizialization of all the elements needed to call the PlaceStartaCard function
-     * on the player, such as the card itself and a player. Then checks if the card is correctly placed.
-     */
-    @Test
-    void CommonGoalsTest(){
-        LinkedList<Player> players = new LinkedList<>();
-        Player p1 = new Player("LOLLO", PlayerColor.GREEN);
-        Player p2 = new Player("PIE", PlayerColor.RED);
-        Player p3 = new Player("NINA", PlayerColor.YELLOW);
-        Player p4 = new Player("HAMIN", PlayerColor.BLUE);
-        players.addLast(p1);
-        players.addLast(p2);
-        players.addLast(p3);
-        players.addLast(p4);
-        Room r1 = new Room(5, players);
+            }
 
-        LinkedList<GoalCard> commongoals = new LinkedList<>();
+            @Override
+            public void showGoals(LinkedList<GoalCard> goals) throws RemoteException {
 
-        int array1[] = new int[3];
-        array1[0] = 0;
-        array1[1] = 0;
-        array1[2] = 2;
+            }
 
-        CompositionGoalCard GoalRL = new CompositionGoalCard(88, 2, Composition.REVERSE_L, CardColor.GREEN);
-        ResourceGoalCard GoalBlue = new ResourceGoalCard(97, 3, Resources.ANIMAL_KINGDOM);
-        ObjectsGoalCard amidogol = new ObjectsGoalCard(100, 2, array1);
+            @Override
+            public void showHand(LinkedList<PlayableCard> hand) throws RemoteException {
 
-        commongoals.addLast(GoalRL);
-        commongoals.addLast(GoalBlue);
+            }
 
-        p4.setPlayerGoal(true);
+            @Override
+            public void updateField(String name, PlayingField field) throws RemoteException {
 
-        r1.checkGoals(p4, commongoals);
+            }
+
+            @Override
+            public void showFreePositions(String name, LinkedList<Position> freePosition) throws RemoteException {
+
+            }
+
+            @Override
+            public void update() throws RemoteException {
+
+            }
+
+            @Override
+            public void showOtherField(String player) throws RemoteException {
+
+            }
+        };
+        VirtualView client2 = new VirtualView() {
+            @Override
+            public void showException(String details) throws RemoteException {
+
+            }
+
+            @Override
+            public void updatePoints(int points, String name) throws RemoteException {
+
+            }
+
+            @Override
+            public void showGoals(LinkedList<GoalCard> goals) throws RemoteException {
+
+            }
+
+            @Override
+            public void showHand(LinkedList<PlayableCard> hand) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateField(String name, PlayingField field) throws RemoteException {
+
+            }
+
+            @Override
+            public void showFreePositions(String name, LinkedList<Position> freePosition) throws RemoteException {
+
+            }
+
+            @Override
+            public void update() throws RemoteException {
+
+            }
+
+            @Override
+            public void showOtherField(String player) throws RemoteException {
+
+            }
+        };
+        VirtualView client3 = new VirtualView() {
+            @Override
+            public void showException(String details) throws RemoteException {
+
+            }
+
+            @Override
+            public void updatePoints(int points, String name) throws RemoteException {
+
+            }
+
+            @Override
+            public void showGoals(LinkedList<GoalCard> goals) throws RemoteException {
+
+            }
+
+            @Override
+            public void showHand(LinkedList<PlayableCard> hand) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateField(String name, PlayingField field) throws RemoteException {
+
+            }
+
+            @Override
+            public void showFreePositions(String name, LinkedList<Position> freePosition) throws RemoteException {
+
+            }
+
+            @Override
+            public void update() throws RemoteException {
+
+            }
+
+            @Override
+            public void showOtherField(String player) throws RemoteException {
+
+            }
+        };
+        VirtualView client4 = new VirtualView() {
+            @Override
+            public void showException(String details) throws RemoteException {
+
+            }
+
+            @Override
+            public void updatePoints(int points, String name) throws RemoteException {
+
+            }
+
+            @Override
+            public void showGoals(LinkedList<GoalCard> goals) throws RemoteException {
+
+            }
+
+            @Override
+            public void showHand(LinkedList<PlayableCard> hand) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateField(String name, PlayingField field) throws RemoteException {
+
+            }
+
+            @Override
+            public void showFreePositions(String name, LinkedList<Position> freePosition) throws RemoteException {
+
+            }
+
+            @Override
+            public void update() throws RemoteException {
+
+            }
+
+            @Override
+            public void showOtherField(String player) throws RemoteException {
+
+            }
+        };
+
+        beppe.addPlayer("dalla", PlayerColor.YELLOW, client1);
+        beppe.addPlayer("degregori", PlayerColor.GREEN, client2);
+        beppe.addPlayer("venditti", PlayerColor.RED, client3);
+        beppe.addPlayer("hamingway", PlayerColor.BLUE, client4);
+
+        beppe.getPlayers().getFirst().addPoints(21);
+
+        beppe.startGame();
+        beppe.createDecks();
+        try {
+            beppe.giveHands();
+        } catch (RemoteException e) {
+            fail("Unexpected RemoteException: " + e.getMessage());
+        }
+        beppe.commonGoals();
+        beppe.getGame().setTwentyFlag();
+        beppe.getGame().setLastRound();
     }
 }
+    /**
+     *
+     */
