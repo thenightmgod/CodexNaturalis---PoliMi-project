@@ -35,4 +35,9 @@ public class TUI implements GameView{
     public void showFreePosition(String name, LinkedList<Position> freePositions) {
 
     }
+
+    @Override
+    public void showException(String name, String exception) {
+
+    }
 }

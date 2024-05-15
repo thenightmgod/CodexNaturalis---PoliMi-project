@@ -18,4 +18,6 @@ public interface GameView {
     public void updateField(PlayingField field, String name);
 
     public void showFreePosition(String name, LinkedList<Position> freePositions);
+
+    public void showException(String name, String exception);
 }

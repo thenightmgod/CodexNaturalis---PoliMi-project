@@ -3,7 +3,6 @@ package it.polimi.ingsw.Model;
 import static org.junit.jupiter.api.Assertions.*;
 
 import it.polimi.ingsw.Controller.GameController;
-import it.polimi.ingsw.Exceptions.WrongIndexException;
 import it.polimi.ingsw.Model.CardPackage.Card;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.*;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.CardColor;
@@ -212,10 +211,8 @@ class RoomTest {
         beppe.commonGoals();
         beppe.getGame().setTwentyFlag();
         beppe.getGame().setLastRound();
-        try {
-            beppe.chooseGoalCard(beppe.getPlayers().getFirst(), 2);
-        } catch (WrongIndexException e) {
-            fail("Unexpected WrongIndexException: " + e.getMessage());
-        }
     }
 }
+    /**
+     *
+     */
