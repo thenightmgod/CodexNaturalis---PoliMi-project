@@ -1,4 +1,4 @@
 package it.polimi.ingsw.Model.Messages;
 
-public class GetScoreBoardMessage {
+public class GetScoreBoardMessage extends Message{
 }

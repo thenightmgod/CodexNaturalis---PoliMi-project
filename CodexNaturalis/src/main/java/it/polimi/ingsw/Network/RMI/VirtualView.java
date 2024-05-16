@@ -33,6 +33,8 @@ public interface VirtualView extends Remote {
 
     void createGame(String name, int NumPlayers) throws WrongPlayersNumberException, RemoteException, NotBoundException;
 
+    void setView(GameView view);
+
     void update() throws RemoteException; //update il clientModel
 
     void showOtherField(String player) throws RemoteException;

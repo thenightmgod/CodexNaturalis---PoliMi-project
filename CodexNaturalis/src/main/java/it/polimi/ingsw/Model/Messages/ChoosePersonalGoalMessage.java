@@ -1,4 +1,5 @@
 package it.polimi.ingsw.Model.Messages;
+import com.google.gson.Gson;
 
 public class ChoosePersonalGoalMessage extends Message {
     public int i;
@@ -16,4 +17,10 @@ public class ChoosePersonalGoalMessage extends Message {
     public int getI() {
         return i;
     }
+
+    @Override
+    public String MessageToJson() {
+        return super.MessageToJson();
+    }
+
 }

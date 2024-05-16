@@ -1,4 +1,4 @@
 package it.polimi.ingsw.Model.Messages;
 
-public class QuitGameMessage {
+public class QuitGameMessage extends Message{
 }

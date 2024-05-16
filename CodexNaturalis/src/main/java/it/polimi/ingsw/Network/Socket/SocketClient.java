@@ -14,8 +14,8 @@ public class SocketClient {
     public SocketClient(BufferedReader input, BufferedWriter output){ //input e output sono rispettivamente il socket.getinputstream e socket.outputstream
         this.input = input;
         this.server = new VirtualSocketServer(output);
-    }
 
+    }
     public void initializeClient(String hostname, int ServerPort){
         Socket socket;
         OutputStreamWriter socketTx;

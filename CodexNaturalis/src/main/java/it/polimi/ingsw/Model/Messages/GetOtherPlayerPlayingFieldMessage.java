@@ -1,4 +1,4 @@
 package it.polimi.ingsw.Model.Messages;
 
-public class GetOtherPlayerPlayingFieldMessage {
+public class GetOtherPlayerPlayingFieldMessage extends Message {
 }
