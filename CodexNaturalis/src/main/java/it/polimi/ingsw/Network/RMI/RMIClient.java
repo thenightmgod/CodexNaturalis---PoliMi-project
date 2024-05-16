@@ -42,10 +42,6 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
         this.server = (VirtualServer) registry.lookup(serverName);
     }
 
-    public void placeCard(int whichInHand, int x, int y, FB face) throws WrongIndexException{
-        server.placeCard(this, whichInHand, x, y, face);
-    };
-
     @Override
     public void setStartCardFace(boolean face, VirtualView client){
         server.setStartCardFace(face, this);
@@ -58,7 +54,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
 
     @Override
     public void placeCard(VirtualView client, int whichInHand, int x, int y, FB face) throws WrongIndexException {
-
+        server.placeCard(this, whichInHand, x, y, face);
     }
 
     @Override

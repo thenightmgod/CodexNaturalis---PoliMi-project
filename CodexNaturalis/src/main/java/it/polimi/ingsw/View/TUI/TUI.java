@@ -71,6 +71,7 @@ public class TUI implements GameView {
             input = waitForInput(scan, executor);
 
             if(!input.equals("")){
+                //try con la parseint not number porcoddio
                 num = Integer.parseInt(input);
                 if(num<2 || num>4)
                     System.out.println("The number of players must be between 2 and 4!");
@@ -163,11 +164,11 @@ public class TUI implements GameView {
 
     public String getNickname(){
         String nickname;
-        boolean goon = false;
+
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             nickname = reader.readLine();
-            goon = true;
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
