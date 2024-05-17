@@ -1,4 +1,5 @@
 package it.polimi.ingsw.Model.Messages;
+import com.google.gson.Gson;
 import it.polimi.ingsw.Model.PlayerPackage.*;
 
 public class JoinExistingGameMessage extends Message{
@@ -16,5 +17,10 @@ public class JoinExistingGameMessage extends Message{
     }
     public PlayerColor getPlayerColor() {
         return c;
+    }
+
+    public String MessageToJson() {
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
 }
