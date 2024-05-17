@@ -10,6 +10,7 @@ public class PlaceCardMessage extends Message{
    public int x;
    public int y;
    public FB face;
+   public String name;
 
    public PlaceCardMessage(CommonClient client,String name, int whichInHand, int x, int y, FB face) {
        super("PlaceCardMessage");
@@ -18,6 +19,7 @@ public class PlaceCardMessage extends Message{
        this.x=x;
        this.y=y;
        this.face=face;
+       this.name = name;
    }
 
     @Override
@@ -43,5 +45,9 @@ public class PlaceCardMessage extends Message{
 
     public int getY() {
         return y;
+    }
+
+    public String getName() {
+        return name;
     }
 }
