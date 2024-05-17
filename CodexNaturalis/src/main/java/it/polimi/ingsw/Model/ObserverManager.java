@@ -34,8 +34,10 @@ public class ObserverManager {
     // tutti i metodi della virtual view
 
     public void updatePoints(int points, String name) throws RemoteException {
-        for(String s : observers.keySet())
+        for(String s : observers.keySet()) {
+
             observers.get(s).updatePoints(points, name);
+        }
     }
 
     public void showException(String exception, String name) throws RemoteException {
