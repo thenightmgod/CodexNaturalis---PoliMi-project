@@ -22,16 +22,16 @@ public class MainController {
         this.controllersPerGame = new HashMap<>();
     }
 
-    public LinkedList<GameController> getControllers(){
+    public synchronized LinkedList<GameController> getControllers(){
         return this.controllers;
     }
 
-    public HashMap<Integer, GameController> getControllersPerGame(){
+    public synchronized HashMap<Integer, GameController> getControllersPerGame(){
         return controllersPerGame;
     }
 
     //numPlayers arriva da
-    public GameController createGame(String Name, int numPlayers, VirtualView client) throws WrongPlayersNumberException {
+    public synchronized GameController createGame(String Name, int numPlayers, VirtualView client) throws WrongPlayersNumberException {
         if(numPlayers<2 || numPlayers>4)
             throw new WrongPlayersNumberException("the number of players has to be between 2 and 4");
         else {
@@ -50,7 +50,7 @@ public class MainController {
         return controllers.getLast();
     }
 
-    public GameController joinGame(String Name, VirtualView client) throws RoomFullException, RoomNotExistsException, NameAlreadyTakenException {
+    public synchronized GameController joinGame(String Name, VirtualView client) throws RoomFullException, RoomNotExistsException, NameAlreadyTakenException {
         //come gestire il fatto che debba essere chiamata la createGame se non ne esistono
         //RoomNotExistsException
         if(this.controllers.isEmpty()){
@@ -77,9 +77,8 @@ public class MainController {
         return controllers.getLast();
     }
 
-    public GameController leaveGame(String Name, int RoomId){
+    public synchronized GameController leaveGame(String Name, int RoomId){
         controllers.get(RoomId).removePlayer(Name);
         return controllers.get(RoomId);
     }
-
 }
