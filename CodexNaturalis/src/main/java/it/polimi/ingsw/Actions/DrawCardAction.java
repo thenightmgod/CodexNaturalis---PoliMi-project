@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Actions;
 
 import it.polimi.ingsw.Controller.GameController;
+import it.polimi.ingsw.Controller.MainController;
 import it.polimi.ingsw.Exceptions.WrongIndexException;
 import it.polimi.ingsw.Network.RMI.VirtualView;
 
@@ -11,8 +12,8 @@ public class DrawCardAction extends Actions {
     int i;
     int whichOne;
 
-    public DrawCardAction(int i, int whichOne){
-        super();
+    public DrawCardAction(int i, int whichOne, VirtualView view, MainController manager){
+        super(view, manager);
         this.i = i;
         this.whichOne = whichOne;
     }

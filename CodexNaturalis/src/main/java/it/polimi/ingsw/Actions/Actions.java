@@ -9,16 +9,17 @@ import it.polimi.ingsw.Network.RMI.VirtualView;
 import java.rmi.RemoteException;
 
 public abstract class Actions {
-    private String name;
+
     private VirtualView view;
     private MainController manager;
 
-    public MainController getManager(){
-        return manager;
+    public Actions(VirtualView view, MainController manager) {
+        this.view = view;
+        this.manager = manager;
     }
 
-    public String getName() {
-        return name;
+    public MainController getManager(){
+        return manager;
     }
 
     public VirtualView getView() {

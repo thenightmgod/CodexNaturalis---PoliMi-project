@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Actions;
 
 import it.polimi.ingsw.Controller.GameController;
+import it.polimi.ingsw.Controller.MainController;
 import it.polimi.ingsw.Exceptions.WrongIndexException;
 import it.polimi.ingsw.Network.RMI.VirtualView;
 
@@ -9,8 +10,8 @@ import java.util.Map;
 public class ChooseGoalCardAction extends Actions{
     int i;
 
-    public ChooseGoalCardAction(int i){
-        super();
+    public ChooseGoalCardAction(int i, VirtualView view, MainController manager){
+        super(view, manager);
         this.i = i;
     }
 
