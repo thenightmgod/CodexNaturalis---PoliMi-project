@@ -89,7 +89,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     @Override
     public void joinGame(String Name) throws RoomFullException, RoomNotExistsException,
             RemoteException, NameAlreadyTakenException, NotBoundException {
-        server.joinGame(Name);
+        server.joinGame(name, this);
     }
 
     @Override
