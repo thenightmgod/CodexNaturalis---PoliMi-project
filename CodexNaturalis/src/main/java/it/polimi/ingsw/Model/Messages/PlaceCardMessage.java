@@ -11,7 +11,7 @@ public class PlaceCardMessage extends Message{
    public int y;
    public FB face;
 
-   public PlaceCardMessage(CommonClient client,String name, int whichInHand, int x, int y, FB face) {
+   public PlaceCardMessage(CommonClient client, int whichInHand, int x, int y, FB face) {
        super("PlaceCardMessage");
        this.client=client;
        this.whichInHand=whichInHand;
