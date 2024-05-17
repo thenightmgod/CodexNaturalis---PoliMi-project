@@ -15,7 +15,7 @@ public interface VirtualServer extends Remote {
 
     //le funzioni del server che vuole chiamare il client
 
-    void joinGame(String Name) throws RoomFullException, RoomNotExistsException, RemoteException, NameAlreadyTakenException, NotBoundException;
+    void joinGame(String Name, VirtualView client) throws RoomFullException, RoomNotExistsException, RemoteException, NameAlreadyTakenException, NotBoundException;
 
     void createGame(String Name, int numPlayers, VirtualView client) throws WrongPlayersNumberException, RemoteException, NotBoundException;
 

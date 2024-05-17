@@ -48,8 +48,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer{
     }
 
     @Override
-    public void joinGame(String Name) throws RoomFullException, RoomNotExistsException, RemoteException, NameAlreadyTakenException, NotBoundException {
-        RMIClient client = new RMIClient(Name);
+    public void joinGame(String Name, VirtualView client) throws RoomFullException, RoomNotExistsException, RemoteException, NameAlreadyTakenException, NotBoundException {
         try {
             GameController c = this.controller.joinGame(Name, client);
             clients.put(c.getRoomId(), client);
