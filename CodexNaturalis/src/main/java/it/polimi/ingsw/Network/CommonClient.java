@@ -4,6 +4,7 @@ import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import it.polimi.ingsw.Network.RMI.VirtualView;
+import it.polimi.ingsw.View.GameView;
 import it.polimi.ingsw.View.TUI.TUI;
 
 import java.rmi.NotBoundException;
@@ -15,12 +16,12 @@ public interface CommonClient {
 
     void createGame(String Name, int numPlayers) throws WrongPlayersNumberException, RemoteException, NotBoundException;
 
-    void leaveGame(String name, VirtualView client);
+    void leaveGame(String name, CommonClient client);
 
-    void placeCard(VirtualView client, int whichInHand, int x, int y, FB face) throws WrongIndexException;
+    void placeCard(CommonClient client, int whichInHand, int x, int y, FB face) throws WrongIndexException;
 
-    void setStartCardFace(boolean face, VirtualView client); //il player setta la variabile face della sua start card
-    void chooseGoalCard(int i, VirtualView client) throws WrongIndexException;
+    void setStartCardFace(boolean face, CommonClient client); //il player setta la variabile face della sua start card
+    void chooseGoalCard(int i, CommonClient client) throws WrongIndexException;
 
-    void setView(TUI tui);
+    void setView(GameView view);
 }

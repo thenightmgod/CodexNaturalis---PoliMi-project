@@ -47,22 +47,22 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     };
 
     @Override
-    public void setStartCardFace(boolean face, VirtualView client){
+    public void setStartCardFace(boolean face, CommonClient client){
         server.setStartCardFace(face, this);
     }
 
     @Override
-    public void leaveGame(String name, VirtualView client){
+    public void leaveGame(String name, CommonClient client){
         server.leaveGame(name, this);
     }
 
     @Override
-    public void placeCard(VirtualView client, int whichInHand, int x, int y, FB face) throws WrongIndexException {
+    public void placeCard(CommonClient client, int whichInHand, int x, int y, FB face) throws WrongIndexException {
 
     }
 
     @Override
-    public void chooseGoalCard(int i, VirtualView client) throws WrongIndexException{
+    public void chooseGoalCard(int i, CommonClient client) throws WrongIndexException{
         server.chooseGoalCard(i, this);
     };
 

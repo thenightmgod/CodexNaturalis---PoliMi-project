@@ -84,7 +84,7 @@ public class SocketClient implements CommonClient {
     }
 
     @Override
-    public void joinGame(String name, PlayerColor color, int RoomId) throws RoomFullException, RoomNotExistsException, RemoteException, NameAlreadyTakenException {
+    public void joinGame(String name) throws RoomFullException, RoomNotExistsException, RemoteException, NameAlreadyTakenException {
         name = this.name;
         JoinExistingGameMessage msg = new JoinExistingGameMessage(name, color, RoomId);
         String gson = msg.MessageToJson();
@@ -92,7 +92,7 @@ public class SocketClient implements CommonClient {
     }
 
     @Override
-    public void createGame(String name, PlayerColor color, int numPlayers) throws WrongPlayersNumberException, RemoteException {
+    public void createGame(String name, int numPlayers) throws WrongPlayersNumberException, RemoteException {
         name = this.name;
         CreateGameMessage msg = new CreateGameMessage(name, numPlayers, color);
         String gson = msg.MessagetoJson();
@@ -100,23 +100,23 @@ public class SocketClient implements CommonClient {
     }
 
     @Override
-    public void leaveGame(String name, VirtualView client) {
+    public void leaveGame(String name, CommonClient client) {
         name = this.name
         LeaveGameMessage msg = new LeaveGameMessage(name, );
     }
 
     @Override
-    public void placeCard(VirtualView client, int whichInHand, int x, int y, FB face) throws WrongIndexException {
+    public void placeCard(CommonClient client, int whichInHand, int x, int y, FB face) throws WrongIndexException {
         PlaceCardMessage msg = new PlaceCardMessage()
     }
 
     @Override
-    public void setStartCardFace(boolean face, VirtualView client) {
+    public void setStartCardFace(boolean face, CommonClient client) {
 
     }
 
     @Override
-    public void chooseGoalCard(int i, VirtualView client) throws WrongIndexException {
+    public void chooseGoalCard(int i, CommonClient client) throws WrongIndexException {
 
     }
 
