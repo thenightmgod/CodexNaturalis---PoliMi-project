@@ -76,7 +76,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
 
     @Override
     public void createGame(String Name, int numPlayers) throws WrongPlayersNumberException, RemoteException, NotBoundException {
-        server.createGame(Name, numPlayers);
+        server.createGame(Name, numPlayers, this);
     }
 
     @Override
