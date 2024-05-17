@@ -3,6 +3,7 @@ package it.polimi.ingsw.Network.RMI;
 import it.polimi.ingsw.Exceptions.WrongPlayersNumberException;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
+import it.polimi.ingsw.Model.Messages.Message;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
@@ -21,17 +22,20 @@ public interface VirtualView extends Remote {
 
     void showException(String details) throws RemoteException;
 
-    void updatePoints(int points, String name) throws RemoteException;
+    void updatePoints(String pointsMex) throws RemoteException;
+    // int points, String name
 
-    void showGoals(LinkedList<GoalCard> goals) throws RemoteException;
+    void showGoals(String goalMex) throws RemoteException;
+    // LinkedList<GoalCard> goals
 
-    void showHand(LinkedList<PlayableCard> hand) throws RemoteException;
+    void showHand(String handMex) throws RemoteException;
+    // LinkedList<PlayableCard> hand
 
-    void updateField(String name, PlayingField field) throws RemoteException;
+    void updateField(String fieldMex) throws RemoteException;
+    // String name, PlayingField field
 
-    void showFreePositions(String name, LinkedList<Position> freePosition) throws RemoteException;
-
-    void createGame(String name, int NumPlayers) throws WrongPlayersNumberException, RemoteException, NotBoundException;
+    void showFreePositions(String freePosMex) throws RemoteException;
+    // String name, LinkedList<Position> freePosition
 
     void update() throws RemoteException; //update il clientModel
 
