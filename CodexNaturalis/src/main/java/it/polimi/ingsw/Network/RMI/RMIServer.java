@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Network.RMI;
 
+import it.polimi.ingsw.Actions.Actions;
 import it.polimi.ingsw.Controller.GameController;
 import it.polimi.ingsw.Controller.MainController;
 import it.polimi.ingsw.Exceptions.*;
@@ -17,6 +18,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.concurrent.BlockingQueue;
 
 public class RMIServer extends UnicastRemoteObject implements VirtualServer{
 
@@ -27,6 +29,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer{
     HashMap<Integer, VirtualView> clients = new HashMap<>(); //aggiungere roba qui dentro
     int port;
 
+    BlockingQueue<Actions> actions;
 
     public RMIServer(MainController controller) throws RemoteException{
         this.controller = controller;
@@ -60,8 +63,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer{
     }
 
     @Override
-    public void createGame(String Name, int numPlayers) throws WrongPlayersNumberException, RemoteException, NotBoundException {
-        RMIClient client = new RMIClient(Name);
+    public void createGame(String Name, int numPlayers, VirtualView client) throws WrongPlayersNumberException, RemoteException, NotBoundException {
         GameController c = this.controller.createGame(Name, numPlayers, client);
         clients.put(c.getRoomId(), client);
         //eccezione del nome
@@ -103,6 +105,12 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer{
         int k = clients.entrySet().stream().filter(entry -> client.equals(entry.getValue())).map(Map.Entry::getKey).findFirst().orElse(-1);
         GameController controller = this.controller.getControllers().get(k);
         controller.drawCard(i, whichOne);
+    }
+
+    public void execute() throws InterruptedException, WrongIndexException {
+        new Thread(()->{
+
+        }).start();
     }
 
 }
