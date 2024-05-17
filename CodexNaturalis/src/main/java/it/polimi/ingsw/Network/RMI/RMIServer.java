@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Network.RMI;
 
-import it.polimi.ingsw.Actions.Actions;
+import it.polimi.ingsw.Actions.*;
 import it.polimi.ingsw.Controller.GameController;
 import it.polimi.ingsw.Controller.MainController;
 import it.polimi.ingsw.Exceptions.*;
@@ -49,13 +49,8 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer{
 
     @Override
     public void joinGame(String Name, VirtualView client) throws RoomFullException, RoomNotExistsException, RemoteException, NameAlreadyTakenException, NotBoundException {
-        try {
-            GameController c = this.controller.joinGame(Name, client);
-            clients.put(c.getRoomId(), client);
-
-        } catch(NameAlreadyTakenException e){
-            e.printStackTrace();
-        }
+        Actions jGame = new JoinAction(client, controller, Name);
+        actions.add(jGame);
         //creare room
         //addare poi il lazzaro nel coso
         //mettere eccezione del nome
@@ -63,47 +58,38 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer{
 
     @Override
     public void createGame(String Name, int numPlayers, VirtualView client) throws WrongPlayersNumberException, RemoteException, NotBoundException {
-        GameController c = this.controller.createGame(Name, numPlayers, client);
-        clients.put(c.getRoomId(), client);
+        Actions cGame = new CreateAction(numPlayers, client, controller, Name);
+        actions.add(cGame);
         //eccezione del nome
     }
 
     @Override
     public void leaveGame(String name, VirtualView client) {
-        int k = clients.entrySet().stream().filter(entry -> client.equals(entry.getValue())).map(Map.Entry::getKey).findFirst().orElse(-1);
-        GameController c = this.controller.leaveGame(name, k);
-        clients.remove(c);
+        Actions lAction = new LeaveAction(name, client, controller);
+        actions.add(lAction);
     }
 
     @Override
     public void placeCard(VirtualView client, int whichInHand, int x, int y, FB face) throws WrongIndexException {
-        int k = clients.entrySet().stream().filter(entry -> client.equals(entry.getValue())).map(Map.Entry::getKey).findFirst().orElse(-1);
-        GameController controller = this.controller.getControllers().get(k);
-        //cambiare dinamica di place card con l'int della mano
-        controller.placeCard(whichInHand, x, y, face);
+        Actions pAction = new PlaceCardAction(controller, client, whichInHand, x, y, face);
+        actions.add(pAction);
     }
 
     @Override
     public void setStartCardFace(boolean face, VirtualView client) { //ordine initialize game tutto gestito nella view
-        int k = clients.entrySet().stream().filter(entry -> client.equals(entry.getValue())).map(Map.Entry::getKey).findFirst().orElse(-1);
-        GameController controller = this.controller.getControllers().get(k);
-        FB f = FB.FRONT;
-        if(!face) f = FB.BACK;
-        controller.giveStartCard(f);
+        Actions ssAction = new SetStartCardFaceAction(face, client, controller);
+        actions.add(ssAction);
     }
 
     @Override
     public void chooseGoalCard(int i, VirtualView client) throws WrongIndexException {
-        int k = clients.entrySet().stream().filter(entry -> client.equals(entry.getValue())).map(Map.Entry::getKey).findFirst().orElse(-1);
-        GameController controller = this.controller.getControllers().get(k);
-        controller.chooseGoalCard(controller.getGame().getTurn(), i);
+        Actions cgAction = new ChooseGoalCardAction(i, client, controller);
+        actions.add(cgAction);
     }
 
     @Override
     public void drawCard(int i, int whichOne, VirtualView client) throws WrongIndexException, RemoteException {
-        int k = clients.entrySet().stream().filter(entry -> client.equals(entry.getValue())).map(Map.Entry::getKey).findFirst().orElse(-1);
-        GameController controller = this.controller.getControllers().get(k);
-        controller.drawCard(i, whichOne);
+        Actions dAction = new DrawCardAction(i, whichOne, client, controller);
     }
 
     public void execute() throws InterruptedException, WrongIndexException {
