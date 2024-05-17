@@ -21,7 +21,10 @@ public interface CommonClient {
     void placeCard(CommonClient client, int whichInHand, int x, int y, FB face) throws WrongIndexException;
 
     void setStartCardFace(boolean face, CommonClient client); //il player setta la variabile face della sua start card
+
     void chooseGoalCard(int i, CommonClient client) throws WrongIndexException;
+
+    void drawCard(int i, int whichone, CommonClient client) throws WrongIndexException, RemoteException;
 
     void setView(GameView view);
 }

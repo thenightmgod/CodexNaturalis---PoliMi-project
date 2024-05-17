@@ -64,7 +64,15 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     @Override
     public void chooseGoalCard(int i, CommonClient client) throws WrongIndexException{
         server.chooseGoalCard(i, this);
-    };
+    }
+
+    @Override
+    public void drawCard(int whichDeck, int whichone, CommonClient client) throws WrongIndexException, RemoteException {
+        server.drawCard(whichDeck, whichone, this);
+
+    }
+
+    ;
 
     @Override
     public void createGame(String Name, int numPlayers) throws WrongPlayersNumberException, RemoteException, NotBoundException {
@@ -82,10 +90,6 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     public void joinGame(String Name) throws RoomFullException, RoomNotExistsException,
             RemoteException, NameAlreadyTakenException, NotBoundException {
         server.joinGame(Name);
-    }
-
-    public void drawCard(int whichDeck, int whichOne) throws WrongIndexException, RemoteException {
-        server.drawCard(whichDeck, whichOne, this);
     }
 
     @Override
