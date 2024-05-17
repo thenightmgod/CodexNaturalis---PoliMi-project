@@ -26,6 +26,10 @@ public class MainController {
         return this.controllers;
     }
 
+    public HashMap<Integer, GameController> getControllersPerGame(){
+        return controllersPerGame;
+    }
+
     //numPlayers arriva da
     public GameController createGame(String Name, int numPlayers, VirtualView client) throws WrongPlayersNumberException {
         if(numPlayers<2 || numPlayers>4)
