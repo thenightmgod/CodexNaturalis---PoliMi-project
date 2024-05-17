@@ -1,18 +1,22 @@
 package it.polimi.ingsw.Model.Messages;
 
-public class LeaveGameMessage extends Message {
-    //va messa la virtualView?
-    public int RoomId;
+import it.polimi.ingsw.Network.CommonClient;
 
-    public LeaveGameMessage(String name, int RoomId) {
-        super("LeaveGameMessage", name);
-        this.RoomId=RoomId;
+public class LeaveGameMessage extends Message {
+    String name;
+    CommonClient client;
+    public LeaveGameMessage(String name, CommonClient client) {
+        super("LeaveGameMessage");
+        this.name=name;
+        this.client= client;
     }
-    @Override
+
+
     public String getName() {
-        return super.getName();
+        return this.name;
     }
-    public int getRoomId() {
-        return RoomId;
+
+    public CommonClient getClient() {
+        return client;
     }
 }

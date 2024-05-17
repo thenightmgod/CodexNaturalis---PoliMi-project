@@ -17,14 +17,9 @@ import static com.sun.management.HotSpotDiagnosticMXBean.ThreadDumpFormat.JSON;
 
 public abstract class Message implements Serializable {
     public String type;
-    public String name;
 
-    public Message(String type, String nickname) {
+    public Message(String type) {
         this.type=type;
-        this.name= nickname;
-    }
-    public String getName() {
-        return name;
     }
     public String getType() {
         return type;

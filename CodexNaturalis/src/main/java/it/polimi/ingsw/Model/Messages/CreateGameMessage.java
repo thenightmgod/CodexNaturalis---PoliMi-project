@@ -4,22 +4,17 @@ import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 
 
 public class CreateGameMessage extends Message{
-    public int RoomId;
+    public String name;
     public int NumPlayers;
-    public PlayerColor pc;
 
-    public CreateGameMessage(String nickname, int NumPlayers, PlayerColor pc) {
-        super("CreateGameMessage", nickname);
-        this.RoomId= RoomId;
+    public CreateGameMessage(String nickname, int NumPlayers) {
+        super("CreateGameMessage");
         this.NumPlayers=NumPlayers;
-        this.pc = pc;
+        this.name=nickname;
     }
 
     public int getNumPlayers(){
         return NumPlayers;
-    }
-    public int getRoomId() {
-        return RoomId;
     }
 
     public String MessagetoJson() {
