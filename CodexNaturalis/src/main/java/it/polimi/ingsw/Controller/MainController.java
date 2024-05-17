@@ -15,8 +15,11 @@ import java.util.LinkedList;
 public class MainController {
     LinkedList<GameController> controllers;
 
+    HashMap<Integer, GameController> controllersPerGame;
+
     public MainController(){
         this.controllers = new LinkedList<>();
+        this.controllersPerGame = new HashMap<>();
     }
 
     public LinkedList<GameController> getControllers(){
@@ -28,10 +31,16 @@ public class MainController {
         if(numPlayers<2 || numPlayers>4)
             throw new WrongPlayersNumberException("the number of players has to be between 2 and 4");
         else {
-            if(controllers.isEmpty())
-                controllers.add(new GameController(0, numPlayers));
-            else
-                controllers.add(new GameController(controllers.getLast().getRoomId() + 1, numPlayers));
+            if(controllers.isEmpty()) {
+                GameController Garfield = new GameController(0, numPlayers);
+                controllers.add(Garfield);
+                controllersPerGame.put(0, Garfield);
+            }
+            else {
+                GameController Garfield = new GameController(controllers.getLast().getRoomId() + 1, numPlayers);
+                controllers.add(Garfield);
+                controllersPerGame.put(controllers.getLast().getRoomId() + 1, Garfield);
+            }
             controllers.getLast().addPlayer(Name, PlayerColor.RED, client);
         }
         return controllers.getLast();

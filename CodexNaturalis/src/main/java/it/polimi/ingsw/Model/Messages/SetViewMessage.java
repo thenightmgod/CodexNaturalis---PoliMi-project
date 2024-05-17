@@ -13,7 +13,4 @@ public class SetViewMessage extends Message {
     public GameView getView() {
         return view;
     }
-    public String MessageToJson() {
-        return super.MessageToJson();
-    }
 }

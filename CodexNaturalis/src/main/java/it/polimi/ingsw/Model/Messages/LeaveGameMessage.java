@@ -19,9 +19,4 @@ public class LeaveGameMessage extends Message {
     public CommonClient getClient() {
         return client;
     }
-
-    @Override
-    public String MessageToJson() {
-        return super.MessageToJson();
-    }
 }
