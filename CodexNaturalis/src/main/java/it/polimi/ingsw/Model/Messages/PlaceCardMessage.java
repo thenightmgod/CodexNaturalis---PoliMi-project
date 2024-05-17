@@ -20,6 +20,11 @@ public class PlaceCardMessage extends Message{
        this.face=face;
    }
 
+    @Override
+    public String getType() {
+        return super.getType();
+    }
+
     public CommonClient getClient() {
         return client;
     }

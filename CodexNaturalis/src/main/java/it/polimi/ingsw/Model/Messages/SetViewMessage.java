@@ -10,6 +10,12 @@ public class SetViewMessage extends Message {
         super("SetViewMessage");
         this.view=view;
     }
+
+    @Override
+    public String getType() {
+        return super.getType();
+    }
+
     public GameView getView() {
         return view;
     }

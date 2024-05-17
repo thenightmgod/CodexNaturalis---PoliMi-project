@@ -14,6 +14,11 @@ public class DrawCardMessage extends Message {
         this.client=client;
     }
 
+    @Override
+    public String getType() {
+        return super.getType();
+    }
+
     public CommonClient getClient() {
         return client;
     }

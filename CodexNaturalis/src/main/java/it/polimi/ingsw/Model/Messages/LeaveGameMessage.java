@@ -11,6 +11,10 @@ public class LeaveGameMessage extends Message {
         this.client= client;
     }
 
+    @Override
+    public String getType() {
+        return super.getType();
+    }
 
     public String getName() {
         return this.name;

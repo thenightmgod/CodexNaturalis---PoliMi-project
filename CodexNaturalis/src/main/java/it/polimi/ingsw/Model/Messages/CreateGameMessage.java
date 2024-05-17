@@ -13,6 +13,11 @@ public class CreateGameMessage extends Message{
         this.name=nickname;
     }
 
+    @Override
+    public String getType() {
+        return super.getType();
+    }
+
     public int getNumPlayers(){
         return NumPlayers;
     }
