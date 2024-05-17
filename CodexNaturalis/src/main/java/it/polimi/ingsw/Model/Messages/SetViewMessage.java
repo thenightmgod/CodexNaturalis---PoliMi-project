@@ -11,8 +11,6 @@ public class SetViewMessage extends Message {
         this.view=view;
     }
 
-
-
     @Override
     public String getType() {
         return super.getType();

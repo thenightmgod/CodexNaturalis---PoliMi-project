@@ -5,8 +5,6 @@ import it.polimi.ingsw.Exceptions.WrongIndexException;
 import it.polimi.ingsw.Network.CommonClient;
 import it.polimi.ingsw.Network.RMI.VirtualView;
 
-import java.rmi.RemoteException;
-
 public abstract class Actions {
     private String name;
     private VirtualView view;
@@ -21,14 +19,6 @@ public abstract class Actions {
         return manager;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public VirtualView getView() {
-        return view;
-    }
-
-    public void executor() throws WrongIndexException, RemoteException {}
+    public void executor() throws WrongIndexException {}
 }
 

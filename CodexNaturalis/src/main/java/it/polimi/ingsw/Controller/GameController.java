@@ -40,37 +40,37 @@ public class GameController {
         this.clients = new LinkedList<>();
     }
 
-    public synchronized Room getGame() {
+    public Room getGame() {
         return Game;
     }
 
-    public synchronized int getRoomId(){
+    public int getRoomId(){
         return this.RoomId;
     }
 
-    public synchronized int getNumPlayers(){
+    public int getNumPlayers(){
         return numPlayers;
     }
 
-    public synchronized int getHowManyPlayers(){
+    public int getHowManyPlayers(){
         return this.Players.size();
     }
 
-    public synchronized void removePlayer(String name){
+    public void removePlayer(String name){
         Players.removeIf(p -> p.getName() == name);
     }
 
-    public synchronized void addPlayer(String name, PlayerColor color, VirtualView client){  //non possono esserci più di 4 giocatori
+    public void addPlayer(String name, PlayerColor color, VirtualView client){  //non possono esserci più di 4 giocatori
         Player player = new Player(name, color);
         this.Players.add(player);
         this.clients.add(client);
     }
 
-    public synchronized void initializeRoom(){ //pre inizializzazione è una specie di waiting room
+    public void initializeRoom(){ //pre inizializzazione è una specie di waiting room
         this.Game = new Room(RoomId, Players, clients);
     }
 
-    public synchronized void startGame(){ //in virtual view
+    public void startGame(){ //in virtual view
         if(this.Players.size() == this.numPlayers) {
             initializeRoom();
             State = GameState.RUNNING;
@@ -79,20 +79,20 @@ public class GameController {
     }
 
 
-    public synchronized void createDecks(){
+    public void createDecks(){
         this.Game.createDecks();
     }
 
-    public synchronized void giveStartCard(FB face){//ovviamente la face viene passata dal client
+    public void giveStartCard(FB face){//ovviamente la face viene passata dal client
         this.Game.giveStartCards(face);
         changeTurns();
     }
 
-    public synchronized void giveHands() throws RemoteException {
+    public void giveHands() throws RemoteException {
         this.Game.giveHands();
     }
 
-    public synchronized void commonGoals(){
+    public void commonGoals(){
         this.Game.commonGoals();
     }
 
@@ -102,7 +102,7 @@ public class GameController {
     }*/
     //non penso serva perchè è il model che la manda al client
 
-    public synchronized void chooseGoalCard(Player p, int i) throws WrongIndexException {
+    public void chooseGoalCard(Player p, int i) throws WrongIndexException {
         if(i<1 || i>2)
             throw new WrongIndexException("it should be between 1 and 2");
         else{
@@ -112,19 +112,19 @@ public class GameController {
         changeTurns(); //boh dipende dalla logica di gioco
     }
 
-    public synchronized void checkGoals(){
+    public void checkGoals(){
         for(Player p : Players){
             this.Game.checkGoals(p, Game.getCommonGoals());
         }
     }
 
-    public synchronized GameState getState(){
+    public GameState getState(){
         return this.State;
     }
 
     //la place card effettiva si compone di questi due passaggi
 
-    public synchronized void placeCard(int i, int x, int y, FB face) throws WrongIndexException{ //p passata dal client
+    public void placeCard(int i, int x, int y, FB face) throws WrongIndexException{ //p passata dal client
     if(i < 1 || i > 3)
         throw new WrongIndexException("put an index between 1 and 3");
     else
@@ -142,7 +142,7 @@ public class GameController {
 
     // ci serve una funzione che chiede al client un intero da 0 a 2? boh
     // da client si sceglie deck che è già lì(?) e intero, non bisogna passare molto
-    public synchronized void pickResCard(int i) throws RemoteException { //l'intero deve arrivare dal client
+    public void pickResCard(int i) throws RemoteException { //l'intero deve arrivare dal client
         declareWinner();
         this.Game.getResourceDeck().giveCard(this.Game.getTurn(), i);
         this.Game.setTwentyFlag();
@@ -151,7 +151,7 @@ public class GameController {
         changeTurns();
     }
 
-    public synchronized void pickGoldCard(int i) throws RemoteException {
+    public void pickGoldCard(int i) throws RemoteException {
         declareWinner();
         this.Game.getGoldDeck().giveCard(this.Game.getTurn(), i);
         this.Game.setTwentyFlag();
@@ -160,7 +160,7 @@ public class GameController {
         changeTurns();
     }
 
-    public synchronized void changeTurns(){
+    public void changeTurns(){
         Player now = this.Game.getTurn();
         int size = Players.size();
         switch(size){
@@ -191,16 +191,16 @@ public class GameController {
     }
 
     //come gestire l'ending, se qua o nel client o boh
-    public synchronized void declareWinner(){
+    public void declareWinner(){
         checkGoals();
         this.Game.declareWinner();
     }
 
-    public synchronized LinkedList<Player> getPlayers(){
+    public LinkedList<Player> getPlayers(){
         return this.Players;
     }
 
-    public synchronized void drawCard(int i, int whichone) throws WrongIndexException, RemoteException {
+    public void drawCard(int i, int whichone) throws WrongIndexException, RemoteException {
         if(i < 1 || i  > 2)
             throw new WrongIndexException("indice sbagliato, o 1 o 2");
         else{
