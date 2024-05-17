@@ -19,4 +19,7 @@ public class SetStartCardFaceMessage extends Message {
     public boolean getFace() {
         return Face;
     }
+    public String MessageToJson() {
+        return super.MessageToJson();
+    }
 }

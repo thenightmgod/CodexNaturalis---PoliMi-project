@@ -39,4 +39,7 @@ public class PlaceCardMessage extends Message{
     public int getY() {
         return y;
     }
+    public String MessageToJson() {
+        return super.MessageToJson();
+    }
 }

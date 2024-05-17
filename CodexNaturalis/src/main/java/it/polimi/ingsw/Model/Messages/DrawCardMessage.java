@@ -25,4 +25,7 @@ public class DrawCardMessage extends Message {
     public int getWhichOne() {
         return whichOne;
     }
+    public String MessageToJson() {
+        return super.MessageToJson();
+    }
 }
