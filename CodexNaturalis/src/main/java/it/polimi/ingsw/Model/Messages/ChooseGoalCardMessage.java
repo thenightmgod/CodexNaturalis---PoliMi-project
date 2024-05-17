@@ -12,6 +12,10 @@ public class ChooseGoalCardMessage extends Message {
         this.client=client;
     }
 
+    @Override
+    public String getType() {
+        return super.getType();
+    }
 
     public int getI() {
         return i;

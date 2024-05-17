@@ -11,6 +11,11 @@ public class JoinExistingGameMessage extends Message{
         this.name=nickname;
     }
 
+    @Override
+    public String getType() {
+        return super.getType();
+    }
+
     public String MessageToJson() {
         Gson gson = new Gson();
         return gson.toJson(this);
