@@ -18,6 +18,10 @@ public class CreateGameMessage extends Message{
         return super.getType();
     }
 
+    public String getName() {
+        return name;
+    }
+
     public int getNumPlayers(){
         return NumPlayers;
     }
