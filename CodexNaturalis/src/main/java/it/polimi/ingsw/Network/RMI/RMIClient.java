@@ -28,6 +28,8 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     private ClientModel model;
 
 
+    //               FUNZIONI PER CREARE ED INIZIALIZZARE IL CLIENT RMI
+
     public RMIClient( String name) throws RemoteException, NotBoundException {
         this.model = new ClientModel(name);
         this.name = name;
@@ -42,9 +44,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
         this.server = (VirtualServer) registry.lookup(serverName);
     }
 
-    public void placeCard(int whichInHand, int x, int y, FB face) throws WrongIndexException{
-        server.placeCard(this, whichInHand, x, y, face);
-    };
+    //                   FUNZIONI DEL COMMON CLIENT
 
     @Override
     public void setStartCardFace(boolean face, CommonClient client){
@@ -58,7 +58,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
 
     @Override
     public void placeCard(CommonClient client, int whichInHand, int x, int y, FB face) throws WrongIndexException {
-
+        server.placeCard(this, whichInHand, x, y, face);
     }
 
     @Override
@@ -69,10 +69,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     @Override
     public void drawCard(int whichDeck, int whichone, CommonClient client) throws WrongIndexException, RemoteException {
         server.drawCard(whichDeck, whichone, this);
-
     }
-
-    ;
 
     @Override
     public void createGame(String Name, int numPlayers) throws WrongPlayersNumberException, RemoteException, NotBoundException {
@@ -91,6 +88,9 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
             RemoteException, NameAlreadyTakenException, NotBoundException {
         server.joinGame(name, this);
     }
+
+
+    //    FUNZIONI DELLA VIRTUAL VIEW
 
     @Override
     public void showException(String details) throws RemoteException {

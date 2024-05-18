@@ -92,9 +92,23 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer{
         Actions dAction = new DrawCardAction(i, whichOne, client, controller);
     }
 
-    public void execute() throws InterruptedException, WrongIndexException {
+    public void execute(){
         new Thread(()->{
-
+            try {
+                Actions now = actions.take();
+                now.executor();
+                // le eccezioni che vorrebbe catchare qua, tranne la runtime
+                // vanno catchate in zona client, suppongo
+                // vabbè bella poi vediamo
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            } catch (WrongIndexException e) {
+                throw new RuntimeException(e);
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            } catch (WrongPlayersNumberException e) {
+                throw new RuntimeException(e);
+            }
         }).start();
     }
 
