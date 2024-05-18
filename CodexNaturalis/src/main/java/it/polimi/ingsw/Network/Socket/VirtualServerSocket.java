@@ -12,7 +12,6 @@ public interface VirtualServerSocket {
     void createGame(String stringMessage) ;
 
     void leaveGame(String stringMessage);
-
     void placeCard(String stringMessage);
 
     void setStartCardFace(String stringMessage); //il player setta la variabile face della sua start card

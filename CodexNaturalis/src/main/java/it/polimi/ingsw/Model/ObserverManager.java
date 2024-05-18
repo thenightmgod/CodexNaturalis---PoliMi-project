@@ -35,7 +35,6 @@ public class ObserverManager {
 
     public void updatePoints(int points, String name) throws RemoteException {
         for(String s : observers.keySet()) {
-
             observers.get(s).updatePoints(points, name);
         }
     }

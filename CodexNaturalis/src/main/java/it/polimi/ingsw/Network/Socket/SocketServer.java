@@ -31,16 +31,21 @@ public class SocketServer {
             System.exit(-1);
         }
     }
+
+    //OutputStreamWriter socketTx = new OutputStreamWriter(clientSocket.getOutputStream());
+    //PrintWriter writer = new PrintWriter(socketTx, true);
+   // SocketClientHandler handler = new SocketClientHandler(this.controller, this, new BufferedReader(socketRx), new ClientProxy(writer));
+
     public void startServer(){
         Socket clientSocket = null;
         try {
             while ((clientSocket = this.listenSocket.accept()) != null){
+                //quando creo il socketclienthandler devo mettergli come input l'ouput del ServerProxy e devo mettergli
+                //come output il client Proxy che smista il mex verso il client
                 InputStreamReader socketRx = new InputStreamReader(clientSocket.getInputStream());
                 OutputStreamWriter socketTx = new OutputStreamWriter(clientSocket.getOutputStream());
-
                 SocketClientHandler handler = new SocketClientHandler(this.controller, this, new BufferedReader(socketRx), new PrintWriter(socketTx));
                 System.out.println("Connection established");
-
                 synchronized (this.clients) {
                     clients.add(handler);
                 }

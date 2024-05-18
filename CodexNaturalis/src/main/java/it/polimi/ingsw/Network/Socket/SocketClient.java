@@ -14,7 +14,7 @@ import java.rmi.RemoteException;
 
 import static java.lang.System.exit;
 
-//il client deve
+//QUANDO CREO IL SOCKETCLIENT DEVO DARGLI COME NOME IL NOME DEL PLAYER
 public class SocketClient implements CommonClient {
     final ServerProxy server;
     final BufferedReader input;
@@ -26,6 +26,11 @@ public class SocketClient implements CommonClient {
         this.name = name;
 
     }
+    public String getName() {
+        return this.name;
+    }
+
+    //VA ASSOCIATO IL BUFFERED READER INPUT del client al PRINT WRITER DEL CLIENT PROXY
     public void initializeClient(String hostname, int ServerPort) {
         Socket socket;
         OutputStreamWriter socketTx;
@@ -61,7 +66,7 @@ public class SocketClient implements CommonClient {
         this.runClient();
     }
 
-    //si mette in ascolto sul client e
+    //si mette in ascolto sul client e traduce le cose digitate sulla tui nelle chiamate ai propri metodi giusti
     private void runClient() {
         new Thread(() -> {
             BufferedReader terminalReader = new BufferedReader(new InputStreamReader(System.in));

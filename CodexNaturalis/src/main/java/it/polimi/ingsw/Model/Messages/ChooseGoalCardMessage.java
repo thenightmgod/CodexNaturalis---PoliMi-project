@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Model.Messages;
 
 import it.polimi.ingsw.Network.CommonClient;
+import it.polimi.ingsw.Network.Socket.SocketClient;
 
 public class ChooseGoalCardMessage extends Message {
     public int i;
@@ -25,9 +26,14 @@ public class ChooseGoalCardMessage extends Message {
         return client;
     }
 
+    public SocketClient castCommonToSocket(CommonClient client) {
+        return (SocketClient) client;
+    }
+
     @Override
     public String MessageToJson() {
         return super.MessageToJson();
     }
+
 
 }

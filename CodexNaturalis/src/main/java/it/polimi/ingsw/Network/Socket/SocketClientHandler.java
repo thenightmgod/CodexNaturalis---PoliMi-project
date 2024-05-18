@@ -8,8 +8,10 @@ import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.Messages.*;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
+import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
+import it.polimi.ingsw.Network.CommonClient;
 import it.polimi.ingsw.Network.RMI.VirtualView;
 
 import java.io.BufferedReader;
@@ -22,17 +24,16 @@ import java.util.Map;
 
 public class SocketClientHandler implements VirtualView {
     final MainController controller;
+    final ClientProxy proxy;
     final SocketServer server;
     final BufferedReader input;
-    final PrintWriter output;
     private GameController gc;
-
 
     public SocketClientHandler(MainController controller, SocketServer server, BufferedReader input, PrintWriter output){
         this.controller = controller;
         this.server = server;
         this.input = input;
-        this.output = output;
+        this.proxy = new ClientProxy(output);
         this.gc = null;
     }
 
@@ -45,6 +46,7 @@ public class SocketClientHandler implements VirtualView {
                     receivedmessage = input.readLine();
                     Gson gson = new Gson();
                     Message message = gson.fromJson(receivedmessage, Message.class);
+                    //gestire le eccezioni di handleCommand in questo metodo
                     handleCommand(message);
                 }
             }
@@ -53,7 +55,7 @@ public class SocketClientHandler implements VirtualView {
             }
         }
     }
-    public void handleCommand(Message msg) throws RoomFullException, RoomNotExistsException, NameAlreadyTakenException, WrongPlayersNumberException, WrongIndexException {
+    public void handleCommand(Message msg) throws RoomFullException, RoomNotExistsException, NameAlreadyTakenException, WrongPlayersNumberException, WrongIndexException, RemoteException {
         switch(msg.getType()){
             case "JoinExistingGameMessage" -> {
                 String name = ((JoinExistingGameMessage) msg).getName();
@@ -67,22 +69,31 @@ public class SocketClientHandler implements VirtualView {
             case "LeaveGameMessage" -> {
                 String name = ((LeaveGameMessage) msg).getName();
                 HashMap<Integer, GameController> map = controller.getControllersPerGame();
-                Integer k = gc.getRoomId();
+                int k = gc.getRoomId();
                 GameController useless = controller.leaveGame(name, k);
             }
             case "PlaceCardMessage" -> {
                 String name = ((PlaceCardMessage) msg).getName();
-                Integer x = ((PlaceCardMessage) msg).getX();
-                Integer y = ((PlaceCardMessage) msg).getY();
-                Integer whichInHand = ((PlaceCardMessage) msg).getWhichInHand();
+                int x = ((PlaceCardMessage) msg).getX();
+                int y = ((PlaceCardMessage) msg).getY();
+                int whichInHand = ((PlaceCardMessage) msg).getWhichInHand();
                 FB face = ((PlaceCardMessage) msg).getFace();
                 gc.placeCard(whichInHand, x, y, face);
             }
             case "SetStartCardMessage" -> {
-
+                //da fare dopo aver sistemato il metodo nel game controller
             }
             case "ChooseGoalCardMessage" -> {
-
+                int i= ((ChooseGoalCardMessage)msg).getI();
+                SocketClient client = ((ChooseGoalCardMessage)msg).castCommonToSocket(((ChooseGoalCardMessage) msg).getClient());
+                String name = client.getName();
+                Player p= gc.getPlayerByName(name);
+                gc.chooseGoalCard(p,i);
+            }
+            case "DrawCardMessage" -> {
+                int i= ((DrawCardMessage)msg).getI();
+                int WhichOne= ((DrawCardMessage)msg).getWhichOne();
+                gc.drawCard(i,WhichOne);
             }
         }
     }
@@ -93,6 +104,7 @@ public class SocketClientHandler implements VirtualView {
     }
 
     public void updatePoints(int points, String name) throws RemoteException{
+
 
     }
 
