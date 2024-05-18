@@ -213,9 +213,10 @@ public class GameController {
         }
     }
 
-    //public synchronized Player getPlayerByName(String name) {
-        //todo
-
-    //}
+    public synchronized Player getPlayerByName(String name) {
+        Player p = Players.stream().filter(x -> x.getName() == name).findFirst().orElse(null);
+        // se p è null ci deve essere un'eccezione
+        return p;
+    }
 
 }
