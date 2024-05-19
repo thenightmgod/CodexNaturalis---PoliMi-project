@@ -1,14 +1,10 @@
 package it.polimi.ingsw.Network.RMI;
 
 import it.polimi.ingsw.Actions.*;
-import it.polimi.ingsw.Controller.GameController;
 import it.polimi.ingsw.Controller.MainController;
 import it.polimi.ingsw.Exceptions.*;
-import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
-import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
-import it.polimi.ingsw.Model.PlayerPackage.Position;
-import it.polimi.ingsw.Model.Room;
+import it.polimi.ingsw.Network.VirtualView;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -16,8 +12,6 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 
 public class RMIServer extends UnicastRemoteObject implements VirtualServer{

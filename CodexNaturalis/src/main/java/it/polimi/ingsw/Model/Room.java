@@ -6,19 +6,16 @@ import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.CompositionGoalCard;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.ObjectsGoalCard;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.ResourceGoalCard;
-import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.StartCard;
 import it.polimi.ingsw.Model.DeckPackage.*;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
-import it.polimi.ingsw.Network.RMI.VirtualView;
+import it.polimi.ingsw.Network.VirtualView;
 
 import java.rmi.RemoteException;
-import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Set;
 
 /**
  * Represents a game room where players participate.

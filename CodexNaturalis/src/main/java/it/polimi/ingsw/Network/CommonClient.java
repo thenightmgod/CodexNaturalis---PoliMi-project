@@ -2,10 +2,7 @@ package it.polimi.ingsw.Network;
 
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
-import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
-import it.polimi.ingsw.Network.RMI.VirtualView;
 import it.polimi.ingsw.View.GameView;
-import it.polimi.ingsw.View.TUI.TUI;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.Network.RMI;
+package it.polimi.ingsw.Network;
 
 import it.polimi.ingsw.Exceptions.WrongPlayersNumberException;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
@@ -15,8 +15,6 @@ import java.rmi.RemoteException;
 import java.util.LinkedList;
 
 public interface VirtualView extends Remote {
-
-
 
     //le funzioni del client che vuole chiamare il server
 

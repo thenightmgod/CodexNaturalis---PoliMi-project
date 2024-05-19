@@ -3,9 +3,7 @@ package it.polimi.ingsw.Network.Socket;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.Messages.*;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
-import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import it.polimi.ingsw.Network.CommonClient;
-import it.polimi.ingsw.Network.RMI.VirtualView;
 import it.polimi.ingsw.View.GameView;
 
 import java.io.*;

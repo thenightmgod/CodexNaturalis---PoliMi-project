@@ -3,10 +3,8 @@ package it.polimi.ingsw.Actions;
 import it.polimi.ingsw.Controller.GameController;
 import it.polimi.ingsw.Controller.MainController;
 import it.polimi.ingsw.Exceptions.WrongPlayersNumberException;
-import it.polimi.ingsw.Network.RMI.RMIClient;
-import it.polimi.ingsw.Network.RMI.VirtualView;
+import it.polimi.ingsw.Network.VirtualView;
 
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 public class CreateAction extends Actions{

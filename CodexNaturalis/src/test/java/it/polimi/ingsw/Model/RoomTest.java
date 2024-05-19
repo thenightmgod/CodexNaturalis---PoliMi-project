@@ -3,19 +3,12 @@ package it.polimi.ingsw.Model;
 import static org.junit.jupiter.api.Assertions.*;
 
 import it.polimi.ingsw.Controller.GameController;
-import it.polimi.ingsw.Model.CardPackage.Card;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.*;
-import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.CardColor;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
-import it.polimi.ingsw.Model.CornerPackage.Objects;
-import it.polimi.ingsw.Model.CornerPackage.Orientation;
-import it.polimi.ingsw.Model.CornerPackage.Resources;
-import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
-import it.polimi.ingsw.Network.RMI.VirtualView;
-import org.junit.jupiter.api.BeforeEach;
+import it.polimi.ingsw.Network.VirtualView;
 import org.junit.jupiter.api.Test;
 
 import java.rmi.RemoteException;

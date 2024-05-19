@@ -4,7 +4,7 @@ import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
-import it.polimi.ingsw.Network.RMI.VirtualView;
+import it.polimi.ingsw.Network.VirtualView;
 
 import java.rmi.RemoteException;
 import java.util.HashMap;

@@ -5,9 +5,8 @@ import it.polimi.ingsw.Controller.MainController;
 import it.polimi.ingsw.Exceptions.NameAlreadyTakenException;
 import it.polimi.ingsw.Exceptions.RoomFullException;
 import it.polimi.ingsw.Exceptions.RoomNotExistsException;
-import it.polimi.ingsw.Network.RMI.VirtualView;
+import it.polimi.ingsw.Network.VirtualView;
 
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 public class JoinAction extends Actions {

@@ -1,10 +1,8 @@
 package it.polimi.ingsw.Network.RMI;
 
 import it.polimi.ingsw.Exceptions.*;
-import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
-import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
-import it.polimi.ingsw.Model.PlayerPackage.Position;
+import it.polimi.ingsw.Network.VirtualView;
 
 import java.rmi.NotBoundException;
 import java.rmi.Remote;

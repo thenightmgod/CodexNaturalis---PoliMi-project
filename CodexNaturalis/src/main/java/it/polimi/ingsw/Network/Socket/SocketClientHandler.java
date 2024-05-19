@@ -11,8 +11,7 @@ import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
-import it.polimi.ingsw.Network.CommonClient;
-import it.polimi.ingsw.Network.RMI.VirtualView;
+import it.polimi.ingsw.Network.VirtualView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,7 +19,6 @@ import java.io.PrintWriter;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Map;
 
 public class SocketClientHandler implements VirtualView {
     final MainController controller;
@@ -28,6 +26,8 @@ public class SocketClientHandler implements VirtualView {
     final SocketServer server;
     final BufferedReader input;
     private GameController gc;
+
+
 
     public SocketClientHandler(MainController controller, SocketServer server, BufferedReader input, PrintWriter output){
         this.controller = controller;
@@ -103,30 +103,38 @@ public class SocketClientHandler implements VirtualView {
 
     }
 
+    @Override
     public void updatePoints(int points, String name) throws RemoteException{
-
-
+        UpdatePointsMessage message= new UpdatePointsMessage(points, name);
+        String gson = message.MessagetoJson();
+        proxy.updatePoints(gson);
     }
-
+    @Override
     public void showGoals(LinkedList<GoalCard> goals) throws RemoteException{
-
+        ShowGoalsMessage message= new ShowGoalsMessage(goals);
+        String gson=message.MessageToJson();
+        proxy.showGoals(gson);
     }
 
+    @Override
     public void showHand(LinkedList<PlayableCard> hand) throws RemoteException{
-
+        ShowHandMessage message= new ShowHandMessage(hand);
+        String gson=message.MessageToJson();
+        proxy.showHand(gson);
     }
 
+    @Override
     public void updateField(String name, PlayingField field) throws RemoteException{
-
+        UpdateFieldMessage message= new UpdateFieldMessage(name,field);
+        String gson=message.MessageToJson();
+        proxy.updateField(gson);
     }
 
     @Override
     public void showFreePositions(String name, LinkedList<Position> freePosition) throws RemoteException {
-
-    }
-
-    public void showFreePositions(String name) throws RemoteException{
-
+        ShowFreePositionsMessage message = new ShowFreePositionsMessage(name, freePosition);
+        String gson = message.MessageToJson();
+        proxy.showFreePositions(gson);
     }
 
     public void update() throws RemoteException{

@@ -6,7 +6,7 @@ import it.polimi.ingsw.Exceptions.RoomNotExistsException;
 import it.polimi.ingsw.Exceptions.WrongPlayersNumberException;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
-import it.polimi.ingsw.Network.RMI.VirtualView;
+import it.polimi.ingsw.Network.VirtualView;
 
 import java.util.HashMap;
 import java.util.LinkedList;

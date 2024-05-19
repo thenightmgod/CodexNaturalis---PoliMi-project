@@ -1,7 +1,6 @@
 package it.polimi.ingsw.Model.Messages;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Network.CommonClient;
-import it.polimi.ingsw.Network.RMI.VirtualView;
 
 
 public class PlaceCardMessage extends Message{

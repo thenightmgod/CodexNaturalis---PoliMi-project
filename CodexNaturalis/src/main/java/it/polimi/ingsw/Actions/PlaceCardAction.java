@@ -4,7 +4,7 @@ import it.polimi.ingsw.Controller.GameController;
 import it.polimi.ingsw.Controller.MainController;
 import it.polimi.ingsw.Exceptions.WrongIndexException;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
-import it.polimi.ingsw.Network.RMI.VirtualView;
+import it.polimi.ingsw.Network.VirtualView;
 
 import java.util.Map;
 

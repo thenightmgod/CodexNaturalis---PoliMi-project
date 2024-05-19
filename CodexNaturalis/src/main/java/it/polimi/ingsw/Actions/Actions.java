@@ -3,8 +3,7 @@ package it.polimi.ingsw.Actions;
 import it.polimi.ingsw.Controller.MainController;
 import it.polimi.ingsw.Exceptions.WrongIndexException;
 import it.polimi.ingsw.Exceptions.WrongPlayersNumberException;
-import it.polimi.ingsw.Network.CommonClient;
-import it.polimi.ingsw.Network.RMI.VirtualView;
+import it.polimi.ingsw.Network.VirtualView;
 
 import java.rmi.RemoteException;
 

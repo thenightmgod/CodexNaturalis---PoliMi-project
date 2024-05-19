@@ -6,16 +6,13 @@ import it.polimi.ingsw.Exceptions.RoomNotExistsException;
 import it.polimi.ingsw.Exceptions.WrongPlayersNumberException;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
-import it.polimi.ingsw.Model.CornerPackage.Objects;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
 import it.polimi.ingsw.Network.CommonClient;
 import it.polimi.ingsw.Network.RMI.RMIClient;
-import it.polimi.ingsw.Network.RMI.VirtualView;
 import it.polimi.ingsw.View.GameView;
 
-import javax.naming.Name;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

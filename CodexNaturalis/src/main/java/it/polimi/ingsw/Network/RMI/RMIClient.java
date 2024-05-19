@@ -4,11 +4,11 @@ import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
-import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
 import it.polimi.ingsw.Network.ClientModel;
 import it.polimi.ingsw.Network.CommonClient;
+import it.polimi.ingsw.Network.VirtualView;
 import it.polimi.ingsw.View.GameView;
 
 import java.rmi.NotBoundException;
@@ -17,7 +17,6 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.LinkedList;
-import java.util.Scanner;
 
 public class RMIClient extends UnicastRemoteObject implements VirtualView, CommonClient {
 

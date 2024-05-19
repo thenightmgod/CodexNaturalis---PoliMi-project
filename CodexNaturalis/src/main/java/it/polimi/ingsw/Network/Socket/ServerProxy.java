@@ -1,13 +1,5 @@
 package it.polimi.ingsw.Network.Socket;
 
-import it.polimi.ingsw.Exceptions.InvalidOperationException;
-import it.polimi.ingsw.Exceptions.RoomFullException;
-import it.polimi.ingsw.Exceptions.RoomNotExistsException;
-import it.polimi.ingsw.Exceptions.WrongPlayersNumberException;
-import it.polimi.ingsw.Model.PlayerPackage.FB;
-import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
-import it.polimi.ingsw.Network.RMI.VirtualView;
-
 
 import java.io.BufferedWriter;
 import java.io.PrintWriter;

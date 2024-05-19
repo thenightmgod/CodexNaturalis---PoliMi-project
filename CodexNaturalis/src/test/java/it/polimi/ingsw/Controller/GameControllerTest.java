@@ -4,14 +4,9 @@ import it.polimi.ingsw.Exceptions.WrongIndexException;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.PlayerPackage.*;
-import it.polimi.ingsw.Model.Room;
-import it.polimi.ingsw.Network.RMI.VirtualView;
-import org.junit.jupiter.api.BeforeEach;
+import it.polimi.ingsw.Network.VirtualView;
 import org.junit.jupiter.api.Test;
 
-import javax.swing.text.BadLocationException;
-import javax.swing.text.View;
-import java.awt.*;
 import java.rmi.RemoteException;
 import java.util.LinkedList;
 

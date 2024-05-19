@@ -1,14 +1,10 @@
 package it.polimi.ingsw.Network.Socket;
 
 import it.polimi.ingsw.Controller.MainController;
-import it.polimi.ingsw.Network.RMI.VirtualView;
 
-import javax.imageio.IIOException;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 
 public class SocketServer {

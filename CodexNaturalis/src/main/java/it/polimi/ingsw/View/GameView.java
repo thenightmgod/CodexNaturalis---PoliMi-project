@@ -1,13 +1,9 @@
 package it.polimi.ingsw.View;
 
-import it.polimi.ingsw.Controller.GameController;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
-import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
-import it.polimi.ingsw.Network.RMI.RMIClient;
-import it.polimi.ingsw.Network.RMI.VirtualView;
 
 import java.util.LinkedList;
 
