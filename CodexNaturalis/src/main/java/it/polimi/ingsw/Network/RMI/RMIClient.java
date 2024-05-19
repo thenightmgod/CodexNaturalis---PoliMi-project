@@ -92,8 +92,25 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     //    FUNZIONI DELLA VIRTUAL VIEW
 
     @Override
-    public void showException(String details) throws RemoteException {
-        this.view.showException(name, details);
+    public void showException(String details) throws RemoteException, WrongIndexException, WrongPositionException, WrongPlayersNumberException, RoomNotExistsException, RoomFullException, RequirementsNotSatisfied, NameAlreadyTakenException, InvalidOperationException {
+        switch(details){
+            case "WrongIndexException" ->
+                throw new WrongIndexException("the index you chose is wrong");
+            case "WrongPositionException" ->
+                throw new WrongPositionException();
+            case "WrongPlayersNumberException" ->
+                throw new WrongPlayersNumberException("the number of players should be between 2 and 4");
+            case "RoomNotExistsException" ->
+                throw new RoomNotExistsException("the room doesn't exist");
+            case "RoomFullException" ->
+                throw new RoomFullException("the room is already full");
+            case "RequirementsNotSatisfied" ->
+                throw new RequirementsNotSatisfied("the requirements aren't satisfied, choose another card or flip this");
+            case "NameAlreadyTakenException" ->
+                throw new NameAlreadyTakenException("the name is already taken");
+            case "InvalidOperationTaken" ->
+                throw new InvalidOperationException("operation invalid, scimmia");
+        }
     }
 
     @Override

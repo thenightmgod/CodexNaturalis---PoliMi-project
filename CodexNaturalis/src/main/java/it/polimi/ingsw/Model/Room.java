@@ -142,7 +142,7 @@ public class Room {
      */
     public void placeCard(ResourceCard card, Position p) throws RequirementsNotSatisfied, RemoteException, WrongPositionException {
         if(!Turn.getPlayerField().getField().containsKey(p))
-            throw new WrongPositionException();
+            observerManager.showException("WrongPositionException", Turn.getName());
         else {
             Turn.placeCard(card, p);
             observerManager.showNewHand(Turn.getName(), Turn.getHand());
