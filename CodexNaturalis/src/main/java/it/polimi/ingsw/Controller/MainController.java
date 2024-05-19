@@ -1,13 +1,11 @@
 package it.polimi.ingsw.Controller;
 
-import it.polimi.ingsw.Exceptions.NameAlreadyTakenException;
-import it.polimi.ingsw.Exceptions.RoomFullException;
-import it.polimi.ingsw.Exceptions.RoomNotExistsException;
-import it.polimi.ingsw.Exceptions.WrongPlayersNumberException;
+import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import it.polimi.ingsw.Network.VirtualView;
 
+import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -32,37 +30,38 @@ public class MainController {
 
     //numPlayers arriva da
     public synchronized GameController createGame(String Name, int numPlayers, VirtualView client) throws WrongPlayersNumberException {
-        if(numPlayers<2 || numPlayers>4)
-            throw new WrongPlayersNumberException("the number of players has to be between 2 and 4");
-        else {
-            if(controllers.isEmpty()) {
-                GameController Garfield = new GameController(0, numPlayers);
-                controllers.add(Garfield);
-                controllersPerGame.put(0, Garfield);
-            }
-            else {
-                GameController Garfield = new GameController(controllers.getLast().getRoomId() + 1, numPlayers);
-                controllers.add(Garfield);
-                controllersPerGame.put(controllers.getLast().getRoomId() + 1, Garfield);
-            }
-            controllers.getLast().addPlayer(Name, PlayerColor.RED, client);
+        //controllo sui numeri lo fa la tui
+        if(controllers.isEmpty()) {
+            GameController Garfield = new GameController(0, numPlayers);
+            controllers.add(Garfield);
+            controllersPerGame.put(0, Garfield);
         }
+        else {
+            GameController Garfield = new GameController(controllers.getLast().getRoomId() + 1, numPlayers);
+            controllers.add(Garfield);
+            controllersPerGame.put(controllers.getLast().getRoomId() + 1, Garfield);
+        }
+        controllers.getLast().addPlayer(Name, PlayerColor.RED, client);
+
         return controllers.getLast();
     }
 
-    public synchronized GameController joinGame(String Name, VirtualView client) throws RoomFullException, RoomNotExistsException, NameAlreadyTakenException {
+    public synchronized GameController joinGame(String Name, VirtualView client) throws RoomFullException, RoomNotExistsException, NameAlreadyTakenException, RequirementsNotSatisfied, InvalidOperationException, WrongIndexException, RemoteException, WrongPositionException, WrongPlayersNumberException {
         //come gestire il fatto che debba essere chiamata la createGame se non ne esistono
         //RoomNotExistsException
+        int i;
         if(this.controllers.isEmpty()){
             throw new RoomNotExistsException("there isn't a game to join, create one");
         }
         else {
             for(Player p : this.controllers.getLast().getPlayers()){
                 if(p.getName() == Name)
-                    throw new NameAlreadyTakenException("the name is already taken");
+                    //non funzionerà mai
+                    this.controllers.getLast().getGame().getObserverManager().showException("NameAlreadyTakenException", this.controllers.getLast().getPlayerByName(p.getName()).getName());
             }
             if (this.controllers.getLast().getHowManyPlayers() == this.controllers.getLast().getNumPlayers())
-                throw new RoomFullException("The room is already full");
+                //non funziona perchè il player non è nella room, fare da tui
+                i = 5;
             else {
                 switch(this.controllers.getLast().getNumPlayers()){
                     case 1 ->

@@ -1,7 +1,6 @@
-package it.polimi.ingsw.Model;
+package it.polimi.ingsw.Model.RoomPackage;
 
-import it.polimi.ingsw.Exceptions.RequirementsNotSatisfied;
-import it.polimi.ingsw.Exceptions.WrongPositionException;
+import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.CompositionGoalCard;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.ObjectsGoalCard;
@@ -140,11 +139,11 @@ public class Room {
      * @param card The card to place.
      * @param p The position to place the card.
      */
-    public void placeCard(ResourceCard card, Position p) throws RequirementsNotSatisfied, RemoteException, WrongPositionException {
+    public void placeCard(ResourceCard card, Position p) throws RequirementsNotSatisfied, RemoteException, WrongPositionException, RoomFullException, RoomNotExistsException, NameAlreadyTakenException, InvalidOperationException, WrongIndexException, WrongPlayersNumberException {
         if(!Turn.getPlayerField().getField().containsKey(p))
             observerManager.showException("WrongPositionException", Turn.getName());
         else {
-            Turn.placeCard(card, p);
+            Turn.placeCard(card, p, observerManager);
             observerManager.showNewHand(Turn.getName(), Turn.getHand());
             observerManager.updateField(Turn.getName(), Turn.getPlayerField());
             observerManager.updatePoints(Turn.getPointsCounter(), Turn.getName());
@@ -157,7 +156,7 @@ public class Room {
      * @param player The player picking the goal card.
      */
 
-    public void pickGoalCard(Player player, boolean choice){
+    public void pickGoalCard(Player player, boolean choice) throws RemoteException {
         player.setPlayerGoal(choice);
     }
 

@@ -43,6 +43,10 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
         this.server = (VirtualServer) registry.lookup(serverName);
     }
 
+    public String getName(){
+        return name;
+    }
+
     //                   FUNZIONI DEL COMMON CLIENT
 
     @Override
