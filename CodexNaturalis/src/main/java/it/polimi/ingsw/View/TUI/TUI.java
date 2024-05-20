@@ -112,6 +112,10 @@ public class TUI implements GameView {
                 goon = true;
             } catch (NameAlreadyTakenException e){
                 System.out.print("The name you chose is already taken, try again! UwU ;)");
+            } catch (RoomFullException e){
+                System.out.print("The number of players isn't supported");
+            } catch (RoomNotExistsException e){
+                System.out.print("There isn't a room available");
             }
         } while(!goon);
 
