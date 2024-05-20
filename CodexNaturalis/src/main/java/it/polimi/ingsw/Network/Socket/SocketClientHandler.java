@@ -29,6 +29,7 @@ public class SocketClientHandler implements VirtualView {
 
 
 
+
     public SocketClientHandler(MainController controller, SocketServer server, BufferedReader input, PrintWriter output){
         this.controller = controller;
         this.server = server;
@@ -59,7 +60,7 @@ public class SocketClientHandler implements VirtualView {
         switch(msg.getType()){
             case "JoinExistingGameMessage" -> {
                 String name = ((JoinExistingGameMessage) msg).getName();
-                this.gc = controller.joinGame(name, this); //capire come gestire i messaggi di errore e recapitarli al clietn giusto
+                this.gc = controller.joinGame(name, this); //capire come gestire i messaggi di errore e recapitarli al client giusto
             }
             case "CreateGameMessage" -> {
                 String name = ((CreateGameMessage) msg).getName();
@@ -100,7 +101,6 @@ public class SocketClientHandler implements VirtualView {
 
     @Override
     public void showException(String details) throws RemoteException{
-
     }
 
     @Override
@@ -137,11 +137,14 @@ public class SocketClientHandler implements VirtualView {
         proxy.showFreePositions(gson);
     }
 
+    //probabilmente da togliere
     public void update() throws RemoteException{
 
     } //update il clientModel
 
     public void showOtherField(String player) throws RemoteException{
-
+        ShowOtherFieldMessage message= new ShowOtherFieldMessage(player);
+        String gson= message.MessageToJson();
+        proxy.showOtherField(gson);
     }
 }

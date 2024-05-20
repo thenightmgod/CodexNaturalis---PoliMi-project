@@ -19,10 +19,8 @@ public class ClientProxy {
         sendMessage(StringMessage);
     }
 
-
     public void showGoals(String StringMessage) throws RemoteException {
         sendMessage(StringMessage);
-
     }
 
 
@@ -41,11 +39,8 @@ public class ClientProxy {
         sendMessage(StringMessage);
     }
 
-
-
     public void update() throws RemoteException {
     }
-
 
     public void showOtherField(String StringMessage) throws RemoteException {
         sendMessage(StringMessage);
@@ -54,4 +49,6 @@ public class ClientProxy {
         output.write(stringMessage);
         output.flush();
     }
+
+
 }

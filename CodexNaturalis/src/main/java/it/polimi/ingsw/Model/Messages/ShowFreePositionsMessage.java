@@ -8,7 +8,7 @@ public class ShowFreePositionsMessage extends Message {
     private LinkedList<Position> freePosition;
 
     public ShowFreePositionsMessage(String name, LinkedList<Position> positions) {
-        super("ShowFreePositions");
+        super("ShowFreePositionsMessage");
         this.name=name;
         this.freePosition=positions;
     }

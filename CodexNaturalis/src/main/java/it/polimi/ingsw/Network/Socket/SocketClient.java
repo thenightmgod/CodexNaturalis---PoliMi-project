@@ -1,14 +1,20 @@
 package it.polimi.ingsw.Network.Socket;
 
+import com.google.gson.Gson;
 import it.polimi.ingsw.Exceptions.*;
+import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
+import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.Messages.*;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
+import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
+import it.polimi.ingsw.Model.PlayerPackage.Position;
 import it.polimi.ingsw.Network.CommonClient;
 import it.polimi.ingsw.View.GameView;
 
 import java.io.*;
 import java.net.Socket;
 import java.rmi.RemoteException;
+import java.util.LinkedList;
 
 import static java.lang.System.exit;
 
@@ -17,6 +23,7 @@ public class SocketClient implements CommonClient {
     final ServerProxy server;
     final BufferedReader input;
     final String name;
+    private GameView view;
 
     public SocketClient(BufferedReader input, BufferedWriter output, String name) { //input e output sono rispettivamente il socket.getinputstream e socket.outputstream
         this.input = input;
@@ -80,17 +87,59 @@ public class SocketClient implements CommonClient {
     }
 
 
+    //      GESTISCE LE FUNZIONI DELLA VIRTUAL VIEW:
     public void runVirtualServer() {
-        while(true){
-            try{
-                String receivedMessage;
-                while((receivedMessage = input.readLine()) != null){
-
+        String receivedMessage;
+        while (true) {
+            try {
+                while ((receivedMessage = input.readLine()) != null) {
+                    receivedMessage = input.readLine();
+                    Gson gson = new Gson();
+                    Message mex = gson.fromJson(receivedMessage, Message.class);
+                    handleCommand(mex);
                 }
+            } catch (RuntimeException | IOException e) {
+                e.printStackTrace();
             }
         }
     }
 
+    public void handleCommand(Message mex) {
+        switch(mex.getType()) {
+            case"ShowException" -> {
+
+            }
+            case "UpdatePointsMessage" -> {
+                int points= ((UpdatePointsMessage)mex).getPoints();
+                String name= ((UpdatePointsMessage)mex).getName();
+                this.view.updatePoints(points, name);
+            }
+            case "ShowGoalsMessage" -> {
+                LinkedList<GoalCard> cards= ((ShowGoalsMessage)mex).getGoals();
+                this.view.showGoals(cards, name);
+            }
+            case "ShowHandMessage" -> {
+                LinkedList<PlayableCard> hand = ((ShowHandMessage)mex).getHand();
+                this.view.showHands(hand,name);
+            }
+            case "UpdateFieldMessage" -> {
+                PlayingField playingField= ((UpdateFieldMessage)mex).getPlayingField();
+                this.view.updateField(playingField, name);
+            }
+            case "ShowFreePositionsMessage" -> {
+                String name = ((ShowFreePositionsMessage)mex).getName();
+                LinkedList<Position> freePositions = ((ShowFreePositionsMessage)mex).getFreePosition();
+                this.view.showFreePosition(name, freePositions);
+            }
+            case "ShowOtherField"-> {
+                //Lori non sa ancora se mettere la showOtherField nella GameView o no
+            }
+        }
+
+    }
+
+
+    //             FUNZIONI DEL COMMONCLIENT
     @Override
     public void joinGame(String name) throws RoomFullException, RoomNotExistsException, RemoteException, NameAlreadyTakenException {
         JoinExistingGameMessage msg = new JoinExistingGameMessage(name);
@@ -138,6 +187,7 @@ public class SocketClient implements CommonClient {
         server.drawCard(gson);
     }
     public void setView(GameView view){
+        this.view=view;
         SetViewMessage msg = new SetViewMessage(view);
         String gson = msg.MessageToJson();
         server.setView(gson);
