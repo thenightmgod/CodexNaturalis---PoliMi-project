@@ -95,7 +95,7 @@ public class SocketClient implements CommonClient {
 
 
     //      GESTISCE LE FUNZIONI DELLA VIRTUAL VIEW:
-    public void runVirtualServer() {
+    public void runVirtualServer() throws RoomFullException, RoomNotExistsException, RequirementsNotSatisfied, NameAlreadyTakenException, InvalidOperationException, WrongIndexException, WrongPositionException, WrongPlayersNumberException {
         String receivedMessage;
         while (true) {
             try {
@@ -111,10 +111,28 @@ public class SocketClient implements CommonClient {
         }
     }
 
-    public void handleCommand(Message mex) {
+    public void handleCommand(Message mex) throws NameAlreadyTakenException, WrongIndexException, WrongPositionException, WrongPlayersNumberException, RoomNotExistsException, RoomFullException, RequirementsNotSatisfied, InvalidOperationException {
         switch(mex.getType()) {
-            case"ShowException" -> {
-
+            case"ExceptionMessage" -> {
+                String details= ((ExceptionMessage)mex).getDetails();
+                switch (details) {
+                    case "WrongIndexException" ->
+                            throw new WrongIndexException("the index you chose is wrong");
+                    case "WrongPositionException" ->
+                            throw new WrongPositionException();
+                    case "WrongPlayersNumberException" ->
+                            throw new WrongPlayersNumberException("the number of players should be between 2 and 4");
+                    case "RoomNotExistsException" ->
+                            throw new RoomNotExistsException("the room doesn't exist");
+                    case "RoomFullException" ->
+                            throw new RoomFullException("the room is already full");
+                    case "RequirementsNotSatisfied" ->
+                            throw new RequirementsNotSatisfied("the requirements aren't satisfied, choose another card or flip this");
+                    case "NameAlreadyTakenException" ->
+                            throw new NameAlreadyTakenException("the name is already taken");
+                    case "InvalidOperationTaken" ->
+                            throw new InvalidOperationException("operation invalid, scimmia");
+                }
             }
             case "UpdatePointsMessage" -> {
                 int points= ((UpdatePointsMessage)mex).getPoints();
@@ -142,7 +160,6 @@ public class SocketClient implements CommonClient {
                 //Lori non sa ancora se mettere la showOtherField nella GameView o no
             }
         }
-
     }
 
 
@@ -170,7 +187,7 @@ public class SocketClient implements CommonClient {
 
     @Override
     public void placeCard(CommonClient client, int whichInHand, int x, int y, FB face) throws WrongIndexException {
-        PlaceCardMessage msg = new PlaceCardMessage(client, whichInHand, x, y, face);
+        PlaceCardMessage msg = new PlaceCardMessage(client, name, whichInHand, x, y, face);
         String gson = msg.MessageToJson();
         server.placeCard(gson);
     }
@@ -203,8 +220,6 @@ public class SocketClient implements CommonClient {
     //si connette al socket del server
     //passandogli negli argomenti del main al posto 0 l'host,
     //al posto 1 la porta
-
-    //lo stato della partita è sul model
     //
 
 }

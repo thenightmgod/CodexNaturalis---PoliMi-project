@@ -32,7 +32,7 @@ public class SocketServer {
     //PrintWriter writer = new PrintWriter(socketTx, true);
    // SocketClientHandler handler = new SocketClientHandler(this.controller, this, new BufferedReader(socketRx), new ClientProxy(writer));
 
-    public void startServer(){
+    public void startServer() {
         Socket clientSocket = null;
         try {
             while ((clientSocket = this.listenSocket.accept()) != null){
