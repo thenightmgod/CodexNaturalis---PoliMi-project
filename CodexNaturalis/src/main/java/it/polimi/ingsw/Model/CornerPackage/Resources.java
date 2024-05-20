@@ -8,20 +8,31 @@ public enum Resources implements CardRes {
     /**
      * Represents the resource type for plants.
      */
-    PLANT_KINGDOM,
+    PLANT_KINGDOM("\uD83C\uDF3F"),
 
     /**
      * Represents the resource type for animals.
      */
-    ANIMAL_KINGDOM,
+    ANIMAL_KINGDOM("\uD83E\uDECE"),
 
     /**
      * Represents the resource type for fungi.
      */
-    FUNGI_KINGDOM,
+    FUNGI_KINGDOM("\uD83C\uDF44"),
 
     /**
      * Represents the resource type for insects.
      */
-    INSECT_KINGDOM
-}
+    INSECT_KINGDOM("\uD83E\uDD8B");
+
+    private final String shortName;
+
+    public String getShortName() {
+        return shortName;
+    }
+
+    Resources(String shortName) {
+        this.shortName = shortName;
+    }
+
+    }

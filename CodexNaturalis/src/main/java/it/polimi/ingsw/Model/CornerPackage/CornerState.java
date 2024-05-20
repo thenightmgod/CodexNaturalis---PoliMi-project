@@ -9,9 +9,19 @@ public enum CornerState implements CardRes {
     /**
      * Empty is when the angle does not contain any resource or object.
      */
-    EMPTY, // Represents an empty corner.
+    EMPTY("\uD83C\uDD93"),
     /**
      * Absent is when the angle is not present.
      */
-    ABSENT // Represents a corner that is absent.
+    ABSENT("⬛");
+
+    private final String shortName;
+
+    public String getShortName() {
+        return shortName;
+    }
+
+    CornerState(String shortName) {
+        this.shortName = shortName;
+    }
 }

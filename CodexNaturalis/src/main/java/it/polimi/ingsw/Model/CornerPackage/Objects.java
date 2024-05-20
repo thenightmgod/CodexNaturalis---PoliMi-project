@@ -5,9 +5,19 @@ package it.polimi.ingsw.Model.CornerPackage;
  * These objects are implementations of the abstract interface CardRes.
  */
 public enum Objects implements CardRes {
-    QUILL,
-    INKWELL,
-    MANUSCRIPT;
+    QUILL("\uD83E\uDEB6"),
+    INKWELL("\uD83E\uDED9"),
+    MANUSCRIPT("\uD83D\uDCDC");
+
+    private final String shortName;
+
+    public String getShortName() {
+        return shortName;
+    }
+
+    Objects(String shortName) {
+        this.shortName = shortName;
+    }
 
     /**
      * Compares two CardRes objects for equality.
