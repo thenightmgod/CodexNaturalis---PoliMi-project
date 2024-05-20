@@ -233,7 +233,7 @@ public class TUI implements GameView {
             } catch (IOException e)  {
                 throw new RuntimeException(e);
             } catch (WrongIndexException e){
-                System.out.println("you chose a wrong index");
+                System.out.println("Error: ", e.getMessage());
             } catch (NumberFormatException e){
                 System.out.println("Please enter a number!");
             } catch (RequirementsNotSatisfied e) {
@@ -243,7 +243,42 @@ public class TUI implements GameView {
             }
         } while (!goon );
     }
+    public void setStartCardFace(){
+        boolean face = true;
+        boolean goon = false;
+        String fac;
+        do{
+            try{
+                System.out.println("Do you want to place the StartCard Front or Back?");
+                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                fac = reader.readLine();
+                if(fac.equals("1") || fac.equals("0") ) {
+                    if (fac.equals("0"))
+                        face = false;
+                    client.setStartCardFace(face, this.client);
+                    goon = true;
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } while(!goon);
+    }
 
-
-
+    public void chooseGoalCard(){
+        int i = 0;
+        do{
+            try{
+                System.out.println("Choose your personal GoalCard: 1 or 2?");
+                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                i = Integer.parseInt(reader.readLine());
+                if(i==1 || i==2){
+                    client.chooseGoalCard(i, this.client);
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (WrongIndexException e) {
+                System.out.println("you chose a wrong index");
+            }
+        } while(i==0);
+    }
 }

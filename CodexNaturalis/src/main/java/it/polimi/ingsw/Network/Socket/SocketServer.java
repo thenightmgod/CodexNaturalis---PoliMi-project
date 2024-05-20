@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Network.Socket;
 
 import it.polimi.ingsw.Controller.MainController;
+import it.polimi.ingsw.Exceptions.*;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -49,6 +50,22 @@ public class SocketServer {
                     try{
                         handler.runVirtualView();
                     } catch(IOException e) {
+                        throw new RuntimeException(e);
+                    } catch (RoomFullException e) {
+                        throw new RuntimeException(e);
+                    } catch (RoomNotExistsException e) {
+                        throw new RuntimeException(e);
+                    } catch (RequirementsNotSatisfied e) {
+                        throw new RuntimeException(e);
+                    } catch (NameAlreadyTakenException e) {
+                        throw new RuntimeException(e);
+                    } catch (InvalidOperationException e) {
+                        throw new RuntimeException(e);
+                    } catch (WrongIndexException e) {
+                        throw new RuntimeException(e);
+                    } catch (WrongPlayersNumberException e) {
+                        throw new RuntimeException(e);
+                    } catch (WrongPositionException e) {
                         throw new RuntimeException(e);
                     }
                 }).start();
