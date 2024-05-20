@@ -20,10 +20,16 @@ import static java.lang.System.exit;
 
 //QUANDO CREO IL SOCKETCLIENT DEVO DARGLI COME NOME IL NOME DEL PLAYER
 public class SocketClient implements CommonClient {
-    final ServerProxy server;
-    final BufferedReader input;
-    final String name;
+    private ServerProxy server;
+    private BufferedReader input;
+    private String name;
     private GameView view;
+
+    public SocketClient(String name) {
+        this.name=name;
+        String hostname= "Hamin";
+        this.initializeClient(this, hostname, 4444, name);
+    }
 
     public SocketClient(BufferedReader input, BufferedWriter output, String name) { //input e output sono rispettivamente il socket.getinputstream e socket.outputstream
         this.input = input;
@@ -36,10 +42,10 @@ public class SocketClient implements CommonClient {
     }
 
     //VA ASSOCIATO IL BUFFERED READER INPUT del client al PRINT WRITER DEL CLIENT PROXY
-    public void initializeClient(String hostname, int ServerPort) {
+    public void initializeClient(SocketClient client, String hostname, int ServerPort, String name) {
         Socket socket;
-        OutputStreamWriter socketTx;
-        InputStreamReader socketRx;
+        OutputStreamWriter socketTx= null;
+        InputStreamReader socketRx= null;
         try {
             socket = new Socket(hostname, ServerPort);
         } catch (IOException e) {
@@ -57,7 +63,8 @@ public class SocketClient implements CommonClient {
             System.out.println(e);
             exit(1);
         }
-        new SocketClient(new BufferedReader(socketRx), new BufferedWriter(socketTx)).run();
+        client = new SocketClient (new BufferedReader(socketRx), new BufferedWriter(socketTx), name);
+        client.run();
     }
 
     public void run() {

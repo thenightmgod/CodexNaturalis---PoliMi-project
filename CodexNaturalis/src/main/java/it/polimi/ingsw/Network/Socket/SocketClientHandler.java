@@ -26,9 +26,7 @@ public class SocketClientHandler implements VirtualView {
     final SocketServer server;
     final BufferedReader input;
     private GameController gc;
-
-
-
+    private String name;
 
     public SocketClientHandler(MainController controller, SocketServer server, BufferedReader input, PrintWriter output){
         this.controller = controller;
@@ -38,6 +36,10 @@ public class SocketClientHandler implements VirtualView {
         this.gc = null;
     }
 
+    @Override
+    public String getName() {
+        return name;
+    }
 
     public void runVirtualView() throws IOException{
         String receivedmessage;
@@ -56,7 +58,7 @@ public class SocketClientHandler implements VirtualView {
             }
         }
     }
-    public void handleCommand(Message msg) throws RoomFullException, RoomNotExistsException, NameAlreadyTakenException, WrongPlayersNumberException, WrongIndexException, RemoteException {
+    public void handleCommand(Message msg) throws RoomFullException, RoomNotExistsException, NameAlreadyTakenException, WrongPlayersNumberException, WrongIndexException, RemoteException, RequirementsNotSatisfied, InvalidOperationException, WrongPositionException {
         switch(msg.getType()){
             case "JoinExistingGameMessage" -> {
                 String name = ((JoinExistingGameMessage) msg).getName();
