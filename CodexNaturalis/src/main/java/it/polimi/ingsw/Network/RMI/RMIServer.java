@@ -94,6 +94,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer{
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+
             try {
                 now.executor();
             } catch (WrongIndexException e) {
@@ -115,6 +116,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer{
             } catch (WrongPositionException e) {
                 throw new RuntimeException(e);
             }
+
         }).start();
     }
 

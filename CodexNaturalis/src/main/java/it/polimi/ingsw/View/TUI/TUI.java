@@ -1,9 +1,6 @@
 package it.polimi.ingsw.View.TUI;
 
-import it.polimi.ingsw.Exceptions.NameAlreadyTakenException;
-import it.polimi.ingsw.Exceptions.RoomFullException;
-import it.polimi.ingsw.Exceptions.RoomNotExistsException;
-import it.polimi.ingsw.Exceptions.WrongPlayersNumberException;
+import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
@@ -52,7 +49,26 @@ public class TUI implements GameView {
     public void showFreePosition(String name, LinkedList<Position> freePositions) {}
 
     @Override
-    public void showException(String name, String exception) {}
+    public void showException(String name, String details) throws WrongPlayersNumberException, WrongIndexException, WrongPositionException, RoomNotExistsException, RoomFullException, RequirementsNotSatisfied, NameAlreadyTakenException, InvalidOperationException {
+        switch(details){
+            case "WrongIndexException" ->
+                    throw new WrongIndexException("the index you chose is wrong");
+            case "WrongPositionException" ->
+                    throw new WrongPositionException();
+            case "WrongPlayersNumberException" ->
+                    throw new WrongPlayersNumberException("the number of players should be between 2 and 4");
+            case "RoomNotExistsException" ->
+                    throw new RoomNotExistsException("the room doesn't exist");
+            case "RoomFullException" ->
+                    throw new RoomFullException("the room is already full");
+            case "RequirementsNotSatisfied" ->
+                    throw new RequirementsNotSatisfied("the requirements aren't satisfied, choose another card or flip this");
+            case "NameAlreadyTakenException" ->
+                    throw new NameAlreadyTakenException("the name is already taken");
+            case "InvalidOperationTaken" ->
+                    throw new InvalidOperationException("operation invalid, scimmia");
+        }
+    }
 
     public void createGame(){
 
@@ -113,9 +129,13 @@ public class TUI implements GameView {
             } catch (NameAlreadyTakenException e){
                 System.out.print("The name you chose is already taken, try again! UwU ;)");
             } catch (RoomFullException e){
-                System.out.print("The number of players isn't supported");
+                System.out.print("The room is already full");
+                System.out.println("Create a new room!");
+                goon = true;
             } catch (RoomNotExistsException e){
                 System.out.print("There isn't a room available");
+                System.out.println("Create a new room!");
+                goon = true;
             }
         } while(!goon);
 
@@ -147,19 +167,6 @@ public class TUI implements GameView {
                 client = new SocketClient(nickname);
                 client.setView(this);
             }
-
-            //fare socketclient inizializzazione quando c'è, startarlo dopo e gestire eccezioni
-
-            /*if(connection.equals("1")){
-                try{
-                    String nickname = getNickname();
-                    // client = new SocketClient()
-                    client.setView(this);
-                } catch{(NotBoundException | RemoteException e) {
-                    System.out.println("an exception occured while starting the client");
-                }
-                }
-            }*/
 
         } while(!connection.equals("0") && !connection.equals("1"));
 

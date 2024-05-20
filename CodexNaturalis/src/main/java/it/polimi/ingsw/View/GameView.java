@@ -1,5 +1,6 @@
 package it.polimi.ingsw.View;
 
+import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
@@ -23,7 +24,7 @@ public interface GameView {
 
     public void showFreePosition(String name, LinkedList<Position> freePositions);
 
-    public void showException(String name, String exception);
+    public void showException(String name, String exception) throws WrongPlayersNumberException, WrongIndexException, WrongPositionException, RoomNotExistsException, RoomFullException, RequirementsNotSatisfied, NameAlreadyTakenException, InvalidOperationException;
 
     //public void joinGame
 }
