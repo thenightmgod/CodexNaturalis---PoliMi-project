@@ -29,7 +29,6 @@ public class TUI implements GameView {
 
     @Override
     public void updatePoints(int points, String name) {
-
     }
 
     @Override

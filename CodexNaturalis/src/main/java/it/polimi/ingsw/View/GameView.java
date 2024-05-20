@@ -8,7 +8,9 @@ import it.polimi.ingsw.Model.PlayerPackage.Position;
 import java.util.LinkedList;
 
 public interface GameView {
-    
+
+
+
 
     boolean connectionType = false;
     public void updatePoints(int points, String name);
