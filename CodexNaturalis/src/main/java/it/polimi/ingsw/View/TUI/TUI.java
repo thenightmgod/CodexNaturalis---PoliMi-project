@@ -232,17 +232,15 @@ public class TUI implements GameView {
                 System.out.println("the face of the card should be 1 or 0");
             } catch (IOException e)  {
                 throw new RuntimeException(e);
-            } catch (WrongIndexException e){
-                System.out.println("Error: ", e.getMessage());
+            } catch (WrongIndexException | RequirementsNotSatisfied | WrongPositionException e){
+                System.out.println("Error: " + e.getMessage());
             } catch (NumberFormatException e){
                 System.out.println("Please enter a number!");
-            } catch (RequirementsNotSatisfied e) {
-                System.out.println("the requirements not satisfied, choose another card");
-            } catch (WrongPositionException e) {
-                System.out.println("the position you selected isn't free");
             }
         } while (!goon );
     }
+
+
     public void setStartCardFace(){
         boolean face = true;
         boolean goon = false;
@@ -264,6 +262,7 @@ public class TUI implements GameView {
         } while(!goon);
     }
 
+
     public void chooseGoalCard(){
         int i = 0;
         do{
@@ -277,8 +276,35 @@ public class TUI implements GameView {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             } catch (WrongIndexException e) {
-                System.out.println("you chose a wrong index");
+                System.out.println("Error: " + e.getMessage());
+            } catch (NumberFormatException e){
+                System.out.println("Please enter a number!");
             }
         } while(i==0);
     }
+
+
+    public void drawCard(){
+        boolean goon = false;
+        int whichDeck, whichCard;
+        do{
+            try{
+                System.out.println("From which deck do you want to draw?\n1 --> ResourceDeck\n2 --> GoldDeck");
+                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                whichDeck = Integer.parseInt(reader.readLine());
+                System.out.println("Which card do you want to pick?");
+                whichCard = Integer.parseInt(reader.readLine());
+                client.drawCard(whichDeck, whichCard, client);
+                goon = true;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (WrongIndexException e) {
+                System.out.println("Error: " + e.getMessage());
+            } catch (NumberFormatException e){
+                System.out.println("Please enter a number!");
+            }
+        } while(!goon);
+    }
+
+
 }

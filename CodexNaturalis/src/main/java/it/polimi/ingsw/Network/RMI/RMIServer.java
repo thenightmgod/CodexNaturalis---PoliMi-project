@@ -91,31 +91,11 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer{
             Actions now = null;
             try {
                 now = actions.take();
+                now.executor();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
 
-            try {
-                now.executor();
-            } catch (WrongIndexException e) {
-                throw new RuntimeException(e);
-            } catch (RemoteException e) {
-                throw new RuntimeException(e);
-            } catch (WrongPlayersNumberException e) {
-                throw new RuntimeException(e);
-            } catch (RoomFullException e) {
-                throw new RuntimeException(e);
-            } catch (RoomNotExistsException e) {
-                throw new RuntimeException(e);
-            } catch (RequirementsNotSatisfied e) {
-                throw new RuntimeException(e);
-            } catch (NameAlreadyTakenException e) {
-                throw new RuntimeException(e);
-            } catch (InvalidOperationException e) {
-                throw new RuntimeException(e);
-            } catch (WrongPositionException e) {
-                throw new RuntimeException(e);
-            }
 
         }).start();
     }

@@ -92,7 +92,7 @@ public class GameController {
     }*/
     //non penso serva perchè è il model che la manda al client
 
-    public synchronized void chooseGoalCard(Player p, int i) throws WrongIndexException, RemoteException, RoomFullException, RoomNotExistsException, RequirementsNotSatisfied, NameAlreadyTakenException, InvalidOperationException, WrongPositionException, WrongPlayersNumberException {
+    public synchronized void chooseGoalCard(Player p, int i) throws WrongIndexException, RemoteException, RoomNotExistsException, RequirementsNotSatisfied, NameAlreadyTakenException, InvalidOperationException, WrongPositionException, WrongPlayersNumberException, RoomFullException {
         if (i < 1 || i > 2)
             getGame().getObserverManager().showException("WrongIndexException", p.getName());
         else {

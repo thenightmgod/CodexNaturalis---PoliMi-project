@@ -17,7 +17,7 @@ public class ChooseGoalCardAction extends Actions{
     }
 
     @Override
-    public void executor() throws WrongIndexException, RoomFullException, RoomNotExistsException, RequirementsNotSatisfied, NameAlreadyTakenException, InvalidOperationException, RemoteException, WrongPositionException, WrongPlayersNumberException {
+    public void executor() throws WrongIndexException, RemoteException, RoomFullException, RoomNotExistsException, RequirementsNotSatisfied, NameAlreadyTakenException, InvalidOperationException, WrongPositionException, WrongPlayersNumberException {
         int k = getManager().getControllersPerGame().entrySet().stream().filter(entry -> getManager().equals(entry.getValue())).map(Map.Entry::getKey).findFirst().orElse(-1);
         GameController controller = getManager().getControllersPerGame().get(k);
         controller.chooseGoalCard(controller.getGame().getTurn(), i);
