@@ -2,9 +2,7 @@ package it.polimi.ingsw.Actions;
 
 import it.polimi.ingsw.Controller.GameController;
 import it.polimi.ingsw.Controller.MainController;
-import it.polimi.ingsw.Exceptions.NameAlreadyTakenException;
-import it.polimi.ingsw.Exceptions.RoomFullException;
-import it.polimi.ingsw.Exceptions.RoomNotExistsException;
+import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Network.VirtualView;
 
 import java.rmi.RemoteException;
@@ -24,6 +22,16 @@ public class JoinAction extends Actions {
 
         } catch (NameAlreadyTakenException | RoomFullException | RoomNotExistsException e) {
             e.printStackTrace();
+        } catch (RequirementsNotSatisfied e) {
+            throw new RuntimeException(e);
+        } catch (InvalidOperationException e) {
+            throw new RuntimeException(e);
+        } catch (WrongIndexException e) {
+            throw new RuntimeException(e);
+        } catch (WrongPositionException e) {
+            throw new RuntimeException(e);
+        } catch (WrongPlayersNumberException e) {
+            throw new RuntimeException(e);
         }
     }
 

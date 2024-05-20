@@ -2,7 +2,7 @@ package it.polimi.ingsw.Actions;
 
 import it.polimi.ingsw.Controller.GameController;
 import it.polimi.ingsw.Controller.MainController;
-import it.polimi.ingsw.Exceptions.WrongIndexException;
+import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Network.VirtualView;
 
 import java.rmi.RemoteException;
@@ -18,7 +18,7 @@ public class DrawCardAction extends Actions {
         this.whichOne = whichOne;
     }
 
-    public void executor() throws WrongIndexException, RemoteException {
+    public void executor() throws WrongIndexException, RemoteException, RoomFullException, RoomNotExistsException, RequirementsNotSatisfied, NameAlreadyTakenException, InvalidOperationException, WrongPositionException, WrongPlayersNumberException {
         int k = getManager().getControllersPerGame().entrySet().stream().filter(entry -> getManager().equals(entry.getValue())).map(Map.Entry::getKey).findFirst().orElse(-1);
         GameController controller = this.getManager().getControllersPerGame().get(k);
         controller.drawCard(i, whichOne);

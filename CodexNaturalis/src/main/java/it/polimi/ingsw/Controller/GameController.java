@@ -2,14 +2,12 @@ package it.polimi.ingsw.Controller;
 
 //questo controlla un game specifico
 
-import it.polimi.ingsw.Exceptions.RequirementsNotSatisfied;
-import it.polimi.ingsw.Exceptions.WrongIndexException;
-import it.polimi.ingsw.Exceptions.WrongPositionException;
+import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
-import it.polimi.ingsw.Model.Room;
+import it.polimi.ingsw.Model.RoomPackage.Room;
 import it.polimi.ingsw.Network.VirtualView;
 
 import java.rmi.RemoteException;
@@ -94,9 +92,9 @@ public class GameController {
     }*/
     //non penso serva perchè è il model che la manda al client
 
-    public synchronized void chooseGoalCard(Player p, int i) throws WrongIndexException {
+    public synchronized void chooseGoalCard(Player p, int i) throws WrongIndexException, RemoteException, RoomFullException, RoomNotExistsException, RequirementsNotSatisfied, NameAlreadyTakenException, InvalidOperationException, WrongPositionException, WrongPlayersNumberException {
         if (i < 1 || i > 2)
-            throw new WrongIndexException("it should be between 1 and 2");
+            getGame().getObserverManager().showException("WrongIndexException", p.getName());
         else {
             boolean choice = i != 1;
             this.Game.pickGoalCard(p, choice);
@@ -116,25 +114,16 @@ public class GameController {
 
     //la place card effettiva si compone di questi due passaggi
 
-    public synchronized void placeCard(int i, int x, int y, FB face) throws WrongIndexException { //p passata dal client
+    public synchronized void placeCard(int i, int x, int y, FB face) throws WrongIndexException, RemoteException, RequirementsNotSatisfied, WrongPositionException, RoomFullException, RoomNotExistsException, NameAlreadyTakenException, InvalidOperationException, WrongPlayersNumberException { //p passata dal client
         if (i < 1 || i > 3)
-            throw new WrongIndexException("put an index between 1 and 3");
+            getGame().getObserverManager().showException("WrongIndexException", getGame().getTurn().getName());
         else
-            try {
-                this.Game.placeCard(this.Game.getTurn().getCardFromHand(i), new Position(face, x, y));
-            } catch (RequirementsNotSatisfied e) {
-                //chiamare metodo della view che mi fa riscegliere la carta da giocare;
-            } catch (RemoteException e) {
-                throw new RuntimeException(e);
-            } catch (WrongPositionException e) {
-                //chiamare metodo della view che mi fa scegliere posizione sensata
-            }
+            this.Game.placeCard(this.Game.getTurn().getCardFromHand(i), new Position(face, x, y));
+
     }
 
-    // ci serve una funzione che chiede al client un intero da 0 a 2? boh
-    // da client si sceglie deck che è già lì(?) e intero, non bisogna passare molto
+
     public synchronized void pickResCard(int i) throws RemoteException { //l'intero deve arrivare dal client
-        declareWinner();
         this.Game.getResourceDeck().giveCard(this.Game.getTurn(), i);
         this.Game.setTwentyFlag();
         this.Game.setLastRound();
@@ -143,7 +132,6 @@ public class GameController {
     }
 
     public synchronized void pickGoldCard(int i) throws RemoteException {
-        declareWinner();
         this.Game.getGoldDeck().giveCard(this.Game.getTurn(), i);
         this.Game.setTwentyFlag();
         this.Game.setLastRound();
@@ -191,12 +179,12 @@ public class GameController {
         return this.Players;
     }
 
-    public synchronized void drawCard(int i, int whichone) throws WrongIndexException, RemoteException {
+    public synchronized void drawCard(int i, int whichone) throws WrongIndexException, RemoteException, RoomFullException, RoomNotExistsException, RequirementsNotSatisfied, NameAlreadyTakenException, InvalidOperationException, WrongPositionException, WrongPlayersNumberException {
         if (i < 1 || i > 2)
-            throw new WrongIndexException("indice sbagliato, o 1 o 2");
+            getGame().getObserverManager().showException("WrongIndexException", getGame().getTurn().getName());
         else {
             if (whichone < 1 || whichone > 3)
-                throw new WrongIndexException("indice sbagliato, 1, 2 o 3");
+                getGame().getObserverManager().showException("WrongIndexException", getGame().getTurn().getName());
             else {
                 if (i == 1)
                     pickResCard(whichone);

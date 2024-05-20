@@ -1,8 +1,7 @@
 package it.polimi.ingsw.Actions;
 
 import it.polimi.ingsw.Controller.MainController;
-import it.polimi.ingsw.Exceptions.WrongIndexException;
-import it.polimi.ingsw.Exceptions.WrongPlayersNumberException;
+import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Network.VirtualView;
 
 import java.rmi.RemoteException;
@@ -25,5 +24,5 @@ public abstract class Actions {
         return view;
     }
 
-    public void executor() throws WrongIndexException, RemoteException, WrongPlayersNumberException {}
+    public void executor() throws WrongIndexException, RemoteException, WrongPlayersNumberException, RoomFullException, RoomNotExistsException, RequirementsNotSatisfied, NameAlreadyTakenException, InvalidOperationException, WrongPositionException {}
 }

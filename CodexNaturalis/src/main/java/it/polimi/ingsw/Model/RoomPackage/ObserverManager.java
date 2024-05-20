@@ -1,5 +1,6 @@
-package it.polimi.ingsw.Model;
+package it.polimi.ingsw.Model.RoomPackage;
 
+import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
@@ -39,7 +40,7 @@ public class ObserverManager {
         }
     }
 
-    public void showException(String exception, String name) throws RemoteException {
+    public void showException(String exception, String name) throws RemoteException, RoomFullException, RoomNotExistsException, RequirementsNotSatisfied, NameAlreadyTakenException, InvalidOperationException, WrongIndexException, WrongPositionException, WrongPlayersNumberException {
         observers.get(name).showException(exception);
     }
 

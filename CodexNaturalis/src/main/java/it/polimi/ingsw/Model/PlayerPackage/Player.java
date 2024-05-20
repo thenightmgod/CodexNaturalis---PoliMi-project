@@ -1,15 +1,16 @@
 package it.polimi.ingsw.Model.PlayerPackage;
 
+import java.rmi.RemoteException;
 import java.util.*;
 
-import it.polimi.ingsw.Exceptions.RequirementsNotSatisfied;
+import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.*;
 import it.polimi.ingsw.Model.CornerPackage.*;
 import it.polimi.ingsw.Model.CornerPackage.Resources;
 import it.polimi.ingsw.Model.CornerPackage.Objects;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
+import it.polimi.ingsw.Model.RoomPackage.ObserverManager;
 
-import static it.polimi.ingsw.Model.CornerPackage.CornerState.ABSENT;
 import static it.polimi.ingsw.Model.CornerPackage.CornerState.EMPTY;
 
 import static it.polimi.ingsw.Model.CornerPackage.Objects.*;
@@ -206,11 +207,11 @@ public class Player {
      * @param c The card to be placed.
      * @param p The position at which the card is to be placed.
      */
-    public void placeCard(ResourceCard c, Position p) throws RequirementsNotSatisfied {
+    public void placeCard(ResourceCard c, Position p, ObserverManager k) throws RequirementsNotSatisfied, RemoteException, RoomFullException, RoomNotExistsException, NameAlreadyTakenException, InvalidOperationException, WrongIndexException, WrongPositionException, WrongPlayersNumberException {
         HashMap<Position, PlayableCard> x = this.PlayerField.getField();
 
         if(c.getId()>=41 && c.getId()<81 && !((GoldCard) c).RequirementsOk(this)){
-            throw new RequirementsNotSatisfied("requirements not satisfied");
+            k.showException("RequirementsNotSatisfied", getName());
         }
         this.PlayerField.getField().put(p, c);
 
