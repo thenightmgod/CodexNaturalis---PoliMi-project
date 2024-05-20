@@ -75,23 +75,9 @@ public class SocketClient implements CommonClient {
                 throw new RuntimeException(e);
             }
         }).start();
-        this.runClient();
     }
 
     //si mette in ascolto sul client e traduce le cose digitate sulla tui nelle chiamate ai propri metodi giusti
-    private void runClient() {
-        new Thread(() -> {
-            BufferedReader terminalReader = new BufferedReader(new InputStreamReader(System.in));
-            String userInput;
-            while ((userInput = terminalReader.readLine()) != null) {
-                switch(userInput){
-                    case "placeCard" -> {
-                        this.placeCard();
-                    }
-                }
-            }
-        }
-    }
 
 
     //      GESTISCE LE FUNZIONI DELLA VIRTUAL VIEW:
@@ -115,24 +101,7 @@ public class SocketClient implements CommonClient {
         switch(mex.getType()) {
             case"ExceptionMessage" -> {
                 String details= ((ExceptionMessage)mex).getDetails();
-                switch (details) {
-                    case "WrongIndexException" ->
-                            throw new WrongIndexException("the index you chose is wrong");
-                    case "WrongPositionException" ->
-                            throw new WrongPositionException();
-                    case "WrongPlayersNumberException" ->
-                            throw new WrongPlayersNumberException("the number of players should be between 2 and 4");
-                    case "RoomNotExistsException" ->
-                            throw new RoomNotExistsException("the room doesn't exist");
-                    case "RoomFullException" ->
-                            throw new RoomFullException("the room is already full");
-                    case "RequirementsNotSatisfied" ->
-                            throw new RequirementsNotSatisfied("the requirements aren't satisfied, choose another card or flip this");
-                    case "NameAlreadyTakenException" ->
-                            throw new NameAlreadyTakenException("the name is already taken");
-                    case "InvalidOperationTaken" ->
-                            throw new InvalidOperationException("operation invalid, scimmia");
-                }
+                this.view.showException(this.getName(), details);
             }
             case "UpdatePointsMessage" -> {
                 int points= ((UpdatePointsMessage)mex).getPoints();
