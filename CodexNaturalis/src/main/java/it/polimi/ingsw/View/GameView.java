@@ -10,9 +10,6 @@ import java.util.LinkedList;
 
 public interface GameView {
 
-
-
-
     boolean connectionType = false;
     public void updatePoints(int points, String name);
 

@@ -41,7 +41,7 @@ public class SocketClientHandler implements VirtualView {
         return name;
     }
 
-    public void runVirtualView() throws IOException{
+    public void runVirtualView() throws IOException, RoomFullException, RoomNotExistsException, RequirementsNotSatisfied, NameAlreadyTakenException, InvalidOperationException, WrongIndexException, WrongPlayersNumberException, WrongPositionException {
         String receivedmessage;
         while(true) {
             try {
@@ -103,6 +103,9 @@ public class SocketClientHandler implements VirtualView {
 
     @Override
     public void showException(String details) throws RemoteException{
+        ExceptionMessage message= new ExceptionMessage(details);
+        String gson = message.MessageToJson();
+        proxy.showException(gson);
     }
 
     @Override
