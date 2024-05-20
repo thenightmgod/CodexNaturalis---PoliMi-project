@@ -3,6 +3,7 @@ package it.polimi.ingsw.View.TUI;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
+import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
@@ -74,26 +75,28 @@ public class TUI implements GameView {
 
         String input;
         String name;
-        int num;
+        int num = 0;
         boolean goon = false;
         Scanner scan = new Scanner(System.in);
         ExecutorService executor = Executors.newSingleThreadExecutor();
 
         do {
+            try {
+                System.out.println("Enter the number of players: ");
+                input = waitForInput(scan, executor);
 
-            System.out.println("Enter the number of players: ");
-            input = waitForInput(scan, executor);
-
-            if(!input.equals("")){
-                num = Integer.parseInt(input);
-                if(num<2 || num>4)
-                    System.out.println("The number of players must be between 2 and 4!");
-            } else{
-                num = 0;
-                goon = true;
-                break;
+                if (!input.isEmpty()) {
+                    num = Integer.parseInt(input);
+                    if (num < 2 || num > 4)
+                        System.out.println("The number of players must be between 2 and 4!");
+                } else {
+                    num = 0;
+                    goon = true;
+                    break;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a number!");
             }
-
         } while(num < 2 || num > 4);
 
         if(!goon){
@@ -200,5 +203,47 @@ public class TUI implements GameView {
             return "";
         }
     }
+
+    //            FUNZIONI PER GIOCARE
+
+    private void placeCard(){
+        boolean goon = false;
+        int i, x, y;
+        boolean face = false;
+        FB f = FB.FRONT;
+        String fac;
+        do {
+            try {
+                System.out.println("What card do you want to place?");
+                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                i = Integer.parseInt(reader.readLine());
+                System.out.println("in what position do you want to place it? Send the x first!");
+                x = Integer.parseInt(reader.readLine());
+                System.out.println("And now the y!");
+                y = Integer.parseInt(reader.readLine());
+                System.out.println("Do you want to place it Front or Back? Send a 1 for front and a 0 for back");
+                fac = reader.readLine();
+                if(fac.equals("1") || fac.equals("0") ) {
+                    if (fac.equals("0"))
+                        f = FB.BACK;
+                    client.placeCard(client, i, x, y, f);
+                    goon = true;
+                }
+                System.out.println("the face of the card should be 1 or 0");
+            } catch (IOException e)  {
+                throw new RuntimeException(e);
+            } catch (WrongIndexException e){
+                System.out.println("you chose a wrong index");
+            } catch (NumberFormatException e){
+                System.out.println("Please enter a number!");
+            } catch (RequirementsNotSatisfied e) {
+                System.out.println("the requirements not satisfied, choose another card");
+            } catch (WrongPositionException e) {
+                System.out.println("the position you selected isn't free");
+            }
+        } while (!goon );
+    }
+
+
 
 }

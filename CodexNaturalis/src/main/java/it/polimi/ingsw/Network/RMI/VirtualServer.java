@@ -19,7 +19,7 @@ public interface VirtualServer extends Remote {
 
     void leaveGame(String name, VirtualView client);
 
-    void placeCard(VirtualView client, int whichInHand, int x, int y, FB face) throws WrongIndexException;
+    void placeCard(VirtualView client, int whichInHand, int x, int y, FB face) throws WrongIndexException, RequirementsNotSatisfied, WrongPositionException;
 
     void setStartCardFace(boolean face, VirtualView client); //il player setta la variabile face della sua start card
     void chooseGoalCard(int i, VirtualView client) throws WrongIndexException;

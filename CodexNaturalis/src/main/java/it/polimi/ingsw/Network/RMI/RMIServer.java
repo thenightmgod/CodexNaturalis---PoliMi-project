@@ -64,7 +64,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer{
     }
 
     @Override
-    public void placeCard(VirtualView client, int whichInHand, int x, int y, FB face) throws WrongIndexException {
+    public void placeCard(VirtualView client, int whichInHand, int x, int y, FB face) throws WrongIndexException, RequirementsNotSatisfied, WrongPositionException {
         Actions pAction = new PlaceCardAction(controller, client, whichInHand, x, y, face);
         actions.add(pAction);
     }

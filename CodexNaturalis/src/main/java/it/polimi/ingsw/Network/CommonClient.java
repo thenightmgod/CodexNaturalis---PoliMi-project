@@ -15,7 +15,7 @@ public interface CommonClient {
 
     void leaveGame(String name, CommonClient client);
 
-    void placeCard(CommonClient client, int whichInHand, int x, int y, FB face) throws WrongIndexException;
+    void placeCard(CommonClient client, int whichInHand, int x, int y, FB face) throws WrongIndexException, RequirementsNotSatisfied, WrongPositionException;
 
     void setStartCardFace(boolean face, CommonClient client); //il player setta la variabile face della sua start card
 
