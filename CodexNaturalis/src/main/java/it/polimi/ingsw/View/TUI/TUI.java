@@ -129,12 +129,12 @@ public class TUI implements GameView {
     public void joinGame() throws RemoteException {
         boolean goon = false;
         do {
-            try {
+            //try {
                 String name = getNickname();
                 this.client = chooseClient(name);
                 this.client.joinGame(name);
                 goon = true;
-            } catch (NameAlreadyTakenException e){
+            /*} catch (NameAlreadyTakenException e){
                 System.out.print("The name you chose is already taken, try again! UwU ;)");
             } catch (RoomFullException e){
                 System.out.print("The room is already full");
@@ -144,7 +144,7 @@ public class TUI implements GameView {
                 System.out.print("There isn't a room available");
                 System.out.println("Create a new room!");
                 goon = true;
-            }
+            }*/
         } while(!goon);
 
     }
@@ -269,14 +269,14 @@ public class TUI implements GameView {
     }
 
 
-    public void chooseGoalCard(){
+    public void chooseGoalCard() {
         int i = 0;
-        do{
-            try{
+        do {
+            try {
                 System.out.println("Choose your personal GoalCard: 1 or 2?");
                 BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
                 i = Integer.parseInt(reader.readLine());
-                if(i==1 || i==2){
+                if (i == 1 || i == 2) {
                     client.chooseGoalCard(i, this.client);
                 }
             } catch (IOException e) {
@@ -286,31 +286,34 @@ public class TUI implements GameView {
             } catch (NumberFormatException e){
                 System.out.println("Please enter a number!");
             }*/
-        } while(i==0);
+            }
+            while (i == 0) ;
+        }
     }
 
 
-    public void drawCard(){
-        boolean goon = false;
-        int whichDeck, whichCard;
-        do{
-            try{
-                System.out.println("From which deck do you want to draw?\n1 --> ResourceDeck\n2 --> GoldDeck");
-                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-                whichDeck = Integer.parseInt(reader.readLine());
-                System.out.println("Which card do you want to pick?");
-                whichCard = Integer.parseInt(reader.readLine());
-                client.drawCard(whichDeck, whichCard, client);
-                goon = true;
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+    public void drawCard() {
+            boolean goon = false;
+            int whichDeck, whichCard;
+            do {
+                try {
+                    System.out.println("From which deck do you want to draw?\n1 --> ResourceDeck\n2 --> GoldDeck");
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                    whichDeck = Integer.parseInt(reader.readLine());
+                    System.out.println("Which card do you want to pick?");
+                    whichCard = Integer.parseInt(reader.readLine());
+                    client.drawCard(whichDeck, whichCard, client);
+                    goon = true;
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
             /*} catch (WrongIndexException e) {
                 System.out.println("Error: " + e.getMessage());
             } catch (NumberFormatException e){
                 System.out.println("Please enter a number!");
             }*/
-        } while(!goon);
-    }
+                }
+            }while (!goon) ;
+        }
 
 
 }
