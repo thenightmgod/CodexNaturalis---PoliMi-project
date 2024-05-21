@@ -287,8 +287,7 @@ public class TUI implements GameView {
                 System.out.println("Please enter a number!");
             }*/
             }
-            while (i == 0) ;
-        }
+        }while (i == 0) ;
     }
 
 
