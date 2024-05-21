@@ -11,38 +11,38 @@ public class ClientProxy {
         this.output = new PrintWriter(output);
     }
 
-    public void showException(String StringMessage) throws RemoteException {
+    public void showException(String StringMessage) {
         sendMessage(StringMessage);
     }
 
-    public void updatePoints(String StringMessage) throws RemoteException {
+    public void updatePoints(String StringMessage) {
         sendMessage(StringMessage);
     }
 
-    public void showGoals(String StringMessage) throws RemoteException {
-        sendMessage(StringMessage);
-    }
-
-
-    public void showHand(String StringMessage) throws RemoteException {
-        sendMessage(StringMessage);
-
-    }
-
-
-    public void updateField(String StringMessage) throws RemoteException {
+    public void showGoals(String StringMessage) {
         sendMessage(StringMessage);
     }
 
 
-    public void showFreePositions(String StringMessage) throws RemoteException {
+    public void showHand(String StringMessage) {
+        sendMessage(StringMessage);
+
+    }
+
+
+    public void updateField(String StringMessage) {
         sendMessage(StringMessage);
     }
 
-    public void update() throws RemoteException {
+
+    public void showFreePositions(String StringMessage)  {
+        sendMessage(StringMessage);
     }
 
-    public void showOtherField(String StringMessage) throws RemoteException {
+    public void update()  {
+    }
+
+    public void showOtherField(String StringMessage) {
         sendMessage(StringMessage);
     }
     public void sendMessage(String stringMessage){

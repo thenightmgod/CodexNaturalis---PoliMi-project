@@ -21,7 +21,7 @@ public interface GameView {
 
     public void showFreePosition(String name, LinkedList<Position> freePositions);
 
-    public void showException(String name, String exception) throws WrongPlayersNumberException, WrongIndexException, WrongPositionException, RoomNotExistsException, RoomFullException, RequirementsNotSatisfied, NameAlreadyTakenException, InvalidOperationException;
+    public void showException(String name, String exception);
 
     //public void joinGame
 }

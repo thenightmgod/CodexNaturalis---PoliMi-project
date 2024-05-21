@@ -134,14 +134,14 @@ public class SocketClient implements CommonClient {
 
     //             FUNZIONI DEL COMMONCLIENT
     @Override
-    public void joinGame(String name) throws RoomFullException, RoomNotExistsException, RemoteException, NameAlreadyTakenException {
+    public void joinGame(String name) {
         JoinExistingGameMessage msg = new JoinExistingGameMessage(name);
         String gson = msg.MessageToJson();
         server.joinGame(gson);
     }
 
     @Override
-    public void createGame(String name, int numPlayers) throws WrongPlayersNumberException, RemoteException {
+    public void createGame(String name, int numPlayers) {
         CreateGameMessage msg = new CreateGameMessage(name, numPlayers);
         String gson = msg.MessagetoJson();
         server.createGame(gson);
@@ -155,7 +155,7 @@ public class SocketClient implements CommonClient {
     }
 
     @Override
-    public void placeCard(CommonClient client, int whichInHand, int x, int y, FB face) throws WrongIndexException {
+    public void placeCard(CommonClient client, int whichInHand, int x, int y, FB face) {
         PlaceCardMessage msg = new PlaceCardMessage(client, name, whichInHand, x, y, face);
         String gson = msg.MessageToJson();
         server.placeCard(gson);

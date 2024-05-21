@@ -42,7 +42,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer{
     }
 
     @Override
-    public void joinGame(String Name, VirtualView client) throws RoomFullException, RoomNotExistsException, RemoteException, NameAlreadyTakenException, NotBoundException {
+    public void joinGame(String Name, VirtualView client)  {
         Actions jGame = new JoinAction(client, controller, Name);
         actions.add(jGame);
         //creare room
@@ -51,7 +51,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer{
     }
 
     @Override
-    public void createGame(String Name, int numPlayers, VirtualView client) throws WrongPlayersNumberException, RemoteException, NotBoundException {
+    public void createGame(String Name, int numPlayers, VirtualView client) {
         Actions cGame = new CreateAction(numPlayers, client, controller, Name);
         actions.add(cGame);
         //eccezione del nome
@@ -64,7 +64,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer{
     }
 
     @Override
-    public void placeCard(VirtualView client, int whichInHand, int x, int y, FB face) throws WrongIndexException, RequirementsNotSatisfied, WrongPositionException {
+    public void placeCard(VirtualView client, int whichInHand, int x, int y, FB face) {
         Actions pAction = new PlaceCardAction(controller, client, whichInHand, x, y, face);
         actions.add(pAction);
     }
@@ -76,17 +76,17 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer{
     }
 
     @Override
-    public void chooseGoalCard(int i, VirtualView client) throws WrongIndexException {
+    public void chooseGoalCard(int i, VirtualView client) {
         Actions cgAction = new ChooseGoalCardAction(i, client, controller);
         actions.add(cgAction);
     }
 
     @Override
-    public void drawCard(int i, int whichOne, VirtualView client) throws WrongIndexException, RemoteException {
+    public void drawCard(int i, int whichOne, VirtualView client)  {
         Actions dAction = new DrawCardAction(i, whichOne, client, controller);
     }
 
-    public void execute() throws WrongIndexException, RemoteException, NameAlreadyTakenException, NotBoundException {
+    public void execute() {
         new Thread(()->{
             Actions now = null;
             try {
@@ -95,8 +95,6 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer{
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-
-
         }).start();
     }
 

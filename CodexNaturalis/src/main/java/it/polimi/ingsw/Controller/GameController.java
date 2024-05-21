@@ -12,6 +12,7 @@ import it.polimi.ingsw.Network.VirtualView;
 
 import java.rmi.RemoteException;
 import java.util.LinkedList;
+import java.util.Objects;
 
 public class GameController {
 
@@ -92,14 +93,23 @@ public class GameController {
     }*/
     //non penso serva perchè è il model che la manda al client
 
-    public synchronized void chooseGoalCard(Player p, int i) throws WrongIndexException, RemoteException, RoomNotExistsException, RequirementsNotSatisfied, NameAlreadyTakenException, InvalidOperationException, WrongPositionException, WrongPlayersNumberException, RoomFullException {
+    public synchronized void chooseGoalCard(Player p, int i){
         if (i < 1 || i > 2)
             getGame().getObserverManager().showException("WrongIndexException", p.getName());
         else {
             boolean choice = i != 1;
             this.Game.pickGoalCard(p, choice);
+            changeTurns();
         }
-        changeTurns(); //boh dipende dalla logica di gioco
+
+
+       /* if (i < 1 || i > 2)
+            getGame().getObserverManager().showException("WrongIndexException", p.getName());
+        else {
+            boolean choice = i != 1;
+            this.Game.pickGoalCard(p, choice);
+        }
+        changeTurns(); //boh dipende dalla logica di gioco */
     }
 
     public synchronized void checkGoals() {
@@ -114,16 +124,17 @@ public class GameController {
 
     //la place card effettiva si compone di questi due passaggi
 
-    public synchronized void placeCard(int i, int x, int y, FB face) throws WrongIndexException, RemoteException, RequirementsNotSatisfied, WrongPositionException, RoomFullException, RoomNotExistsException, NameAlreadyTakenException, InvalidOperationException, WrongPlayersNumberException { //p passata dal client
+    public synchronized void placeCard(int i, int x, int y, FB face) { //p passata dal client
         if (i < 1 || i > 3)
             getGame().getObserverManager().showException("WrongIndexException", getGame().getTurn().getName());
         else
-            this.Game.placeCard(this.Game.getTurn().getCardFromHand(i), new Position(face, x, y));
-
+            {
+            this.Game.placeCard(this.Game.getTurn().getCardFromHand(i), face, x, y);
+            }
     }
 
 
-    public synchronized void pickResCard(int i) throws RemoteException { //l'intero deve arrivare dal client
+    public synchronized void pickResCard(int i) { //l'intero deve arrivare dal client
         this.Game.getResourceDeck().giveCard(this.Game.getTurn(), i);
         this.Game.setTwentyFlag();
         this.Game.setLastRound();
@@ -131,7 +142,7 @@ public class GameController {
         changeTurns();
     }
 
-    public synchronized void pickGoldCard(int i) throws RemoteException {
+    public synchronized void pickGoldCard(int i) {
         this.Game.getGoldDeck().giveCard(this.Game.getTurn(), i);
         this.Game.setTwentyFlag();
         this.Game.setLastRound();
@@ -179,7 +190,7 @@ public class GameController {
         return this.Players;
     }
 
-    public synchronized void drawCard(int i, int whichone) throws WrongIndexException, RemoteException, RoomFullException, RoomNotExistsException, RequirementsNotSatisfied, NameAlreadyTakenException, InvalidOperationException, WrongPositionException, WrongPlayersNumberException {
+    public synchronized void drawCard(int i, int whichone) {
         if (i < 1 || i > 2)
             getGame().getObserverManager().showException("WrongIndexException", getGame().getTurn().getName());
         else {
@@ -194,7 +205,7 @@ public class GameController {
     }
 
     public synchronized Player getPlayerByName(String name) {
-        Player p = Players.stream().filter(x -> x.getName() == name).findFirst().orElse(null);
+        Player p = Players.stream().filter(x -> Objects.equals(x.getName(), name)).findFirst().orElse(null);
         // se p è null ci deve essere un'eccezione
         return p;
     }

@@ -51,22 +51,6 @@ public class SocketServer {
                         handler.runVirtualView();
                     } catch(IOException e) {
                         throw new RuntimeException(e);
-                    } catch (RoomFullException e) {
-                        throw new RuntimeException(e);
-                    } catch (RoomNotExistsException e) {
-                        throw new RuntimeException(e);
-                    } catch (RequirementsNotSatisfied e) {
-                        throw new RuntimeException(e);
-                    } catch (NameAlreadyTakenException e) {
-                        throw new RuntimeException(e);
-                    } catch (InvalidOperationException e) {
-                        throw new RuntimeException(e);
-                    } catch (WrongIndexException e) {
-                        throw new RuntimeException(e);
-                    } catch (WrongPlayersNumberException e) {
-                        throw new RuntimeException(e);
-                    } catch (WrongPositionException e) {
-                        throw new RuntimeException(e);
                     }
                 }).start();
                 //socketRx in un BufferReader per leggerlo piu easy e passarlo al costruttore di clienthandler

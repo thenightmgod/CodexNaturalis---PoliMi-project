@@ -41,7 +41,7 @@ public class SocketClientHandler implements VirtualView {
         return name;
     }
 
-    public void runVirtualView() throws IOException, RoomFullException, RoomNotExistsException, RequirementsNotSatisfied, NameAlreadyTakenException, InvalidOperationException, WrongIndexException, WrongPlayersNumberException, WrongPositionException {
+    public void runVirtualView() throws IOException {
         String receivedmessage;
         while(true) {
             try {
@@ -58,7 +58,7 @@ public class SocketClientHandler implements VirtualView {
             }
         }
     }
-    public void handleCommand(Message msg) throws RoomFullException, RoomNotExistsException, NameAlreadyTakenException, WrongPlayersNumberException, WrongIndexException, RemoteException, RequirementsNotSatisfied, InvalidOperationException, WrongPositionException {
+    public void handleCommand(Message msg) {
         switch(msg.getType()){
             case "JoinExistingGameMessage" -> {
                 String name = ((JoinExistingGameMessage) msg).getName();
@@ -102,52 +102,52 @@ public class SocketClientHandler implements VirtualView {
     }
 
     @Override
-    public void showException(String details) throws RemoteException{
+    public void showException(String details){
         ExceptionMessage message= new ExceptionMessage(details);
         String gson = message.MessageToJson();
         proxy.showException(gson);
     }
 
     @Override
-    public void updatePoints(int points, String name) throws RemoteException{
+    public void updatePoints(int points, String name) {
         UpdatePointsMessage message= new UpdatePointsMessage(points, name);
         String gson = message.MessagetoJson();
         proxy.updatePoints(gson);
     }
     @Override
-    public void showGoals(LinkedList<GoalCard> goals) throws RemoteException{
+    public void showGoals(LinkedList<GoalCard> goals) {
         ShowGoalsMessage message= new ShowGoalsMessage(goals);
         String gson=message.MessageToJson();
         proxy.showGoals(gson);
     }
 
     @Override
-    public void showHand(LinkedList<PlayableCard> hand) throws RemoteException{
+    public void showHand(LinkedList<PlayableCard> hand) {
         ShowHandMessage message= new ShowHandMessage(hand);
         String gson=message.MessageToJson();
         proxy.showHand(gson);
     }
 
     @Override
-    public void updateField(String name, PlayingField field) throws RemoteException{
+    public void updateField(String name, PlayingField field) {
         UpdateFieldMessage message= new UpdateFieldMessage(name,field);
         String gson=message.MessageToJson();
         proxy.updateField(gson);
     }
 
     @Override
-    public void showFreePositions(String name, LinkedList<Position> freePosition) throws RemoteException {
+    public void showFreePositions(String name, LinkedList<Position> freePosition)  {
         ShowFreePositionsMessage message = new ShowFreePositionsMessage(name, freePosition);
         String gson = message.MessageToJson();
         proxy.showFreePositions(gson);
     }
 
     //probabilmente da togliere
-    public void update() throws RemoteException{
+    public void update() {
 
     } //update il clientModel
 
-    public void showOtherField(String player) throws RemoteException{
+    public void showOtherField(String player) {
         ShowOtherFieldMessage message= new ShowOtherFieldMessage(player);
         String gson= message.MessageToJson();
         proxy.showOtherField(gson);

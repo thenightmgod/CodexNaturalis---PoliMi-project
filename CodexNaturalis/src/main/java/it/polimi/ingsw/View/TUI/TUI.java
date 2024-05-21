@@ -24,8 +24,13 @@ import java.util.concurrent.*;
 public class TUI implements GameView {
 
     Player Turn;
+
     CommonClient client;
+
     int ServerPort= 4444;
+
+    String error;
+
 
     @Override
     public void updatePoints(int points, String name) {
@@ -50,24 +55,24 @@ public class TUI implements GameView {
     public void showFreePosition(String name, LinkedList<Position> freePositions) {}
 
     @Override
-    public void showException(String name, String details) throws WrongPlayersNumberException, WrongIndexException, WrongPositionException, RoomNotExistsException, RoomFullException, RequirementsNotSatisfied, NameAlreadyTakenException, InvalidOperationException {
+    public void showException(String name, String details) {
         switch(details){
             case "WrongIndexException" ->
-                    throw new WrongIndexException("the index you chose is wrong");
+                    error = "WrongIndexException";
             case "WrongPositionException" ->
-                    throw new WrongPositionException();
+                    error = "WrongPositionException";
             case "WrongPlayersNumberException" ->
-                    throw new WrongPlayersNumberException("the number of players should be between 2 and 4");
+                    error = "WrongPlayersNumberException";
             case "RoomNotExistsException" ->
-                    throw new RoomNotExistsException("the room doesn't exist");
+                    error = "RoomNotExistsException";
             case "RoomFullException" ->
-                    throw new RoomFullException("the room is already full");
+                    error = "RoomFullException";
             case "RequirementsNotSatisfied" ->
-                    throw new RequirementsNotSatisfied("the requirements aren't satisfied, choose another card or flip this");
+                    error = "RequirementsNotSatisfied";
             case "NameAlreadyTakenException" ->
-                    throw new NameAlreadyTakenException("the name is already taken");
-            case "InvalidOperationTaken" ->
-                    throw new InvalidOperationException("operation invalid, scimmia");
+                    error = "NameAlreadyTakenException";
+            case "Exception" ->
+                    error = "Sbatti";
         }
     }
 
@@ -121,7 +126,7 @@ public class TUI implements GameView {
 
     }
 
-    public void joinGame() throws RoomFullException, RoomNotExistsException, NotBoundException, NameAlreadyTakenException, RemoteException {
+    public void joinGame() throws RemoteException {
         boolean goon = false;
         do {
             try {
@@ -206,7 +211,7 @@ public class TUI implements GameView {
 
     //            FUNZIONI PER GIOCARE
 
-    private void placeCard(){
+    private void placeCard() {
         boolean goon = false;
         int i, x, y;
         boolean face = false;
@@ -223,21 +228,22 @@ public class TUI implements GameView {
                 y = Integer.parseInt(reader.readLine());
                 System.out.println("Do you want to place it Front or Back? Send a 1 for front and a 0 for back");
                 fac = reader.readLine();
-                if(fac.equals("1") || fac.equals("0") ) {
+                if (fac.equals("1") || fac.equals("0")) {
                     if (fac.equals("0"))
                         f = FB.BACK;
                     client.placeCard(client, i, x, y, f);
                     goon = true;
                 }
                 System.out.println("the face of the card should be 1 or 0");
-            } catch (IOException e)  {
+            } catch (IOException e) {
                 throw new RuntimeException(e);
-            } catch (WrongIndexException | RequirementsNotSatisfied | WrongPositionException e){
+            /*} catch (WrongIndexException | RequirementsNotSatisfied | WrongPositionException e){
                 System.out.println("Error: " + e.getMessage());
             } catch (NumberFormatException e){
                 System.out.println("Please enter a number!");
+            }*/
             }
-        } while (!goon );
+        }while (!goon) ;
     }
 
 
@@ -275,11 +281,11 @@ public class TUI implements GameView {
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
-            } catch (WrongIndexException e) {
+            /*} catch (WrongIndexException e) {
                 System.out.println("Error: " + e.getMessage());
             } catch (NumberFormatException e){
                 System.out.println("Please enter a number!");
-            }
+            }*/
         } while(i==0);
     }
 
@@ -298,11 +304,11 @@ public class TUI implements GameView {
                 goon = true;
             } catch (IOException e) {
                 throw new RuntimeException(e);
-            } catch (WrongIndexException e) {
+            /*} catch (WrongIndexException e) {
                 System.out.println("Error: " + e.getMessage());
             } catch (NumberFormatException e){
                 System.out.println("Please enter a number!");
-            }
+            }*/
         } while(!goon);
     }
 

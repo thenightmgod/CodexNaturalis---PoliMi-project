@@ -17,7 +17,7 @@ public class CreateAction extends Actions{
     }
 
     @Override
-    public void executor() throws RemoteException, WrongPlayersNumberException {
+    public void executor() {
         GameController c = this.getManager().createGame(name, i, getView());
         getManager().getControllersPerGame().put(c.getRoomId(), c);
     }

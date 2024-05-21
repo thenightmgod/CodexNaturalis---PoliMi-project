@@ -34,31 +34,31 @@ public class ObserverManager {
 
     // tutti i metodi della virtual view
 
-    public void updatePoints(int points, String name) throws RemoteException {
+    public void updatePoints(int points, String name) {
         for(String s : observers.keySet()) {
             observers.get(s).updatePoints(points, name);
         }
     }
 
-    public void showException(String exception, String name) throws RemoteException, RoomFullException, RoomNotExistsException, RequirementsNotSatisfied, NameAlreadyTakenException, InvalidOperationException, WrongIndexException, WrongPositionException, WrongPlayersNumberException {
+    public void showException(String exception, String name) {
         observers.get(name).showException(exception);
     }
 
-    public void showGoals(String name, LinkedList<GoalCard> goals) throws RemoteException {
+    public void showGoals(String name, LinkedList<GoalCard> goals) {
         observers.get(name).showGoals(goals);
     }
 
-    public void showNewHand(String name, LinkedList<PlayableCard> hand) throws RemoteException{
+    public void showNewHand(String name, LinkedList<PlayableCard> hand) {
         observers.get(name).showHand(hand);
         //anche per starter card, eventuali sbatti con l'id farli qua
     }
 
-    public void updateField(String name, PlayingField field) throws RemoteException{
+    public void updateField(String name, PlayingField field) {
         for(String s : observers.keySet())
             observers.get(s).updateField(name, field);
     }
 
-    public void showFreePositions(String name, LinkedList<Position> freePosition) throws RemoteException{
+    public void showFreePositions(String name, LinkedList<Position> freePosition) {
         observers.get(name).showFreePositions(name, freePosition);
     }
 

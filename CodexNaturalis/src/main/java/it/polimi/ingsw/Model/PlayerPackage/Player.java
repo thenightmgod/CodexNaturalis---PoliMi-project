@@ -207,31 +207,25 @@ public class Player {
      * @param c The card to be placed.
      * @param p The position at which the card is to be placed.
      */
-    public void placeCard(ResourceCard c, Position p, ObserverManager k) throws RequirementsNotSatisfied, RemoteException, RoomFullException, RoomNotExistsException, NameAlreadyTakenException, InvalidOperationException, WrongIndexException, WrongPositionException, WrongPlayersNumberException {
+    public void placeCard(ResourceCard c, Position p, ObserverManager k) {
         HashMap<Position, PlayableCard> x = this.PlayerField.getField();
-
-        if(c.getId()>=41 && c.getId()<81 && !((GoldCard) c).RequirementsOk(this)){
-            k.showException("RequirementsNotSatisfied", getName());
-        }
         this.PlayerField.getField().put(p, c);
-
-        if(p.getFace().equals(FB.BACK)){
+        if (p.getFace().equals(FB.BACK)) {
             LinkedList<Resources> Res = c.getBackRes();
-            for(Resources elemento : Res){
-                switch(elemento){
+            for (Resources elemento : Res) {
+                switch (elemento) {
                     case PLANT_KINGDOM -> this.ResourceCounter[0]++;
                     case ANIMAL_KINGDOM -> this.ResourceCounter[1]++;
                     case FUNGI_KINGDOM -> this.ResourceCounter[2]++;
                     case INSECT_KINGDOM -> this.ResourceCounter[3]++;
                 }
             }
-            for(Orientation Orien : Orientation.values()){
+            for (Orientation Orien : Orientation.values()) {
                 c.getCorner(Orien).setRes(EMPTY);
             }
-        }
-        else{
-            for(Orientation Orien : Orientation.values()){
-                switch (c.getCorner(Orien).getRes()){
+        } else {
+            for (Orientation Orien : Orientation.values()) {
+                switch (c.getCorner(Orien).getRes()) {
                     case PLANT_KINGDOM -> this.ResourceCounter[0]++;
                     case ANIMAL_KINGDOM -> this.ResourceCounter[1]++;
                     case FUNGI_KINGDOM -> this.ResourceCounter[2]++;
@@ -239,24 +233,23 @@ public class Player {
                     case QUILL -> this.ObjectCounter[0]++;
                     case INKWELL -> this.ObjectCounter[1]++;
                     case MANUSCRIPT -> this.ObjectCounter[2]++;
-                    default ->{
+                    default -> {
                         break;
                     }
                 }
             }
-            if(c.getId()>=41 && c.getId()<81){
+            if (c.getId() >= 41 && c.getId() < 81) {
                 this.PointsCounter += ((GoldCard) c).PointsCalc(this, p);
-            }
-            else{
+            } else {
                 this.PointsCounter += ((ResourceCard) c).getPoints();
             }
         }
-        for(Orientation Orien : Orientation.values()){
+        for (Orientation Orien : Orientation.values()) {
             Position front = PlayerField.getPosFromCorner(p, Orien); //posizioni davanti agli angoli
-            if(x.containsKey(front)){ //se c'è carta in quelle posizioni
+            if (x.containsKey(front)) { //se c'è carta in quelle posizioni
                 Corner toCover = x.get(front).getCorner(PlayerField.getOppFromCorner(Orien));
                 toCover.setCovered(true); //si covera l'angolo
-                switch (toCover.getRes()){  //accedo a risorsa dell'angolo coperto e diminuisco il counter
+                switch (toCover.getRes()) {  //accedo a risorsa dell'angolo coperto e diminuisco il counter
                     case PLANT_KINGDOM -> this.ResourceCounter[0]--;
                     case ANIMAL_KINGDOM -> this.ResourceCounter[1]--;
                     case FUNGI_KINGDOM -> this.ResourceCounter[2]--;
@@ -264,7 +257,7 @@ public class Player {
                     case QUILL -> this.ObjectCounter[0]--;
                     case INKWELL -> this.ObjectCounter[1]--;
                     case MANUSCRIPT -> this.ObjectCounter[2]--;
-                    default ->{
+                    default -> {
                         break;
                     }
                 }
@@ -274,6 +267,7 @@ public class Player {
         this.Hand.remove(c); //tolgo la carta dalla mano
         return;
     }
+
 
     public ResourceCard getCardFromHand(int i){
         return (ResourceCard) this.Hand.get(i);

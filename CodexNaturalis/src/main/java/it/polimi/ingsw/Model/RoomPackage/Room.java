@@ -5,6 +5,7 @@ import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.CompositionGoalCard;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.ObjectsGoalCard;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.ResourceGoalCard;
+import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.StartCard;
 import it.polimi.ingsw.Model.DeckPackage.*;
@@ -136,14 +137,18 @@ public class Room {
 
     /**
      * Places a card on the playing field for the specified player at the given position.
-     * @param card The card to place.
-     * @param p The position to place the card.
+     * @param c The card to place.
      */
-    public void placeCard(ResourceCard card, Position p) throws RequirementsNotSatisfied, RemoteException, WrongPositionException, RoomFullException, RoomNotExistsException, NameAlreadyTakenException, InvalidOperationException, WrongIndexException, WrongPlayersNumberException {
-        if(!Turn.getPlayerField().getField().containsKey(p))
+    public void placeCard(ResourceCard c, FB face, int x, int y) {
+        Position p = new Position(face, x, y);
+        if(!Turn.getPlayerField().getField().containsKey(p)) {
             observerManager.showException("WrongPositionException", Turn.getName());
+        }
+        else if(c.getId() >= 41 && c.getId() < 81 && !((GoldCard) c).RequirementsOk(Turn)){
+            observerManager.showException("RequirementsNotSatisfied", Turn.getName());
+        }
         else {
-            Turn.placeCard(card, p, observerManager);
+            Turn.placeCard(c, p, observerManager);
             observerManager.showNewHand(Turn.getName(), Turn.getHand());
             observerManager.updateField(Turn.getName(), Turn.getPlayerField());
             observerManager.updatePoints(Turn.getPointsCounter(), Turn.getName());
@@ -156,11 +161,11 @@ public class Room {
      * @param player The player picking the goal card.
      */
 
-    public void pickGoalCard(Player player, boolean choice) throws RemoteException {
-        player.setPlayerGoal(choice);
+    public void pickGoalCard(Player player, boolean i) {
+        player.setPlayerGoal(i);
     }
 
-    public void show2GoalCards(Player player) throws RemoteException {
+    public void show2GoalCards(Player player) {
         player.addGoalCard((GoalCard) GoalDeck.getGoalCard());
         player.addGoalCard((GoalCard) GoalDeck.getGoalCard());
         observerManager.showGoals(player.getName(), player.get2goals());
@@ -201,7 +206,7 @@ public class Room {
      * Distributes hands to each player, giving them a fixed number of cards from the resource and gold decks.
      * The first two cards remain fixed.
      */
-    public void giveHands() throws RemoteException { //rimangono così fisse le prime 2
+    public void giveHands() { //rimangono così fisse le prime 2
         for (Player turn : Players) {
             ResourceDeck.giveCard(turn, 2);
             ResourceDeck.giveCard(turn, 2);

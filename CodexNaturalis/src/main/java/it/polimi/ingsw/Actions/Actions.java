@@ -24,5 +24,5 @@ public abstract class Actions {
         return view;
     }
 
-    public void executor() throws WrongIndexException, RemoteException, WrongPlayersNumberException, RoomFullException, RoomNotExistsException, RequirementsNotSatisfied, NameAlreadyTakenException, InvalidOperationException, WrongPositionException {}
+    public void executor() {}
 }

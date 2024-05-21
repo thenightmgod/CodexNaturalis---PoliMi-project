@@ -15,7 +15,7 @@ public class JoinAction extends Actions {
     }
 
     @Override
-    public void executor() throws RemoteException, RoomFullException, RoomNotExistsException, RequirementsNotSatisfied, NameAlreadyTakenException, InvalidOperationException, WrongIndexException, WrongPositionException, WrongPlayersNumberException {
+    public void executor()  {
         GameController c = this.getManager().joinGame(name, getView());
         getManager().getControllersPerGame().put(c.getRoomId(), c);
     }
