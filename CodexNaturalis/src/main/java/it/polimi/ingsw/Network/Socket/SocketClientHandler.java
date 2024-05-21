@@ -58,7 +58,7 @@ public class SocketClientHandler implements VirtualView {
             }
         }
     }
-    public void handleCommand(Message msg) {
+    public void handleCommand(Message msg) throws RemoteException {
         switch(msg.getType()){
             case "JoinExistingGameMessage" -> {
                 String name = ((JoinExistingGameMessage) msg).getName();
@@ -102,41 +102,41 @@ public class SocketClientHandler implements VirtualView {
     }
 
     @Override
-    public void showException(String details){
+    public void showException(String details) throws RemoteException{
         ExceptionMessage message= new ExceptionMessage(details);
         String gson = message.MessageToJson();
         proxy.showException(gson);
     }
 
     @Override
-    public void updatePoints(int points, String name) {
+    public void updatePoints(int points, String name) throws RemoteException {
         UpdatePointsMessage message= new UpdatePointsMessage(points, name);
         String gson = message.MessagetoJson();
         proxy.updatePoints(gson);
     }
     @Override
-    public void showGoals(LinkedList<GoalCard> goals) {
+    public void showGoals(LinkedList<GoalCard> goals) throws RemoteException {
         ShowGoalsMessage message= new ShowGoalsMessage(goals);
         String gson=message.MessageToJson();
         proxy.showGoals(gson);
     }
 
     @Override
-    public void showHand(LinkedList<PlayableCard> hand) {
+    public void showHand(LinkedList<PlayableCard> hand) throws RemoteException {
         ShowHandMessage message= new ShowHandMessage(hand);
         String gson=message.MessageToJson();
         proxy.showHand(gson);
     }
 
     @Override
-    public void updateField(String name, PlayingField field) {
+    public void updateField(String name, PlayingField field) throws RemoteException {
         UpdateFieldMessage message= new UpdateFieldMessage(name,field);
         String gson=message.MessageToJson();
         proxy.updateField(gson);
     }
 
     @Override
-    public void showFreePositions(String name, LinkedList<Position> freePosition)  {
+    public void showFreePositions(String name, LinkedList<Position> freePosition) throws RemoteException {
         ShowFreePositionsMessage message = new ShowFreePositionsMessage(name, freePosition);
         String gson = message.MessageToJson();
         proxy.showFreePositions(gson);
@@ -147,7 +147,7 @@ public class SocketClientHandler implements VirtualView {
 
     } //update il clientModel
 
-    public void showOtherField(String player) {
+    public void showOtherField(String player) throws RemoteException {
         ShowOtherFieldMessage message= new ShowOtherFieldMessage(player);
         String gson= message.MessageToJson();
         proxy.showOtherField(gson);

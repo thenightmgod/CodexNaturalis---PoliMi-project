@@ -18,22 +18,23 @@ public interface VirtualView extends Remote {
 
     //le funzioni del client che vuole chiamare il server
 
-    void showException(String details);
-    void updatePoints(int points, String name);
+    void showException(String details) throws RemoteException;
+
+    void updatePoints(int points, String name) throws RemoteException;
     // int points, String name
 
-    void showGoals(LinkedList<GoalCard> goals);
+    void showGoals(LinkedList<GoalCard> goals) throws RemoteException;
     // LinkedList<GoalCard> goals
 
-    void showHand(LinkedList<PlayableCard> hand);
+    void showHand(LinkedList<PlayableCard> hand) throws RemoteException;
     // LinkedList<PlayableCard> hand
 
-    void updateField(String name, PlayingField field);
+    void updateField(String name, PlayingField field) throws RemoteException;
     // String name, PlayingField field
 
-    void showFreePositions(String name, LinkedList<Position> freePosition);
+    void showFreePositions(String name, LinkedList<Position> freePosition) throws RemoteException;
 
-    String getName();
+    String getName() throws RemoteException;
     // String name, LinkedList<Position> freePosition
 
     void update() throws RemoteException; //update il clientModel

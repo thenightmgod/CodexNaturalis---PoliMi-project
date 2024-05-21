@@ -42,7 +42,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer{
     }
 
     @Override
-    public void joinGame(String Name, VirtualView client)  {
+    public void joinGame(String Name, VirtualView client) throws RemoteException {
         Actions jGame = new JoinAction(client, controller, Name);
         actions.add(jGame);
         //creare room
@@ -51,38 +51,38 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer{
     }
 
     @Override
-    public void createGame(String Name, int numPlayers, VirtualView client) {
+    public void createGame(String Name, int numPlayers, VirtualView client) throws RemoteException {
         Actions cGame = new CreateAction(numPlayers, client, controller, Name);
         actions.add(cGame);
         //eccezione del nome
     }
 
     @Override
-    public void leaveGame(String name, VirtualView client) {
+    public void leaveGame(String name, VirtualView client) throws RemoteException {
         Actions lAction = new LeaveAction(name, client, controller);
         actions.add(lAction);
     }
 
     @Override
-    public void placeCard(VirtualView client, int whichInHand, int x, int y, FB face) {
+    public void placeCard(VirtualView client, int whichInHand, int x, int y, FB face) throws RemoteException {
         Actions pAction = new PlaceCardAction(controller, client, whichInHand, x, y, face);
         actions.add(pAction);
     }
 
     @Override
-    public void setStartCardFace(boolean face, VirtualView client) { //ordine initialize game tutto gestito nella view
+    public void setStartCardFace(boolean face, VirtualView client) throws RemoteException{ //ordine initialize game tutto gestito nella view
         Actions ssAction = new SetStartCardFaceAction(face, client, controller);
         actions.add(ssAction);
     }
 
     @Override
-    public void chooseGoalCard(int i, VirtualView client) {
+    public void chooseGoalCard(int i, VirtualView client) throws RemoteException {
         Actions cgAction = new ChooseGoalCardAction(i, client, controller);
         actions.add(cgAction);
     }
 
     @Override
-    public void drawCard(int i, int whichOne, VirtualView client)  {
+    public void drawCard(int i, int whichOne, VirtualView client) throws RemoteException {
         Actions dAction = new DrawCardAction(i, whichOne, client, controller);
     }
 
@@ -92,7 +92,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer{
             try {
                 now = actions.take();
                 now.executor();
-            } catch (InterruptedException e) {
+            } catch (InterruptedException | RemoteException e) {
                 throw new RuntimeException(e);
             }
         }).start();

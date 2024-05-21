@@ -207,7 +207,7 @@ public class Player {
      * @param c The card to be placed.
      * @param p The position at which the card is to be placed.
      */
-    public void placeCard(ResourceCard c, Position p, ObserverManager k) {
+    public void placeCard(ResourceCard c, Position p) {
         HashMap<Position, PlayableCard> x = this.PlayerField.getField();
         this.PlayerField.getField().put(p, c);
         if (p.getFace().equals(FB.BACK)) {
@@ -241,7 +241,7 @@ public class Player {
             if (c.getId() >= 41 && c.getId() < 81) {
                 this.PointsCounter += ((GoldCard) c).PointsCalc(this, p);
             } else {
-                this.PointsCounter += ((ResourceCard) c).getPoints();
+                this.PointsCounter +=  c.getPoints();
             }
         }
         for (Orientation Orien : Orientation.values()) {

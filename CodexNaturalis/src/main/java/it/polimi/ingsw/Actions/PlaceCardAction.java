@@ -24,7 +24,7 @@ public class PlaceCardAction extends Actions{
     }
 
     @Override
-    public void executor() {
+    public void executor() throws RemoteException {
         int k = getManager().getControllersPerGame().entrySet().stream().filter(entry -> getManager().equals(entry.getValue())).map(Map.Entry::getKey).findFirst().orElse(-1);
         GameController controller = getManager().getControllersPerGame().get(k);
         //cambiare dinamica di place card con l'int della mano

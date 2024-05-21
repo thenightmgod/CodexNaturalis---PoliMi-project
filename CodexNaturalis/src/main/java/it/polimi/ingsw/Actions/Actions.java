@@ -24,5 +24,5 @@ public abstract class Actions {
         return view;
     }
 
-    public void executor() {}
+    public void executor() throws RemoteException {}
 }

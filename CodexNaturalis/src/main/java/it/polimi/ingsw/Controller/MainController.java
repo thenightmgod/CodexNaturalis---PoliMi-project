@@ -32,7 +32,7 @@ public class MainController {
     }
 
     //numPlayers arriva da
-    public synchronized GameController createGame(String Name, int numPlayers, VirtualView client) {
+    public synchronized GameController createGame(String Name, int numPlayers, VirtualView client) throws RemoteException{
         //controllo sui numeri lo fa la tui
         if(controllers.isEmpty()) {
             GameController Garfield = new GameController(0, numPlayers);
@@ -49,7 +49,7 @@ public class MainController {
         return controllers.getLast();
     }
 
-    public synchronized GameController joinGame(String Name, VirtualView client)  {
+    public synchronized GameController joinGame(String Name, VirtualView client) throws RemoteException {
         //come gestire il fatto che debba essere chiamata la createGame se non ne esistono
         //RoomNotExistsException
         int i;
@@ -91,7 +91,7 @@ public class MainController {
         return controllers.getLast();
     }
 
-    public synchronized GameController leaveGame(String Name, int RoomId){
+    public synchronized GameController leaveGame(String Name, int RoomId) throws RemoteException{
         controllers.get(RoomId).removePlayer(Name);
         return controllers.get(RoomId);
     }

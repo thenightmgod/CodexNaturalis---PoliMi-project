@@ -50,32 +50,32 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     //                   FUNZIONI DEL COMMON CLIENT
 
     @Override
-    public void setStartCardFace(boolean face, CommonClient client){
+    public void setStartCardFace(boolean face, CommonClient client) throws RemoteException {
         server.setStartCardFace(face, this);
     }
 
     @Override
-    public void leaveGame(String name, CommonClient client){
+    public void leaveGame(String name, CommonClient client) throws RemoteException {
         server.leaveGame(name, this);
     }
 
     @Override
-    public void placeCard(CommonClient client, int whichInHand, int x, int y, FB face) {
+    public void placeCard(CommonClient client, int whichInHand, int x, int y, FB face) throws RemoteException {
         server.placeCard(this, whichInHand, x, y, face);
     }
 
     @Override
-    public void chooseGoalCard(int i, CommonClient client){
+    public void chooseGoalCard(int i, CommonClient client) throws RemoteException {
         server.chooseGoalCard(i, this);
     }
 
     @Override
-    public void drawCard(int whichDeck, int whichone, CommonClient client) {
+    public void drawCard(int whichDeck, int whichone, CommonClient client) throws RemoteException {
         server.drawCard(whichDeck, whichone, this);
     }
 
     @Override
-    public void createGame(String Name, int numPlayers)  {
+    public void createGame(String Name, int numPlayers) throws RemoteException {
         server.createGame(Name, numPlayers, this);
     }
 
@@ -87,7 +87,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     ;
 
     @Override
-    public void joinGame(String Name) {
+    public void joinGame(String Name) throws RemoteException {
         server.joinGame(name, this);
     }
 
@@ -95,34 +95,34 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     //    FUNZIONI DELLA VIRTUAL VIEW
 
     @Override
-    public void showException(String details)  {
+    public void showException(String details) throws RemoteException {
        this.view.showException(name, details);
     }
 
     @Override
-    public void updatePoints(int points, String name){
+    public void updatePoints(int points, String name) throws RemoteException {
         //model.setPointsCounter(points);
         this.view.updatePoints(points, name);
     }
 
     @Override
-    public void showGoals(LinkedList<GoalCard> goals) {
+    public void showGoals(LinkedList<GoalCard> goals) throws RemoteException {
         this.view.showGoals(goals, name);
     }
 
     @Override
-    public void showHand(LinkedList<PlayableCard> hand) {
+    public void showHand(LinkedList<PlayableCard> hand) throws RemoteException {
         this.view.showHands(hand, name);
         //farla, forse sbatti con playablecard
     }
 
     @Override
-    public void updateField(String name, PlayingField field) {
+    public void updateField(String name, PlayingField field) throws RemoteException {
         this.view.updateField(field, name);
     }
 
     @Override
-    public void showFreePositions(String name, LinkedList<Position> freePosition) {
+    public void showFreePositions(String name, LinkedList<Position> freePosition) throws RemoteException {
         this.view.showFreePosition(name, freePosition);
     }
 

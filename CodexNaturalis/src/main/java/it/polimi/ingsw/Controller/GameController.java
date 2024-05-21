@@ -74,7 +74,7 @@ public class GameController {
         this.Game.createDecks();
     }
 
-    public synchronized void giveStartCard(FB face) {//ovviamente la face viene passata dal client
+    public synchronized void giveStartCard(FB face) throws RemoteException{//ovviamente la face viene passata dal client
         this.Game.giveStartCards(face);
         changeTurns();
     }
@@ -93,23 +93,10 @@ public class GameController {
     }*/
     //non penso serva perchè è il model che la manda al client
 
-    public synchronized void chooseGoalCard(Player p, int i){
-        if (i < 1 || i > 2)
-            getGame().getObserverManager().showException("WrongIndexException", p.getName());
-        else {
-            boolean choice = i != 1;
-            this.Game.pickGoalCard(p, choice);
-            changeTurns();
-        }
-
-
-       /* if (i < 1 || i > 2)
-            getGame().getObserverManager().showException("WrongIndexException", p.getName());
-        else {
-            boolean choice = i != 1;
-            this.Game.pickGoalCard(p, choice);
-        }
-        changeTurns(); //boh dipende dalla logica di gioco */
+    public synchronized void chooseGoalCard(Player p, int i) throws RemoteException {
+        boolean choice = i != 1;
+        this.Game.pickGoalCard(p, choice);
+        changeTurns();
     }
 
     public synchronized void checkGoals() {
@@ -118,13 +105,23 @@ public class GameController {
         }
     }
 
+       /* if (i < 1 || i > 2)
+            getGame().getObserverManager().showException("WrongIndexException", p.getName());
+        else {
+            boolean choice = i != 1;
+            this.Game.pickGoalCard(p, choice);
+        }
+        changeTurns(); //boh dipende dalla logica di gioco */
+
+
+
     public synchronized GameState getState() {
         return this.State;
     }
 
     //la place card effettiva si compone di questi due passaggi
 
-    public synchronized void placeCard(int i, int x, int y, FB face) { //p passata dal client
+    public synchronized void placeCard(int i, int x, int y, FB face) throws RemoteException { //p passata dal client
         if (i < 1 || i > 3)
             getGame().getObserverManager().showException("WrongIndexException", getGame().getTurn().getName());
         else
@@ -134,7 +131,7 @@ public class GameController {
     }
 
 
-    public synchronized void pickResCard(int i) { //l'intero deve arrivare dal client
+    public synchronized void pickResCard(int i) throws RemoteException { //l'intero deve arrivare dal client
         this.Game.getResourceDeck().giveCard(this.Game.getTurn(), i);
         this.Game.setTwentyFlag();
         this.Game.setLastRound();
@@ -142,7 +139,7 @@ public class GameController {
         changeTurns();
     }
 
-    public synchronized void pickGoldCard(int i) {
+    public synchronized void pickGoldCard(int i) throws RemoteException {
         this.Game.getGoldDeck().giveCard(this.Game.getTurn(), i);
         this.Game.setTwentyFlag();
         this.Game.setLastRound();
@@ -190,7 +187,7 @@ public class GameController {
         return this.Players;
     }
 
-    public synchronized void drawCard(int i, int whichone) {
+    public synchronized void drawCard(int i, int whichone) throws RemoteException {
         if (i < 1 || i > 2)
             getGame().getObserverManager().showException("WrongIndexException", getGame().getTurn().getName());
         else {

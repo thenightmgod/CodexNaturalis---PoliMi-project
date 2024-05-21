@@ -9,19 +9,19 @@ import java.rmi.RemoteException;
 
 public interface CommonClient {
 
-    void joinGame(String Name);
+    void joinGame(String Name) throws RemoteException;
 
-    void createGame(String Name, int numPlayers);
+    void createGame(String Name, int numPlayers) throws RemoteException;
 
-    void leaveGame(String name, CommonClient client);
+    void leaveGame(String name, CommonClient client) throws RemoteException;
 
-    void placeCard(CommonClient client, int whichInHand, int x, int y, FB face);
+    void placeCard(CommonClient client, int whichInHand, int x, int y, FB face) throws RemoteException;
 
-    void setStartCardFace(boolean face, CommonClient client); //il player setta la variabile face della sua start card
+    void setStartCardFace(boolean face, CommonClient client) throws RemoteException; //il player setta la variabile face della sua start card
 
-    void chooseGoalCard(int i, CommonClient client);
+    void chooseGoalCard(int i, CommonClient client) throws RemoteException;
 
-    void drawCard(int i, int whichOne, CommonClient client);
+    void drawCard(int i, int whichOne, CommonClient client) throws RemoteException;
 
     void setView(GameView view);
 }

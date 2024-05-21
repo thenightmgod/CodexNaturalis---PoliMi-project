@@ -4,6 +4,7 @@ import it.polimi.ingsw.Controller.GameController;
 import it.polimi.ingsw.Controller.MainController;
 import it.polimi.ingsw.Network.VirtualView;
 
+import java.rmi.RemoteException;
 import java.util.Map;
 
 public class LeaveAction extends Actions{
@@ -14,7 +15,7 @@ public class LeaveAction extends Actions{
     }
 
     @Override
-    public void executor() {
+    public void executor() throws RemoteException {
         int k = getManager().getControllersPerGame().entrySet().stream().filter(entry -> getManager().equals(entry.getValue())).map(Map.Entry::getKey).findFirst().orElse(-1);
         GameController c = this.getManager().leaveGame(name, k);
         getManager().getControllersPerGame().remove(c);

@@ -15,7 +15,7 @@ public class JoinAction extends Actions {
     }
 
     @Override
-    public void executor()  {
+    public void executor() throws RemoteException {
         GameController c = this.getManager().joinGame(name, getView());
         getManager().getControllersPerGame().put(c.getRoomId(), c);
     }

@@ -29,7 +29,7 @@ public class TUI implements GameView {
 
     int ServerPort= 4444;
 
-    String error;
+    String error = "default";
 
 
     @Override
@@ -76,7 +76,7 @@ public class TUI implements GameView {
         }
     }
 
-    public void createGame(){
+    public void createGame() throws RemoteException {
 
         String input;
         String name;
@@ -108,9 +108,9 @@ public class TUI implements GameView {
             //fare in modo che richiami in qualche modo
         } else{
             //try{
-                name = getNickname();
-                client = chooseClient(name);
-                client.createGame(name, num); // è tutto nullo perchè così è inizializzata la view
+            name = getNickname();
+            client = chooseClient(name);
+            client.createGame(name, num); // è tutto nullo perchè così è inizializzata la view
 
             /*} catch (RemoteException e) {
                 System.out.println("an exception occurred while starting the client");
@@ -129,22 +129,24 @@ public class TUI implements GameView {
     public void joinGame() throws RemoteException {
         boolean goon = false;
         do {
-            //try {
-                String name = getNickname();
-                this.client = chooseClient(name);
-                this.client.joinGame(name);
-                goon = true;
-            /*} catch (NameAlreadyTakenException e){
-                System.out.print("The name you chose is already taken, try again! UwU ;)");
-            } catch (RoomFullException e){
-                System.out.print("The room is already full");
-                System.out.println("Create a new room!");
-                goon = true;
-            } catch (RoomNotExistsException e){
-                System.out.print("There isn't a room available");
-                System.out.println("Create a new room!");
-                goon = true;
-            }*/
+            String name = getNickname();
+            this.client = chooseClient(name);
+            this.client.joinGame(name);
+            switch (error) {
+                case "NameAlreadyTakenException" -> {
+                    System.out.println("Name already taken! Please try again!");
+                    error = "default";
+                }
+                case "RoomFullException" -> {
+                    System.out.println("Room full! Please try again!");
+                    error = "default";
+                }
+                case "RoomNotExistsException" -> {
+                    System.out.println("The room doesn't exist! Please create a game from scratch!");
+                    error = "default";
+                }
+                default -> goon = true;
+            }
         } while(!goon);
 
     }
@@ -232,18 +234,29 @@ public class TUI implements GameView {
                     if (fac.equals("0"))
                         f = FB.BACK;
                     client.placeCard(client, i, x, y, f);
-                    goon = true;
+                    switch (error) {
+                        case "WrongIndexException" -> {
+                            System.out.println("You chose a card which wasn't in your hand, put an index between 1 and 3!");
+                            error = "default";
+                        }
+                        case "RequirementsNotSatisfied" -> {
+                            System.out.println("The requirements for the card you chose aren't satisfied! ");
+                            System.out.println("Flip this gold card or play another one!");
+                            error = "default";
+                        }
+                        case "WrongPositionException" -> {
+                            System.out.println("The position you chose isn't in the free ones!");
+                            System.out.println("Look at the free position and choose one in those");
+                            error = "default";
+                        }
+                        default -> goon = true;
+                    }
+                    System.out.println("the face of the card should be 1 or 0");
                 }
-                System.out.println("the face of the card should be 1 or 0");
-            } catch (IOException e) {
+            } catch (IOException e){
                 throw new RuntimeException(e);
-            /*} catch (WrongIndexException | RequirementsNotSatisfied | WrongPositionException e){
-                System.out.println("Error: " + e.getMessage());
-            } catch (NumberFormatException e){
-                System.out.println("Please enter a number!");
-            }*/
             }
-        }while (!goon) ;
+        } while (!goon) ;
     }
 
 
@@ -270,7 +283,8 @@ public class TUI implements GameView {
 
 
     public void chooseGoalCard() {
-        int i = 0;
+        boolean goon = false;
+        int i;
         do {
             try {
                 System.out.println("Choose your personal GoalCard: 1 or 2?");
@@ -278,16 +292,15 @@ public class TUI implements GameView {
                 i = Integer.parseInt(reader.readLine());
                 if (i == 1 || i == 2) {
                     client.chooseGoalCard(i, this.client);
+                    goon = true;
                 }
+                System.out.println("You put a number which isn't ");
             } catch (IOException e) {
                 throw new RuntimeException(e);
-            /*} catch (WrongIndexException e) {
-                System.out.println("Error: " + e.getMessage());
             } catch (NumberFormatException e){
                 System.out.println("Please enter a number!");
-            }*/
             }
-        }while (i == 0) ;
+        }while (!goon) ;
     }
 
 
@@ -302,15 +315,18 @@ public class TUI implements GameView {
                     System.out.println("Which card do you want to pick?");
                     whichCard = Integer.parseInt(reader.readLine());
                     client.drawCard(whichDeck, whichCard, client);
-                    goon = true;
+                    if(error.equals("WrongIndexException")) {
+                        System.out.println("You chose indexes which are not between 1 and 3!");
+                        System.out.println("Please try again! ");
+                    }
+                    else
+                        goon = true;
                 } catch (IOException e) {
                     throw new RuntimeException(e);
-            /*} catch (WrongIndexException e) {
-                System.out.println("Error: " + e.getMessage());
-            } catch (NumberFormatException e){
-                System.out.println("Please enter a number!");
-            }*/
+                } catch (NumberFormatException e){
+                    System.out.println("Please enter a number!");
                 }
+
             }while (!goon) ;
         }
 

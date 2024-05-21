@@ -18,7 +18,7 @@ public class DrawCardAction extends Actions {
         this.whichOne = whichOne;
     }
 
-    public void executor()  {
+    public void executor() throws RemoteException {
         int k = getManager().getControllersPerGame().entrySet().stream().filter(entry -> getManager().equals(entry.getValue())).map(Map.Entry::getKey).findFirst().orElse(-1);
         GameController controller = this.getManager().getControllersPerGame().get(k);
         controller.drawCard(i, whichOne);
