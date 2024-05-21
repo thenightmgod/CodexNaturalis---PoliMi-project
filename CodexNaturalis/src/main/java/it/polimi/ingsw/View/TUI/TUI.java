@@ -107,18 +107,18 @@ public class TUI implements GameView {
         if(!goon){
             //fare in modo che richiami in qualche modo
         } else{
-            try{
+            //try{
                 name = getNickname();
                 client = chooseClient(name);
                 client.createGame(name, num); // è tutto nullo perchè così è inizializzata la view
 
-            } catch (RemoteException e) {
+            /*} catch (RemoteException e) {
                 System.out.println("an exception occurred while starting the client");
             } catch (NotBoundException e){
                 System.out.print("NotBoundException occurred while initializing the client");
             } catch (WrongPlayersNumberException e){
                 System.out.print("The number of players isn't supported");
-            }
+            }*/
 
         }
 
