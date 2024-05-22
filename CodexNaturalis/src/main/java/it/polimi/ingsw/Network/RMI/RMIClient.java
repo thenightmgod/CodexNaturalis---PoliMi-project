@@ -5,6 +5,7 @@ import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.StartCard;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
+import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
 import it.polimi.ingsw.Network.ClientModel;
@@ -88,6 +89,11 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
         this.view = view;
     }
 
+    @Override
+    public void endTurn() throws RemoteException {
+        server.endTurn(this);
+    }
+
     ;
 
     @Override
@@ -97,6 +103,11 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
 
 
     //    FUNZIONI DELLA VIRTUAL VIEW
+
+    @Override
+    public void updateTurn(Player p) throws RemoteException {
+        this.view.updateTurn(p);
+    }
 
     @Override
     public void showException(String details) throws RemoteException {

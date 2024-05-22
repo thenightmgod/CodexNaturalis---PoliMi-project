@@ -58,6 +58,12 @@ public class TUI implements GameView {
     }
 
     @Override
+    public void updateTurn(Player player) throws RemoteException {
+        this.Turn = player;
+        isYourTurn();
+    }
+
+    @Override
     public void showFreePosition(String name, LinkedList<Position> freePositions) {}
 
     @Override
@@ -180,7 +186,7 @@ public class TUI implements GameView {
                     System.out.print("NotBoundException occurred while initializing the client");
                 }
             }else {
-                String nickname= getNickname();
+                String nickname = getNickname();
                 client = new SocketClient(nickname);
                 client.setView(this);
             }
@@ -218,71 +224,72 @@ public class TUI implements GameView {
         }
     }
 
-    public void isYourTurn() throws IOException {
-        boolean goon = false;
-        String roba;
-        do {
-            Menu1();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            roba = reader.readLine();
-            switch(roba){
-                case "help" ->{
+    public void isYourTurn() throws RemoteException {
+        if(Turn.getName().equals(client.getName())) {
+            boolean goon = false;
+            String roba;
+            do {
+                try {
+                    Menu1();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                    roba = reader.readLine();
+                    switch (roba) {
+                        case "help" -> {
 
+                        }
+                        case "pgc" -> {
+                            //plot goal cards da modellino (?)
+                        }
+                        case "hand" -> {
+                            //plot hand
+                        }
+                        case "score" -> {
+                            //plot points
+                        }
+                        case "other" -> {
+                            //choose player e poi plotti il suo field
+                        }
+                        case "place" -> {
+                            placeCard();
+                            goon = true;
+                        }
+                        case "myField" -> {
+                            //plot playing field
+                        }
+                        // case "freePosition" eventuale
+                        case "toDraw" -> {
+                            //plotti quelle pescabili
+                        }
+                        case "chat" -> {
+                            //scrivi in chat
+                        }
+                        case "showChat" -> {
+                            //show chat
+                        }
+                        case "q" -> {
+                            //leave game
+                        }
+                        default -> System.out.println("Write a command in the menu");
+                    }
+                }catch(IOException e){
+                    System.out.println("sbatti");
                 }
-                case "pgc" -> {
-                    //plot goal cards da modellino (?)
-                }
-                case "hand" ->{
-                    //plot hand
-                }
-                case "score" ->{
-                    //plot points
-                }
-                case "other" ->{
-                    //choose player e poi plotti il suo field
-                }
-                case "place" ->{
-                    placeCard();
-                    goon = true;
-                }
-                case "myField" ->{
-                    //plot playing field
-                }
-                // case "freePosition" eventuale
-                case "toDraw" ->{
-                    //plotti quelle pescabili
-                }
-                case "chat" ->{
-                    //scrivi in chat
-                }
-                case "showChat" ->{
-                    //show chat
-                }
-                case "q" ->{
-                    //leave game
-                }
-                default -> System.out.println("Write a command in the menu");
-            }
-        } while(!goon);
+            } while (!goon);
+
+            // do while parte 2 per pescare
+
+            endTurn();
+        }
+        else{
+            System.out.println("You are not your turn");
+            //magari altre funzioni
+        }
     }
-    /*private void Menu1(){
-        System.out.println("+-----------------------------------------------------------+");
-        System.out.println("|                          MENU:                            |");
-        System.out.println("|                                                           |");
-        System.out.println("|   /help: to show all the commands available               |");
-        System.out.println("|   /pgc: to show the goal cards                            |");
-        System.out.println("|   /hand: to show your hand                                |");
-        System.out.println("|   /score: to get yours and others score                   |");
-        System.out.println("|   /others: to show other player field                     |");
-        System.out.println("|   /place: to place a card                                 |");
-        System.out.println("|   /myField: to show your field                            |");
-        System.out.println("|   /toDraw: to see the cards that you can draw             |");
-        System.out.println("|   /chat: to write a message in the chat                   |");
-        System.out.println("|   /showChat: to show the chat                             |");
-        System.out.println("|   /q: to leave the game                                   |");
-        System.out.println("|                                                           |");
-        System.out.println("+-----------------------------------------------------------+");
-    }*/
+
+    public void endTurn() throws RemoteException {
+        client.endTurn();
+    }
+
 
     //            FUNZIONI PER GIOCARE
 

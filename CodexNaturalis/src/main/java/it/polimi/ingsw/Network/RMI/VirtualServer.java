@@ -26,4 +26,5 @@ public interface VirtualServer extends Remote {
     //aggiungere metodo pesca carta e vedere lì come gestirlo
     void drawCard(int i, int whichOne, VirtualView client) throws RemoteException;
 
+    void endTurn(VirtualView client) throws RemoteException;
 }

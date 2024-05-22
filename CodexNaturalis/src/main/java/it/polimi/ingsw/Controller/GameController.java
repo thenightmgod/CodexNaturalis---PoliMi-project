@@ -98,7 +98,6 @@ public class GameController {
     public synchronized void chooseGoalCard(Player p, int i) throws RemoteException {
         boolean choice = i != 1;
         this.Game.pickGoalCard(p, choice);
-        changeTurns();
     }
 
     public synchronized void show2goalCards(Player p) throws RemoteException {
@@ -141,7 +140,6 @@ public class GameController {
         this.Game.setTwentyFlag();
         this.Game.setLastRound();
         this.Game.getObserverManager().showNewHand(this.Game.getTurn().getName(), this.Game.getTurn().getHand());
-        changeTurns();
     }
 
     public synchronized void pickGoldCard(int i) throws RemoteException {
@@ -149,37 +147,11 @@ public class GameController {
         this.Game.setTwentyFlag();
         this.Game.setLastRound();
         this.Game.getObserverManager().showNewHand(this.Game.getTurn().getName(), this.Game.getTurn().getHand());
-        changeTurns();
     }
 
-    public synchronized void changeTurns() {
-        Player now = this.Game.getTurn();
-        int size = Players.size();
-        switch (size) {
-            case 2 -> {
-                if (now.equals(Players.getFirst())) {
-                    this.Game.setTurn(Players.get(1));
-                    break;
-                }
-                this.Game.setTurn(Players.getFirst());
-            }
-            case 3 -> {
-                if (now.equals(Players.getFirst()))
-                    this.Game.setTurn(Players.get(1));
-                else if (now.equals(Players.get(1)))
-                    this.Game.setTurn(Players.get(2));
-                else this.Game.setTurn(Players.getFirst());
-            }
-            case 4 -> {
-                if (now.equals(Players.getFirst()))
-                    this.Game.setTurn(Players.get(1));
-                else if (now.equals(Players.get(1)))
-                    this.Game.setTurn(Players.get(2));
-                else if (now.equals(Players.get(2)))
-                    this.Game.setTurn(Players.get(3));
-                else this.Game.setTurn(Players.getFirst());
-            }
-        }
+    public synchronized void changeTurns() throws RemoteException {
+        this.Game.changeTurns();
+
     }
 
     //come gestire l'ending, se qua o nel client o boh

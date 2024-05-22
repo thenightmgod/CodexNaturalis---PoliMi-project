@@ -12,6 +12,7 @@ import it.polimi.ingsw.Model.DeckPackage.*;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
+import it.polimi.ingsw.Network.CommonClient;
 import it.polimi.ingsw.Network.VirtualView;
 
 import java.rmi.RemoteException;
@@ -279,5 +280,35 @@ public class Room {
 
     public StartDeck getStartDeck() {
         return StartDeck;
+    }
+
+    public void changeTurns() throws RemoteException {
+        int size = Players.size();
+        switch (size) {
+            case 2 -> {
+                if (Turn.equals(Players.getFirst())) {
+                    setTurn(Players.get(1));
+                    break;
+                }
+                setTurn(Players.getFirst());
+            }
+            case 3 -> {
+                if (Turn.equals(Players.getFirst()))
+                    setTurn(Players.get(1));
+                else if (Turn.equals(Players.get(1)))
+                    setTurn(Players.get(2));
+                else setTurn(Players.getFirst());
+            }
+            case 4 -> {
+                if (Turn.equals(Players.getFirst()))
+                    setTurn(Players.get(1));
+                else if (Turn.equals(Players.get(1)))
+                    setTurn(Players.get(2));
+                else if (Turn.equals(Players.get(2)))
+                    setTurn(Players.get(3));
+                else setTurn(Players.getFirst());
+            }
+        }
+        observerManager.updateTurn(Turn);
     }
 }

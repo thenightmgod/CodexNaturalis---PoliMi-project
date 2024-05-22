@@ -4,9 +4,11 @@ import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.StartCard;
+import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
 
+import java.rmi.RemoteException;
 import java.util.LinkedList;
 
 public interface GameView {
@@ -25,6 +27,8 @@ public interface GameView {
     public void showException(String name, String exception);
 
     public void showStartCard(StartCard card);
+
+    public void updateTurn(Player player) throws RemoteException;
 
     //public void joinGame
 }

@@ -1,10 +1,12 @@
 package it.polimi.ingsw.Network.RMI;
 
 import it.polimi.ingsw.Actions.*;
+import it.polimi.ingsw.Controller.GameController;
 import it.polimi.ingsw.Controller.MainController;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Network.VirtualView;
+import java.util.Map.Entry;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -40,6 +42,8 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer{
         registry.rebind(serverName, stub);
         System.out.println("Server buond.");
     }
+
+
 
     @Override
     public void joinGame(String Name, VirtualView client) throws RemoteException {
@@ -84,6 +88,21 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer{
     @Override
     public void drawCard(int i, int whichOne, VirtualView client) throws RemoteException {
         Actions dAction = new DrawCardAction(i, whichOne, client, controller);
+    }
+
+    @Override
+    public void endTurn(VirtualView client) throws RemoteException {
+        int k = -1;
+        for(Entry<Integer, VirtualView> entry : clients.entrySet()){
+            if(entry.getValue().getName().equals(client.getName())){
+                k = entry.getKey();
+            }
+        }
+        if(k != -1){
+            GameController Garfield = controller.getControllers().get(k);
+            Garfield.changeTurns();
+        }
+
     }
 
     public void execute() {

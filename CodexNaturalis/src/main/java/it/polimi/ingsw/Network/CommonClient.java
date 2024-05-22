@@ -24,4 +24,8 @@ public interface CommonClient {
     void drawCard(int i, int whichOne, CommonClient client) throws RemoteException;
 
     void setView(GameView view);
+
+    String getName();
+
+    void endTurn() throws RemoteException;
 }
