@@ -60,6 +60,8 @@ public class TUI implements GameView {
     @Override
     public void updateTurn(Player player) throws RemoteException {
         this.Turn = player;
+        // bisogna fare roba del declare winner con parametro in più
+        // e switch
         isYourTurn();
     }
 
