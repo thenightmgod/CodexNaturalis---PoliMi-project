@@ -218,6 +218,72 @@ public class TUI implements GameView {
         }
     }
 
+    public void isYourTurn() throws IOException {
+        boolean goon = false;
+        String roba;
+        do {
+            Menu1();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            roba = reader.readLine();
+            switch(roba){
+                case "help" ->{
+
+                }
+                case "pgc" -> {
+                    //plot goal cards da modellino (?)
+                }
+                case "hand" ->{
+                    //plot hand
+                }
+                case "score" ->{
+                    //plot points
+                }
+                case "other" ->{
+                    //choose player e poi plotti il suo field
+                }
+                case "place" ->{
+                    placeCard();
+                    goon = true;
+                }
+                case "myField" ->{
+                    //plot playing field
+                }
+                // case "freePosition" eventuale
+                case "toDraw" ->{
+                    //plotti quelle pescabili
+                }
+                case "chat" ->{
+                    //scrivi in chat
+                }
+                case "showChat" ->{
+                    //show chat
+                }
+                case "q" ->{
+                    //leave game
+                }
+                default -> System.out.println("Write a command in the menu");
+            }
+        } while(!goon);
+    }
+    /*private void Menu1(){
+        System.out.println("+-----------------------------------------------------------+");
+        System.out.println("|                          MENU:                            |");
+        System.out.println("|                                                           |");
+        System.out.println("|   /help: to show all the commands available               |");
+        System.out.println("|   /pgc: to show the goal cards                            |");
+        System.out.println("|   /hand: to show your hand                                |");
+        System.out.println("|   /score: to get yours and others score                   |");
+        System.out.println("|   /others: to show other player field                     |");
+        System.out.println("|   /place: to place a card                                 |");
+        System.out.println("|   /myField: to show your field                            |");
+        System.out.println("|   /toDraw: to see the cards that you can draw             |");
+        System.out.println("|   /chat: to write a message in the chat                   |");
+        System.out.println("|   /showChat: to show the chat                             |");
+        System.out.println("|   /q: to leave the game                                   |");
+        System.out.println("|                                                           |");
+        System.out.println("+-----------------------------------------------------------+");
+    }*/
+
     //            FUNZIONI PER GIOCARE
 
     private void placeCard() {
@@ -337,5 +403,43 @@ public class TUI implements GameView {
             }while (!goon) ;
         }
 
+
+    private void Menu1(){
+        System.out.println("+-----------------------------------------------------------+");
+        System.out.println("|                          MENU:                            |");
+        System.out.println("|                                                           |");
+        System.out.println("|   /help: to show all the commands available               |");
+        System.out.println("|   /pgc: to show the goal cards                            |");
+        System.out.println("|   /hand: to show your hand                                |");
+        System.out.println("|   /score: to get yours and others score                   |");
+        System.out.println("|   /others: to show other player field                     |");
+        System.out.println("|   /place: to place a card                                 |");
+        System.out.println("|   /myField: to show your field                            |");
+        System.out.println("|   /toDraw: to see the cards that you can draw             |");
+        System.out.println("|   /chat: to write a message in the chat                   |");
+        System.out.println("|   /showChat: to show the chat                             |");
+        System.out.println("|   /q: to leave the game                                   |");
+        System.out.println("|                                                           |");
+        System.out.println("+-----------------------------------------------------------+");
+    }
+
+    private void Menu2(){
+        System.out.println("+-----------------------------------------------------------+");
+        System.out.println("|                          MENU:                            |");
+        System.out.println("|                                                           |");
+        System.out.println("|   /help: to show all the commands available               |");
+        System.out.println("|   /pgc: to show the goal cards                            |");
+        System.out.println("|   /hand: to show your hand                                |");
+        System.out.println("|   /score: to get yours and others score                   |");
+        System.out.println("|   /others: to show other player field                     |");
+        System.out.println("|   /draw: to draw   a card                                 |");
+        System.out.println("|   /myField: to show your field                            |");
+        System.out.println("|   /toDraw: to see the cards that you can draw             |");
+        System.out.println("|   /chat: to write a message in the chat                   |");
+        System.out.println("|   /showChat: to show the chat                             |");
+        System.out.println("|   /q: to leave the game                                   |");
+        System.out.println("|                                                           |");
+        System.out.println("+-----------------------------------------------------------+");
+    }
 
 }
