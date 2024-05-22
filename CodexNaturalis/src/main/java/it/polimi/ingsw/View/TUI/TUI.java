@@ -3,6 +3,7 @@ package it.polimi.ingsw.View.TUI;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
+import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.StartCard;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
@@ -52,6 +53,11 @@ public class TUI implements GameView {
     }
 
     @Override
+    public void showStartCard(StartCard card) {
+
+    }
+
+    @Override
     public void showFreePosition(String name, LinkedList<Position> freePositions) {}
 
     @Override
@@ -75,6 +81,7 @@ public class TUI implements GameView {
                     error = "Sbatti";
         }
     }
+
 
     public void createGame() throws RemoteException {
 

@@ -3,6 +3,7 @@ package it.polimi.ingsw.Model.RoomPackage;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
+import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.StartCard;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
 import it.polimi.ingsw.Network.VirtualView;
@@ -38,6 +39,10 @@ public class ObserverManager {
         for(String s : observers.keySet()) {
             observers.get(s).updatePoints(points, name);
         }
+    }
+
+    public void showStartCard(String name, StartCard card) throws RemoteException{
+        observers.get(name).showStartCard(card);
     }
 
     public void showException(String exception, String name) throws RemoteException {

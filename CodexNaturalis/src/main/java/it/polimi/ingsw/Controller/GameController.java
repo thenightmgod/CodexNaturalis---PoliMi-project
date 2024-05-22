@@ -51,33 +51,35 @@ public class GameController {
         Players.removeIf(p -> p.getName() == name);
     }
 
-    public synchronized void addPlayer(String name, PlayerColor color, VirtualView client) {  //non possono esserci più di 4 giocatori
+    public synchronized void addPlayer(String name, PlayerColor color, VirtualView client) throws RemoteException {  //non possono esserci più di 4 giocatori
         Player player = new Player(name, color);
         this.Players.add(player);
         this.clients.add(client);
+        if(this.Players.size() == numPlayers) {
+            startGame();
+        }
     }
 
     public synchronized void initializeRoom() { //pre inizializzazione è una specie di waiting room
         this.Game = new Room(RoomId, Players, clients);
     }
 
-    public synchronized void startGame() { //in virtual view
-        if (this.Players.size() == this.numPlayers) {
-            initializeRoom();
-            State = GameState.RUNNING;
-            //e poi robe col vecchio initialize game
-        }
+    public synchronized void startGame() throws RemoteException { //in virtual view
+        initializeRoom();
+        State = GameState.RUNNING;
+        createDecks();
+        for(Player p: Players)
+            giveStartCard(p);
+        for(Player p: Players)
+            giveInitialCards(p);
+        for(Player p: Players)
+            show2goalCards(p);
     }
-
 
     public synchronized void createDecks() {
         this.Game.createDecks();
     }
 
-    public synchronized void giveStartCard(FB face) throws RemoteException{//ovviamente la face viene passata dal client
-        this.Game.giveStartCards(face);
-        changeTurns();
-    }
 
     public synchronized void giveHands() throws RemoteException {
         this.Game.giveHands();
@@ -99,20 +101,23 @@ public class GameController {
         changeTurns();
     }
 
+    public synchronized void show2goalCards(Player p) throws RemoteException {
+        getGame().show2GoalCards(p);
+    }
+
+    public synchronized void giveStartCard(Player p) throws RemoteException {
+        getGame().giveStartCards(p);
+    }
+
+    public synchronized void giveInitialCards(Player p) throws RemoteException {
+        getGame().giveInitialCards(p);
+    }
+
     public synchronized void checkGoals() {
         for (Player p : Players) {
             this.Game.checkGoals(p, Game.getCommonGoals());
         }
     }
-
-       /* if (i < 1 || i > 2)
-            getGame().getObserverManager().showException("WrongIndexException", p.getName());
-        else {
-            boolean choice = i != 1;
-            this.Game.pickGoalCard(p, choice);
-        }
-        changeTurns(); //boh dipende dalla logica di gioco */
-
 
 
     public synchronized GameState getState() {
@@ -187,16 +192,16 @@ public class GameController {
         return this.Players;
     }
 
-    public synchronized void drawCard(int i, int whichone) throws RemoteException {
+    public synchronized void drawCard(int i, int whichOne) throws RemoteException {
         if (i < 1 || i > 2)
             getGame().getObserverManager().showException("WrongIndexException", getGame().getTurn().getName());
         else {
-            if (whichone < 1 || whichone > 3)
+            if (whichOne < 1 || whichOne > 3)
                 getGame().getObserverManager().showException("WrongIndexException", getGame().getTurn().getName());
             else {
                 if (i == 1)
-                    pickResCard(whichone);
-                else pickGoldCard(whichone);
+                    pickResCard(whichOne);
+                else pickGoldCard(whichOne);
             }
         }
     }

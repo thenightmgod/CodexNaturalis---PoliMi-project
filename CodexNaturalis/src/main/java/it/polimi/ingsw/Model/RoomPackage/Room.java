@@ -166,11 +166,10 @@ public class Room {
     }
 
     public void show2GoalCards(Player player) throws RemoteException {
-        player.addGoalCard((GoalCard) GoalDeck.getGoalCard());
+        player.addGoalCard((GoalCard) GoalDeck.getGoalCard()); //in teoria funge
         player.addGoalCard((GoalCard) GoalDeck.getGoalCard());
         observerManager.showGoals(player.getName(), player.get2goals());
     }
-
 
     /**
      * Creates all decks required for the game and shuffles them.
@@ -220,11 +219,18 @@ public class Room {
      * Distributes start cards to players.
      //* @param  face The face of the start card.
      */
-    public void giveStartCards(FB face){
+    public void giveStartCards(Player player) throws RemoteException {
         StartDeck.giveCard(this.Turn, 0);
-        StartCard sc = (StartCard) this.Turn.getHand().getFirst();
-        this.Turn.placeStartCard(sc, face);
+        observerManager.showStartCard(player.getName(), (StartCard) player.getHand().getFirst());
     }
+
+    public void giveInitialCards(Player p) throws RemoteException {
+        getResourceDeck().giveCard(p, 3);
+        getResourceDeck().giveCard(p, 3);
+        getGoldDeck().giveCard(p, 3);
+        observerManager.showNewHand(p.getName(), p.getHand());
+    }
+
 
     /**
      * Sets common goals for the game.

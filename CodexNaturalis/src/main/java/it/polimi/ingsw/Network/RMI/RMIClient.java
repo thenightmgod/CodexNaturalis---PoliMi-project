@@ -3,6 +3,7 @@ package it.polimi.ingsw.Network.RMI;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
+import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.StartCard;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
@@ -47,7 +48,10 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
         return name;
     }
 
+
     //                   FUNZIONI DEL COMMON CLIENT
+
+
 
     @Override
     public void setStartCardFace(boolean face, CommonClient client) throws RemoteException {
@@ -103,6 +107,11 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     public void updatePoints(int points, String name) throws RemoteException {
         //model.setPointsCounter(points);
         this.view.updatePoints(points, name);
+    }
+
+    @Override
+    public void showStartCard(StartCard card) throws RemoteException {
+        this.view.showStartCard(card);
     }
 
     @Override
