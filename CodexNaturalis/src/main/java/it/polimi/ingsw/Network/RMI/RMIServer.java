@@ -105,6 +105,20 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer{
 
     }
 
+    @Override
+    public void checkGoals(VirtualView client) throws RemoteException {
+        int k = -1;
+        for(Entry<Integer, VirtualView> entry : clients.entrySet()){
+            if(entry.getValue().getName().equals(client.getName())){
+                k = entry.getKey();
+            }
+        }
+        if(k != -1){
+            GameController Grian = controller.getControllers().get(k);
+            Grian.checkGoals(client.getName());
+        }
+    }
+
     public void execute() {
         new Thread(()->{
             Actions now = null;

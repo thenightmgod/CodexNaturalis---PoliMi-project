@@ -81,10 +81,6 @@ public class GameController {
     }
 
 
-    public synchronized void giveHands() throws RemoteException {
-        this.Game.giveHands();
-    }
-
     public synchronized void commonGoals() {
         this.Game.commonGoals();
     }
@@ -101,23 +97,16 @@ public class GameController {
     }
 
     public synchronized void show2goalCards(Player p) throws RemoteException {
-        getGame().show2GoalCards(p);
+        this.Game.show2GoalCards(p);
     }
 
     public synchronized void giveStartCard(Player p) throws RemoteException {
-        getGame().giveStartCards(p);
+        this.Game.giveStartCards(p);
     }
 
     public synchronized void giveInitialCards(Player p) throws RemoteException {
-        getGame().giveInitialCards(p);
+        this.Game.giveInitialCards(p);
     }
-
-    public synchronized void checkGoals() {
-        for (Player p : Players) {
-            this.Game.checkGoals(p, Game.getCommonGoals());
-        }
-    }
-
 
     public synchronized GameState getState() {
         return this.State;
@@ -137,15 +126,11 @@ public class GameController {
 
     public synchronized void pickResCard(int i) throws RemoteException { //l'intero deve arrivare dal client
         this.Game.getResourceDeck().giveCard(this.Game.getTurn(), i);
-        this.Game.setTwentyFlag();
-        this.Game.setLastRound();
         this.Game.getObserverManager().showNewHand(this.Game.getTurn().getName(), this.Game.getTurn().getHand());
     }
 
     public synchronized void pickGoldCard(int i) throws RemoteException {
         this.Game.getGoldDeck().giveCard(this.Game.getTurn(), i);
-        this.Game.setTwentyFlag();
-        this.Game.setLastRound();
         this.Game.getObserverManager().showNewHand(this.Game.getTurn().getName(), this.Game.getTurn().getHand());
     }
 
@@ -154,10 +139,8 @@ public class GameController {
 
     }
 
-    //come gestire l'ending, se qua o nel client o boh
-    public synchronized void declareWinner() {
-        checkGoals();
-        this.Game.declareWinner();
+    public synchronized void checkGoals(String name) throws RemoteException {
+        this.Game.checkGoals(getPlayerByName(name));
     }
 
     public synchronized LinkedList<Player> getPlayers() {

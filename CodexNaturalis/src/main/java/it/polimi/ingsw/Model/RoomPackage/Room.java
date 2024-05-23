@@ -36,6 +36,7 @@ public class Room {
     private StartDeck StartDeck;
     private LinkedList<GoalCard> CommonGoals;
     private Player Winner;
+    private boolean LL;
 
     //la initialize game è stata divisa in più funzioni per evitare sbatti su input da client
     // (non so se ha senso, ma c'est la vie)
@@ -53,6 +54,7 @@ public class Room {
         this.Players = Players;
         this.Turn = Players.getFirst();
         this.CommonGoals = new LinkedList<>();
+        this.LL = false;
         for(int i=0; i<this.Players.size(); i++){
             observerManager.addObserver(clients.get(i), Players.get(i).getName());
         }
@@ -201,21 +203,6 @@ public class Room {
     }
 
 
-
-    /**
-     * Distributes hands to each player, giving them a fixed number of cards from the resource and gold decks.
-     * The first two cards remain fixed.
-     */
-    public void giveHands() throws RemoteException { //rimangono così fisse le prime 2
-        for (Player turn : Players) {
-            ResourceDeck.giveCard(turn, 2);
-            ResourceDeck.giveCard(turn, 2);
-            GoldDeck.giveCard(turn, 2);
-            observerManager.showNewHand(turn.getName(), turn.getHand());
-        }
-
-    }
-
     /**
      * Distributes start cards to players.
      //* @param  face The face of the start card.
@@ -256,8 +243,8 @@ public class Room {
         return this.CommonGoals;
     }
 
-    public void checkGoals(Player p, LinkedList<GoalCard> commonGoals){
-        LinkedList<GoalCard> toCheck = new LinkedList<>(commonGoals);
+    public void checkGoals(Player p) throws RemoteException {
+        LinkedList<GoalCard> toCheck = CommonGoals;
         toCheck.add(p.getPlayerGoal());
         for(int i=0; i<3; i++){
             if(toCheck.get(i).getId() >= 87 && toCheck.get(i).getId() <= 94) {
@@ -273,7 +260,9 @@ public class Room {
                 p.addPoints(nostra.pointsCalc(p));
             }
         }
+        observerManager.updatePoints(p.getPointsCounter(), p.getName());
     }
+
     public Deck getGoalDeck() {
         return GoalDeck;
     }
@@ -309,6 +298,10 @@ public class Room {
                 else setTurn(Players.getFirst());
             }
         }
-        observerManager.updateTurn(Turn);
+        setTwentyFlag();
+        setLastRound();
+        if(LastRound && Turn.equals(Players.getLast()))
+            LL = true;
+        observerManager.updateTurn(Turn, LL);
     }
 }

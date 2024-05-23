@@ -24,6 +24,8 @@ import java.util.concurrent.*;
 
 public class TUI implements GameView {
 
+    boolean connectionType;
+
     Player Turn;
 
     CommonClient client;
@@ -32,41 +34,39 @@ public class TUI implements GameView {
 
     String error = "default";
 
-
-    @Override
-    public void updatePoints(int points, String name) {
-    }
-
-    @Override
-    public void showGoals(LinkedList<GoalCard> goals, String name) {
+    public void showPoints(){
 
     }
 
     @Override
-    public void showHands(LinkedList<PlayableCard> hand, String name) {
+    public void updatePoints(int points, String name){
+        client.getClient().setPointsCounter(points);
+    }
 
+    @Override
+    public void updateGoals(LinkedList<GoalCard> goals, String name) {
+        client.getClient().setCommonGoals(goals);
+    }
+
+    @Override
+    public void updateHands(LinkedList<PlayableCard> hand, String name) {
+        client.getClient().setHand(hand);
     }
 
     @Override
     public void updateField(PlayingField field, String name) {
+        client.getClient().setField(field);
+    }
 
+    @Override
+    public void updateFreePosition(String name, LinkedList<Position> freePositions) {
+        client.getClient().setFreePositions(freePositions);
     }
 
     @Override
     public void showStartCard(StartCard card) {
 
     }
-
-    @Override
-    public void updateTurn(Player player) throws RemoteException {
-        this.Turn = player;
-        // bisogna fare roba del declare winner con parametro in più
-        // e switch
-        isYourTurn();
-    }
-
-    @Override
-    public void showFreePosition(String name, LinkedList<Position> freePositions) {}
 
     @Override
     public void showException(String name, String details) {
@@ -182,6 +182,7 @@ public class TUI implements GameView {
                     String nickname = getNickname();
                     client = new RMIClient(nickname);
                     client.setView(this);
+                    connectionType = false;
                 } catch (RemoteException e) {
                     System.out.println("an exception occurred while starting the client");
                 } catch (NotBoundException e){
@@ -191,6 +192,7 @@ public class TUI implements GameView {
                 String nickname = getNickname();
                 client = new SocketClient(nickname);
                 client.setView(this);
+                connectionType = true;
             }
 
         } while(!connection.equals("0") && !connection.equals("1"));
@@ -226,7 +228,7 @@ public class TUI implements GameView {
         }
     }
 
-    public void isYourTurn() throws RemoteException {
+    public void isYourTurn(boolean LL) throws RemoteException {
         if(Turn.getName().equals(client.getName())) {
             boolean goon = false;
             String roba;
@@ -286,12 +288,37 @@ public class TUI implements GameView {
             System.out.println("You are not your turn");
             //magari altre funzioni
         }
+        if(LL)
+            declareWinner();
+    }
+
+    @Override
+    public void updateTurn(Player player, boolean LL) throws RemoteException {
+        this.Turn = player;
+        isYourTurn(LL);
     }
 
     public void endTurn() throws RemoteException {
         client.endTurn();
     }
 
+    public void declareWinner() throws RemoteException {
+        System.out.println("These are your points now...");
+        showPoints();
+        System.out.println("Let's now check the goals...");
+        System.out.println("...");
+        System.out.println("You are jackie down the line...");
+        System.out.println("...");
+        checkGoals();
+        System.out.println("These are the final points!");
+
+        // bisogna staccare tutto poi
+        // come si fa boh
+    }
+
+    public void checkGoals() throws RemoteException {
+        client.checkGoals();
+    }
 
     //            FUNZIONI PER GIOCARE
 

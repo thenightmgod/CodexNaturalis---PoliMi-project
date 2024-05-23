@@ -1,6 +1,5 @@
 package it.polimi.ingsw.Network.RMI;
 
-import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.StartCard;
@@ -8,7 +7,7 @@ import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
-import it.polimi.ingsw.Network.ClientModel;
+import it.polimi.ingsw.View.TUI.ClientModel;
 import it.polimi.ingsw.Network.CommonClient;
 import it.polimi.ingsw.Network.VirtualView;
 import it.polimi.ingsw.View.GameView;
@@ -49,6 +48,9 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
         return name;
     }
 
+    public ClientModel getClient(){
+        return model;
+    }
 
     //                   FUNZIONI DEL COMMON CLIENT
 
@@ -90,6 +92,11 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     }
 
     @Override
+    public void checkGoals() throws RemoteException {
+        server.checkGoals(this);
+    }
+
+    @Override
     public void endTurn() throws RemoteException {
         server.endTurn(this);
     }
@@ -105,8 +112,8 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     //    FUNZIONI DELLA VIRTUAL VIEW
 
     @Override
-    public void updateTurn(Player p) throws RemoteException {
-        this.view.updateTurn(p);
+    public void updateTurn(Player p, boolean LL) throws RemoteException {
+        this.view.updateTurn(p, LL);
     }
 
     @Override
@@ -127,12 +134,12 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
 
     @Override
     public void showGoals(LinkedList<GoalCard> goals) throws RemoteException {
-        this.view.showGoals(goals, name);
+        this.view.updateGoals(goals, name);
     }
 
     @Override
     public void showHand(LinkedList<PlayableCard> hand) throws RemoteException {
-        this.view.showHands(hand, name);
+        this.view.updateHands(hand, name);
         //farla, forse sbatti con playablecard
     }
 
@@ -143,7 +150,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
 
     @Override
     public void showFreePositions(String name, LinkedList<Position> freePosition) throws RemoteException {
-        this.view.showFreePosition(name, freePosition);
+        this.view.updateFreePosition(name, freePosition);
     }
 
     @Override

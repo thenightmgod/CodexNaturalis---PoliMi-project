@@ -13,22 +13,21 @@ import java.util.LinkedList;
 
 public interface GameView {
 
-    boolean connectionType = false;
     public void updatePoints(int points, String name);
 
-    public void showGoals(LinkedList<GoalCard> goals, String name);
+    public void updateGoals(LinkedList<GoalCard> goals, String name);
 
-    public void showHands(LinkedList<PlayableCard> hand, String name);
+    public void updateHands(LinkedList<PlayableCard> hand, String name);
 
     public void updateField(PlayingField field, String name);
 
-    public void showFreePosition(String name, LinkedList<Position> freePositions);
+    public void updateFreePosition(String name, LinkedList<Position> freePositions);
 
     public void showException(String name, String exception);
 
     public void showStartCard(StartCard card);
 
-    public void updateTurn(Player player) throws RemoteException;
+    public void updateTurn(Player player, boolean LL) throws RemoteException;
 
     //public void joinGame
 }

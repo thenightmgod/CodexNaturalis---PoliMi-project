@@ -19,7 +19,7 @@ public interface VirtualView extends Remote {
 
     //le funzioni del client che vuole chiamare il server
 
-    void updateTurn(Player p) throws RemoteException;
+    void updateTurn(Player p, boolean LL) throws RemoteException;
 
     void showException(String details) throws RemoteException;
 

@@ -27,4 +27,6 @@ public interface VirtualServer extends Remote {
     void drawCard(int i, int whichOne, VirtualView client) throws RemoteException;
 
     void endTurn(VirtualView client) throws RemoteException;
+
+    void checkGoals(VirtualView client) throws RemoteException;
 }

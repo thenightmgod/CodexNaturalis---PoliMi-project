@@ -3,6 +3,7 @@ package it.polimi.ingsw.Network;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.View.GameView;
+import it.polimi.ingsw.View.TUI.ClientModel;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -25,7 +26,11 @@ public interface CommonClient {
 
     void setView(GameView view);
 
+    void checkGoals() throws RemoteException;
+
     String getName();
+
+    ClientModel getClient();
 
     void endTurn() throws RemoteException;
 }
