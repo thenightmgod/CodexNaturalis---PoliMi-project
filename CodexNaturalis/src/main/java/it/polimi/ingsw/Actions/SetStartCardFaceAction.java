@@ -3,6 +3,7 @@ package it.polimi.ingsw.Actions;
 import it.polimi.ingsw.Controller.GameController;
 import it.polimi.ingsw.Controller.MainController;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
+import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Network.VirtualView;
 
 import java.rmi.RemoteException;
@@ -17,12 +18,18 @@ public class SetStartCardFaceAction extends Actions {
     }
 
     @Override
-    public void executor() throws RemoteException { //ordine initialize game tutto gestito nella view
-        int k = getManager().getControllersPerGame().entrySet().stream().filter(entry -> getManager().equals(entry.getValue())).map(Map.Entry::getKey).findFirst().orElse(-1);
-        GameController controller = getManager().getControllersPerGame().get(k);
-        FB f = FB.FRONT;
-        if(!face) f = FB.BACK;
-        controller.placeStartCard(getView().getName(), f);
+    public void executor() throws RemoteException {
+        int k = -1;
+        for(Map.Entry<Integer, GameController> entry : getManager().getControllersPerGame().entrySet()){
+            if(entry.getValue().getPlayers().stream().map(Player::getName).toList().contains(getView().getName())){
+                k = entry.getKey();
+            }
+        }
+        if(k != -1){
+            GameController controller = getManager().getControllersPerGame().get(k);
+            FB f = FB.FRONT;
+            if(!face) f = FB.BACK;
+            controller.placeStartCard(getView().getName(), f);
+        }
     }
 }
-
