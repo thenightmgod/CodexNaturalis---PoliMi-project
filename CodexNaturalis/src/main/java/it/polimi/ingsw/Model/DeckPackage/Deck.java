@@ -40,7 +40,6 @@ public class Deck {
         try {
             LinkedList<Objects> list = gson.fromJson(new FileReader(json), LinkedList.class);
 
-            System.out.println(list.size());
             for (Object card : list){
                 switch(type){
                     case "Resource":
