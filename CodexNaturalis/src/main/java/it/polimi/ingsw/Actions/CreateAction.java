@@ -30,7 +30,7 @@ public class CreateAction extends Actions{
             }
         }
         if(k != -1){
-            GameController controller = this.getManager().createGame(name, i, getView());
+            GameController controller = getManager().getControllersPerGame().get(k);
             getManager().getControllersPerGame().put(controller.getRoomId(), controller);
         }
     }
