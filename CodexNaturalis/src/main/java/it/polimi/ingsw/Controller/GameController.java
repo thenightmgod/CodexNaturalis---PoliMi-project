@@ -147,6 +147,10 @@ public class GameController {
         this.Game.checkGoals(getPlayerByName(name));
     }
 
+    public void endTurn() throws RemoteException {
+        this.Game.changeTurns();
+    }
+
     public synchronized LinkedList<Player> getPlayers() {
         return this.Players;
     }

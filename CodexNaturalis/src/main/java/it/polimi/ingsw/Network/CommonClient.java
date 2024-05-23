@@ -26,11 +26,11 @@ public interface CommonClient {
 
     void setView(GameView view);
 
-    void checkGoals() throws RemoteException;
+    void checkGoals(String name) throws RemoteException;
 
     String getName();
 
     ClientModel getClient();
 
-    void endTurn() throws RemoteException;
+    void endTurn(String name) throws RemoteException;
 }

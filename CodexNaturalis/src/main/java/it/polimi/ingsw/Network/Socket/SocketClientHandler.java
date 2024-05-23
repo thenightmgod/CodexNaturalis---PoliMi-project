@@ -19,27 +19,24 @@ import java.io.PrintWriter;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 public class SocketClientHandler implements VirtualView {
+
+    HashMap<Integer, VirtualView> clients = new HashMap<>();
     final MainController controller;
     final ClientProxy proxy;
     final SocketServer server;
     final BufferedReader input;
-    private GameController gc;
-    private String name;
 
     public SocketClientHandler(MainController controller, SocketServer server, BufferedReader input, PrintWriter output){
         this.controller = controller;
         this.server = server;
         this.input = input;
         this.proxy = new ClientProxy(output);
-        this.gc = null;
     }
 
     @Override
-    public String getName() {
-        return name;
-    }
 
     public void runVirtualView() throws IOException {
         String receivedmessage;
@@ -62,16 +59,17 @@ public class SocketClientHandler implements VirtualView {
         switch(msg.getType()){
             case "JoinExistingGameMessage" -> {
                 String name = ((JoinExistingGameMessage) msg).getName();
-                this.gc = controller.joinGame(name, this); //capire come gestire i messaggi di errore e recapitarli al client giusto
+                GameController useless = controller.joinGame(name, this); //capire come gestire i messaggi di errore e recapitarli al client giusto
             }
             case "CreateGameMessage" -> {
                 String name = ((CreateGameMessage) msg).getName();
                 int numPlayers = ((CreateGameMessage) msg).getNumPlayers();
-                this.gc = controller.createGame(name, numPlayers, this );
+                GameController useless = controller.createGame(name, numPlayers, this);
             }
             case "LeaveGameMessage" -> {
                 String name = ((LeaveGameMessage) msg).getName();
                 HashMap<Integer, GameController> map = controller.getControllersPerGame();
+                GameController gc = findGameController(name);
                 int k = gc.getRoomId();
                 GameController useless = controller.leaveGame(name, k);
             }
@@ -81,6 +79,7 @@ public class SocketClientHandler implements VirtualView {
                 int y = ((PlaceCardMessage) msg).getY();
                 int whichInHand = ((PlaceCardMessage) msg).getWhichInHand();
                 FB face = ((PlaceCardMessage) msg).getFace();
+                GameController gc = findGameController(name);
                 gc.placeCard(whichInHand, x, y, face);
             }
             case "SetStartCardMessage" -> {
@@ -90,13 +89,27 @@ public class SocketClientHandler implements VirtualView {
                 int i= ((ChooseGoalCardMessage)msg).getI();
                 SocketClient client = ((ChooseGoalCardMessage)msg).castCommonToSocket(((ChooseGoalCardMessage) msg).getClient());
                 String name = client.getName();
+                GameController gc = findGameController(name);
                 Player p= gc.getPlayerByName(name);
                 gc.chooseGoalCard(p,i);
             }
             case "DrawCardMessage" -> {
                 int i= ((DrawCardMessage)msg).getI();
                 int WhichOne= ((DrawCardMessage)msg).getWhichOne();
+                SocketClient client = ((DrawCardMessage)msg).castCommonToSocket(((DrawCardMessage) msg).getClient());
+                String name = client.getName();
+                GameController gc = findGameController(name);
                 gc.drawCard(i,WhichOne);
+            }
+            case "CheckGoalCardMessage" -> {
+                String name = ((CheckGoalCardMessage)msg).getName();
+                GameController gc = findGameController(name);
+                gc.checkGoals(name);
+            }
+            case "EndTurnMessage" -> {
+                String name = ((EndTurnMessage)msg).getName();
+                GameController gc = findGameController(name);
+                gc.endTurn();
             }
         }
     }
@@ -152,4 +165,18 @@ public class SocketClientHandler implements VirtualView {
         String gson= message.MessageToJson();
         proxy.showOtherField(gson);
     }
+    public GameController findGameController(String name) throws RemoteException {
+        GameController Garfield = null;
+        int k = -1;
+        for(Map.Entry<Integer, VirtualView> entry : clients.entrySet()){
+            if(entry.getValue().getName().equals(name)){
+                k = entry.getKey();
+            }
+        }
+        if(k != -1){
+            Garfield = controller.getControllers().get(k);
+        }
+        return Garfield;
+    }
 }
+

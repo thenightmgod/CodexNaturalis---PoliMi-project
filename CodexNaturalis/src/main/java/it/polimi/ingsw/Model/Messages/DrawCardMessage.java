@@ -1,12 +1,12 @@
 package it.polimi.ingsw.Model.Messages;
 
 import it.polimi.ingsw.Network.CommonClient;
+import it.polimi.ingsw.Network.Socket.SocketClient;
 
 public class DrawCardMessage extends Message {
     int i;
     int whichOne;
     CommonClient client;
-
     public DrawCardMessage(int i, int whichOne, CommonClient client){
         super("DrawCardMessage");
         this.i=i;
@@ -29,5 +29,8 @@ public class DrawCardMessage extends Message {
 
     public int getWhichOne() {
         return whichOne;
+    }
+    public SocketClient castCommonToSocket(CommonClient client) {
+        return (SocketClient) client;
     }
 }

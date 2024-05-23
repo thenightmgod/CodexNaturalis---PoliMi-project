@@ -10,6 +10,7 @@ import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
 import it.polimi.ingsw.Network.CommonClient;
 import it.polimi.ingsw.View.GameView;
+import it.polimi.ingsw.View.TUI.ClientModel;
 
 import java.io.*;
 import java.net.Socket;
@@ -24,6 +25,7 @@ public class SocketClient implements CommonClient {
     private BufferedReader input;
     private String name;
     private GameView view;
+    private ClientModel model;
 
     public SocketClient(String name) {
         this.name=name;
@@ -110,11 +112,11 @@ public class SocketClient implements CommonClient {
             }
             case "ShowGoalsMessage" -> {
                 LinkedList<GoalCard> cards= ((ShowGoalsMessage)mex).getGoals();
-                this.view.showGoals(cards, name);
+                this.view.updateGoals(cards, name);
             }
             case "ShowHandMessage" -> {
                 LinkedList<PlayableCard> hand = ((ShowHandMessage)mex).getHand();
-                this.view.showHands(hand,name);
+                this.view.updateHands(hand,name);
             }
             case "UpdateFieldMessage" -> {
                 PlayingField playingField= ((UpdateFieldMessage)mex).getPlayingField();
@@ -123,11 +125,12 @@ public class SocketClient implements CommonClient {
             case "ShowFreePositionsMessage" -> {
                 String name = ((ShowFreePositionsMessage)mex).getName();
                 LinkedList<Position> freePositions = ((ShowFreePositionsMessage)mex).getFreePosition();
-                this.view.showFreePosition(name, freePositions);
+                this.view.updateFreePosition(name, freePositions);
             }
             case "ShowOtherField"-> {
                 //Lori non sa ancora se mettere la showOtherField nella GameView o no
             }
+
         }
     }
 
@@ -190,5 +193,19 @@ public class SocketClient implements CommonClient {
     //passandogli negli argomenti del main al posto 0 l'host,
     //al posto 1 la porta
     //
+
+    public ClientModel getModel() {
+        return model;
+    }
+    public void checkGoals(String name){
+        CheckGoalCardMessage msg = new CheckGoalCardMessage(name);
+        String gson = msg.MessageToJson();
+        server.checkGoals(gson);
+    }
+    public void endTurn(String name){
+        EndTurnMessage msg = new EndTurnMessage(name);
+        String gson = msg.MessageToJson();
+        server.endTurn(gson);
+    }
 
 }

@@ -49,6 +49,8 @@ public class ServerProxy implements VirtualServerSocket {
     public void setView(String stringMessage) {
         sendMessage(stringMessage);
     }
+    public void checkGoals(String stringMessage) { sendMessage(stringMessage); }
+    public void endTurn(String stringMessage) { sendMessage(stringMessage); }
 
     public void sendMessage(String stringMessage){
             output.write(stringMessage);
