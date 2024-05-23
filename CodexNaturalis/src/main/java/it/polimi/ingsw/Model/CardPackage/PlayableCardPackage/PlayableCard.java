@@ -44,7 +44,6 @@ public abstract class PlayableCard extends Card{
         }
     }
 
-
     /**
      * Returns the list of resources present on the back of the card based on the BackRes array.
      *
