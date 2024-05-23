@@ -65,7 +65,28 @@ public class TUI implements GameView {
 
     @Override
     public void showStartCard(StartCard card) {
-
+        //plotStartCard(card);
+        //flip card eventuale
+        String f;
+        boolean face;
+        boolean goon = false;
+        do {
+            try {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                System.out.println("Write 'front' or 'back' to decide which way you want to place the start card");
+                f = reader.readLine();
+                if(f.equals("front") || f.equals("back")){
+                    if(f.equals("front"))
+                        face = true;
+                    else face = false;
+                    client.setStartCardFace(face, client);
+                    goon = true;
+                }
+                System.out.println("You need to write front or back");
+            } catch(IOException e){
+                System.out.println("There was an error while reading the front or back");
+            }
+        } while(!goon);
     }
 
     @Override

@@ -123,6 +123,10 @@ public class GameController {
             }
     }
 
+    public synchronized void placeStartCard(String name, FB face) throws RemoteException {
+        this.Game.placeStartCard(getPlayerByName(name), face);
+    }
+
 
     public synchronized void pickResCard(int i) throws RemoteException { //l'intero deve arrivare dal client
         this.Game.getResourceDeck().giveCard(this.Game.getTurn(), i);

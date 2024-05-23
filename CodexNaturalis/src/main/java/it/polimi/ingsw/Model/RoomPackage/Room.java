@@ -159,6 +159,14 @@ public class Room {
         }
     } //per il collegamento col controller
 
+    public void placeStartCard(Player p, FB face) throws RemoteException {
+        p.placeStartCard((StartCard) p.getHand().getFirst(), face);
+        observerManager.updateField(p.getName(), p.getPlayerField());
+        observerManager.showFreePositions(Turn.getName(), Turn.getPlayerField().getFreePositions());
+        observerManager.showNewHand(Turn.getName(), Turn.getHand());
+    }
+
+
     /**
      * Picks a goal card for the specified player based on their choice.
      * @param player The player picking the goal card.
