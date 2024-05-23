@@ -4,6 +4,7 @@ import it.polimi.ingsw.Controller.GameController;
 import it.polimi.ingsw.Controller.MainController;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
+import it.polimi.ingsw.Network.RMI.RMIServer;
 import it.polimi.ingsw.Network.VirtualView;
 
 import java.rmi.RemoteException;
@@ -13,8 +14,8 @@ public class DrawCardAction extends Actions {
     int i;
     int whichOne;
 
-    public DrawCardAction(int i, int whichOne, VirtualView view, MainController manager){
-        super(view, manager);
+    public DrawCardAction(int i, int whichOne, VirtualView view, MainController manager, RMIServer server){
+        super(view, manager, server);
         this.i = i;
         this.whichOne = whichOne;
     }

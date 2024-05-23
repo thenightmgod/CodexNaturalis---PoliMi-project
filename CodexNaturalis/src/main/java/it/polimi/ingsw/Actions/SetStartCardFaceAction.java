@@ -4,6 +4,7 @@ import it.polimi.ingsw.Controller.GameController;
 import it.polimi.ingsw.Controller.MainController;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
+import it.polimi.ingsw.Network.RMI.RMIServer;
 import it.polimi.ingsw.Network.VirtualView;
 
 import java.rmi.RemoteException;
@@ -12,8 +13,8 @@ import java.util.Map;
 public class SetStartCardFaceAction extends Actions {
     boolean face;
 
-    public SetStartCardFaceAction(boolean face, VirtualView view, MainController manager){
-        super(view, manager);
+    public SetStartCardFaceAction(boolean face, VirtualView view, MainController manager, RMIServer server){
+        super(view, manager, server);
         this.face = face;
     }
 

@@ -52,6 +52,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
         return model;
     }
 
+
     //                   FUNZIONI DEL COMMON CLIENT
 
 
@@ -92,16 +93,19 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     }
 
     @Override
-    public void checkGoals() throws RemoteException {
+    public void checkGoals(String name) throws RemoteException {
         server.checkGoals(this);
     }
 
     @Override
-    public void endTurn() throws RemoteException {
+    public void endTurn(String name) throws RemoteException {
         server.endTurn(this);
     }
 
-    ;
+    @Override
+    public LinkedList<VirtualView> getOtherPlayers() throws RemoteException {
+        return server.getOtherPlayers(name);
+    }
 
     @Override
     public void joinGame(String Name) throws RemoteException {

@@ -5,7 +5,10 @@ import it.polimi.ingsw.Controller.GameController;
 import it.polimi.ingsw.Controller.MainController;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
+import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Network.VirtualView;
+
+import java.util.LinkedList;
 import java.util.Map.Entry;
 
 import java.rmi.NotBoundException;
@@ -23,6 +26,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer{
     //come perbacco aggiungo un client alla mappa clients se non riesco a tenere conto
     //del numero della room?
     HashMap<Integer, VirtualView> clients = new HashMap<>(); //aggiungere roba qui dentro
+
     int port;
 
     BlockingQueue<Actions> actions;
@@ -43,11 +47,13 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer{
         System.out.println("Server buond.");
     }
 
-
+    public HashMap<Integer, VirtualView> getClients(){
+        return clients;
+    }
 
     @Override
     public void joinGame(String Name, VirtualView client) throws RemoteException {
-        Actions jGame = new JoinAction(client, controller, Name);
+        Actions jGame = new JoinAction(client, controller, Name, this);
         actions.add(jGame);
         //creare room
         //addare poi il lazzaro nel coso
@@ -56,51 +62,71 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer{
 
     @Override
     public void createGame(String Name, int numPlayers, VirtualView client) throws RemoteException {
-        Actions cGame = new CreateAction(numPlayers, client, controller, Name);
+        Actions cGame = new CreateAction(numPlayers, client, controller, Name, this);
         actions.add(cGame);
         //eccezione del nome
     }
 
     @Override
     public void leaveGame(String name, VirtualView client) throws RemoteException {
-        Actions lAction = new LeaveAction(name, client, controller);
+        Actions lAction = new LeaveAction(name, client, controller, this);
         actions.add(lAction);
     }
 
     @Override
     public void placeCard(VirtualView client, int whichInHand, int x, int y, FB face) throws RemoteException {
-        Actions pAction = new PlaceCardAction(controller, client, whichInHand, x, y, face);
+        Actions pAction = new PlaceCardAction(controller, client, whichInHand, x, y, face, this);
         actions.add(pAction);
     }
 
     @Override
     public void setStartCardFace(boolean face, VirtualView client) throws RemoteException{ //ordine initialize game tutto gestito nella view
-        Actions ssAction = new SetStartCardFaceAction(face, client, controller);
+        Actions ssAction = new SetStartCardFaceAction(face, client, controller, this);
         actions.add(ssAction);
     }
 
     @Override
     public void chooseGoalCard(int i, VirtualView client) throws RemoteException {
-        Actions cgAction = new ChooseGoalCardAction(i, client, controller);
+        Actions cgAction = new ChooseGoalCardAction(i, client, controller, this);
         actions.add(cgAction);
     }
 
     @Override
     public void drawCard(int i, int whichOne, VirtualView client) throws RemoteException {
-        Actions dAction = new DrawCardAction(i, whichOne, client, controller);
+        Actions dAction = new DrawCardAction(i, whichOne, client, controller, this);
         actions.add(dAction);
     }
 
     @Override
     public void endTurn(VirtualView client) throws RemoteException {
-        Actions eAction = new EndTurnAction(client, controller);
+        Actions eAction = new EndTurnAction(client, controller, this);
         actions.add(eAction);
     }
 
     @Override
     public void checkGoals(VirtualView client) throws RemoteException {
-        Actions cAction = new CheckGoalsAction(client, controller);
+        Actions cAction = new CheckGoalsAction(client, controller, this);
         actions.add(cAction);
+    }
+
+    @Override
+    public LinkedList<VirtualView> getOtherPlayers(String name) throws RemoteException {
+
+        LinkedList<VirtualView> otherPlayers = new LinkedList<>();
+        int k = -1;
+        for (Entry<Integer, VirtualView> entry : clients.entrySet()) {
+            if (entry.getValue().getName().equals(name)) {
+                k = entry.getKey();
+            }
+        }
+        if(k != -1){
+           for(int i = 0; i<4; i++){
+               VirtualView v = clients.get(k);
+               if(!v.equals(null) && !v.getName().equals(name))
+                   otherPlayers.add(v);
+           }
+        }
+        return otherPlayers;
     }
 
     public void execute() {

@@ -3,6 +3,7 @@ package it.polimi.ingsw.Actions;
 import it.polimi.ingsw.Controller.GameController;
 import it.polimi.ingsw.Controller.MainController;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
+import it.polimi.ingsw.Network.RMI.RMIServer;
 import it.polimi.ingsw.Network.VirtualView;
 
 import java.rmi.RemoteException;
@@ -11,8 +12,8 @@ import java.util.Map;
 public class EndTurnAction extends Actions{
 
 
-    public EndTurnAction(VirtualView view, MainController manager){
-        super(view, manager);
+    public EndTurnAction(VirtualView view, MainController manager, RMIServer server){
+        super(view, manager, server);
     }
 
     @Override

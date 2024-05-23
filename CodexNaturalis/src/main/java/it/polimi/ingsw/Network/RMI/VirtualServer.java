@@ -7,6 +7,7 @@ import it.polimi.ingsw.Network.VirtualView;
 import java.rmi.NotBoundException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.LinkedList;
 
 public interface VirtualServer extends Remote {
 
@@ -14,6 +15,7 @@ public interface VirtualServer extends Remote {
     //le funzioni del server che vuole chiamare il client
 
     void joinGame(String Name, VirtualView client) throws RemoteException;
+
     void createGame(String Name, int numPlayers, VirtualView client) throws RemoteException;
 
     void leaveGame(String name, VirtualView client) throws RemoteException;
@@ -21,6 +23,7 @@ public interface VirtualServer extends Remote {
     void placeCard(VirtualView client, int whichInHand, int x, int y, FB face) throws RemoteException;
 
     void setStartCardFace(boolean face, VirtualView client) throws RemoteException; //il player setta la variabile face della sua start card
+
     void chooseGoalCard(int i, VirtualView client) throws RemoteException;
 
     //aggiungere metodo pesca carta e vedere lì come gestirlo
@@ -29,4 +32,6 @@ public interface VirtualServer extends Remote {
     void endTurn(VirtualView client) throws RemoteException;
 
     void checkGoals(VirtualView client) throws RemoteException;
+
+    LinkedList<VirtualView> getOtherPlayers(String name) throws RemoteException;
 }

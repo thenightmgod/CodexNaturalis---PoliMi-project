@@ -5,6 +5,7 @@ import it.polimi.ingsw.Controller.MainController;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
+import it.polimi.ingsw.Network.RMI.RMIServer;
 import it.polimi.ingsw.Network.VirtualView;
 
 import java.rmi.RemoteException;
@@ -17,8 +18,8 @@ public class PlaceCardAction extends Actions{
     int y;
     FB face;
 
-    public PlaceCardAction( MainController manager, VirtualView view, int whichInHand, int x, int y, FB face){
-        super(view, manager);
+    public PlaceCardAction(MainController manager, VirtualView view, int whichInHand, int x, int y, FB face, RMIServer server){
+        super(view, manager, server);
         this.whichInHand = whichInHand;
         this.x = x;
         this.y = y;

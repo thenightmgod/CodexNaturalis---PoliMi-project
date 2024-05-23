@@ -4,6 +4,7 @@ import it.polimi.ingsw.Controller.GameController;
 import it.polimi.ingsw.Controller.MainController;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
+import it.polimi.ingsw.Network.RMI.RMIServer;
 import it.polimi.ingsw.Network.VirtualView;
 
 import java.rmi.RemoteException;
@@ -13,8 +14,8 @@ import java.util.stream.Collectors;
 public class ChooseGoalCardAction extends Actions{
     int i;
 
-    public ChooseGoalCardAction(int i, VirtualView view, MainController manager){
-        super(view, manager);
+    public ChooseGoalCardAction(int i, VirtualView view, MainController manager, RMIServer server){
+        super(view, manager, server);
         this.i = i;
     }
 

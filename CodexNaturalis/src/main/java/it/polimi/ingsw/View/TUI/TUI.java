@@ -1,8 +1,11 @@
 package it.polimi.ingsw.View.TUI;
 
+import it.polimi.ingsw.Controller.GameController;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
+import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
+import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.StartCard;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
@@ -25,6 +28,8 @@ import java.util.concurrent.*;
 public class TUI implements GameView {
 
     boolean connectionType;
+
+    CardsTUI cards;
 
     Player Turn;
 
@@ -263,12 +268,22 @@ public class TUI implements GameView {
 
                         }
                         case "pgc" -> {
+                            LinkedList<GoalCard> toPrint = client.getClient().getCommonGoals();
+                            //for(GoalCard gc : toPrint)
+                                //cards.printGoalCard(gc);
                             //plot goal cards da modellino (?)
                         }
                         case "hand" -> {
-                            //plot hand
+                            LinkedList<PlayableCard> toPrint = client.getClient().getHand();
+                            for(PlayableCard pc : toPrint){
+                                if(pc.getId() >= 1 && pc.getId() <= 40)
+                                    cards.printFrontResourceCard((ResourceCard) pc);
+                                else cards.printFrontGoldCard((GoldCard) pc);
+                            }
+                            // poi può flippare
                         }
                         case "score" -> {
+                            //GameController Grian = client.
                             //plot points
                         }
                         case "other" -> {
@@ -320,7 +335,7 @@ public class TUI implements GameView {
     }
 
     public void endTurn() throws RemoteException {
-        client.endTurn();
+        client.endTurn(client.getName());
     }
 
     public void declareWinner() throws RemoteException {
@@ -338,7 +353,7 @@ public class TUI implements GameView {
     }
 
     public void checkGoals() throws RemoteException {
-        client.checkGoals();
+        client.checkGoals(client.getName());
     }
 
     //            FUNZIONI PER GIOCARE
