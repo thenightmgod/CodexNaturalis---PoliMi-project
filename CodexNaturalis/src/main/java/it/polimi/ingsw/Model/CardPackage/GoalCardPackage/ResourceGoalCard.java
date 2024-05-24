@@ -12,7 +12,6 @@ import it.polimi.ingsw.Model.PlayerPackage.Player;
 public class ResourceGoalCard extends GoalCard {
     private final Resources Res;
 
-
     /**
      *Constructs a new ResourceGoalCard with its individual id, points and Resources R
      *

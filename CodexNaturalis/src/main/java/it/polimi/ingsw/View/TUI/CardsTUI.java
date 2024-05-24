@@ -1,5 +1,7 @@
 package it.polimi.ingsw.View.TUI;
 
+import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
+import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.ObjectsGoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.*;
 import it.polimi.ingsw.Model.CornerPackage.*;
 import java.util.LinkedList;
@@ -27,6 +29,13 @@ public class CardsTUI {
     public static final String ANSI_PURPLE = "\u001B[35m";
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BRIGHT_YELLOW = "\u001B[93m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    //public static final String ANSI_BG_PURPLE = "\u001B[45m";
+    // public static final String ANSI_BG_GREEN = "\u001B[42m";
+    public static final String GREEN_SQUARE = "🟩";
+    public static final String PURPLE_SQUARE="\uD83D\uDFEA";
+    public static final String RED_SQUARE="\uD83D\uDFE5";
+    public static final String BLUE_SQUARE="🟦";
 
     public CardsTUI() {
     }
@@ -357,6 +366,212 @@ public class CardsTUI {
         System.out.println("———————————————");
         System.out.print(ANSI_RESET);
     }
+
+    //------------------printare goal card---------------------------
+
+    public void printGoalCard(GoalCard c) {
+        System.out.print(ANSI_YELLOW);
+        System.out.println("———————————————");
+        System.out.print("|");
+        int id= c.getId();
+        if(id== 87 || id==89) {
+            printDiagonalUp(c);
+        } else if (id == 88 || id== 90){
+            printDiagonalDown(c);
+        }else if(id==91) {
+            printL(c);
+        }else if(id==92) {
+            printReverseL(c);
+        }else if(id==93) {
+            printGoalCard93(c);
+        }else if(id==94) {
+            printGoalCard94(c);
+        }else {
+            System.out.print("      ");
+            if (id>94 && id<99) {
+                System.out.println("2      |");
+                System.out.print("|   ");
+                System.out.print("[");
+                switch(id) {
+                    case 95 -> {
+                        System.out.print(FUNGI_KINGDOM.getShortName());
+                        System.out.print(FUNGI_KINGDOM.getShortName());
+                        System.out.print(FUNGI_KINGDOM.getShortName());
+                    }
+                    case 96 -> {
+                        System.out.print(PLANT_KINGDOM.getShortName());
+                        System.out.print(PLANT_KINGDOM.getShortName());
+                        System.out.print(PLANT_KINGDOM.getShortName());
+                    }
+                    case 97 -> {
+                        System.out.print(ANIMAL_KINGDOM.getShortName());
+                        System.out.print(ANIMAL_KINGDOM.getShortName());
+                        System.out.print(ANIMAL_KINGDOM.getShortName());
+                    }
+                    case 98 -> {
+                        System.out.print(INSECT_KINGDOM.getShortName());
+                        System.out.print(INSECT_KINGDOM.getShortName());
+                        System.out.print(INSECT_KINGDOM.getShortName());
+                    }
+                }
+                System.out.print("]");
+            }else if (id>98 && id<=102) {
+                int[] o= ((ObjectsGoalCard)c).getObj();
+                if(id == 102 ) {
+                    System.out.println("2      |");
+                    System.out.print("|   ");
+                    System.out.print("[");
+                    System.out.print(Objects.QUILL.getShortName());
+                    System.out.print(Objects.QUILL.getShortName());
+                    System.out.print("]  ");
+                }
+                else if(id==101) {
+                    System.out.println("2      |");
+                    System.out.print("|   ");
+                    System.out.print("[");
+                    System.out.print(Objects.INKWELL.getShortName());
+                    System.out.print(Objects.INKWELL.getShortName());
+                    System.out.print("]  ");
+                }
+                else if(id==100) {
+                    System.out.println("2      |");
+                    System.out.print("|   ");
+                    System.out.print("[");
+                    System.out.print(Objects.MANUSCRIPT.getShortName());
+                    System.out.print(Objects.MANUSCRIPT.getShortName());
+                    System.out.print("]  ");
+                }
+                else {
+                    System.out.println("3      |");
+                    System.out.print("|   ");
+                    System.out.print("[");
+                    System.out.print(Objects.QUILL.getShortName());
+                    System.out.print(Objects.INKWELL.getShortName());
+                    System.out.print(Objects.MANUSCRIPT.getShortName());
+                    System.out.print("]");
+                }
+            }
+            System.out.println("  |");
+            System.out.println("|             |");
+            System.out.println("———————————————");
+            System.out.print(ANSI_RESET);
+        }
+    }
+
+    private void printL(GoalCard c) {
+        System.out.print("  3");
+        System.out.print("    ");
+        System.out.print(RED_SQUARE);
+        System.out.println("    |");
+        System.out.print("|       ");
+        System.out.print(RED_SQUARE);
+        System.out.println("    |");
+        System.out.print("|         ");
+        System.out.print(GREEN_SQUARE);
+        System.out.println("  |");
+        System.out.println("———————————————");
+    }
+
+    private void printGoalCard93(GoalCard c) {
+        System.out.print("  3");
+        System.out.print("      ");
+        System.out.print(RED_SQUARE);
+        System.out.println("  |");
+        System.out.print("|       ");
+        System.out.print(BLUE_SQUARE);
+        System.out.println("    |");
+        System.out.print("|       ");
+        System.out.print(BLUE_SQUARE);
+        System.out.println("    |");
+        System.out.println("———————————————");
+    }
+
+    private void printReverseL(GoalCard c) {
+        System.out.print("  3");
+        System.out.print("    ");
+        System.out.print(GREEN_SQUARE);
+        System.out.println("    |");
+        System.out.print("|       ");
+        System.out.print(GREEN_SQUARE);
+        System.out.println("    |");
+        System.out.print("|     ");
+        System.out.print(PURPLE_SQUARE);
+        System.out.println("      |");
+        System.out.println("———————————————");
+    }
+
+    private void printGoalCard94(GoalCard c) {
+        System.out.print("  3");
+        System.out.print("  ");
+        System.out.print(BLUE_SQUARE);
+        System.out.println("     |");
+        System.out.print("|       ");
+        System.out.print(PURPLE_SQUARE);
+        System.out.println("    |");
+        System.out.print("|       ");
+        System.out.print(PURPLE_SQUARE);
+        System.out.println("    |");
+        System.out.println("———————————————");
+    }
+
+    public void printDiagonalDown(GoalCard c) {
+        if (c.getId() == 88) {
+            System.out.print("  2");
+            System.out.print("  ");
+            System.out.print(GREEN_SQUARE);
+            System.out.println("      |");
+            System.out.print("|       ");
+            System.out.print(GREEN_SQUARE);
+            System.out.println("    |");
+            System.out.print("|         ");
+            System.out.print(GREEN_SQUARE);
+            System.out.println("  |");
+            System.out.println("———————————————");
+        }else if (c.getId()==90) {
+            System.out.print("  2");
+            System.out.print("  ");
+            System.out.print(PURPLE_SQUARE);
+            System.out.println("      |");
+            System.out.print("|       ");
+            System.out.print(PURPLE_SQUARE);
+            System.out.println("    |");
+            System.out.print("|         ");
+            System.out.print(PURPLE_SQUARE);
+            System.out.println("  |");
+            System.out.println("———————————————");
+        }
+    }
+
+    public void printDiagonalUp(GoalCard c) {
+        if (c.getId() ==89) {
+            System.out.print("  2");
+            System.out.print("    ");
+            System.out.print(BLUE_SQUARE);
+            System.out.println("    |");
+            System.out.print("|     ");
+            System.out.print(BLUE_SQUARE);
+            System.out.println("      |");
+            System.out.print("|   ");
+            System.out.print(BLUE_SQUARE);
+            System.out.println("        |");
+            System.out.println("———————————————");
+        }else if(c.getId()==87) {
+            System.out.print("  2");
+            System.out.print("    ");
+            System.out.print(RED_SQUARE);
+            System.out.println("    |");
+            System.out.print("|     ");
+            System.out.print(RED_SQUARE);
+            System.out.println("      |");
+            System.out.print("|   ");
+            System.out.print(RED_SQUARE);
+            System.out.println("        |");
+            System.out.println("———————————————");
+        }
+    }
+
+
+
 
 
     //-----------------------PRINTARE ANGOLI (UGUALE SIA PER GOLD CHE PER RISORSA)------------------------------
