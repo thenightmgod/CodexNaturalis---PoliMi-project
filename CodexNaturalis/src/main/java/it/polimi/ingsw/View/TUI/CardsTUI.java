@@ -40,11 +40,9 @@ public class CardsTUI {
     public CardsTUI() {
     }
 
-    ;
+    //-----------------------------------------PRINTARE START CARD------------------------------------------------------
 
-
-    //------------------------PRINTARE START CARD-----------------------------
-    public void PrintFrontStartCard(StartCard c) {
+    public void printFrontStartCard(StartCard c) {
         System.out.print(ANSI_BRIGHT_YELLOW);
         System.out.println("———————————————");
         System.out.print("|");
@@ -77,7 +75,7 @@ public class CardsTUI {
 
     public void printStartCardJackie(StartCard c){
         System.out.print(ANSI_BRIGHT_YELLOW);
-        System.out.println("———————————————");
+        System.out.print("———————————————");
     }
 
     public void printFrontStartCardFirstLine(StartCard c){
@@ -90,7 +88,7 @@ public class CardsTUI {
         StringBuilder sb2 = new StringBuilder();
         Corner c3 = c.getCorner(Orientation.HR);
         printCorner(c3, sb2);
-        System.out.println("|");
+        System.out.print("|");
     }
 
     public void printFrontStartCardSecondLine(StartCard c){
@@ -100,7 +98,7 @@ public class CardsTUI {
         int size = c.getBackRes().size();
         PrintBackResFrontStartCard(c, size);
 
-        System.out.println("   |");
+        System.out.print("   |");
     }
 
     public void printFrontStartCardThirdLine(StartCard c){
@@ -113,7 +111,7 @@ public class CardsTUI {
         StringBuilder sb4 = new StringBuilder();
         Corner c4 = c.getCorner(Orientation.LR);
         printCorner(c4, sb4);
-        System.out.println("|");
+        System.out.print("|");
     }
 
 
@@ -196,14 +194,14 @@ public class CardsTUI {
         StringBuilder sb2 = new StringBuilder();
         Corner c3 = c.getBackCorner(Orientation.HR);
         printCorner(c3, sb2);
-        System.out.println("|");
+        System.out.print("|");
     }
 
     public void printBackStartCardSecondLine(StartCard c) {
         System.out.print(ANSI_BRIGHT_YELLOW);
         System.out.print("|  ");
 
-        System.out.println("           |");
+        System.out.print("           |");
     }
 
     public void printBackStartCardThirdLine(StartCard c){
@@ -218,11 +216,11 @@ public class CardsTUI {
         StringBuilder sb4 = new StringBuilder();
         Corner c4 = c.getBackCorner(Orientation.LR);
         printCorner(c4, sb4);
-        System.out.println("|");
+        System.out.print("|");
     }
 
+    //-----------------------------------------PRINTARE RESOURCE CARD---------------------------------------------------
 
-    //-------------------------PRINTARE RESOURCE CARD----------------------------
     public void printFrontResourceCard(ResourceCard card) {
         if (card.getColor().equals(CardColor.GREEN)) {
             System.out.print(ANSI_GREEN);
@@ -262,8 +260,79 @@ public class CardsTUI {
 
         System.out.print("———————————————");
         System.out.print(ANSI_RESET);
-
     }
+
+    public void printResourceCardJackie(ResourceCard card) {
+        if (card.getColor().equals(CardColor.GREEN)) {
+            System.out.print(ANSI_GREEN);
+        } else if (card.getColor().equals(CardColor.PURPLE)) {
+            System.out.println(ANSI_PURPLE);
+        } else if (card.getColor().equals(CardColor.BLUE)) {
+            System.out.println(ANSI_BLUE);
+        } else if (card.getColor().equals(CardColor.RED))
+            System.out.println(ANSI_RED);
+        System.out.print("———————————————");
+    }
+
+    public void printFrontResourceCardFirstLine(ResourceCard card) {
+        if (card.getColor().equals(CardColor.GREEN)) {
+            System.out.print(ANSI_GREEN);
+        } else if (card.getColor().equals(CardColor.PURPLE)) {
+            System.out.println(ANSI_PURPLE);
+        } else if (card.getColor().equals(CardColor.BLUE)) {
+            System.out.println(ANSI_BLUE);
+        } else if (card.getColor().equals(CardColor.RED))
+            System.out.println(ANSI_RED);
+
+        System.out.print("|");
+        StringBuilder sb = new StringBuilder();
+        Corner c = card.getCorner(Orientation.HL);
+        printCorner(c, sb);
+        printResourcePoints(card);
+
+
+        System.out.print("    ");
+        StringBuilder sb2 = new StringBuilder();
+        Corner c3 = card.getCorner(Orientation.HR);
+        printCorner(c3, sb2);
+        System.out.print("|");
+    }
+
+    public void printFrontResourceCardSecondLine(ResourceCard card) {
+        if (card.getColor().equals(CardColor.GREEN)) {
+            System.out.print(ANSI_GREEN);
+        } else if (card.getColor().equals(CardColor.PURPLE)) {
+            System.out.println(ANSI_PURPLE);
+        } else if (card.getColor().equals(CardColor.BLUE)) {
+            System.out.println(ANSI_BLUE);
+        } else if (card.getColor().equals(CardColor.RED))
+            System.out.println(ANSI_RED);
+
+        System.out.print("|             |");
+    }
+
+    public void printFrontResourceCardThirdLine(ResourceCard card) {
+        if (card.getColor().equals(CardColor.GREEN)) {
+            System.out.print(ANSI_GREEN);
+        } else if (card.getColor().equals(CardColor.PURPLE)) {
+            System.out.println(ANSI_PURPLE);
+        } else if (card.getColor().equals(CardColor.BLUE)) {
+            System.out.println(ANSI_BLUE);
+        } else if (card.getColor().equals(CardColor.RED))
+            System.out.println(ANSI_RED);
+
+        System.out.print("|");
+        StringBuilder sb3 = new StringBuilder();
+        Corner c2 = card.getCorner(Orientation.LL);
+        printCorner(c2, sb3);
+        System.out.print("         ");
+
+        StringBuilder sb4 = new StringBuilder();
+        Corner c4 = card.getCorner(Orientation.LR);
+        printCorner(c4, sb4);
+        System.out.print("|");
+    }
+
 
     public void printResourcePoints(ResourceCard card) {
         System.out.print(ANSI_RESET);
@@ -282,6 +351,7 @@ public class CardsTUI {
         } else if (card.getColor().equals(CardColor.RED))
             System.out.print(ANSI_RED);
     }
+
 
     public void printBackResourceCard(ResourceCard card) {
         CardColor c = card.getColor();
@@ -308,8 +378,44 @@ public class CardsTUI {
         System.out.print(ANSI_RESET);
     }
 
+    public void printBackResourceCardFirstLine(ResourceCard card) {
+        CardColor c = card.getColor();
+        switch (c) {
+            case GREEN -> System.out.print(ANSI_GREEN);
+            case RED -> System.out.print(ANSI_RED);
+            case PURPLE -> System.out.print(ANSI_PURPLE);
+            case BLUE -> System.out.print(ANSI_BLUE);
+        }
+        System.out.print("|");
+        System.out.print("              ");
+        System.out.print("|");
+    }
 
-    //------------------PRINTARE GOLD CARD------------------------
+    public void printBackResourceCardSecondLine(ResourceCard card) {
+        System.out.print("|      ");
+        CardColor c = card.getColor();
+        switch (c) {
+            case GREEN -> System.out.print((Resources.PLANT_KINGDOM.getShortName()));
+            case RED -> System.out.print((FUNGI_KINGDOM.getShortName()));
+            case PURPLE -> System.out.print((INSECT_KINGDOM.getShortName()));
+            case BLUE -> System.out.print((ANIMAL_KINGDOM.getShortName()));
+        }
+        System.out.print("      |");
+    }
+
+    public void printBackResourceCardThirdLine(ResourceCard card) {
+        CardColor c = card.getColor();
+        switch (c) {
+            case GREEN -> System.out.print(ANSI_GREEN);
+            case RED -> System.out.print(ANSI_RED);
+            case PURPLE -> System.out.print(ANSI_PURPLE);
+            case BLUE -> System.out.print(ANSI_BLUE);
+        }
+        System.out.print("|              |");
+    }
+
+
+    //----------------------------------------------PRINTARE GOLD CARD--------------------------------------------------
     public void printFrontGoldCard(GoldCard card) {
         if (card.getColor().equals(CardColor.GREEN)) {
             System.out.print(ANSI_GREEN);
@@ -352,6 +458,77 @@ public class CardsTUI {
         System.out.print("———————————————");
         System.out.print(ANSI_RESET);
     }
+
+    public void printGoldCardJackie(GoldCard card) {
+        if (card.getColor().equals(CardColor.GREEN)) {
+            System.out.print(ANSI_GREEN);
+        } else if (card.getColor().equals(CardColor.PURPLE)) {
+            System.out.print(ANSI_PURPLE);
+        } else if (card.getColor().equals(CardColor.BLUE)) {
+            System.out.print(ANSI_BLUE);
+        } else if (card.getColor().equals(CardColor.RED))
+            System.out.print(ANSI_RED);
+        System.out.print("———————————————");
+    }
+
+    public void printFrontGoldCardFirstLine(GoldCard card) {
+        if (card.getColor().equals(CardColor.GREEN)) {
+            System.out.print(ANSI_GREEN);
+        } else if (card.getColor().equals(CardColor.PURPLE)) {
+            System.out.print(ANSI_PURPLE);
+        } else if (card.getColor().equals(CardColor.BLUE)) {
+            System.out.print(ANSI_BLUE);
+        } else if (card.getColor().equals(CardColor.RED))
+            System.out.print(ANSI_RED);
+        System.out.print("|");
+        StringBuilder sb = new StringBuilder();
+        Corner c = card.getCorner(Orientation.HL);
+        printCorner(c, sb);
+        printPoints(card);
+
+
+        StringBuilder sb2 = new StringBuilder();
+        Corner c3 = card.getCorner(Orientation.HR);
+        printCorner(c3, sb2);
+        System.out.print("|");
+    }
+
+    public void printFrontGoldCardSecondLine(GoldCard card) {
+        if (card.getColor().equals(CardColor.GREEN)) {
+            System.out.print(ANSI_GREEN);
+        } else if (card.getColor().equals(CardColor.PURPLE)) {
+            System.out.print(ANSI_PURPLE);
+        } else if (card.getColor().equals(CardColor.BLUE)) {
+            System.out.print(ANSI_BLUE);
+        } else if (card.getColor().equals(CardColor.RED))
+            System.out.print(ANSI_RED);
+        System.out.print("|              |");
+    }
+
+    public void printFrontGoldCardThirdLine(GoldCard card) {
+        if (card.getColor().equals(CardColor.GREEN)) {
+            System.out.print(ANSI_GREEN);
+        } else if (card.getColor().equals(CardColor.PURPLE)) {
+            System.out.print(ANSI_PURPLE);
+        } else if (card.getColor().equals(CardColor.BLUE)) {
+            System.out.print(ANSI_BLUE);
+        } else if (card.getColor().equals(CardColor.RED))
+            System.out.print(ANSI_RED);
+        System.out.print("|");
+        StringBuilder sb3 = new StringBuilder();
+        Corner c2 = card.getCorner(Orientation.LL);
+        printCorner(c2, sb3);
+        System.out.print(" ");
+        printRequirement(card);
+        System.out.print(" ");
+
+
+        StringBuilder sb4 = new StringBuilder();
+        Corner c4 = card.getCorner(Orientation.LR);
+        printCorner(c4, sb4);
+        System.out.print("|");
+    }
+
 
     public void printPoints(GoldCard card) {
         int points = ((GoldCard) card).getPoints();
@@ -446,7 +623,8 @@ public class CardsTUI {
         System.out.print(ANSI_RESET);
     }
 
-    //------------------printare goal card---------------------------
+
+    //--------------------------------------------printare goal card----------------------------------------------------
 
     public void printGoalCard(GoalCard c) {
         System.out.print(ANSI_YELLOW);
@@ -649,11 +827,8 @@ public class CardsTUI {
         }
     }
 
+    //----------------------------PRINTARE ANGOLI (UGUALE SIA PER GOLD CHE PER RISORSA)---------------------------------
 
-
-
-
-    //-----------------------PRINTARE ANGOLI (UGUALE SIA PER GOLD CHE PER RISORSA)------------------------------
     public void printCorner(Corner c, StringBuilder sb) {
         if (c.getCovered()) {
             sb.append("X");
