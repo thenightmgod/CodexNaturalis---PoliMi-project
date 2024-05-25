@@ -1,7 +1,9 @@
 package it.polimi.ingsw.Network.RMI;
 
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
+import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
+import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.StartCard;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
@@ -102,10 +104,6 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
         server.endTurn(this);
     }
 
-    @Override
-    public LinkedList<VirtualView> getOtherPlayers() throws RemoteException {
-        return server.getOtherPlayers(name);
-    }
 
     @Override
     public void joinGame(String Name) throws RemoteException {
@@ -155,6 +153,16 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     @Override
     public void showFreePositions(String name, LinkedList<Position> freePosition) throws RemoteException {
         this.view.updateFreePosition(name, freePosition);
+    }
+
+    @Override
+    public void updateResourceDeck(String name, LinkedList<ResourceCard> deck) throws RemoteException {
+        this.view.updateResourceDeck(deck, name);
+    }
+
+    @Override
+    public void updateGoldDeck(String name, LinkedList<GoldCard> deck) throws RemoteException {
+        this.view.updateGoldDeck(deck, name);
     }
 
     @Override

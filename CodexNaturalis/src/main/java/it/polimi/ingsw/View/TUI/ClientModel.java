@@ -32,6 +32,21 @@ public class ClientModel {
         FreePosition = new LinkedList<>();
     }
 
+    public LinkedList<GoldCard> getDrawableGoldCards(){
+        return DrawableGoldCards;
+    }
+
+    public void setDrawableGoldCards(LinkedList<GoldCard> drawableGoldCards){
+        DrawableGoldCards = drawableGoldCards;
+    }
+
+    public LinkedList<ResourceCard> getDrawableResourceCards(){
+        return DrawableResourceCards;
+    }
+
+    public void setDrawableResourceCards(LinkedList<ResourceCard> drawableResourceCards){
+        DrawableResourceCards = drawableResourceCards;
+    }
 
     public String getName(){
         return Name;

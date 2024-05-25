@@ -3,6 +3,10 @@ package it.polimi.ingsw.Controller;
 //questo controlla un game specifico
 
 import it.polimi.ingsw.Exceptions.*;
+import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
+import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
+import it.polimi.ingsw.Model.DeckPackage.GoldDeck;
+import it.polimi.ingsw.Model.DeckPackage.ResourceDeck;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
@@ -131,11 +135,27 @@ public class GameController {
     public synchronized void pickResCard(int i) throws RemoteException { //l'intero deve arrivare dal client
         this.Game.getResourceDeck().giveCard(this.Game.getTurn(), i);
         this.Game.getObserverManager().showNewHand(this.Game.getTurn().getName(), this.Game.getTurn().getHand());
+        LinkedList<ResourceCard> cards = new LinkedList<>();
+        ResourceDeck deck = this.Game.getResourceDeck();
+        cards.add((ResourceCard) deck.getCards().get(0));
+        cards.add((ResourceCard) deck.getCards().get(1));
+        cards.add((ResourceCard) deck.getCards().get(2));
+        for(Player p: Players) {
+            this.Game.getObserverManager().updateResourceDeck(p.getName(), cards);
+        }
     }
 
     public synchronized void pickGoldCard(int i) throws RemoteException {
         this.Game.getGoldDeck().giveCard(this.Game.getTurn(), i);
         this.Game.getObserverManager().showNewHand(this.Game.getTurn().getName(), this.Game.getTurn().getHand());
+        LinkedList<GoldCard> cards = new LinkedList<>();
+        GoldDeck deck = this.Game.getGoldDeck();
+        cards.add((GoldCard) deck.getCards().get(0));
+        cards.add((GoldCard) deck.getCards().get(1));
+        cards.add((GoldCard) deck.getCards().get(2));
+        for(Player p: Players) {
+            this.Game.getObserverManager().updateGoldDeck(p.getName(), cards);
+        }
     }
 
     public synchronized void changeTurns() throws RemoteException {

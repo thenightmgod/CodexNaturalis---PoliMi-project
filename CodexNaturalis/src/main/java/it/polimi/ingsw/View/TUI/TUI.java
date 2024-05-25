@@ -45,7 +45,13 @@ public class TUI implements GameView {
 
     @Override
     public void updatePoints(int points, String name){
-        client.getClient().setPointsCounter(points);
+        if(name.equals(Turn.getName())) {
+            client.getClient().setPointsCounter(points);
+            System.out.println("Your new points are" + points);
+        }
+        else{
+            System.out.println(name + "new points are" + points);
+        }
     }
 
     @Override
@@ -60,18 +66,55 @@ public class TUI implements GameView {
 
     @Override
     public void updateField(PlayingField field, String name) {
-        client.getClient().setField(field);
+        if(name.equals(Turn.getName())) {
+            client.getClient().setField(field);
+            System.out.println("Your new field is:\n");
+            //plotField();
+        }
+        else{
+            System.out.println(name + "has placed a card");
+        }
     }
 
     @Override
     public void updateFreePosition(String name, LinkedList<Position> freePositions) {
         client.getClient().setFreePositions(freePositions);
+        System.out.println("Your new free positions are:");
+        //plotFreePositions();
+    }
+
+    @Override
+    public void updateGoldDeck(LinkedList<GoldCard> goldDeck, String name) {
+        if(name.equals(Turn.getName())){
+            client.getClient().setDrawableGoldCards(goldDeck);
+            System.out.println("These are the new drawable cards");
+            //plot.GoldDeck
+        }
+        else{
+            System.out.println(name + "has drawn a card");
+            System.out.println("These are the new drawable cards");
+            //plot.GoldDeck
+        }
+    }
+
+    @Override
+    public void updateResourceDeck(LinkedList<ResourceCard> resourceCards, String name){
+        if(name.equals(Turn.getName())){
+            client.getClient().setDrawableResourceCards(resourceCards);
+            System.out.println("These are the new drawable cards");
+            //plot.ResDeck
+        }
+        else{
+            System.out.println(name + "has drawn a card");
+            System.out.println("These are the new drawable cards");
+            //plot.ResDeck
+        }
     }
 
     @Override
     public void showStartCard(StartCard card) {
-        //plotStartCard(card);
-        //flip card eventuale
+        cards.printFrontStartCard(card);
+        cards.printBackStartCard(card);
         String f;
         boolean face;
         boolean goon = false;
@@ -170,23 +213,27 @@ public class TUI implements GameView {
     public void joinGame() throws RemoteException {
         boolean goon = false;
         do {
-            String name = getNickname();
-            this.client = chooseClient(name);
-            this.client.joinGame(name);
-            switch (error) {
-                case "NameAlreadyTakenException" -> {
-                    System.out.println("Name already taken! Please try again!");
-                    error = "default";
+            try {
+                String name = getNickname();
+                this.client = chooseClient(name);
+                this.client.joinGame(name);
+                switch (error) {
+                    case "NameAlreadyTakenException" -> {
+                        System.out.println("Name already taken! Please try again!");
+                        error = "default";
+                    }
+                    case "RoomFullException" -> {
+                        System.out.println("Room full! Please try again!");
+                        error = "default";
+                    }
+                    case "RoomNotExistsException" -> {
+                        System.out.println("The room doesn't exist! Please create a game from scratch!");
+                        error = "default";
+                    }
+                    default -> goon = true;
                 }
-                case "RoomFullException" -> {
-                    System.out.println("Room full! Please try again!");
-                    error = "default";
-                }
-                case "RoomNotExistsException" -> {
-                    System.out.println("The room doesn't exist! Please create a game from scratch!");
-                    error = "default";
-                }
-                default -> goon = true;
+            } catch (RemoteException e){
+                System.out.println("there has been a problem in the join game");
             }
         } while(!goon);
 
@@ -405,7 +452,7 @@ public class TUI implements GameView {
     }
 
 
-    public void setStartCardFace(){
+    /*public void setStartCardFace(){
         boolean face = true;
         boolean goon = false;
         String fac;
@@ -424,7 +471,7 @@ public class TUI implements GameView {
                 throw new RuntimeException(e);
             }
         } while(!goon);
-    }
+    } */
 
 
     public void chooseGoalCard() {

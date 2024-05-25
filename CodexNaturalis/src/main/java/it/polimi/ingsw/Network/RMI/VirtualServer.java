@@ -33,5 +33,4 @@ public interface VirtualServer extends Remote {
 
     void checkGoals(VirtualView client) throws RemoteException;
 
-    LinkedList<VirtualView> getOtherPlayers(String name) throws RemoteException;
 }

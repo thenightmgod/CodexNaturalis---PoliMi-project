@@ -2,7 +2,9 @@ package it.polimi.ingsw.Network;
 
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
+import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
+import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.StartCard;
 import it.polimi.ingsw.Model.Messages.Message;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
@@ -36,6 +38,10 @@ public interface VirtualView extends Remote {
     // String name, PlayingField field
 
     void showFreePositions(String name, LinkedList<Position> freePosition) throws RemoteException;
+
+    void updateResourceDeck(String name, LinkedList<ResourceCard> deck) throws RemoteException;
+
+    void updateGoldDeck(String name, LinkedList<GoldCard> deck) throws RemoteException;
 
     String getName() throws RemoteException;
     // String name, LinkedList<Position> freePosition

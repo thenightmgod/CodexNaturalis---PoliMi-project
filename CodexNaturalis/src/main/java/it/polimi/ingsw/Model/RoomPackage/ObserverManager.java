@@ -2,7 +2,9 @@ package it.polimi.ingsw.Model.RoomPackage;
 
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
+import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
+import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.StartCard;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
@@ -73,6 +75,14 @@ public class ObserverManager {
 
     public void showFreePositions(String name, LinkedList<Position> freePosition) throws RemoteException {
         observers.get(name).showFreePositions(name, freePosition);
+    }
+
+    public void updateGoldDeck(String name, LinkedList<GoldCard> deck) throws RemoteException{
+        observers.get(name).updateGoldDeck(name, deck);
+    }
+
+    public void updateResourceDeck(String name, LinkedList<ResourceCard> deck) throws RemoteException{
+        observers.get(name).updateResourceDeck(name, deck);
     }
 
     //eventualmente implementarli

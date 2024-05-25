@@ -153,8 +153,12 @@ public class Room {
         else {
             Turn.placeCard(c, p);
             observerManager.showNewHand(Turn.getName(), Turn.getHand());
-            observerManager.updateField(Turn.getName(), Turn.getPlayerField());
-            observerManager.updatePoints(Turn.getPointsCounter(), Turn.getName());
+            for(Player player: Players){
+                observerManager.updateField(player.getName(), Turn.getPlayerField());
+            }
+            for(Player player: Players) {
+                observerManager.updatePoints(player.getPointsCounter(), Turn.getName());
+            }
             observerManager.showFreePositions(Turn.getName(), Turn.getPlayerField().getFreePositions());
         }
     } //per il collegamento col controller

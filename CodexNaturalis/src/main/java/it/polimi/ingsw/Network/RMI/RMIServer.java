@@ -25,8 +25,6 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer{
 
     //come perbacco aggiungo un client alla mappa clients se non riesco a tenere conto
     //del numero della room?
-    HashMap<Integer, VirtualView> clients = new HashMap<>(); //aggiungere roba qui dentro
-
     int port;
 
     BlockingQueue<Actions> actions;
@@ -47,9 +45,6 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer{
         System.out.println("Server buond.");
     }
 
-    public HashMap<Integer, VirtualView> getClients(){
-        return clients;
-    }
 
     @Override
     public void joinGame(String Name, VirtualView client) throws RemoteException {
@@ -107,26 +102,6 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer{
     public void checkGoals(VirtualView client) throws RemoteException {
         Actions cAction = new CheckGoalsAction(client, controller, this);
         actions.add(cAction);
-    }
-
-    @Override
-    public LinkedList<VirtualView> getOtherPlayers(String name) throws RemoteException {
-
-        LinkedList<VirtualView> otherPlayers = new LinkedList<>();
-        int k = -1;
-        for (Entry<Integer, VirtualView> entry : clients.entrySet()) {
-            if (entry.getValue().getName().equals(name)) {
-                k = entry.getKey();
-            }
-        }
-        if(k != -1){
-           for(int i = 0; i<4; i++){
-               VirtualView v = clients.get(k);
-               if(!v.equals(null) && !v.getName().equals(name))
-                   otherPlayers.add(v);
-           }
-        }
-        return otherPlayers;
     }
 
     public void execute() {

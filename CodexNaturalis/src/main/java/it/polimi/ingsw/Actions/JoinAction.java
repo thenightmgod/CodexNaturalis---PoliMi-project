@@ -18,16 +18,7 @@ public class JoinAction extends Actions {
     }
 
     public void executor() throws RemoteException {
-        int k = -1;
-        for(Map.Entry<Integer, GameController> entry : getManager().getControllersPerGame().entrySet()){
-            if(entry.getValue().getPlayers().stream().map(Player::getName).toList().contains(getView().getName())){
-                k = entry.getKey();
-            }
-        }
-        if(k != -1){
-            GameController controller = getManager().getControllersPerGame().get(k);
-            getManager().getControllersPerGame().put(controller.getRoomId(), controller);
-            getServer().getClients().put(k, getView());
-        }
+        getManager().joinGame(name, getView());
+
     }
 }
