@@ -73,8 +73,49 @@ public class CardsTUI {
         System.out.println("|");
         System.out.print("———————————————");
         System.out.println(ANSI_RESET);
-
     }
+
+    public void printStartCardJackie(StartCard c){
+        System.out.print(ANSI_BRIGHT_YELLOW);
+        System.out.println("———————————————");
+    }
+
+    public void printFrontStartCardFirstLine(StartCard c){
+        System.out.print(ANSI_BRIGHT_YELLOW);
+        System.out.print("|");
+        StringBuilder sb = new StringBuilder();
+        Corner corner = c.getCorner(Orientation.HL);
+        printCorner(corner, sb);
+        System.out.print("         ");
+        StringBuilder sb2 = new StringBuilder();
+        Corner c3 = c.getCorner(Orientation.HR);
+        printCorner(c3, sb2);
+        System.out.println("|");
+    }
+
+    public void printFrontStartCardSecondLine(StartCard c){
+        System.out.print(ANSI_BRIGHT_YELLOW);
+        System.out.print("|  ");
+
+        int size = c.getBackRes().size();
+        PrintBackResFrontStartCard(c, size);
+
+        System.out.println("   |");
+    }
+
+    public void printFrontStartCardThirdLine(StartCard c){
+        System.out.print(ANSI_BRIGHT_YELLOW);
+        System.out.print("|");
+        StringBuilder sb3 = new StringBuilder();
+        Corner cornerll = c.getCorner(Orientation.LL);
+        printCorner(cornerll, sb3);
+        System.out.print("         ");
+        StringBuilder sb4 = new StringBuilder();
+        Corner c4 = c.getCorner(Orientation.LR);
+        printCorner(c4, sb4);
+        System.out.println("|");
+    }
+
 
     public void PrintBackResFrontStartCard(StartCard c, int size) {
         LinkedList<Resources> BackRes = c.getBackRes();
@@ -140,8 +181,46 @@ public class CardsTUI {
 
 
         System.out.println(ANSI_RESET);
-
     }
+
+    public void printBackStartCardFirstLine(StartCard c) {
+        System.out.print(ANSI_BRIGHT_YELLOW);
+        System.out.print("|");
+
+        StringBuilder sb = new StringBuilder();
+        Corner corner = c.getBackCorner(Orientation.HL);
+        printCorner(corner, sb);
+
+        System.out.print("         ");
+
+        StringBuilder sb2 = new StringBuilder();
+        Corner c3 = c.getBackCorner(Orientation.HR);
+        printCorner(c3, sb2);
+        System.out.println("|");
+    }
+
+    public void printBackStartCardSecondLine(StartCard c) {
+        System.out.print(ANSI_BRIGHT_YELLOW);
+        System.out.print("|  ");
+
+        System.out.println("           |");
+    }
+
+    public void printBackStartCardThirdLine(StartCard c){
+        System.out.print(ANSI_BRIGHT_YELLOW);
+        System.out.print("|");
+
+        StringBuilder sb3 = new StringBuilder();
+        Corner cornerll = c.getBackCorner(Orientation.LL);
+        printCorner(cornerll, sb3);
+        System.out.print("         ");
+
+        StringBuilder sb4 = new StringBuilder();
+        Corner c4 = c.getBackCorner(Orientation.LR);
+        printCorner(c4, sb4);
+        System.out.println("|");
+    }
+
 
     //-------------------------PRINTARE RESOURCE CARD----------------------------
     public void printFrontResourceCard(ResourceCard card) {
