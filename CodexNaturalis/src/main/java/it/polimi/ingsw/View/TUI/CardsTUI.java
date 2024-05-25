@@ -623,6 +623,47 @@ public class CardsTUI {
         System.out.print(ANSI_RESET);
     }
 
+    public void printBackGoldCardFirstLine(GoldCard card) {
+        CardColor c = card.getColor();
+        switch (c) {
+            case GREEN -> System.out.print(ANSI_GREEN);
+            case RED -> System.out.print(ANSI_RED);
+            case PURPLE -> System.out.print(ANSI_PURPLE);
+            case BLUE -> System.out.print(ANSI_BLUE);
+        }
+        System.out.print("|");
+        System.out.print("              ");
+        System.out.print("|");
+    }
+
+    public void printBackGoldCardSecondLine(GoldCard card) {
+        CardColor c = card.getColor();
+        switch (c) {
+            case GREEN -> System.out.print(ANSI_GREEN);
+            case RED -> System.out.print(ANSI_RED);
+            case PURPLE -> System.out.print(ANSI_PURPLE);
+            case BLUE -> System.out.print(ANSI_BLUE);
+        }
+        System.out.print("|      ");
+        switch (c) {
+            case GREEN -> System.out.print((Resources.PLANT_KINGDOM.getShortName()));
+            case RED -> System.out.print((FUNGI_KINGDOM.getShortName()));
+            case PURPLE -> System.out.print((INSECT_KINGDOM.getShortName()));
+            case BLUE -> System.out.print((ANIMAL_KINGDOM.getShortName()));
+        }
+        System.out.print("      |");
+    }
+
+    public void printBackGoldCardThirdLine(GoldCard card) {
+        CardColor c = card.getColor();
+        switch (c) {
+            case GREEN -> System.out.print(ANSI_GREEN);
+            case RED -> System.out.print(ANSI_RED);
+            case PURPLE -> System.out.print(ANSI_PURPLE);
+            case BLUE -> System.out.print(ANSI_BLUE);
+        }
+        System.out.print("|              |");
+    }
 
     //--------------------------------------------printare goal card----------------------------------------------------
 
