@@ -16,6 +16,7 @@ import it.polimi.ingsw.Network.CommonClient;
 import it.polimi.ingsw.Network.VirtualView;
 
 import java.rmi.RemoteException;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 /**
@@ -100,6 +101,12 @@ public class Room {
         if(Twenty)
             if(Turn.equals(Players.getFirst()))
                 this.LastRound = true;
+    }
+
+    public void setLL(){
+        if(LastRound)
+            if(Turn.equals(Players.getFirst()))
+                this.LL = true;
     }
 
     public void createCommonGoals() throws RemoteException {
@@ -295,7 +302,6 @@ public class Room {
                 p.addPoints(nostra.pointsCalc(p));
             }
         }
-        observerManager.updatePoints(p.getPointsCounter(), p.getName());
     }
 
     public Deck getGoalDeck() {
@@ -307,40 +313,56 @@ public class Room {
     }
 
     public void start() throws RemoteException {
-        observerManager.updateTurn(Turn, false);
+        observerManager.updateTurn(Turn);
+    }
+
+    public void declareWinner() throws RemoteException {
+        HashMap<String, Integer> points = new HashMap<>();
+        for(Player p: Players) {
+            points.put(p.getName(), p.getPointsCounter());
+        }
+        for(Player p: Players) {
+            observerManager.declareWinner(p.getName(), points);
+        }
     }
 
     public void changeTurns() throws RemoteException {
-        int size = Players.size();
-        switch (size) {
-            case 2 -> {
-                if (Turn.equals(Players.getFirst())) {
-                    setTurn(Players.get(1));
-                    break;
-                }
-                setTurn(Players.getFirst());
-            }
-            case 3 -> {
-                if (Turn.equals(Players.getFirst()))
-                    setTurn(Players.get(1));
-                else if (Turn.equals(Players.get(1)))
-                    setTurn(Players.get(2));
-                else setTurn(Players.getFirst());
-            }
-            case 4 -> {
-                if (Turn.equals(Players.getFirst()))
-                    setTurn(Players.get(1));
-                else if (Turn.equals(Players.get(1)))
-                    setTurn(Players.get(2));
-                else if (Turn.equals(Players.get(2)))
-                    setTurn(Players.get(3));
-                else setTurn(Players.getFirst());
-            }
+        setLL();
+        if(LL){
+            for(Player p: Players)
+                checkGoals(p);
+            declareWinner();
         }
-        setTwentyFlag();
-        setLastRound();
-        if(LastRound && Turn.equals(Players.getFirst()))
-            LL = true;
-        observerManager.updateTurn(Turn, LL);
+        else {
+            int size = Players.size();
+            switch (size) {
+                case 2 -> {
+                    if (Turn.equals(Players.getFirst())) {
+                        setTurn(Players.get(1));
+                        break;
+                    }
+                    setTurn(Players.getFirst());
+                }
+                case 3 -> {
+                    if (Turn.equals(Players.getFirst()))
+                        setTurn(Players.get(1));
+                    else if (Turn.equals(Players.get(1)))
+                        setTurn(Players.get(2));
+                    else setTurn(Players.getFirst());
+                }
+                case 4 -> {
+                    if (Turn.equals(Players.getFirst()))
+                        setTurn(Players.get(1));
+                    else if (Turn.equals(Players.get(1)))
+                        setTurn(Players.get(2));
+                    else if (Turn.equals(Players.get(2)))
+                        setTurn(Players.get(3));
+                    else setTurn(Players.getFirst());
+                }
+            }
+            setTwentyFlag();
+            setLastRound();
+            observerManager.updateTurn(Turn);
+        }
     }
 }

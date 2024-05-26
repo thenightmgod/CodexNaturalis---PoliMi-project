@@ -28,8 +28,6 @@ public interface CommonClient {
 
     void setView(GameView view);
 
-    void checkGoals(String name) throws RemoteException;
-
     String getName();
 
     ClientModel getClient();

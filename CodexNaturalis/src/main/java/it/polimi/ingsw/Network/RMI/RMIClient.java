@@ -19,6 +19,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 public class RMIClient extends UnicastRemoteObject implements VirtualView, CommonClient {
@@ -95,11 +96,6 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     }
 
     @Override
-    public void checkGoals(String name) throws RemoteException {
-        server.checkGoals(this);
-    }
-
-    @Override
     public void endTurn(String name) throws RemoteException {
         server.endTurn(this);
     }
@@ -114,8 +110,8 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     //    FUNZIONI DELLA VIRTUAL VIEW
 
     @Override
-    public void updateTurn(Player p, boolean LL) throws RemoteException {
-        this.view.updateTurn(p, LL);
+    public void updateTurn(Player p) throws RemoteException {
+        this.view.updateTurn(p);
     }
 
     @Override
@@ -163,6 +159,11 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     @Override
     public void updateGoldDeck(String name, LinkedList<GoldCard> deck) throws RemoteException {
         this.view.updateGoldDeck(deck, name);
+    }
+
+    @Override
+    public void declareWinner(HashMap<String, Integer> classifica) throws RemoteException {
+        this.view.declareWinner(classifica);
     }
 
     @Override

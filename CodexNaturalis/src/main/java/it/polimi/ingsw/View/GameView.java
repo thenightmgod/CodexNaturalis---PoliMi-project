@@ -11,13 +11,14 @@ import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
 
 import java.rmi.RemoteException;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 public interface GameView {
 
-    public void updatePoints(int points, String name);
+     void updatePoints(int points, String name);
 
-    public void updateGoals(LinkedList<GoalCard> goals, String name) throws RemoteException;
+     void updateGoals(LinkedList<GoalCard> goals, String name) throws RemoteException;
 
     public void updateHands(LinkedList<PlayableCard> hand, String name);
 
@@ -29,11 +30,14 @@ public interface GameView {
 
     public void showStartCard(StartCard card);
 
-    public void updateTurn(Player player, boolean LL) throws RemoteException;
+    public void updateTurn(Player player) throws RemoteException;
 
     public void updateGoldDeck(LinkedList<GoldCard> deck, String name);
 
     public void updateResourceDeck(LinkedList<ResourceCard> deck, String name);
+
+    void declareWinner(HashMap<String, Integer> classifica);
+
 
     //public void joinGame
 }

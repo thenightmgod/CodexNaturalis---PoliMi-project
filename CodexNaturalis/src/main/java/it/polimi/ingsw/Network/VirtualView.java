@@ -15,13 +15,14 @@ import it.polimi.ingsw.View.GameView;
 import java.rmi.NotBoundException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 public interface VirtualView extends Remote {
 
     //le funzioni del client che vuole chiamare il server
 
-    void updateTurn(Player p, boolean LL) throws RemoteException;
+    void updateTurn(Player p) throws RemoteException;
 
     void showException(String details) throws RemoteException;
 
@@ -43,8 +44,9 @@ public interface VirtualView extends Remote {
 
     void updateGoldDeck(String name, LinkedList<GoldCard> deck) throws RemoteException;
 
+    void declareWinner(HashMap<String, Integer> classifica) throws RemoteException;
+
     String getName() throws RemoteException;
-    // String name, LinkedList<Position> freePosition
 
     void showStartCard(StartCard card) throws RemoteException;
 

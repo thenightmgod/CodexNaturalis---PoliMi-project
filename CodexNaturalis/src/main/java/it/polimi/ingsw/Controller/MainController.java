@@ -113,7 +113,7 @@ public class MainController {
         if(k != -1){
             for(int i=0; i<viewPerGame.get(k).size(); i++) {
                 VirtualView view = viewPerGame.get(k).get(i);
-                if(!view.getName().equals(name))
+                if(!name.equals(view.getName()))
                     otherPlayers.add(view);
             }
         }

@@ -98,12 +98,6 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer{
         actions.add(eAction);
     }
 
-    @Override
-    public void checkGoals(VirtualView client) throws RemoteException {
-        Actions cAction = new CheckGoalsAction(client, controller, this);
-        actions.add(cAction);
-    }
-
     public void execute() {
         new Thread(()->{
             Actions now = null;

@@ -45,10 +45,14 @@ public class ObserverManager {
         }
     }
 
-    public void updateTurn(Player turn, boolean LL) throws RemoteException {
+    public void updateTurn(Player turn) throws RemoteException {
         for(String s : observers.keySet()) {
-            observers.get(s).updateTurn(turn, LL);
+            observers.get(s).updateTurn(turn);
         }
+    }
+
+    public void declareWinner(String name, HashMap<String, Integer> classifica) throws RemoteException{
+        observers.get(name).declareWinner(classifica);
     }
 
     public void showStartCard(String name, StartCard card) throws RemoteException{

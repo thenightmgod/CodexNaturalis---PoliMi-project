@@ -21,9 +21,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.util.LinkedList;
-import java.util.Scanner;
+import java.util.*;
 import java.util.concurrent.*;
+import java.util.stream.Collectors;
 
 public class TUI implements GameView {
 
@@ -342,7 +342,7 @@ public class TUI implements GameView {
         }
     }
 
-    public void isYourTurn(boolean LL) throws RemoteException {
+    public void isYourTurn() throws RemoteException {
         if(Turn.getName().equals(client.getName())) {
             boolean goon = false;
             String roba;
@@ -415,21 +415,22 @@ public class TUI implements GameView {
     }
 
     @Override
-    public void updateTurn(Player player, boolean LL) throws RemoteException {
-        if(LL){
-            declareWinner();
-        }
-        else {
-            this.Turn = player;
-            isYourTurn(LL);
-        }
+    public void updateTurn(Player player) throws RemoteException {
+        this.Turn = player;
+        isYourTurn();
+
     }
 
     public void endTurn() throws RemoteException {
         client.endTurn(Turn.getName());
     }
 
-    public void declareWinner() throws RemoteException {
+    @Override
+    public void declareWinner(HashMap<String, Integer> classifica) {
+        int i = 0;
+        String first;
+        String second;
+        String third;
         System.out.println("These are your points now...");
         showPoints();
         System.out.println("Let's now check the goals...");
@@ -437,14 +438,36 @@ public class TUI implements GameView {
         System.out.println("You are jackie down the line...");
         System.out.println("...");
         System.out.println("These are the final points!");
-        checkGoals();
-        //controllo sui punti tuoi e degli altri e si stampa il vincitore con jackie down the line
-        // bisogna staccare tutto poi
-        // come si fa boh
-    }
+        classifica.entrySet().stream().sorted(Map.Entry.comparingByValue()).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2, LinkedHashMap::new));
+        for (String name: classifica.keySet()) {
+            if(name.equals(client.getName())){
+                switch (i) {
+                    case 0 -> {
+                        System.out.println("with" + classifica.get(name) + "you won");
+                    }
+                    case 1 -> {
+                        System.out.println("with" + classifica.get(name) + "you got the second place");
+                    }
+                    case 2 -> {
+                        System.out.println("with" + classifica.get(name) + "you got the third place");
+                    }
+                    case 3 -> {
+                        System.out.println("with" + classifica.get(name) + "you got the first place");
+                    }
+                }
 
-    public void checkGoals() throws RemoteException {
-        client.checkGoals(client.getName());
+            }
+            else{
+                switch (i) {
+                    case 0 -> System.out.println("at the first place, "+ name + "with" + classifica.get(name));
+                    case 1 -> System.out.println("at the second place, "+ name + "with" + classifica.get(name));
+                    case 2 -> System.out.println("at the third place, "+ name + "with" + classifica.get(name));
+                    case 3 -> System.out.println("at the fourth place, "+ name + "with" + classifica.get(name));
+                }
+            }
+            i++;
+        }
+        //far finire tutto
     }
 
     //            FUNZIONI PER GIOCARE

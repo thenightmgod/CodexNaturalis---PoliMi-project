@@ -31,6 +31,4 @@ public interface VirtualServer extends Remote {
 
     void endTurn(VirtualView client) throws RemoteException;
 
-    void checkGoals(VirtualView client) throws RemoteException;
-
 }
