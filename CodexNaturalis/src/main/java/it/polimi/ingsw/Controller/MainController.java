@@ -61,37 +61,36 @@ public class MainController {
 
     public synchronized void joinGame(String Name, VirtualView client) throws RemoteException {
 
-        if(this.controllers.isEmpty()){
+        if (this.controllers.isEmpty()) {
             client.showException("RoomNotExistsException");
-        }
-        else {
-            String boh = controllers.stream().map(GameController::getPlayers).flatMap(Collection::stream).map(Player::getName).findAny().orElse("");
-            if(!boh.isEmpty()) {
+        } else {
+            String boh = controllers.stream().map(GameController::getPlayers).flatMap(Collection::stream).map(Player::getName).filter(x -> x.equals(Name)).findFirst().orElse("");
+            if (!boh.isEmpty()) {
                 client.showException("NameAlreadyTakenException");
-            }
-        }
-        if (this.controllers.getLast().getHowManyPlayers() == this.controllers.getLast().getNumPlayers()) {
-            client.showException("RoomFullException");
-        }
-        else {
-            switch (this.controllers.getLast().getNumPlayers()) {
-                case 1 -> {
-                    this.controllers.getLast().addPlayer(Name, PlayerColor.YELLOW, client);
-                    LinkedList<VirtualView> Grian = this.viewPerGame.get(this.controllers.getLast().getRoomId());
-                    Grian.add(client);
-                    this.viewPerGame.put(this.controllers.getLast().getRoomId(), Grian);
-                }
-                case 2 -> {
-                    this.controllers.getLast().addPlayer(Name, PlayerColor.BLUE, client);
-                    LinkedList<VirtualView> Grian = this.viewPerGame.get(this.controllers.getLast().getRoomId());
-                    Grian.add(client);
-                    this.viewPerGame.put(this.controllers.getLast().getRoomId(), Grian);
-                }
-                case 3 -> {
-                    this.controllers.getLast().addPlayer(Name, PlayerColor.GREEN, client);
-                    LinkedList<VirtualView> Grian = this.viewPerGame.get(this.controllers.getLast().getRoomId());
-                    Grian.add(client);
-                    this.viewPerGame.put(this.controllers.getLast().getRoomId(), Grian);
+            } else {
+                if (this.controllers.getLast().getHowManyPlayers() == this.controllers.getLast().getNumPlayers()) {
+                    client.showException("RoomFullException");
+                } else {
+                    switch (this.controllers.getLast().getNumPlayers()) {
+                        case 1 -> {
+                            this.controllers.getLast().addPlayer(Name, PlayerColor.YELLOW, client);
+                            LinkedList<VirtualView> Grian = this.viewPerGame.get(this.controllers.getLast().getRoomId());
+                            Grian.add(client);
+                            this.viewPerGame.put(this.controllers.getLast().getRoomId(), Grian);
+                        }
+                        case 2 -> {
+                            this.controllers.getLast().addPlayer(Name, PlayerColor.BLUE, client);
+                            LinkedList<VirtualView> Grian = this.viewPerGame.get(this.controllers.getLast().getRoomId());
+                            Grian.add(client);
+                            this.viewPerGame.put(this.controllers.getLast().getRoomId(), Grian);
+                        }
+                        case 3 -> {
+                            this.controllers.getLast().addPlayer(Name, PlayerColor.GREEN, client);
+                            LinkedList<VirtualView> Grian = this.viewPerGame.get(this.controllers.getLast().getRoomId());
+                            Grian.add(client);
+                            this.viewPerGame.put(this.controllers.getLast().getRoomId(), Grian);
+                        }
+                    }
                 }
             }
         }

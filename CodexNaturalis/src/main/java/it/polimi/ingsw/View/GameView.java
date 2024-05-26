@@ -17,7 +17,7 @@ public interface GameView {
 
     public void updatePoints(int points, String name);
 
-    public void updateGoals(LinkedList<GoalCard> goals, String name);
+    public void updateGoals(LinkedList<GoalCard> goals, String name) throws RemoteException;
 
     public void updateHands(LinkedList<PlayableCard> hand, String name);
 

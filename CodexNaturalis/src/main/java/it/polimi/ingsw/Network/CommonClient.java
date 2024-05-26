@@ -11,7 +11,6 @@ import java.util.LinkedList;
 
 public interface CommonClient {
 
-    LinkedList<VirtualView> getOtherPlayers() throws RemoteException;
 
     void joinGame(String Name) throws RemoteException;
 

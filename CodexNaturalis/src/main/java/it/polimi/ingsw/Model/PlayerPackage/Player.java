@@ -155,7 +155,6 @@ public class Player {
      */
 
     public void placeStartCard(StartCard c, FB face){
-        HashMap<Position, PlayableCard> x = this.PlayerField.getField();
         this.PlayerField.getField().put(new Position(face, 0, 0), c);
         if(face.equals(FB.FRONT)){
             LinkedList<Resources> Res = c.getBackRes();

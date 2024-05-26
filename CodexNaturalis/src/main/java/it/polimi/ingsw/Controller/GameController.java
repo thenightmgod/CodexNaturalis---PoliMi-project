@@ -76,11 +76,17 @@ public class GameController {
             giveStartCard(p);
         for(Player p: Players)
             giveInitialCards(p);
+        createCommonGoals();
         for(Player p: Players)
             show2goalCards(p);
+        this.Game.start();
     }
 
-    public synchronized void createDecks() {
+    public synchronized void createCommonGoals() throws RemoteException {
+        this.Game.createCommonGoals();
+    }
+
+    public synchronized void createDecks() throws RemoteException {
         this.Game.createDecks();
     }
 
@@ -190,9 +196,8 @@ public class GameController {
     }
 
     public synchronized Player getPlayerByName(String name) {
-        Player p = Players.stream().filter(x -> Objects.equals(x.getName(), name)).findFirst().orElse(null);
-        // se p è null ci deve essere un'eccezione
-        return p;
+        return Players.stream().filter(x -> x.getName().equals(name)).findFirst().orElse(null);
+        //se è null sbatti
     }
 
 }

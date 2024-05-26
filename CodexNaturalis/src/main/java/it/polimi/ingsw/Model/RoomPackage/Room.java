@@ -102,6 +102,14 @@ public class Room {
                 this.LastRound = true;
     }
 
+    public void createCommonGoals() throws RemoteException {
+        CommonGoals.add((GoalCard) GoalDeck.getGoalCard());
+        CommonGoals.add((GoalCard) GoalDeck.getGoalCard());
+        for(Player p: Players){
+            observerManager.showGoals("ivebeenwaitingforaguidetocometakemebythehand", CommonGoals);
+        }
+    }
+
     /**
      * Retrieves the room identifier.
      * @return The unique identifier of the room.
@@ -189,7 +197,7 @@ public class Room {
     /**
      * Creates all decks required for the game and shuffles them.
      */
-    public void createDecks(){
+    public void createDecks() throws RemoteException {
         this.StartDeck = new StartDeck();
         this.ResourceDeck = new ResourceDeck();
         this.GoldDeck = new GoldDeck();
@@ -199,10 +207,10 @@ public class Room {
         ResourceGoalDeck temp3 = new ResourceGoalDeck();
 
         for(int i=0; i<4; i++){
-            this.GoalDeck.add((GoalCard)temp2.getCards().get(i));
+            this.GoalDeck.add(temp2.getCards().get(i));
         }
         for(int i=0; i<4; i++){
-            this.GoalDeck.add((GoalCard)temp3.getCards().get(i));
+            this.GoalDeck.add(temp3.getCards().get(i));
         }
         StartDeck.shuffle();
         ResourceDeck.shuffle();
@@ -212,6 +220,25 @@ public class Room {
             Players.get(i).addGoalCard((GoalCard) this.GoalDeck.getGoalCard());
             Players.get(i).addGoalCard((GoalCard) this.GoalDeck.getGoalCard());
         }
+        // robe per observers
+        LinkedList<ResourceCard> cards = new LinkedList<>();
+        ResourceDeck deck = getResourceDeck();
+        cards.add((ResourceCard) deck.getCards().get(0));
+        cards.add((ResourceCard) deck.getCards().get(1));
+        cards.add((ResourceCard) deck.getCards().get(2));
+        for(Player p: Players) {
+            observerManager.updateResourceDeck("ivebeenwaitingforaguidetocometakemebythehand", cards);
+        }
+
+        // robe per observers
+        LinkedList<GoldCard> card5 = new LinkedList<>();
+        ResourceDeck d3ck = getResourceDeck();
+        cards.add((GoldCard) d3ck.getCards().get(0));
+        cards.add((GoldCard) d3ck.getCards().get(1));
+        cards.add((GoldCard) d3ck.getCards().get(2));
+        for(Player p: Players) {
+            observerManager.updateGoldDeck("ivebeenwaitingforaguidetocometakemebythehand", card5);
+        }
     }
 
 
@@ -220,8 +247,10 @@ public class Room {
      //* @param  face The face of the start card.
      */
     public void giveStartCards(Player player) throws RemoteException {
-        StartDeck.giveCard(this.Turn, 0);
-        observerManager.showStartCard(player.getName(), (StartCard) player.getHand().getFirst());
+        synchronized (StartDeck) { //boh
+            StartDeck.giveCard(this.Turn, 0);
+            observerManager.showStartCard(player.getName(), (StartCard) player.getHand().getFirst());
+        }
     }
 
     public void giveInitialCards(Player p) throws RemoteException {
@@ -243,12 +272,6 @@ public class Room {
         CommonGoals.add(Goal_2);
         GoalDeck.getCards().remove(Goal_1);
         GoalDeck.getCards().remove(Goal_2);
-    }
-
-    public void declareWinner(){
-        if(getLastRound() && getTurn().equals(this.Players.getLast())){
-            //Winner = Players.stream().max(x.getPointsCounter()).collect(Collectorsto)
-        }
     }
 
     public LinkedList<GoalCard> getCommonGoals(){
@@ -283,6 +306,10 @@ public class Room {
         return StartDeck;
     }
 
+    public void start() throws RemoteException {
+        observerManager.updateTurn(Turn, false);
+    }
+
     public void changeTurns() throws RemoteException {
         int size = Players.size();
         switch (size) {
@@ -312,7 +339,7 @@ public class Room {
         }
         setTwentyFlag();
         setLastRound();
-        if(LastRound && Turn.equals(Players.getLast()))
+        if(LastRound && Turn.equals(Players.getFirst()))
             LL = true;
         observerManager.updateTurn(Turn, LL);
     }

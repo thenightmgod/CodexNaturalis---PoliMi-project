@@ -55,18 +55,49 @@ public class TUI implements GameView {
     }
 
     @Override
-    public void updateGoals(LinkedList<GoalCard> goals, String name) {
+    public void updateGoals(LinkedList<GoalCard> goals, String name) throws RemoteException {
         client.getClient().setCommonGoals(goals);
+        if(name.equals("ivebeenwaitingforaguidetocometakemebythehand")){
+            System.out.println("The common goals have been chosen!");
+        }
+        else {
+            cards.printGoalCard(goals.getFirst());
+            cards.printGoalCard(goals.getLast());
+            chooseGoalCard();
+        }
+    }
+
+    public void chooseGoalCard() throws RemoteException {
+        boolean goon = false;
+        int i;
+        do {
+            try {
+                System.out.println("Choose your personal GoalCard: 1 or 2?");
+                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                i = Integer.parseInt(reader.readLine());
+                if (i == 1 || i == 2) {
+                    client.chooseGoalCard(i, this.client);
+                    goon = true;
+                }
+                System.out.println("You put a number which isn't ");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (NumberFormatException e){
+                System.out.println("Please enter a number!");
+            }
+        }while (!goon) ;
     }
 
     @Override
     public void updateHands(LinkedList<PlayableCard> hand, String name) {
         client.getClient().setHand(hand);
+        System.out.println("This is your new hand");
+        //eventuale plot
     }
 
     @Override
     public void updateField(PlayingField field, String name) {
-        if(name.equals(Turn.getName())) {
+        if(name.equals(client.getName())) {
             client.getClient().setField(field);
             System.out.println("Your new field is:\n");
             //plotField();
@@ -85,29 +116,39 @@ public class TUI implements GameView {
 
     @Override
     public void updateGoldDeck(LinkedList<GoldCard> goldDeck, String name) {
-        if(name.equals(Turn.getName())){
+        if (name.equals("ivebeenwaitingforaguidetocometakemebythehand")) {
+            System.out.println("The gold deck has been created!\n");
             client.getClient().setDrawableGoldCards(goldDeck);
-            System.out.println("These are the new drawable cards");
-            //plot.GoldDeck
         }
-        else{
-            System.out.println(name + "has drawn a card");
-            System.out.println("These are the new drawable cards");
-            //plot.GoldDeck
+        else {
+            if (name.equals(Turn.getName())) {
+                client.getClient().setDrawableGoldCards(goldDeck);
+                System.out.println("These are the new drawable cards");
+                //plot.GoldDeck
+            } else {
+                System.out.println(name + "has drawn a card");
+                System.out.println("These are the new drawable cards");
+                //plot.GoldDeck
+            }
         }
+
     }
 
     @Override
     public void updateResourceDeck(LinkedList<ResourceCard> resourceCards, String name){
-        if(name.equals(Turn.getName())){
+        if(name.equals("ivebeenwaitingforaguidetocometakemebythehand")){
+            System.out.println("The resource deck has been created!\n");
             client.getClient().setDrawableResourceCards(resourceCards);
-            System.out.println("These are the new drawable cards");
-            //plot.ResDeck
-        }
-        else{
-            System.out.println(name + "has drawn a card");
-            System.out.println("These are the new drawable cards");
-            //plot.ResDeck
+        } else {
+            if (name.equals(Turn.getName())) {
+                client.getClient().setDrawableResourceCards(resourceCards);
+                System.out.println("These are the new drawable cards");
+                //plot.ResDeck
+            } else {
+                System.out.println(name + "has drawn a card");
+                System.out.println("These are the new drawable cards");
+                //plot.ResDeck
+            }
         }
     }
 
@@ -223,12 +264,14 @@ public class TUI implements GameView {
                         error = "default";
                     }
                     case "RoomFullException" -> {
-                        System.out.println("Room full! Please try again!");
+                        System.out.println("Room full! Please create a Game!");
                         error = "default";
+                        goon = true;
                     }
                     case "RoomNotExistsException" -> {
                         System.out.println("The room doesn't exist! Please create a game from scratch!");
                         error = "default";
+                        goon = true;
                     }
                     default -> goon = true;
                 }
@@ -252,8 +295,7 @@ public class TUI implements GameView {
 
             if(connection.equals("0")){
                 try{
-                    String nickname = getNickname();
-                    client = new RMIClient(nickname);
+                    client = new RMIClient(name);
                     client.setView(this);
                     connectionType = false;
                 } catch (RemoteException e) {
@@ -262,8 +304,7 @@ public class TUI implements GameView {
                     System.out.print("NotBoundException occurred while initializing the client");
                 }
             }else {
-                String nickname = getNickname();
-                client = new SocketClient(nickname);
+                client = new SocketClient(name);
                 client.setView(this);
                 connectionType = true;
             }
@@ -359,7 +400,7 @@ public class TUI implements GameView {
                         default -> System.out.println("Write a command in the menu");
                     }
                 }catch(IOException e){
-                    System.out.println("sbatti");
+                    System.out.println("There has been a problem, try again!");
                 }
             } while (!goon);
 
@@ -368,21 +409,24 @@ public class TUI implements GameView {
             endTurn();
         }
         else{
-            System.out.println("You are not your turn");
+            System.out.println("it's"+ Turn.getName()+ "'s turn");
             //magari altre funzioni
         }
-        if(LL)
-            declareWinner();
     }
 
     @Override
     public void updateTurn(Player player, boolean LL) throws RemoteException {
-        this.Turn = player;
-        isYourTurn(LL);
+        if(LL){
+            declareWinner();
+        }
+        else {
+            this.Turn = player;
+            isYourTurn(LL);
+        }
     }
 
     public void endTurn() throws RemoteException {
-        client.endTurn(client.getName());
+        client.endTurn(Turn.getName());
     }
 
     public void declareWinner() throws RemoteException {
@@ -392,9 +436,9 @@ public class TUI implements GameView {
         System.out.println("...");
         System.out.println("You are jackie down the line...");
         System.out.println("...");
-        checkGoals();
         System.out.println("These are the final points!");
-
+        checkGoals();
+        //controllo sui punti tuoi e degli altri e si stampa il vincitore con jackie down the line
         // bisogna staccare tutto poi
         // come si fa boh
     }
@@ -472,28 +516,6 @@ public class TUI implements GameView {
             }
         } while(!goon);
     } */
-
-
-    public void chooseGoalCard() {
-        boolean goon = false;
-        int i;
-        do {
-            try {
-                System.out.println("Choose your personal GoalCard: 1 or 2?");
-                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-                i = Integer.parseInt(reader.readLine());
-                if (i == 1 || i == 2) {
-                    client.chooseGoalCard(i, this.client);
-                    goon = true;
-                }
-                System.out.println("You put a number which isn't ");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (NumberFormatException e){
-                System.out.println("Please enter a number!");
-            }
-        }while (!goon) ;
-    }
 
 
     public void drawCard() {
