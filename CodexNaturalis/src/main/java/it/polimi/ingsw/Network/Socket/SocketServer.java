@@ -36,7 +36,7 @@ public class SocketServer {
     public void startServer() {
         Socket clientSocket = null;
         try {
-            while ((clientSocket = this.listenSocket.accept()) != null){
+            while ((clientSocket = this.listenSocket.accept()) != null){ //dubbio: questo clientSocket è univoco per ogni client che si collega?
                 //quando creo il socketclienthandler devo mettergli come input l'ouput del ServerProxy e devo mettergli
                 //come output il client Proxy che smista il mex verso il client
                 InputStreamReader socketRx = new InputStreamReader(clientSocket.getInputStream());

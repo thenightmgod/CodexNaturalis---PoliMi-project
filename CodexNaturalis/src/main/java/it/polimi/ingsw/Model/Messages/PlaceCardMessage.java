@@ -4,12 +4,12 @@ import it.polimi.ingsw.Network.CommonClient;
 
 
 public class PlaceCardMessage extends Message{
-    public CommonClient client;
-   public int whichInHand;
-   public int x;
-   public int y;
-   public FB face;
-   public String name;
+    private CommonClient client;
+   private int whichInHand;
+   private int x;
+   private int y;
+   private FB face;
+   private String name;
 
    public PlaceCardMessage(CommonClient client,String name, int whichInHand, int x, int y, FB face) {
        super("PlaceCardMessage");
@@ -20,12 +20,6 @@ public class PlaceCardMessage extends Message{
        this.face=face;
        this.name = name;
    }
-
-    @Override
-    public String getType() {
-        return super.getType();
-    }
-
     public CommonClient getClient() {
         return client;
     }

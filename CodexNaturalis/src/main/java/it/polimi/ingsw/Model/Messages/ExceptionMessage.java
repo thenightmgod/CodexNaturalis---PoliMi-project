@@ -8,17 +8,7 @@ public class ExceptionMessage extends Message {
         this.details=details;
     }
 
-    @Override
-    public String getType() {
-        return super.getType();
-    }
-
     public String getDetails() {
         return details;
-    }
-
-    @Override
-    public String MessageToJson() {
-        return super.MessageToJson();
     }
 }

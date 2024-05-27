@@ -3,9 +3,13 @@ package it.polimi.ingsw.Network.Socket;
 import com.google.gson.Gson;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
+import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
+import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
+import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.StartCard;
 import it.polimi.ingsw.Model.Messages.*;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
+import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
 import it.polimi.ingsw.Network.CommonClient;
@@ -15,6 +19,7 @@ import it.polimi.ingsw.View.TUI.ClientModel;
 import java.io.*;
 import java.net.Socket;
 import java.rmi.RemoteException;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import static java.lang.System.exit;
@@ -28,7 +33,8 @@ public class SocketClient implements CommonClient {
     private ClientModel model;
 
     public SocketClient(String name) {
-        this.name=name;
+        this.name = name;
+        this.model = new ClientModel(name);
         String hostname= "Hamin";
         this.initializeClient(this, hostname, 4444, name);
     }
@@ -42,6 +48,8 @@ public class SocketClient implements CommonClient {
     public String getName() {
         return this.name;
     }
+
+    public ClientModel getClient() {  return this.model; }
 
     //VA ASSOCIATO IL BUFFERED READER INPUT del client al PRINT WRITER DEL CLIENT PROXY
     public void initializeClient(SocketClient client, String hostname, int ServerPort, String name) {
@@ -99,7 +107,7 @@ public class SocketClient implements CommonClient {
         }
     }
 
-    public void handleCommand(Message mex) throws NameAlreadyTakenException, WrongIndexException, WrongPositionException, WrongPlayersNumberException, RoomNotExistsException, RoomFullException, RequirementsNotSatisfied, InvalidOperationException {
+    public void handleCommand(Message mex) throws RemoteException {
         switch(mex.getType()) {
             case"ExceptionMessage" -> {
                 String details= ((ExceptionMessage)mex).getDetails();
@@ -110,22 +118,44 @@ public class SocketClient implements CommonClient {
                 String name= ((UpdatePointsMessage)mex).getName();
                 this.view.updatePoints(points, name);
             }
+            case "UpdateTurnMessage" -> {
+                Player p = ((UpdateTurnMessage)mex).getPlayer();
+                this.view.updateTurn(p);
+            }
+            case "DeclareWinnerMessage" -> {
+                HashMap<String, Integer> c = ((DeclareWinnerMessage)mex).getClassifica();
+                this.view.declareWinner(c);
+            }
+            case "ShowStartCardMessage" -> {
+                StartCard card = ((ShowStartCardMessage)mex).getStart();
+                this.view.showStartCard(card);
+            }
             case "ShowGoalsMessage" -> {
                 LinkedList<GoalCard> cards= ((ShowGoalsMessage)mex).getGoals();
-                this.view.updateGoals(cards, name);
+                this.view.updateGoals(cards, this.name);
             }
             case "ShowHandMessage" -> {
                 LinkedList<PlayableCard> hand = ((ShowHandMessage)mex).getHand();
-                this.view.updateHands(hand,name);
+                this.view.updateHands(hand, this.name);
             }
             case "UpdateFieldMessage" -> {
                 PlayingField playingField= ((UpdateFieldMessage)mex).getPlayingField();
-                this.view.updateField(playingField, name);
+                this.view.updateField(playingField, this.name);
             }
             case "ShowFreePositionsMessage" -> {
                 String name = ((ShowFreePositionsMessage)mex).getName();
                 LinkedList<Position> freePositions = ((ShowFreePositionsMessage)mex).getFreePosition();
                 this.view.updateFreePosition(name, freePositions);
+            }
+            case "UpdateGoldDeckMessage" -> {
+                String name = ((UpdateGoldDeckMessage)mex).getName();
+                LinkedList<GoldCard> goldy = ((UpdateGoldDeckMessage)mex).getDeck();
+                this.view.updateGoldDeck(goldy, name);
+            }
+            case "UpdateResourceDeckMessage" -> {
+                String name = ((UpdateResourceDeckMessage)mex).getName();
+                LinkedList<ResourceCard> resourcy = ((UpdateResourceDeckMessage)mex).getDeck();
+                this.view.updateResourceDeck(resourcy, name);
             }
             case "ShowOtherField"-> {
                 //Lori non sa ancora se mettere la showOtherField nella GameView o no
@@ -146,7 +176,7 @@ public class SocketClient implements CommonClient {
     @Override
     public void createGame(String name, int numPlayers) {
         CreateGameMessage msg = new CreateGameMessage(name, numPlayers);
-        String gson = msg.MessagetoJson();
+        String gson = msg.MessageToJson();
         server.createGame(gson);
     }
 

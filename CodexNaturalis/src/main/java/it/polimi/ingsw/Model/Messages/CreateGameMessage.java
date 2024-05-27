@@ -4,8 +4,8 @@ import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 
 
 public class CreateGameMessage extends Message{
-    public String name;
-    public int NumPlayers;
+    private String name;
+    private int NumPlayers;
 
     public CreateGameMessage(String nickname, int NumPlayers) {
         super("CreateGameMessage");
@@ -17,18 +17,8 @@ public class CreateGameMessage extends Message{
         return name;
     }
 
-    @Override
-    public String getType() {
-        return super.getType();
-    }
-
     public int getNumPlayers(){
         return NumPlayers;
-    }
-
-    public String MessagetoJson() {
-        Gson gson = new Gson();
-        return gson.toJson(this);
     }
 
 }

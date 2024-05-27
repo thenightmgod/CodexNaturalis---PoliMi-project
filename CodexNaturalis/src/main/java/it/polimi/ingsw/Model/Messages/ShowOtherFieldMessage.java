@@ -7,17 +7,6 @@ public class ShowOtherFieldMessage extends Message {
         super("ShowOtherFieldMessage");
         this.player=name;
     }
-
-    @Override
-    public String MessageToJson() {
-        return super.MessageToJson();
-    }
-
-    @Override
-    public String getType() {
-        return super.getType();
-    }
-
     public String getPlayer() {
         return player;
     }

@@ -14,14 +14,4 @@ public class JoinExistingGameMessage extends Message{
     public String getName() {
         return name;
     }
-
-    @Override
-    public String getType() {
-        return super.getType();
-    }
-
-    public String MessageToJson() {
-        Gson gson = new Gson();
-        return gson.toJson(this);
-    }
 }

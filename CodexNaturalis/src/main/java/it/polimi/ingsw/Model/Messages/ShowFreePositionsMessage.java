@@ -12,17 +12,6 @@ public class ShowFreePositionsMessage extends Message {
         this.name=name;
         this.freePosition=positions;
     }
-
-    @Override
-    public String MessageToJson() {
-        return super.MessageToJson();
-    }
-
-    @Override
-    public String getType() {
-        return super.getType();
-    }
-
     public LinkedList<Position> getFreePosition() {
         return freePosition;
     }

@@ -14,41 +14,31 @@ public class ClientProxy {
     public void showException(String StringMessage) {
         sendMessage(StringMessage);
     }
-
     public void updatePoints(String StringMessage) {
         sendMessage(StringMessage);
     }
-
+    public void updateTurn(String StringMessage) { sendMessage(StringMessage); }
+    public void declareWinner(String StringMessage) { sendMessage(StringMessage); }
+    public void showStartCard(String StringMessage) {  sendMessage(StringMessage);}
     public void showGoals(String StringMessage) {
         sendMessage(StringMessage);
     }
-
-
-    public void showHand(String StringMessage) {
-        sendMessage(StringMessage);
-
-    }
-
-
+    public void showHand(String StringMessage) {  sendMessage(StringMessage);  }
     public void updateField(String StringMessage) {
         sendMessage(StringMessage);
     }
-
-
     public void showFreePositions(String StringMessage)  {
         sendMessage(StringMessage);
     }
-
-    public void update()  {
-    }
-
+    public void updateGoldDeck(String StringMessage) { sendMessage(StringMessage); }
+    public void updateResourceDeck(String StringMessage) { sendMessage(StringMessage); }
     public void showOtherField(String StringMessage) {
         sendMessage(StringMessage);
     }
+
+
     public void sendMessage(String stringMessage){
         output.write(stringMessage);
         output.flush();
     }
-
-
 }

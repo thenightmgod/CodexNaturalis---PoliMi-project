@@ -5,12 +5,16 @@ import it.polimi.ingsw.Controller.GameController;
 import it.polimi.ingsw.Controller.MainController;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
+import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
+import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
+import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.StartCard;
 import it.polimi.ingsw.Model.Messages.*;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
+import it.polimi.ingsw.Model.RoomPackage.Room;
 import it.polimi.ingsw.Network.VirtualView;
 
 import java.io.BufferedReader;
@@ -23,11 +27,12 @@ import java.util.Map;
 
 public class SocketClientHandler implements VirtualView {
 
-    HashMap<Integer, VirtualView> clients = new HashMap<>();
     final MainController controller;
     final ClientProxy proxy;
     final SocketServer server;
     final BufferedReader input;
+    final String name;
+
 
     public SocketClientHandler(MainController controller, SocketServer server, BufferedReader input, PrintWriter output){
         this.controller = controller;
@@ -35,8 +40,6 @@ public class SocketClientHandler implements VirtualView {
         this.input = input;
         this.proxy = new ClientProxy(output);
     }
-
-    @Override
 
     public void runVirtualView() throws IOException {
         String receivedmessage;
@@ -59,12 +62,12 @@ public class SocketClientHandler implements VirtualView {
         switch(msg.getType()){
             case "JoinExistingGameMessage" -> {
                 String name = ((JoinExistingGameMessage) msg).getName();
-                GameController useless = controller.joinGame(name, this); //capire come gestire i messaggi di errore e recapitarli al client giusto
+                controller.joinGame(name, this); //capire come gestire i messaggi di errore e recapitarli al client giusto
             }
             case "CreateGameMessage" -> {
                 String name = ((CreateGameMessage) msg).getName();
                 int numPlayers = ((CreateGameMessage) msg).getNumPlayers();
-                GameController useless = controller.createGame(name, numPlayers, this);
+                controller.createGame(name, numPlayers, this);
             }
             case "LeaveGameMessage" -> {
                 String name = ((LeaveGameMessage) msg).getName();
@@ -124,11 +127,33 @@ public class SocketClientHandler implements VirtualView {
     @Override
     public void updatePoints(int points, String name) throws RemoteException {
         UpdatePointsMessage message= new UpdatePointsMessage(points, name);
-        String gson = message.MessagetoJson();
+        String gson = message.MessageToJson();
         proxy.updatePoints(gson);
     }
+
+    public void updateTurn(Player turn) throws RemoteException {
+        UpdateTurnMessage message = new UpdateTurnMessage(turn);
+        String gson = message.MessageToJson();
+        proxy.updateTurn(gson);
+    }
+    public void declareWinner(HashMap<String, Integer> classifica){
+        DeclareWinnerMessage message = new DeclareWinnerMessage(classifica);
+        String gson = message.MessageToJson();
+        proxy.declareWinner(gson);
+    }
+
     @Override
-    public void showGoals(LinkedList<GoalCard> goals) throws RemoteException {
+    public String getName() throws RemoteException {
+        return this.name;
+    }
+
+    public void showStartCard(StartCard card){
+        ShowStartCardMessage message = new ShowStartCardMessage(card);
+        String gson = message.MessageToJson();
+        proxy.showStartCard(gson);
+    }
+    @Override
+    public void updateGoals(LinkedList<GoalCard> goals) throws RemoteException {
         ShowGoalsMessage message= new ShowGoalsMessage(goals);
         String gson=message.MessageToJson();
         proxy.showGoals(gson);
@@ -155,6 +180,18 @@ public class SocketClientHandler implements VirtualView {
         proxy.showFreePositions(gson);
     }
 
+    public void updateGoldDeck(String name, LinkedList<GoldCard> deck){
+        UpdateGoldDeckMessage message = new UpdateGoldDeckMessage(name, deck);
+        String gson = message.MessageToJson();
+        proxy.updateGoldDeck(gson);
+    }
+
+    public void updateResourceDeck(String name, LinkedList<ResourceCard> deck){
+        UpdateResourceDeckMessage message = new UpdateResourceDeckMessage(name, deck);
+        String gson = message.MessageToJson();
+        proxy.updateResourceDeck(gson);
+    }
+
     //probabilmente da togliere
     public void update() {
 
@@ -165,18 +202,26 @@ public class SocketClientHandler implements VirtualView {
         String gson= message.MessageToJson();
         proxy.showOtherField(gson);
     }
+
+
     public GameController findGameController(String name) throws RemoteException {
-        GameController Garfield = null;
-        int k = -1;
-        for(Map.Entry<Integer, VirtualView> entry : clients.entrySet()){
-            if(entry.getValue().getName().equals(name)){
-                k = entry.getKey();
+        GameController gc = null;
+        LinkedList<GameController> gameControllers = controller.getControllers();
+        for(GameController elem : gameControllers){
+            Room curr = elem.getGame();
+            LinkedList<Player> players = curr.getPlayers();
+            for(Player p : players){
+                if(p.getName().equals(name)){
+                    return elem;
+                }
             }
         }
-        if(k != -1){
-            Garfield = controller.getControllers().get(k);
-        }
-        return Garfield;
+        return gc;
+    }
+
+    public static void main(String[] args){
+        int x = 4;
+        System.out.println(4);
     }
 }
 

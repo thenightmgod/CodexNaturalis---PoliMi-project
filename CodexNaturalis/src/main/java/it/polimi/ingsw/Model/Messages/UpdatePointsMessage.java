@@ -3,8 +3,8 @@ package it.polimi.ingsw.Model.Messages;
 //MEX SERVER --> CLIENT
 
 public class UpdatePointsMessage extends Message {
-    int points;
-    String name;
+    private int points;
+    private String name;
 
     public UpdatePointsMessage(int points, String name) {
         super("UpdatePointsMessage");
@@ -15,16 +15,7 @@ public class UpdatePointsMessage extends Message {
     public String getName() {
         return name;
     }
-
-    @Override
-    public String getType() {
-        return super.getType();
-    }
-
     public int getPoints() {
         return points;
-    }
-    public String MessagetoJson() {
-        return super.MessageToJson();
     }
 }

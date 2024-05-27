@@ -11,15 +11,6 @@ public class ShowGoalsMessage extends Message{
         super("ShowGoalsMessage");
         this.goals=cards;
     }
-    @Override
-    public String MessageToJson() {
-        return super.MessageToJson();
-    }
-
-    @Override
-    public String getType() {
-        return super.getType();
-    }
     public LinkedList<GoalCard> getGoals() {
         return goals;
     }
