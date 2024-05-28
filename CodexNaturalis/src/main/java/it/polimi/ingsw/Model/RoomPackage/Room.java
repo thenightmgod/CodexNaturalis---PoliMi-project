@@ -335,6 +335,7 @@ public class Room {
         }
         else {
             int size = Players.size();
+            //magari cambiare sta stronzata
             switch (size) {
                 case 2 -> {
                     if (Turn.equals(Players.getFirst())) {

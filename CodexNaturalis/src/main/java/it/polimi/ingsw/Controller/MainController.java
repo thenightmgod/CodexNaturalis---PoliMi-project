@@ -107,8 +107,11 @@ public class MainController {
         int k = -1;
         LinkedList<VirtualView> otherPlayers = new LinkedList<>();
         for(Map.Entry<Integer, LinkedList<VirtualView>> entry: viewPerGame.entrySet()){
-            if(entry.getValue().stream().filter(x -> x.getName().equals(name)))
-                k = entry.getKey();
+            for(VirtualView v: entry.getValue()){
+                if(v.getName().equals(name)){
+                    k = entry.getKey();
+                }
+            }
         }
         if(k != -1){
             for(int i=0; i<viewPerGame.get(k).size(); i++) {

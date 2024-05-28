@@ -410,7 +410,7 @@ public class TUI implements GameView {
         }
         else{
             System.out.println("it's"+ Turn.getName()+ "'s turn");
-            //magari altre funzioni
+            //magari altre funzioni, o magari no
         }
     }
 
