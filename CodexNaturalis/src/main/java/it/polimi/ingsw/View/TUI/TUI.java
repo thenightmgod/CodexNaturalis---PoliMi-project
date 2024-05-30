@@ -207,51 +207,41 @@ public class TUI implements GameView {
 
     public void createGame() throws RemoteException {
 
-        String input;
+        int input = 0;
         String name;
-        int num = 0;
         boolean goon = false;
-        Scanner scan = new Scanner(System.in);
-        ExecutorService executor = Executors.newSingleThreadExecutor();
 
         do {
             try {
                 System.out.println("Enter the number of players: ");
-                input = waitForInput(scan, executor);
 
-                if (!input.isEmpty()) {
-                    num = Integer.parseInt(input);
-                    if (num < 2 || num > 4)
-                        System.out.println("The number of players must be between 2 and 4!");
-                } else {
-                    num = 0;
+                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                input = Integer.parseInt(reader.readLine());
+
+                if (input < 2 || input > 4)
+                    System.out.println("The number of players must be between 2 and 4!");
+                else {
                     goon = true;
-                    break;
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Please enter a number!");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-        } while(num < 2 || num > 4);
+        } while(!goon);
 
-        if(!goon){
-            //fare in modo che richiami in qualche modo
-        } else{
-            //try{
-            name = getNickname();
-            client = chooseClient(name);
-            client.createGame(name, num);// è tutto nullo perchè così è inizializzata la view
+        //try{
+        name = getNickname();
+        client = chooseClient(name);
+        client.createGame(name, input);// è tutto nullo perchè così è inizializzata la view
 
-            /*} catch (RemoteException e) {
-                System.out.println("an exception occurred while starting the client");
-            } catch (NotBoundException e){
-                System.out.print("NotBoundException occurred while initializing the client");
-            } catch (WrongPlayersNumberException e){
-                System.out.print("The number of players isn't supported");
-            }*/
-
-        }
-
-        executor.shutdown();
+        /*} catch (RemoteException e) {
+            System.out.println("an exception occurred while starting the client");
+        } catch (NotBoundException e){
+            System.out.print("NotBoundException occurred while initializing the client");
+        } catch (WrongPlayersNumberException e){
+            System.out.print("The number of players isn't supported");
+        }*/
 
     }
 
@@ -335,18 +325,7 @@ public class TUI implements GameView {
         return nickname;
     }
 
-    private static String waitForInput(Scanner scanner, ExecutorService executor) {
-        try {
-            // Avvia un'attività per leggere l'input dell'utente
-            Future<String> future = executor.submit(scanner::nextLine);
 
-            // Imposta il timeout
-            return future.get(30, TimeUnit.SECONDS);
-        } catch (InterruptedException | ExecutionException | TimeoutException e) {
-            // Se si verifica un'eccezione, restituisce una stringa vuota
-            return "";
-        }
-    }
 
     public void isYourTurn() throws RemoteException {
         if(Turn.getName().equals(client.getName())) {

@@ -14,10 +14,10 @@ public class MainClient {
 
         do{
             try {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-
                 System.out.println("if you want to play with a Tui write 1");
-                System.out.println("if you want to play with a Tui write 2");
+                System.out.println("if you want to play with a Gui write 2");
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
                 input = Integer.parseInt(reader.readLine());
                 if(input == 1){
