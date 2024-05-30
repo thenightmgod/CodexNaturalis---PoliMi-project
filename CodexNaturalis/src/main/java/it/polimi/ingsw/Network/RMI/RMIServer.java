@@ -31,6 +31,7 @@ public class RMIServer extends UnicastRemoteObject implements VirtualServer{
 
     public RMIServer(MainController controller) throws RemoteException{
         this.controller = controller;
+        port = 4445;
     }
 
     public void startServer() throws RemoteException{ //in realtà le eccezioni dovremmo gestirle decentemente

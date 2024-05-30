@@ -35,8 +35,8 @@ public class SocketClient implements CommonClient {
     public SocketClient(String name) {
         this.name = name;
         this.model = new ClientModel(name);
-        String hostname= "Hamin";
-        this.initializeClient(this, hostname, 4444, name);
+        String ip = "127.0.0.1";
+        this.initializeClient(this, ip, 4444, name);
     }
 
     public SocketClient(BufferedReader input, BufferedWriter output, String name) { //input e output sono rispettivamente il socket.getinputstream e socket.outputstream
@@ -52,12 +52,12 @@ public class SocketClient implements CommonClient {
     public ClientModel getClient() {  return this.model; }
 
     //VA ASSOCIATO IL BUFFERED READER INPUT del client al PRINT WRITER DEL CLIENT PROXY
-    public void initializeClient(SocketClient client, String hostname, int ServerPort, String name) {
+    public void initializeClient(SocketClient client, String ip, int ServerPort, String name) {
         Socket socket;
         OutputStreamWriter socketTx= null;
         InputStreamReader socketRx= null;
         try {
-            socket = new Socket(hostname, ServerPort);
+            socket = new Socket(ip, ServerPort);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -91,7 +91,7 @@ public class SocketClient implements CommonClient {
 
 
     //      GESTISCE LE FUNZIONI DELLA VIRTUAL VIEW:
-    public void runVirtualServer() throws RoomFullException, RoomNotExistsException, RequirementsNotSatisfied, NameAlreadyTakenException, InvalidOperationException, WrongIndexException, WrongPositionException, WrongPlayersNumberException {
+    public void runVirtualServer()  {
         String receivedMessage;
         while (true) {
             try {
