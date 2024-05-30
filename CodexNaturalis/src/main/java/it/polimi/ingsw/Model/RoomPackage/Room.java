@@ -223,10 +223,6 @@ public class Room {
         ResourceDeck.shuffle();
         GoldDeck.shuffle();
         GoalDeck.shuffle();
-        for(int i=0; i<Players.size(); i++){
-            Players.get(i).addGoalCard((GoalCard) this.GoalDeck.getGoalCard());
-            Players.get(i).addGoalCard((GoalCard) this.GoalDeck.getGoalCard());
-        }
         // robe per observers
         LinkedList<ResourceCard> cards = new LinkedList<>();
         ResourceDeck deck = getResourceDeck();
