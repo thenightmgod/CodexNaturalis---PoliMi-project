@@ -39,6 +39,7 @@ public class SocketClientHandler implements VirtualView {
         this.server = server;
         this.input = input;
         this.proxy = new ClientProxy(output);
+        this.name = "Lazz";
     }
 
     public void runVirtualView() throws IOException {
