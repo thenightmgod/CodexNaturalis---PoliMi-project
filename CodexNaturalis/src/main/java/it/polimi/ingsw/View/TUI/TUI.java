@@ -42,7 +42,7 @@ public class TUI implements GameView {
     public TUI(){}
 
     public void startTui() throws RemoteException {
-        createGame();
+        joinGame();
     }
 
     public void showPoints(){}
@@ -252,6 +252,11 @@ public class TUI implements GameView {
                 String name = getNickname();
                 this.client = chooseClient(name);
                 this.client.joinGame(name);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
                 switch (error) {
                     case "NameAlreadyTakenException" -> {
                         System.out.println("Name already taken! Please try again!");
@@ -312,14 +317,15 @@ public class TUI implements GameView {
 
 
     public String getNickname(){
-        String nickname;
+        String nickname = "Carlos";
         boolean goon = false;
         try {
+            System.out.println("What kind of nickname would you like?");
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             nickname = reader.readLine();
             goon = true;
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("There has been an error with the nickname");
         }
 
         return nickname;

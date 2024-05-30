@@ -17,6 +17,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 public class RMIServer implements VirtualServer{
@@ -31,7 +32,9 @@ public class RMIServer implements VirtualServer{
 
     public RMIServer(MainController controller) throws RemoteException{
         this.controller = controller;
-        port = 4445;
+        port = 4446;
+        actions = new ArrayBlockingQueue<>(100);
+        execute();
     }
 
     public void startServer() throws RemoteException{ //in realtà le eccezioni dovremmo gestirle decentemente
@@ -106,7 +109,7 @@ public class RMIServer implements VirtualServer{
                 now = actions.take();
                 now.executor();
             } catch (InterruptedException | RemoteException e) {
-                throw new RuntimeException(e);
+                System.out.println("Perbacco");
             }
         }).start();
     }
