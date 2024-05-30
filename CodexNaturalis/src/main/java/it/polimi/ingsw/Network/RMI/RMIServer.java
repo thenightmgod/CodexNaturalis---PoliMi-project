@@ -19,7 +19,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
 import java.util.concurrent.BlockingQueue;
 
-public class RMIServer extends UnicastRemoteObject implements VirtualServer{
+public class RMIServer implements VirtualServer{
 
     final MainController controller;
 
