@@ -113,7 +113,7 @@ public class Room {
         CommonGoals.add((GoalCard) GoalDeck.getGoalCard());
         CommonGoals.add((GoalCard) GoalDeck.getGoalCard());
         for(Player p: Players){
-            observerManager.showGoals("ivebeenwaitingforaguidetocometakemebythehand", CommonGoals);
+            observerManager.showGoals(p.getName(), CommonGoals);
         }
     }
 
@@ -234,17 +234,17 @@ public class Room {
         cards.add((ResourceCard) deck.getCards().get(1));
         cards.add((ResourceCard) deck.getCards().get(2));
         for(Player p: Players) {
-            observerManager.updateResourceDeck("ivebeenwaitingforaguidetocometakemebythehand", cards);
+            observerManager.updateResourceDeck(p.getName(), cards);
         }
 
         // robe per observers
         LinkedList<GoldCard> card5 = new LinkedList<>();
-        ResourceDeck d3ck = getResourceDeck();
+        GoldDeck d3ck = getGoldDeck();
         cards.add((GoldCard) d3ck.getCards().get(0));
         cards.add((GoldCard) d3ck.getCards().get(1));
         cards.add((GoldCard) d3ck.getCards().get(2));
         for(Player p: Players) {
-            observerManager.updateGoldDeck("ivebeenwaitingforaguidetocometakemebythehand", card5);
+            observerManager.updateGoldDeck(p.getName(), card5);
         }
     }
 
@@ -255,7 +255,7 @@ public class Room {
      */
     public void giveStartCards(Player player) throws RemoteException {
         synchronized (StartDeck) { //boh
-            StartDeck.giveCard(this.Turn, 0);
+            StartDeck.giveCard(player, 0);
             observerManager.showStartCard(player.getName(), (StartCard) player.getHand().getFirst());
         }
     }

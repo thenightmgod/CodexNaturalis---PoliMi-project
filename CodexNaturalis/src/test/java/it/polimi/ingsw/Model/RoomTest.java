@@ -4,14 +4,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import it.polimi.ingsw.Controller.GameController;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.*;
+import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
-import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
-import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
-import it.polimi.ingsw.Model.PlayerPackage.Position;
+import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
+import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.StartCard;
+import it.polimi.ingsw.Model.PlayerPackage.*;
+import it.polimi.ingsw.Model.RoomPackage.ObserverManager;
 import it.polimi.ingsw.Network.VirtualView;
 import org.junit.jupiter.api.Test;
 
 import java.rmi.RemoteException;
+import java.util.HashMap;
 import java.util.LinkedList;
 class RoomTest {
     /**
@@ -19,10 +22,15 @@ class RoomTest {
      * commonGoals, show2GoalCards, pickGoalCard).
      */
     @Test
-    void testMetodiMinori(){
+    void testMetodiMinori() throws RemoteException {
         GameController beppe = new GameController(5, 4);
 
         VirtualView client1 = new VirtualView() {
+            @Override
+            public void updateTurn(Player p) throws RemoteException {
+
+            }
+
             @Override
             public void showException(String details) throws RemoteException {
 
@@ -34,7 +42,7 @@ class RoomTest {
             }
 
             @Override
-            public void showGoals(LinkedList<GoalCard> goals) throws RemoteException {
+            public void updateGoals(LinkedList<GoalCard> goals) throws RemoteException {
 
             }
 
@@ -50,6 +58,31 @@ class RoomTest {
 
             @Override
             public void showFreePositions(String name, LinkedList<Position> freePosition) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateResourceDeck(String name, LinkedList<ResourceCard> deck) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateGoldDeck(String name, LinkedList<GoldCard> deck) throws RemoteException {
+
+            }
+
+            @Override
+            public void declareWinner(HashMap<String, Integer> classifica) throws RemoteException {
+
+            }
+
+            @Override
+            public String getName() throws RemoteException {
+                return "";
+            }
+
+            @Override
+            public void showStartCard(StartCard card) throws RemoteException {
 
             }
 
@@ -65,6 +98,11 @@ class RoomTest {
         };
         VirtualView client2 = new VirtualView() {
             @Override
+            public void updateTurn(Player p) throws RemoteException {
+
+            }
+
+            @Override
             public void showException(String details) throws RemoteException {
 
             }
@@ -75,7 +113,7 @@ class RoomTest {
             }
 
             @Override
-            public void showGoals(LinkedList<GoalCard> goals) throws RemoteException {
+            public void updateGoals(LinkedList<GoalCard> goals) throws RemoteException {
 
             }
 
@@ -91,6 +129,31 @@ class RoomTest {
 
             @Override
             public void showFreePositions(String name, LinkedList<Position> freePosition) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateResourceDeck(String name, LinkedList<ResourceCard> deck) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateGoldDeck(String name, LinkedList<GoldCard> deck) throws RemoteException {
+
+            }
+
+            @Override
+            public void declareWinner(HashMap<String, Integer> classifica) throws RemoteException {
+
+            }
+
+            @Override
+            public String getName() throws RemoteException {
+                return "";
+            }
+
+            @Override
+            public void showStartCard(StartCard card) throws RemoteException {
 
             }
 
@@ -106,6 +169,11 @@ class RoomTest {
         };
         VirtualView client3 = new VirtualView() {
             @Override
+            public void updateTurn(Player p) throws RemoteException {
+
+            }
+
+            @Override
             public void showException(String details) throws RemoteException {
 
             }
@@ -116,7 +184,7 @@ class RoomTest {
             }
 
             @Override
-            public void showGoals(LinkedList<GoalCard> goals) throws RemoteException {
+            public void updateGoals(LinkedList<GoalCard> goals) throws RemoteException {
 
             }
 
@@ -132,6 +200,31 @@ class RoomTest {
 
             @Override
             public void showFreePositions(String name, LinkedList<Position> freePosition) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateResourceDeck(String name, LinkedList<ResourceCard> deck) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateGoldDeck(String name, LinkedList<GoldCard> deck) throws RemoteException {
+
+            }
+
+            @Override
+            public void declareWinner(HashMap<String, Integer> classifica) throws RemoteException {
+
+            }
+
+            @Override
+            public String getName() throws RemoteException {
+                return "";
+            }
+
+            @Override
+            public void showStartCard(StartCard card) throws RemoteException {
 
             }
 
@@ -147,6 +240,11 @@ class RoomTest {
         };
         VirtualView client4 = new VirtualView() {
             @Override
+            public void updateTurn(Player p) throws RemoteException {
+
+            }
+
+            @Override
             public void showException(String details) throws RemoteException {
 
             }
@@ -157,7 +255,7 @@ class RoomTest {
             }
 
             @Override
-            public void showGoals(LinkedList<GoalCard> goals) throws RemoteException {
+            public void updateGoals(LinkedList<GoalCard> goals) throws RemoteException {
 
             }
 
@@ -177,6 +275,31 @@ class RoomTest {
             }
 
             @Override
+            public void updateResourceDeck(String name, LinkedList<ResourceCard> deck) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateGoldDeck(String name, LinkedList<GoldCard> deck) throws RemoteException {
+
+            }
+
+            @Override
+            public void declareWinner(HashMap<String, Integer> classifica) throws RemoteException {
+
+            }
+
+            @Override
+            public String getName() throws RemoteException {
+                return "";
+            }
+
+            @Override
+            public void showStartCard(StartCard card) throws RemoteException {
+
+            }
+
+            @Override
             public void update() throws RemoteException {
 
             }
@@ -187,23 +310,15 @@ class RoomTest {
             }
         };
 
-        beppe.addPlayer("dalla", PlayerColor.YELLOW, client1);
-        beppe.addPlayer("degregori", PlayerColor.GREEN, client2);
-        beppe.addPlayer("venditti", PlayerColor.RED, client3);
-        beppe.addPlayer("hamingway", PlayerColor.BLUE, client4);
+        beppe.addPlayer("hamingway", PlayerColor.YELLOW, client1);
+        beppe.addPlayer("venditti", PlayerColor.BLUE, client2);
+        beppe.addPlayer("dalla", PlayerColor.RED, client3);
+        beppe.addPlayer("degregori", PlayerColor.GREEN, client4);
 
-        beppe.getPlayers().getFirst().addPoints(21);
-
-        beppe.startGame();
-        beppe.createDecks();
-        try {
-            beppe.giveHands();
-        } catch (RemoteException e) {
-            fail("Unexpected RemoteException: " + e.getMessage());
-        }
-        beppe.commonGoals();
-        beppe.getGame().setTwentyFlag();
-        beppe.getGame().setLastRound();
+        beppe.placeStartCard("hamingway", FB.FRONT);
+        beppe.placeStartCard("venditti", FB.BACK);
+        beppe.placeStartCard("dalla", FB.FRONT);
+        beppe.placeStartCard("degregori", FB.BACK);
     }
 }
     /**

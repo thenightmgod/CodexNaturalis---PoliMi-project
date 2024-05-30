@@ -79,6 +79,5 @@ public abstract class PlayableCard extends Card{
             case LL -> this.Corners.get(3);
         };
     }
-
 }
 

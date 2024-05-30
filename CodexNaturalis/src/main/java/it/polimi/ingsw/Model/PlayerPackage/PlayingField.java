@@ -88,7 +88,7 @@ public class PlayingField {
      * @param o The orientation of the position.
      */
     public void checkCorners(Position p, Orientation o) {
-        if (Field.get(p).getCorner(o).getRes().equals(ABSENT)) {
+        if (Field.get(p).getCorner(o).getRes().equals(ABSENT)){
             Position x = getPosFromCorner(p, o);
             FreePositions.remove(x);
         }

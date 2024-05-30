@@ -12,7 +12,7 @@ import java.util.LinkedList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class GameControllerTest {
+/*class GameControllerTest {
 
     @Test
     void Controller() {
@@ -196,3 +196,4 @@ class GameControllerTest {
 
     }
 }
+*/

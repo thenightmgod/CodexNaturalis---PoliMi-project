@@ -21,8 +21,8 @@ import java.util.LinkedList;
  * that use the Deck Class work.
  */
 class GoldDeckTest {
-    @Before
-    void setup(){
+    @BeforeEach
+    public void setup(){
         Corner HR = new Corner(EMPTY, Orientation.HR);
     }
     @Test

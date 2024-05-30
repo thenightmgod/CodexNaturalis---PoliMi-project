@@ -77,8 +77,8 @@ public class GameController {
         for(Player p: Players)
             giveInitialCards(p);
         createCommonGoals();
-        for(Player p: Players)
-            show2goalCards(p);
+//        for(Player p: Players)
+//            show2goalCards(p);
         this.Game.start();
     }
 

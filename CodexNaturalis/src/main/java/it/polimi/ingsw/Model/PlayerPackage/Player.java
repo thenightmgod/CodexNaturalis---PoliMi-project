@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Model.PlayerPackage;
 
+import java.lang.reflect.Field;
 import java.rmi.RemoteException;
 import java.util.*;
 
@@ -180,7 +181,7 @@ public class Player {
                     }
                 }
             }
-
+            this.PlayerField.updateFreePositions(new Position(0, 0));
         }
         else{
             for(Orientation Orien : Orientation.values()){
@@ -194,8 +195,12 @@ public class Player {
                     }
                 }
             }
+            PlayerField.getFreePositions().add(new Position(1,1));
+            PlayerField.getFreePositions().add(new Position(-1,-1));
+            PlayerField.getFreePositions().add(new Position(1,-1));
+            PlayerField.getFreePositions().add(new Position(-1,1));
+
         }
-        this.PlayerField.updateFreePositions(new Position(0, 0));
         this.Hand.remove(c);
     }
 
