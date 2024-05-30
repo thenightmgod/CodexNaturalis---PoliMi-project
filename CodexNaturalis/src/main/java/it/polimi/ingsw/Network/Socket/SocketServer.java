@@ -18,15 +18,19 @@ public class SocketServer {
         this.controller = controller;
         this.listenSocket = listenSocket;
     }
-    public void createServer(){
+    public static SocketServer createServer(){
+        SocketServer server = null;
         try{
             ServerSocket listenSocket = new ServerSocket(4444);
-            new SocketServer(new MainController(),listenSocket);
+            server = new SocketServer(new MainController(),listenSocket);
+            System.out.println("Server Socket ready");
+            return server;
         }
         catch (IOException e){
             System.err.println("Could not listen on port: 4444.");
             System.exit(-1);
         }
+        return server;
     }
 
     //OutputStreamWriter socketTx = new OutputStreamWriter(clientSocket.getOutputStream());
@@ -60,5 +64,9 @@ public class SocketServer {
             System.err.println("Connection failed");
             System.exit(-1);
         }
+    }
+
+    public MainController getController() {
+        return controller;
     }
 }
