@@ -39,9 +39,13 @@ public class TUI implements GameView {
 
     String error = "default";
 
-    public void showPoints(){
+    public TUI(){}
 
+    public void startTui() throws RemoteException {
+        createGame();
     }
+
+    public void showPoints(){}
 
     @Override
     public void updatePoints(int points, String name){
@@ -235,7 +239,7 @@ public class TUI implements GameView {
             //try{
             name = getNickname();
             client = chooseClient(name);
-            client.createGame(name, num); // è tutto nullo perchè così è inizializzata la view
+            client.createGame(name, num);// è tutto nullo perchè così è inizializzata la view
 
             /*} catch (RemoteException e) {
                 System.out.println("an exception occurred while starting the client");
@@ -266,11 +270,13 @@ public class TUI implements GameView {
                     case "RoomFullException" -> {
                         System.out.println("Room full! Please create a Game!");
                         error = "default";
+                        createGame();
                         goon = true;
                     }
                     case "RoomNotExistsException" -> {
                         System.out.println("The room doesn't exist! Please create a game from scratch!");
                         error = "default";
+                        createGame();
                         goon = true;
                     }
                     default -> goon = true;
