@@ -6,6 +6,7 @@ import it.polimi.ingsw.Exceptions.*;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.*;
 import java.util.LinkedList;
 
 public class SocketServer {
@@ -18,11 +19,11 @@ public class SocketServer {
         this.controller = controller;
         this.listenSocket = listenSocket;
     }
-    public static SocketServer createServer(){
+    public static SocketServer createServer(MainController mc){
         SocketServer server = null;
         try{
             ServerSocket listenSocket = new ServerSocket(4444);
-            server = new SocketServer(new MainController(),listenSocket);
+            server = new SocketServer(mc,listenSocket);
             System.out.println("Server Socket ready");
             return server;
         }
@@ -40,23 +41,16 @@ public class SocketServer {
     public void startServer() {
         Socket clientSocket = null;
         try {
-            while ((clientSocket = this.listenSocket.accept()) != null){ //dubbio: questo clientSocket è univoco per ogni client che si collega?
+            while (true){ //dubbio: questo clientSocket è univoco per ogni client che si collega?
                 //quando creo il socketclienthandler devo mettergli come input l'ouput del ServerProxy e devo mettergli
                 //come output il client Proxy che smista il mex verso il client
-                InputStreamReader socketRx = new InputStreamReader(clientSocket.getInputStream());
-                OutputStreamWriter socketTx = new OutputStreamWriter(clientSocket.getOutputStream());
-                SocketClientHandler handler = new SocketClientHandler(this.controller, this, new BufferedReader(socketRx), new PrintWriter(socketTx));
-                System.out.println("Connection established");
+
+                clientSocket = this.listenSocket.accept();
+                SocketClientHandler handler = new SocketClientHandler(this.controller, this, clientSocket);
+                handler.start();
                 synchronized (this.clients) {
                     clients.add(handler);
                 }
-                new Thread(() -> {
-                    try{
-                        handler.runVirtualView();
-                    } catch(IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }).start();
                 //socketRx in un BufferReader per leggerlo piu easy e passarlo al costruttore di clienthandler
             }
         }

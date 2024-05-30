@@ -23,13 +23,11 @@ public class MainServer {
             System.setProperty("java.rmi.server.hostname", input);
         }
 
-
-        SocketServer server = SocketServer.createServer();
-        server.startServer();
-
-        MainController mc = server.getController();
+        MainController mc = new MainController();
 
         RMIServer rmi = new RMIServer(mc);
         rmi.startServer();
+        SocketServer server = SocketServer.createServer(mc);
+        server.startServer();
     }
 }

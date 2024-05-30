@@ -17,15 +17,14 @@ import it.polimi.ingsw.Model.PlayerPackage.Position;
 import it.polimi.ingsw.Model.RoomPackage.Room;
 import it.polimi.ingsw.Network.VirtualView;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import java.net.*;
 
-public class SocketClientHandler implements VirtualView {
+public class SocketClientHandler extends Thread implements VirtualView {
 
     final MainController controller;
     final ClientProxy proxy;
@@ -34,15 +33,16 @@ public class SocketClientHandler implements VirtualView {
     final String name;
 
 
-    public SocketClientHandler(MainController controller, SocketServer server, BufferedReader input, PrintWriter output){
+    public SocketClientHandler(MainController controller, SocketServer server, Socket socket) throws IOException {
         this.controller = controller;
         this.server = server;
-        this.input = input;
-        this.proxy = new ClientProxy(output);
+        this.input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        this.proxy = new ClientProxy(new PrintWriter(new OutputStreamWriter(socket.getOutputStream())));
         this.name = "Lazz";
     }
 
-    public void runVirtualView() throws IOException {
+    @Override
+    public void run(){
         String receivedmessage;
         while(true) {
             try {
@@ -143,8 +143,8 @@ public class SocketClientHandler implements VirtualView {
         proxy.declareWinner(gson);
     }
 
-    @Override
-    public String getName() throws RemoteException {
+
+    public String getNames() throws RemoteException {
         return this.name;
     }
 
