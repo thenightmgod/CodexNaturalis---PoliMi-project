@@ -103,15 +103,22 @@ public class RMIServer implements VirtualServer{
     }
 
     public void execute() {
-        new Thread(()->{
-            Actions now = null;
+        new Thread(() -> {
             try {
-                now = actions.take();
-                now.executor();
-            } catch (InterruptedException | RemoteException e) {
-                System.out.println("Execute of the actions went badly, perbacco");
+                while(true) {
+                    Actions now = actions.take();
+                    now.executor();
+                }
+            } catch (InterruptedException e) {
+                System.err.println("Execution interrupted: " + e.getMessage());
+                Thread.currentThread().interrupt();
+            } catch (RemoteException e) {
+                System.err.println("Remote exception: " + e.getMessage());
+            } catch (Exception e) {
+                System.err.println("Unexpected exception: " + e.getMessage());
             }
         }).start();
     }
+
 
 }
