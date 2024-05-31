@@ -13,7 +13,7 @@ import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
 import it.polimi.ingsw.Network.CommonClient;
 import it.polimi.ingsw.Network.RMI.RMIClient;
-import it.polimi.ingsw.Network.Socket.SocketClient;
+//import it.polimi.ingsw.Network.Socket.SocketClient;
 import it.polimi.ingsw.View.GameView;
 
 import java.io.BufferedReader;
@@ -273,6 +273,10 @@ public class TUI implements GameView {
 
     }
 
+    public void startingGame(){
+        System.out.println("Game is starting...");
+    }
+
     public void joinGame() throws RemoteException {
         boolean goon = false;
         do {
@@ -329,9 +333,9 @@ public class TUI implements GameView {
                     System.out.print("NotBoundException occurred while initializing the client");
                 }
             }else {
-                client = new SocketClient(name);
+                /*client = new SocketClient(name);
                 client.setView(this);
-                connectionType = true;
+                connectionType = true;*/
             }
 
         } while(!connection.equals("0") && !connection.equals("1"));

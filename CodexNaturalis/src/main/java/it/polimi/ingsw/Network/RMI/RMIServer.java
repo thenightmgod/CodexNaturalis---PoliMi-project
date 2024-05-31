@@ -109,7 +109,7 @@ public class RMIServer implements VirtualServer{
                 now = actions.take();
                 now.executor();
             } catch (InterruptedException | RemoteException e) {
-                System.out.println("Perbacco");
+                System.out.println("Execute of the actions went badly, perbacco");
             }
         }).start();
     }

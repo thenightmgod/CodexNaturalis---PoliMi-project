@@ -70,6 +70,8 @@ public class GameController {
 
     public void startGame() throws RemoteException { //in virtual view
         initializeRoom();
+        for(Player p: Players)
+            this.Game.startingGame(p);
         State = GameState.RUNNING;
         createDecks();
         for(Player p: Players)

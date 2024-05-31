@@ -6,7 +6,6 @@ import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.StartCard;
-import it.polimi.ingsw.Model.Messages.Message;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
@@ -49,6 +48,8 @@ public interface VirtualView extends Remote {
     String getName() throws RemoteException;
 
     void showStartCard(StartCard card) throws RemoteException;
+
+    void startingGame(Player p) throws RemoteException;
 
     void update() throws RemoteException; //update il clientModel
 

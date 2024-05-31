@@ -185,6 +185,9 @@ public class Room {
         observerManager.showNewHand(Turn.getName(), Turn.getHand());
     }
 
+    public void startingGame(Player p) throws RemoteException {
+        observerManager.getObserver(p.getName()).startingGame(p);
+    }
 
     /**
      * Picks a goal card for the specified player based on their choice.

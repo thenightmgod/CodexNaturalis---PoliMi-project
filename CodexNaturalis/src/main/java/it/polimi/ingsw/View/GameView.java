@@ -36,6 +36,8 @@ public interface GameView {
 
     public void updateResourceDeck(LinkedList<ResourceCard> deck, String name);
 
+    void startingGame() throws RemoteException;
+
     void declareWinner(HashMap<String, Integer> classifica);
 
 
