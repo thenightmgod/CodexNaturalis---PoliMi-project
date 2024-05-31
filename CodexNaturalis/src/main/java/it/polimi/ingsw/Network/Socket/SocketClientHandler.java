@@ -26,37 +26,44 @@ import java.net.*;
 
 public class SocketClientHandler extends Thread implements VirtualView {
 
-    final MainController controller;
-    final ClientProxy proxy;
-    final SocketServer server;
-    final BufferedReader input;
-    final String name;
+    private final MainController controller;
+    private final Socket clientSocket;
+    private ClientProxy proxy;
+    private final SocketServer server;
+    private BufferedReader input;
+    private final String name;
 
 
     public SocketClientHandler(MainController controller, SocketServer server, Socket socket) throws IOException {
         this.controller = controller;
         this.server = server;
-        this.input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        this.proxy = new ClientProxy(new PrintWriter(new OutputStreamWriter(socket.getOutputStream())));
+        this.clientSocket = socket;
         this.name = "Lazz";
     }
 
     @Override
     public void run(){
-        String receivedmessage;
-        while(true) {
-            try {
-                while (input.readLine() != null) {
-                    receivedmessage = input.readLine();
-                    Gson gson = new Gson();
-                    Message message = gson.fromJson(receivedmessage, Message.class);
-                    //gestire le eccezioni di handleCommand in questo metodo
-                    handleCommand(message);
+        try {
+            this.input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            this.proxy = new ClientProxy(new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream())));
+
+            String receivedmessage;
+            while (true) {
+                try {
+                    while (input.readLine() != null) {
+                        receivedmessage = input.readLine();
+                        Gson gson = new Gson();
+                        Message message = gson.fromJson(receivedmessage, Message.class);
+                        //gestire le eccezioni di handleCommand in questo metodo
+                        handleCommand(message);
+                    }
+                } catch (RuntimeException | IOException e) {
+                    e.printStackTrace();
                 }
             }
-            catch(RuntimeException | IOException e){
-                e.printStackTrace();
-            }
+        }
+        catch (IOException e){
+            System.out.println("Error in Socket connection");
         }
     }
     public void handleCommand(Message msg) throws RemoteException {
