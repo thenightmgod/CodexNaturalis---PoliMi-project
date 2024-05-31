@@ -126,8 +126,8 @@ public class SocketClientHandler extends Thread implements VirtualView {
     }
 
     @Override
-    public void showException(String details) throws RemoteException{
-        ExceptionMessage message= new ExceptionMessage(details);
+    public void showException(String exception, String details) throws RemoteException{
+        ExceptionMessage message= new ExceptionMessage(exception, details);
         String gson = message.MessageToJson();
         proxy.showException(gson);
     }

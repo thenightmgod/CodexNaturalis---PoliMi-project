@@ -8,7 +8,7 @@ public class ServerProxy implements VirtualServerSocket {
 
     final PrintWriter output;
 
-    public ServerProxy(BufferedWriter output) {
+    public ServerProxy(PrintWriter output) {
         this.output = new PrintWriter(output);
     }
     @Override
