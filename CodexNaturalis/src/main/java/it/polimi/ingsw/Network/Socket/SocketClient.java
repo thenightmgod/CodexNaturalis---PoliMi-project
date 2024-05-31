@@ -34,16 +34,15 @@ public class SocketClient implements CommonClient {
 
     public SocketClient(String name) {
         this.name = name;
-        this.model = new ClientModel(name);
         String ip = "127.0.0.1";
-        this.initializeClient(this, ip, 4444, name);
+        this.initializeClient(this, ip, 4444);
     }
 
-    public SocketClient(BufferedReader input, PrintWriter output, String name) { //input e output sono rispettivamente il socket.getinputstream e socket.outputstream
+    public SocketClient(SocketClient client, BufferedReader input, PrintWriter output) { //input e output sono rispettivamente il socket.getinputstream e socket.outputstream
+        this.name = client.getName();
+        this.model = new ClientModel(client.getName());
         this.input = input;
         this.server = new ServerProxy(output);
-        this.name = name;
-
     }
     public String getName() {
         return this.name;
@@ -52,7 +51,7 @@ public class SocketClient implements CommonClient {
     public ClientModel getClient() {  return this.model; }
 
     //VA ASSOCIATO IL BUFFERED READER INPUT del client al PRINT WRITER DEL CLIENT PROXY
-    public void initializeClient(SocketClient client, String ip, int ServerPort, String name) {
+    public void initializeClient(SocketClient client, String ip, int ServerPort) {
         Socket socket;
         OutputStreamWriter socketTx= null;
         InputStreamReader socketRx= null;
@@ -73,8 +72,8 @@ public class SocketClient implements CommonClient {
             System.out.println(e);
             exit(1);
         }
-        client = new SocketClient (new BufferedReader(socketRx), new PrintWriter(socketTx), name);
-        client.run();
+        SocketClient socketclient = new SocketClient (client, new BufferedReader(socketRx), new PrintWriter(socketTx));
+        socketclient.run();
     }
 
     public void run() {
