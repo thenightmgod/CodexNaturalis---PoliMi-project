@@ -62,14 +62,14 @@ public class MainController {
     public synchronized void joinGame(String Name, VirtualView client) throws RemoteException {
 
         if (this.controllers.isEmpty()) {
-            client.showException("RoomNotExistsException");
+            client.showException("RoomNotExistsException", "Nothing");
         } else {
             String boh = controllers.stream().map(GameController::getPlayers).flatMap(Collection::stream).map(Player::getName).filter(x -> x.equals(Name)).findFirst().orElse("");
             if (!boh.isEmpty()) {
-                client.showException("NameAlreadyTakenException");
+                client.showException("NameAlreadyTakenException", "Nothing");
             } else {
                 if (this.controllers.getLast().getHowManyPlayers() == this.controllers.getLast().getNumPlayers()) {
-                    client.showException("RoomFullException");
+                    client.showException("RoomFullException", "Nothing");
                 } else {
                     switch (this.controllers.getLast().getNumPlayers()) {
                         case 1 -> {

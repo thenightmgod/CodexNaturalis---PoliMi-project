@@ -126,7 +126,7 @@ public class GameController {
 
     public synchronized void placeCard(int i, int x, int y, FB face) throws RemoteException { //p passata dal client
         if (i < 1 || i > 3)
-            getGame().getObserverManager().showException("WrongIndexException", getGame().getTurn().getName());
+            getGame().getObserverManager().showException("WrongIndexException", "PlaceCard", getGame().getTurn().getName());
         else
             {
             this.Game.placeCard(this.Game.getTurn().getCardFromHand(i), face, x, y);
@@ -183,10 +183,10 @@ public class GameController {
 
     public synchronized void drawCard(int i, int whichOne) throws RemoteException {
         if (i < 1 || i > 2)
-            getGame().getObserverManager().showException("WrongIndexException", getGame().getTurn().getName());
+            getGame().getObserverManager().showException("WrongIndexException", "DrawDeck", getGame().getTurn().getName());
         else {
             if (whichOne < 1 || whichOne > 3)
-                getGame().getObserverManager().showException("WrongIndexException", getGame().getTurn().getName());
+                getGame().getObserverManager().showException("WrongIndexException", "DrawIndex", getGame().getTurn().getName());
             else {
                 if (i == 1)
                     pickResCard(whichOne);

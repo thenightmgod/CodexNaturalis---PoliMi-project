@@ -59,8 +59,8 @@ public class ObserverManager {
         observers.get(name).showStartCard(card);
     }
 
-    public void showException(String exception, String name) throws RemoteException {
-        observers.get(name).showException(exception);
+    public void showException(String exception, String details, String name) throws RemoteException {
+        observers.get(name).showException(exception, details);
     }
 
     public void showGoals(String name, LinkedList<GoalCard> goals) throws RemoteException {

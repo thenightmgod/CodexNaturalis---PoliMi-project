@@ -183,30 +183,58 @@ public class TUI implements GameView {
     }
 
     @Override
-    public void showException(String name, String details) {
-        switch(details){
-            case "WrongIndexException" ->
-                    error = "WrongIndexException";
-            case "WrongPositionException" ->
-                    error = "WrongPositionException";
-            case "WrongPlayersNumberException" ->
-                    error = "WrongPlayersNumberException";
-            case "RoomNotExistsException" ->
-                    error = "RoomNotExistsException";
-            case "RoomFullException" ->
-                    error = "RoomFullException";
-            case "RequirementsNotSatisfied" ->
-                    error = "RequirementsNotSatisfied";
-            case "NameAlreadyTakenException" ->
-                    error = "NameAlreadyTakenException";
+    public void showException(String exception, String details) throws RemoteException {
+        switch(exception) {
+            case "WrongIndexException" -> {
+                switch(details) {
+                    case "DrawDeck" -> {
+                        System.out.println("you put an index which isn't 1 or 2");
+                        drawCard();
+                    }
+                    case "DrawIndex" -> {
+                        System.out.println("you put an index which isn't between 1 and 3");
+                        drawCard();
+                    }
+                    case "PlaceCard" -> {
+                        System.out.println("You chose a card which wasn't in your hand, put an index between 1 and 3!");
+                        placeCard();
+                    }
+                }
+            }
+            case "WrongPositionException" -> {
+                System.out.println("The position you chose isn't in the free ones!");
+                System.out.println("Look at the free position and choose one in those");
+                placeCard();
+            }
+            case "WrongPlayersNumberException" -> {
+                System.out.println("This shouldn't happen");
+            }
+            case "RoomNotExistsException" -> {
+                System.out.println("There isn't a pre existing game, you'll have to create a game from scratch");
+                createGame();
+            }
+            case "RoomFullException" -> {
+                System.out.println("The last game is full, you'll have to create a game from scratch!");
+                createGame();
+            }
+            case "RequirementsNotSatisfied" -> {
+                System.out.println("The requirements for the card you chose aren't satisfied! ");
+                System.out.println("Flip this gold card or play another one!");
+                placeCard();
+            }
+            case "NameAlreadyTakenException" -> {
+                System.out.println("Name already taken! Please try again!");
+                joinGame();
+            }
             case "Exception" ->
-                    error = "Sbatti";
+                    System.out.println("There has been an error");
         }
     }
 
 
     public void createGame() throws RemoteException {
 
+        System.out.println("CREATING A NEW GAME...");
         int input = 0;
         String name;
         boolean goon = false;
@@ -252,12 +280,8 @@ public class TUI implements GameView {
                 String name = getNickname();
                 this.client = chooseClient(name);
                 this.client.joinGame(name);
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-                switch (error) {
+                goon = true;
+               /* switch (error) {
                     case "NameAlreadyTakenException" -> {
                         System.out.println("Name already taken! Please try again!");
                         error = "default";
@@ -275,7 +299,7 @@ public class TUI implements GameView {
                         goon = true;
                     }
                     default -> goon = true;
-                }
+                }*/
             } catch (RemoteException e){
                 System.out.println("there has been a problem in the join game");
             }
@@ -318,12 +342,12 @@ public class TUI implements GameView {
 
     public String getNickname(){
         String nickname = "Carlos";
-        boolean goon = false;
+
         try {
             System.out.println("What kind of nickname would you like?");
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             nickname = reader.readLine();
-            goon = true;
+
         } catch (IOException e) {
             System.out.println("There has been an error with the nickname");
         }
@@ -484,7 +508,8 @@ public class TUI implements GameView {
                     if (fac.equals("0"))
                         f = FB.BACK;
                     client.placeCard(client, i, x, y, f);
-                    switch (error) {
+                    goon = true;
+                    /*switch (error) {
                         case "WrongIndexException" -> {
                             System.out.println("You chose a card which wasn't in your hand, put an index between 1 and 3!");
                             error = "default";
@@ -500,7 +525,10 @@ public class TUI implements GameView {
                             error = "default";
                         }
                         default -> goon = true;
-                    }
+                    }*/
+
+                }
+                else{
                     System.out.println("the face of the card should be 1 or 0");
                 }
             } catch (IOException e){
@@ -543,14 +571,14 @@ public class TUI implements GameView {
                     System.out.println("Which card do you want to pick?");
                     whichCard = Integer.parseInt(reader.readLine());
                     client.drawCard(whichDeck, whichCard, client);
-                    if(error.equals("WrongIndexException")) {
+                    /*if(error.equals("WrongIndexException")) {
                         System.out.println("You chose indexes which are not between 1 and 3!");
                         System.out.println("Please try again! ");
                     }
-                    else
+                    else*/
                         goon = true;
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    System.out.println("There has been a i/o problem, try again!");
                 } catch (NumberFormatException e){
                     System.out.println("Please enter a number!");
                 }

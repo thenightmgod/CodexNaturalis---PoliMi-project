@@ -160,10 +160,10 @@ public class Room {
     public void placeCard(ResourceCard c, FB face, int x, int y) throws RemoteException {
         Position p = new Position(face, x, y);
         if(!Turn.getPlayerField().getField().containsKey(p)) {
-            observerManager.showException("WrongPositionException", Turn.getName());
+            observerManager.showException("WrongPositionException", "Nothing", Turn.getName());
         }
         else if(c.getId() >= 41 && c.getId() < 81 && !((GoldCard) c).RequirementsOk(Turn)){
-            observerManager.showException("RequirementsNotSatisfied", Turn.getName());
+            observerManager.showException("RequirementsNotSatisfied", "Nothing", Turn.getName());
         }
         else {
             Turn.placeCard(c, p);

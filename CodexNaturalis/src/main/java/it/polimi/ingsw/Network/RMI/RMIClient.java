@@ -118,8 +118,8 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     }
 
     @Override
-    public void showException(String details) throws RemoteException {
-       this.view.showException(name, details);
+    public void showException(String exception, String details) throws RemoteException {
+       this.view.showException(exception, details);
     }
 
     @Override

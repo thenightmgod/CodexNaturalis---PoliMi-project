@@ -26,7 +26,7 @@ public interface GameView {
 
     public void updateFreePosition(String name, LinkedList<Position> freePositions);
 
-    public void showException(String name, String exception);
+    public void showException(String name, String exception) throws RemoteException;
 
     public void showStartCard(StartCard card);
 
