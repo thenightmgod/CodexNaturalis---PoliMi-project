@@ -15,6 +15,7 @@ import it.polimi.ingsw.Model.PlayerPackage.Position;
 import it.polimi.ingsw.Network.CommonClient;
 import it.polimi.ingsw.Network.VirtualView;
 
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -157,7 +158,7 @@ public class Room {
      * Places a card on the playing field for the specified player at the given position.
      * @param c The card to place.
      */
-    public void placeCard(ResourceCard c, FB face, int x, int y) throws RemoteException {
+    public void placeCard(ResourceCard c, FB face, int x, int y) throws RemoteException, NotBoundException {
         Position p = new Position(face, x, y);
         if(!Turn.getPlayerField().getField().containsKey(p)) {
             observerManager.showException("WrongPositionException", "Nothing", Turn.getName());

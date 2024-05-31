@@ -14,6 +14,7 @@ import it.polimi.ingsw.Model.PlayerPackage.Position;
 import it.polimi.ingsw.Model.RoomPackage.Room;
 import it.polimi.ingsw.Network.VirtualView;
 
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.LinkedList;
 import java.util.Objects;
@@ -126,7 +127,7 @@ public class GameController {
 
     //la place card effettiva si compone di questi due passaggi
 
-    public void placeCard(int i, int x, int y, FB face) throws RemoteException { //p passata dal client
+    public void placeCard(int i, int x, int y, FB face) throws RemoteException, NotBoundException { //p passata dal client
         if (i < 1 || i > 3)
             getGame().getObserverManager().showException("WrongIndexException", "PlaceCard", getGame().getTurn().getName());
         else
@@ -183,7 +184,7 @@ public class GameController {
         return this.Players;
     }
 
-    public void drawCard(int i, int whichOne) throws RemoteException {
+    public void drawCard(int i, int whichOne) throws RemoteException, NotBoundException {
         if (i < 1 || i > 2)
             getGame().getObserverManager().showException("WrongIndexException", "DrawDeck", getGame().getTurn().getName());
         else {

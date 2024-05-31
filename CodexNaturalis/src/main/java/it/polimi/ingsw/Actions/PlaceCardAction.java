@@ -8,6 +8,7 @@ import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Network.RMI.RMIServer;
 import it.polimi.ingsw.Network.VirtualView;
 
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Map;
 
@@ -26,7 +27,7 @@ public class PlaceCardAction extends Actions{
     }
 
     @Override
-    public void executor() throws RemoteException {
+    public void executor() throws RemoteException, NotBoundException {
         int k = -1;
         for(Map.Entry<Integer, GameController> entry : getManager().getControllersPerGame().entrySet()){
             if(entry.getValue().getPlayers().stream().map(Player::getName).toList().contains(getView().getName())){

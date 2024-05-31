@@ -10,6 +10,7 @@ import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
 
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -26,7 +27,7 @@ public interface GameView {
 
     public void updateFreePosition(String name, LinkedList<Position> freePositions);
 
-    public void showException(String name, String exception) throws RemoteException;
+    public void showException(String name, String exception) throws RemoteException, NotBoundException;
 
     public void showStartCard(StartCard card);
 

@@ -46,7 +46,11 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
 
     public void initializeClient(String name) throws RemoteException, NotBoundException {
         final String serverName = "CodexServer";
-        Registry registry = LocateRegistry.getRegistry("localhost", 4446);
+        /*stub = (VirtualServer) UnicastRemoteObject.exportObject(this, port);
+        registry = LocateRegistry.createRegistry(port);
+        registry.rebind(serverName, stub);
+        System.out.println("Server buond.");*/
+        registry = LocateRegistry.getRegistry("localhost", 4446);
         this.server = (VirtualServer) registry.lookup(serverName);
     }
 
@@ -118,7 +122,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     }
 
     @Override
-    public void showException(String exception, String details) throws RemoteException {
+    public void showException(String exception, String details) throws RemoteException, NotBoundException {
        this.view.showException(exception, details);
     }
 

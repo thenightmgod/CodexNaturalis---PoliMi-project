@@ -5,6 +5,7 @@ import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Network.RMI.RMIServer;
 import it.polimi.ingsw.Network.VirtualView;
 
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 public abstract class Actions {
@@ -29,5 +30,5 @@ public abstract class Actions {
         return view;
     }
 
-    public void executor() throws RemoteException {}
+    public void executor() throws RemoteException, NotBoundException {}
 }

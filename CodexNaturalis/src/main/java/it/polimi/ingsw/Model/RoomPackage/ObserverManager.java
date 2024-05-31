@@ -12,6 +12,7 @@ import it.polimi.ingsw.Model.PlayerPackage.Position;
 import it.polimi.ingsw.Network.CommonClient;
 import it.polimi.ingsw.Network.VirtualView;
 
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -59,7 +60,7 @@ public class ObserverManager {
         observers.get(name).showStartCard(card);
     }
 
-    public void showException(String exception, String details, String name) throws RemoteException {
+    public void showException(String exception, String details, String name) throws RemoteException, NotBoundException {
         observers.get(name).showException(exception, details);
     }
 

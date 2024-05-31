@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Model.PlayerPackage;
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.rmi.RemoteException;
 import java.util.*;
@@ -24,7 +25,7 @@ import static it.polimi.ingsw.Model.CornerPackage.Resources.INSECT_KINGDOM;
 /**
  * Represents a player in the game. Each player has a name, a color, and keeps track of their points, resources, objects, hand, player goal, and playing field.
  */
-public class Player {
+public class Player implements Serializable {
     //bisogna fare override della equals
     private final String Name;
     private final PlayerColor Color;

@@ -33,6 +33,8 @@ public class TUI implements GameView {
 
     Player Turn;
 
+    String name = "Carlos O'Connell";
+
     CommonClient client;
 
     int ServerPort= 4444;
@@ -183,7 +185,7 @@ public class TUI implements GameView {
     }
 
     @Override
-    public void showException(String exception, String details) throws RemoteException {
+    public void showException(String exception, String details) throws RemoteException, NotBoundException {
         switch(exception) {
             case "WrongIndexException" -> {
                 switch(details) {
@@ -232,11 +234,11 @@ public class TUI implements GameView {
     }
 
 
-    public void createGame() throws RemoteException {
+    public void createGame() throws RemoteException, NotBoundException {
 
         System.out.println("CREATING A NEW GAME...");
         int input = 0;
-        String name;
+
         boolean goon = false;
 
         do {
@@ -259,8 +261,13 @@ public class TUI implements GameView {
         } while(!goon);
 
         //try{
-        name = getNickname();
-        client = chooseClient(name);
+        if(connectionType){
+
+        } else{
+            client = new RMIClient(name);
+            client.setView(this);
+        }
+
         client.createGame(name, input);// è tutto nullo perchè così è inizializzata la view
 
         /*} catch (RemoteException e) {
@@ -281,7 +288,7 @@ public class TUI implements GameView {
         boolean goon = false;
         do {
             try {
-                String name = getNickname();
+                getNickname();
                 this.client = chooseClient(name);
                 this.client.joinGame(name);
                 goon = true;
@@ -344,7 +351,7 @@ public class TUI implements GameView {
     }
 
 
-    public String getNickname(){
+    public void getNickname(){
         String nickname = "Carlos";
 
         try {
@@ -356,7 +363,7 @@ public class TUI implements GameView {
             System.out.println("There has been an error with the nickname");
         }
 
-        return nickname;
+        name = nickname;
     }
 
 
