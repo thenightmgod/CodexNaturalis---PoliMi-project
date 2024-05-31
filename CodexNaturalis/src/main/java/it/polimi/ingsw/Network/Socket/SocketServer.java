@@ -41,11 +41,10 @@ public class SocketServer {
     public void startServer() {
         Socket clientSocket = null;
         try {
-            while (true){ //dubbio: questo clientSocket è univoco per ogni client che si collega?
+            while ((clientSocket = this.listenSocket.accept()) != null){ //dubbio: questo clientSocket è univoco per ogni client che si collega?
                 //quando creo il socketclienthandler devo mettergli come input l'ouput del ServerProxy e devo mettergli
                 //come output il client Proxy che smista il mex verso il client
 
-                clientSocket = this.listenSocket.accept();
                 SocketClientHandler handler = new SocketClientHandler(this.controller, this, clientSocket);
                 handler.start();
                 synchronized (this.clients) {
