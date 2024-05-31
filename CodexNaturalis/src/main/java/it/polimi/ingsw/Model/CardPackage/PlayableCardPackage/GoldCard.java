@@ -8,6 +8,7 @@ import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
 /**
@@ -17,7 +18,7 @@ import java.util.LinkedList;
  * certain positions in which they are fielded or based on the number of Objects the player has.
  *
  */
-public class GoldCard extends ResourceCard {
+public class GoldCard extends ResourceCard implements Serializable {
     private final int[] requirements;
     //requirements è un array da 4 posizioni, in posizione 0 PLANT, posizione 1 ANIMAL, posizione 2 FUNGI, pos.3 INSECT
     //se per posizionare la carta mi servono 3 funghi e una farfalla, avrò un 3 in pos.2 e un 1 in posizione 3

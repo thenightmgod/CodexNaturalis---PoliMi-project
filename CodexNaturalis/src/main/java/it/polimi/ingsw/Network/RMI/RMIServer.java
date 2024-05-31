@@ -115,7 +115,7 @@ public class RMIServer implements VirtualServer{
             } catch (RemoteException e) {
                 System.err.println("Remote exception: " + e.getMessage());
             } catch (Exception e) {
-                System.err.println("Unexpected exception: " + e.getMessage());
+                e.printStackTrace();
             }
         }).start();
     }

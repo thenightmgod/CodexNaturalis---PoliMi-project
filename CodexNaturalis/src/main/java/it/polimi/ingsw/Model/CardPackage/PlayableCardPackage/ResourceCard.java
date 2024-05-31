@@ -8,6 +8,7 @@ import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
 import static it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PointsCondition.*;
@@ -16,7 +17,7 @@ import static it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PointsCondit
  * Represents a Resource Card in the game.
  * Extends the PlayableCard class.
  */
-public class ResourceCard extends PlayableCard {
+public class ResourceCard extends PlayableCard implements Serializable {
     private final CardColor Color;
     private final int Points;
 
