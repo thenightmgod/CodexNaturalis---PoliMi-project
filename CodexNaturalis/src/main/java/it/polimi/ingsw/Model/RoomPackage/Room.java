@@ -15,6 +15,7 @@ import it.polimi.ingsw.Model.PlayerPackage.Position;
 import it.polimi.ingsw.Network.CommonClient;
 import it.polimi.ingsw.Network.VirtualView;
 
+import java.io.Serializable;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.HashMap;
@@ -23,7 +24,7 @@ import java.util.LinkedList;
 /**
  * Represents a game room where players participate.
  */
-public class Room {
+public class Room implements Serializable {
 
     private ObserverManager observerManager = new ObserverManager();
     private final int RoomId;

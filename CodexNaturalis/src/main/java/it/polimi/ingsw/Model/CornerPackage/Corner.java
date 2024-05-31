@@ -1,11 +1,13 @@
 package it.polimi.ingsw.Model.CornerPackage;
 
+import java.io.Serializable;
+
 /**
  * Represents a corner of a card on the game board, which can be covered or uncovered and can possess objects or resources.
  */
 
 
-public class   Corner {
+public class Corner implements Serializable {
     private final Orientation Orient;
     private boolean Covered;
     private CardRes Res;

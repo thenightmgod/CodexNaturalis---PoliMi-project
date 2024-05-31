@@ -1,8 +1,11 @@
 package it.polimi.ingsw.Model.CardPackage.GoalCardPackage;
 
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.CardColor;
+import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
 import it.polimi.ingsw.Model.CornerPackage.Resources;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
+
+import java.io.Serializable;
 
 /**
  * Represents the Goal Card whose specific Goal is the achievement of a

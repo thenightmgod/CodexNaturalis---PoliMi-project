@@ -3,13 +3,14 @@ package it.polimi.ingsw.Model.PlayerPackage;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.CornerPackage.Orientation;
 
+import java.io.Serializable;
 import java.util.*;
 
 import static it.polimi.ingsw.Model.CornerPackage.CornerState.ABSENT;
 /**
  * Represents the playing field where cards are placed during the game.
  */
-public class PlayingField {
+public class PlayingField implements Serializable {
 
     private HashMap<Position, PlayableCard> Field;
     private LinkedList<Position> FreePositions;

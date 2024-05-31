@@ -14,6 +14,7 @@ import it.polimi.ingsw.Model.CornerPackage.CardResDeserializer;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 
 import java.io.FileReader;
+import java.io.Serializable;
 import java.util.*;
 
 
@@ -21,7 +22,7 @@ import java.util.*;
  * Represents a deck of cards in the game. Each deck can contain various types of cards, such as Resource, Start, Gold, CompositionGoal, ObjectsGoal, or ResourceGoal cards.
  * The deck is initialized based on the type specified, loading card data from a corresponding JSON file.
  */
-public class Deck {
+public class Deck implements Serializable {
     private LinkedList<Card> cards;
 
     /**
