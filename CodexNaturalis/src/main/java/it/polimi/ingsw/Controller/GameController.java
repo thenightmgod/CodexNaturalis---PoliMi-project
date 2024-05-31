@@ -35,27 +35,27 @@ public class GameController {
         this.clients = new LinkedList<>();
     }
 
-    public synchronized Room getGame() {
+    public Room getGame() {
         return Game;
     }
 
-    public synchronized int getRoomId() {
+    public int getRoomId() {
         return this.RoomId;
     }
 
-    public synchronized int getNumPlayers() {
+    public int getNumPlayers() {
         return numPlayers;
     }
 
-    public synchronized int getHowManyPlayers() {
+    public int getHowManyPlayers() {
         return this.Players.size();
     }
 
-    public synchronized void removePlayer(String name) {
+    public void removePlayer(String name) {
         Players.removeIf(p -> p.getName() == name);
     }
 
-    public synchronized void addPlayer(String name, PlayerColor color, VirtualView client) throws RemoteException {  //non possono esserci più di 4 giocatori
+    public void addPlayer(String name, PlayerColor color, VirtualView client) throws RemoteException {  //non possono esserci più di 4 giocatori
         Player player = new Player(name, color);
         this.Players.add(player);
         this.clients.add(client);
@@ -64,11 +64,11 @@ public class GameController {
         }
     }
 
-    public synchronized void initializeRoom() { //pre inizializzazione è una specie di waiting room
+    public void initializeRoom() { //pre inizializzazione è una specie di waiting room
         this.Game = new Room(RoomId, Players, clients);
     }
 
-    public synchronized void startGame() throws RemoteException { //in virtual view
+    public void startGame() throws RemoteException { //in virtual view
         initializeRoom();
         State = GameState.RUNNING;
         createDecks();
@@ -82,16 +82,16 @@ public class GameController {
         this.Game.start();
     }
 
-    public synchronized void createCommonGoals() throws RemoteException {
+    public void createCommonGoals() throws RemoteException {
         this.Game.createCommonGoals();
     }
 
-    public synchronized void createDecks() throws RemoteException {
+    public void createDecks() throws RemoteException {
         this.Game.createDecks();
     }
 
 
-    public synchronized void commonGoals() {
+    public void commonGoals() {
         this.Game.commonGoals();
     }
 
@@ -101,30 +101,30 @@ public class GameController {
     }*/
     //non penso serva perchè è il model che la manda al client
 
-    public synchronized void chooseGoalCard(Player p, int i) throws RemoteException {
+    public void chooseGoalCard(Player p, int i) throws RemoteException {
         boolean choice = i != 1;
         this.Game.pickGoalCard(p, choice);
     }
 
-    public synchronized void show2goalCards(Player p) throws RemoteException {
+    public void show2goalCards(Player p) throws RemoteException {
         this.Game.show2GoalCards(p);
     }
 
-    public synchronized void giveStartCard(Player p) throws RemoteException {
+    public void giveStartCard(Player p) throws RemoteException {
         this.Game.giveStartCards(p);
     }
 
-    public synchronized void giveInitialCards(Player p) throws RemoteException {
+    public void giveInitialCards(Player p) throws RemoteException {
         this.Game.giveInitialCards(p);
     }
 
-    public synchronized GameState getState() {
+    public GameState getState() {
         return this.State;
     }
 
     //la place card effettiva si compone di questi due passaggi
 
-    public synchronized void placeCard(int i, int x, int y, FB face) throws RemoteException { //p passata dal client
+    public void placeCard(int i, int x, int y, FB face) throws RemoteException { //p passata dal client
         if (i < 1 || i > 3)
             getGame().getObserverManager().showException("WrongIndexException", "PlaceCard", getGame().getTurn().getName());
         else
@@ -133,12 +133,12 @@ public class GameController {
             }
     }
 
-    public synchronized void placeStartCard(String name, FB face) throws RemoteException {
+    public void placeStartCard(String name, FB face) throws RemoteException {
         this.Game.placeStartCard(getPlayerByName(name), face);
     }
 
 
-    public synchronized void pickResCard(int i) throws RemoteException { //l'intero deve arrivare dal client
+    public void pickResCard(int i) throws RemoteException { //l'intero deve arrivare dal client
         this.Game.getResourceDeck().giveCard(this.Game.getTurn(), i);
         this.Game.getObserverManager().showNewHand(this.Game.getTurn().getName(), this.Game.getTurn().getHand());
         LinkedList<ResourceCard> cards = new LinkedList<>();
@@ -151,7 +151,7 @@ public class GameController {
         }
     }
 
-    public synchronized void pickGoldCard(int i) throws RemoteException {
+    public void pickGoldCard(int i) throws RemoteException {
         this.Game.getGoldDeck().giveCard(this.Game.getTurn(), i);
         this.Game.getObserverManager().showNewHand(this.Game.getTurn().getName(), this.Game.getTurn().getHand());
         LinkedList<GoldCard> cards = new LinkedList<>();
@@ -164,12 +164,12 @@ public class GameController {
         }
     }
 
-    public synchronized void changeTurns() throws RemoteException {
+    public void changeTurns() throws RemoteException {
         this.Game.changeTurns();
 
     }
 
-    public synchronized void checkGoals(String name) throws RemoteException {
+    public void checkGoals(String name) throws RemoteException {
         this.Game.checkGoals(getPlayerByName(name));
     }
 
@@ -177,11 +177,11 @@ public class GameController {
         this.Game.changeTurns();
     }
 
-    public synchronized LinkedList<Player> getPlayers() {
+    public LinkedList<Player> getPlayers() {
         return this.Players;
     }
 
-    public synchronized void drawCard(int i, int whichOne) throws RemoteException {
+    public void drawCard(int i, int whichOne) throws RemoteException {
         if (i < 1 || i > 2)
             getGame().getObserverManager().showException("WrongIndexException", "DrawDeck", getGame().getTurn().getName());
         else {
@@ -195,7 +195,7 @@ public class GameController {
         }
     }
 
-    public synchronized Player getPlayerByName(String name) {
+    public Player getPlayerByName(String name) {
         return Players.stream().filter(x -> x.getName().equals(name)).findFirst().orElse(null);
         //se è null sbatti
     }

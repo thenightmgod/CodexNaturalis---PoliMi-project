@@ -105,7 +105,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
 
 
     @Override
-    public void joinGame(String Name) throws RemoteException {
+    public void joinGame(String name) throws RemoteException {
         server.joinGame(name, this);
     }
 

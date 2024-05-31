@@ -28,16 +28,16 @@ public class MainController {
         this.viewPerGame = new HashMap<>();
     }
 
-    public synchronized LinkedList<GameController> getControllers(){
+    public LinkedList<GameController> getControllers(){
         return this.controllers;
     }
 
-    public synchronized HashMap<Integer, GameController> getControllersPerGame(){
+    public HashMap<Integer, GameController> getControllersPerGame(){
         return controllersPerGame;
     }
 
     //numPlayers arriva da
-    public synchronized void createGame(String Name, int numPlayers, VirtualView client) throws RemoteException{
+    public void createGame(String Name, int numPlayers, VirtualView client) throws RemoteException{
         //controllo sui numeri lo fa la tui
         if(controllers.isEmpty()) {
             GameController Garfield = new GameController(0, numPlayers);
@@ -59,7 +59,7 @@ public class MainController {
         //fare sbatti per aggiunta client
     }
 
-    public synchronized void joinGame(String Name, VirtualView client) throws RemoteException {
+    public void joinGame(String Name, VirtualView client) throws RemoteException {
 
         if (this.controllers.isEmpty()) {
             client.showException("RoomNotExistsException", "Nothing");
@@ -96,14 +96,14 @@ public class MainController {
         }
     }
 
-    public synchronized GameController leaveGame(String Name, int RoomId) throws RemoteException{
+    public GameController leaveGame(String Name, int RoomId) throws RemoteException{
         controllers.get(RoomId).removePlayer(Name);
         return controllers.get(RoomId);
     }
 
 
     //come togliere sbatti del try catch
-    public synchronized LinkedList<VirtualView> getOtherPlayers(String name) throws RemoteException {
+    public LinkedList<VirtualView> getOtherPlayers(String name) throws RemoteException {
         int k = -1;
         LinkedList<VirtualView> otherPlayers = new LinkedList<>();
         for(Map.Entry<Integer, LinkedList<VirtualView>> entry: viewPerGame.entrySet()){
