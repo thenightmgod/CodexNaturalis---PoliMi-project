@@ -235,7 +235,7 @@ public class Room implements Serializable {
         cards.add((ResourceCard) deck.getCards().get(1));
         cards.add((ResourceCard) deck.getCards().get(2));
         for(Player p: Players) {
-            observerManager.updateResourceDeck(p.getName(), cards);
+            observerManager.updateResourceDeck("ivebeenwaitingforaguidetocometakemebythehand", cards);
         }
 
         // robe per observers
@@ -245,7 +245,7 @@ public class Room implements Serializable {
         cards.add((GoldCard) d3ck.getCards().get(1));
         cards.add((GoldCard) d3ck.getCards().get(2));
         for(Player p: Players) {
-            observerManager.updateGoldDeck(p.getName(), card5);
+            observerManager.updateGoldDeck("ivebeenwaitingforaguidetocometakemebythehand", card5);
         }
     }
 
