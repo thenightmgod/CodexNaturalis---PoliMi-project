@@ -121,8 +121,8 @@ public class TUI implements GameView {
     }
 
     @Override
-    public void updateGoldDeck(LinkedList<GoldCard> goldDeck, String name) {
-        if (name.equals("ivebeenwaitingforaguidetocometakemebythehand")) {
+    public void updateGoldDeck(LinkedList<GoldCard> goldDeck, boolean start, String name) {
+        if (start) {
             System.out.println("The gold deck has been created!\n");
             client.getClient().setDrawableGoldCards(goldDeck);
         }
@@ -141,8 +141,8 @@ public class TUI implements GameView {
     }
 
     @Override
-    public void updateResourceDeck(LinkedList<ResourceCard> resourceCards, String name){
-        if(name.equals("ivebeenwaitingforaguidetocometakemebythehand")){
+    public void updateResourceDeck(LinkedList<ResourceCard> resourceCards, boolean start, String name){
+        if(start){
             System.out.println("The resource deck has been created!\n");
             client.getClient().setDrawableResourceCards(resourceCards);
         } else {

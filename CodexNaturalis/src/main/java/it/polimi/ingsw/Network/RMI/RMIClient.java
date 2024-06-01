@@ -166,13 +166,13 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     }
 
     @Override
-    public void updateResourceDeck(String name, LinkedList<ResourceCard> deck) throws RemoteException {
-        this.view.updateResourceDeck(deck, name);
+    public void updateResourceDeck(String name, boolean start, LinkedList<ResourceCard> deck) throws RemoteException {
+        this.view.updateResourceDeck(deck, start, name);
     }
 
     @Override
-    public void updateGoldDeck(String name, LinkedList<GoldCard> deck) throws RemoteException {
-        this.view.updateGoldDeck(deck, name);
+    public void updateGoldDeck(String name, boolean start, LinkedList<GoldCard> deck) throws RemoteException {
+        this.view.updateGoldDeck(deck, start, name);
     }
 
     @Override

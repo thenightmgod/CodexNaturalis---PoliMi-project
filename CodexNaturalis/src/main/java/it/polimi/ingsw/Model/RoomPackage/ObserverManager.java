@@ -82,12 +82,12 @@ public class ObserverManager {
         observers.get(name).showFreePositions(name, freePosition);
     }
 
-    public void updateGoldDeck(String name, LinkedList<GoldCard> deck) throws RemoteException{
-        observers.get(name).updateGoldDeck(name, deck);
+    public void updateGoldDeck(String name, boolean start, LinkedList<GoldCard> deck) throws RemoteException{
+        observers.get(name).updateGoldDeck(name, start, deck);
     }
 
-    public void updateResourceDeck(String name, LinkedList<ResourceCard> deck) throws RemoteException{
-        observers.get(name).updateResourceDeck(name, deck);
+    public void updateResourceDeck(String name, boolean start, LinkedList<ResourceCard> deck) throws RemoteException{
+        observers.get(name).updateResourceDeck(name, start, deck);
     }
 
     //eventualmente implementarli

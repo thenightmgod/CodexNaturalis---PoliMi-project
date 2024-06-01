@@ -210,6 +210,7 @@ public class Room implements Serializable {
      * Creates all decks required for the game and shuffles them.
      */
     public void createDecks() throws RemoteException {
+        boolean robo = true;
         this.StartDeck = new StartDeck();
         this.ResourceDeck = new ResourceDeck();
         this.GoldDeck = new GoldDeck();
@@ -235,7 +236,7 @@ public class Room implements Serializable {
         cards.add((ResourceCard) deck.getCards().get(1));
         cards.add((ResourceCard) deck.getCards().get(2));
         for(Player p: Players) {
-            observerManager.updateResourceDeck("ivebeenwaitingforaguidetocometakemebythehand", cards);
+            observerManager.updateResourceDeck(p.getName(), robo, cards);
         }
 
         // robe per observers
@@ -245,7 +246,7 @@ public class Room implements Serializable {
         cards.add((GoldCard) d3ck.getCards().get(1));
         cards.add((GoldCard) d3ck.getCards().get(2));
         for(Player p: Players) {
-            observerManager.updateGoldDeck("ivebeenwaitingforaguidetocometakemebythehand", card5);
+            observerManager.updateGoldDeck(p.getName(), robo, card5);
         }
     }
 

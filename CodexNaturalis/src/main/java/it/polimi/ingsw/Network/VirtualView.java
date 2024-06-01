@@ -39,9 +39,9 @@ public interface VirtualView extends Remote {
 
     void showFreePositions(String name, LinkedList<Position> freePosition) throws RemoteException;
 
-    void updateResourceDeck(String name, LinkedList<ResourceCard> deck) throws RemoteException;
+    void updateResourceDeck(String name, boolean start, LinkedList<ResourceCard> deck) throws RemoteException;
 
-    void updateGoldDeck(String name, LinkedList<GoldCard> deck) throws RemoteException;
+    void updateGoldDeck(String name, boolean start, LinkedList<GoldCard> deck) throws RemoteException;
 
     void declareWinner(HashMap<String, Integer> classifica) throws RemoteException;
 

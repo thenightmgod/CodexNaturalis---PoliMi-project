@@ -33,9 +33,9 @@ public interface GameView {
 
     public void updateTurn(Player player) throws RemoteException;
 
-    public void updateGoldDeck(LinkedList<GoldCard> deck, String name);
+    public void updateGoldDeck(LinkedList<GoldCard> deck, boolean start, String name);
 
-    public void updateResourceDeck(LinkedList<ResourceCard> deck, String name);
+    public void updateResourceDeck(LinkedList<ResourceCard> deck, boolean start, String name);
 
     void startingGame() throws RemoteException;
 

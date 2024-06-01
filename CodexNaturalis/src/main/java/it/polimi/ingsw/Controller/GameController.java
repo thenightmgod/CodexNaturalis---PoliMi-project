@@ -150,7 +150,7 @@ public class GameController {
         cards.add((ResourceCard) deck.getCards().get(1));
         cards.add((ResourceCard) deck.getCards().get(2));
         for(Player p: Players) {
-            this.Game.getObserverManager().updateResourceDeck(p.getName(), cards);
+            this.Game.getObserverManager().updateResourceDeck(p.getName(), false, cards);
         }
     }
 
@@ -163,7 +163,7 @@ public class GameController {
         cards.add((GoldCard) deck.getCards().get(1));
         cards.add((GoldCard) deck.getCards().get(2));
         for(Player p: Players) {
-            this.Game.getObserverManager().updateGoldDeck(p.getName(), cards);
+            this.Game.getObserverManager().updateGoldDeck(p.getName(), false, cards);
         }
     }
 
