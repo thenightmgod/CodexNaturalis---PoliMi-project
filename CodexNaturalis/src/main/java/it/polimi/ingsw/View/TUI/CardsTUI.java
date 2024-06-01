@@ -871,10 +871,10 @@ public class CardsTUI {
     //----------------------------PRINTARE ANGOLI (UGUALE SIA PER GOLD CHE PER RISORSA)---------------------------------
 
     public void printCorner(Corner c, StringBuilder sb) {
-        if (c.getCovered()) {
+  //      if (c.getCovered()) {
             sb.append("X");
-        } else {
-            if (c.getRes().equals(Resources.PLANT_KINGDOM)) {
+  //      } else {
+/*            if (c.getRes().equals(Resources.PLANT_KINGDOM)) {
                 sb.append(Resources.PLANT_KINGDOM.getShortName());
             } else if (c.getRes().equals(Resources.ANIMAL_KINGDOM)) {
                 sb.append(Resources.ANIMAL_KINGDOM.getShortName());
@@ -893,9 +893,6 @@ public class CardsTUI {
             } else if (c.getRes().equals(CornerState.EMPTY)) {
                 sb.append(CornerState.EMPTY.getShortName());
             }
-            System.out.print(sb.toString());
+         */   System.out.print(sb.toString());
         }
     }
-
-
-}

@@ -84,8 +84,9 @@ public class TUI implements GameView {
                 if (i == 1 || i == 2) {
                     client.chooseGoalCard(i, this.client);
                     goon = true;
+                } else {
+                    System.out.println("You put a number which isn't ");
                 }
-                System.out.println("You put a number which isn't ");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             } catch (NumberFormatException e){
@@ -176,8 +177,9 @@ public class TUI implements GameView {
                     else face = false;
                     client.setStartCardFace(face, client);
                     goon = true;
+                } else {
+                    System.out.println("You need to write front or back");
                 }
-                System.out.println("You need to write front or back");
             } catch(IOException e){
                 System.out.println("There was an error while reading the front or back");
             }
