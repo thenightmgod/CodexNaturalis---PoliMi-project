@@ -5,22 +5,18 @@ import it.polimi.ingsw.Network.Socket.SocketClient;
 
 public class ChooseGoalCardMessage extends Message {
     private int i;
-    private CommonClient client;
+    private String name;
 
-    public ChooseGoalCardMessage(int i, CommonClient client){
+    public ChooseGoalCardMessage(int i, String name){
         super("ChooseGoalCardMessage");
         this.i=i;
-        this.client=client;
+        this.name = name;
     }
     public int getI() {
         return i;
     }
 
-    public CommonClient getClient() {
-        return client;
-    }
-
-    public SocketClient castCommonToSocket(CommonClient client) {
-        return (SocketClient) client;
+    public String getName() {
+        return name;
     }
 }

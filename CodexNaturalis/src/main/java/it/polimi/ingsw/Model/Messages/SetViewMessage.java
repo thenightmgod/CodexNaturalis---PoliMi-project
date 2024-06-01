@@ -8,7 +8,7 @@ public class SetViewMessage extends Message {
 
     public SetViewMessage(GameView view) {
         super("SetViewMessage");
-        this.view=view;
+        this.view = view;
     }
     public GameView getView() {
         return view;

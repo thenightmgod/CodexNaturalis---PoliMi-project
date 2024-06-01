@@ -4,17 +4,12 @@ import it.polimi.ingsw.Network.CommonClient;
 
 public class LeaveGameMessage extends Message {
     private String name;
-    private CommonClient client;
-    public LeaveGameMessage(String name, CommonClient client) {
+    public LeaveGameMessage(String name) {
         super("LeaveGameMessage");
         this.name=name;
-        this.client= client;
     }
     public String getName() {
         return this.name;
     }
 
-    public CommonClient getClient() {
-        return client;
-    }
 }

@@ -80,7 +80,7 @@ public class TUI implements GameView {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
                 i = Integer.parseInt(reader.readLine());
                 if (i == 1 || i == 2) {
-                    client.chooseGoalCard(i, this.client);
+                    client.chooseGoalCard(i, client.getName());
                     goon = true;
                 }
                 System.out.println("You put a number which isn't ");
@@ -172,7 +172,7 @@ public class TUI implements GameView {
                     if(f.equals("front"))
                         face = true;
                     else face = false;
-                    client.setStartCardFace(face, client);
+                    client.setStartCardFace(face);
                     goon = true;
                 }
                 System.out.println("You need to write front or back");
@@ -330,7 +330,6 @@ public class TUI implements GameView {
                 }
             }else {
                 client = new SocketClient(name);
-                client.setView(this);
                 connectionType = true;
             }
 
@@ -507,7 +506,7 @@ public class TUI implements GameView {
                 if (fac.equals("1") || fac.equals("0")) {
                     if (fac.equals("0"))
                         f = FB.BACK;
-                    client.placeCard(client, i, x, y, f);
+                    client.placeCard(i, x, y, f);
                     goon = true;
                     /*switch (error) {
                         case "WrongIndexException" -> {
@@ -570,7 +569,7 @@ public class TUI implements GameView {
                     whichDeck = Integer.parseInt(reader.readLine());
                     System.out.println("Which card do you want to pick?");
                     whichCard = Integer.parseInt(reader.readLine());
-                    client.drawCard(whichDeck, whichCard, client);
+                    client.drawCard(whichDeck, whichCard, client.getName());
                     /*if(error.equals("WrongIndexException")) {
                         System.out.println("You chose indexes which are not between 1 and 3!");
                         System.out.println("Please try again! ");

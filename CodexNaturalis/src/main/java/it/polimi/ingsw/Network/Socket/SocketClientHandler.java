@@ -98,8 +98,7 @@ public class SocketClientHandler extends Thread implements VirtualView {
             }
             case "ChooseGoalCardMessage" -> {
                 int i= ((ChooseGoalCardMessage)msg).getI();
-                SocketClient client = ((ChooseGoalCardMessage)msg).castCommonToSocket(((ChooseGoalCardMessage) msg).getClient());
-                String name = client.getName();
+                String name = ((ChooseGoalCardMessage)msg).getName();
                 GameController gc = findGameController(name);
                 Player p= gc.getPlayerByName(name);
                 gc.chooseGoalCard(p,i);
@@ -107,8 +106,7 @@ public class SocketClientHandler extends Thread implements VirtualView {
             case "DrawCardMessage" -> {
                 int i= ((DrawCardMessage)msg).getI();
                 int WhichOne= ((DrawCardMessage)msg).getWhichOne();
-                SocketClient client = ((DrawCardMessage)msg).castCommonToSocket(((DrawCardMessage) msg).getClient());
-                String name = client.getName();
+                String name = ((DrawCardMessage)msg).getName();
                 GameController gc = findGameController(name);
                 gc.drawCard(i,WhichOne);
             }

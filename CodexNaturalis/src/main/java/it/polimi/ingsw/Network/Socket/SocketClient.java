@@ -38,12 +38,6 @@ public class SocketClient implements CommonClient {
         this.initializeClient(this, ip, 4444);
     }
 
-    public SocketClient(SocketClient client, BufferedReader input, PrintWriter output) { //input e output sono rispettivamente il socket.getinputstream e socket.outputstream
-        this.name = client.getName();
-        this.model = new ClientModel(client.getName());
-        this.input = input;
-        this.server = new ServerProxy(output);
-    }
     public String getName() {
         return this.name;
     }
@@ -72,8 +66,10 @@ public class SocketClient implements CommonClient {
             System.out.println(e);
             exit(1);
         }
-        SocketClient socketclient = new SocketClient (client, new BufferedReader(socketRx), new PrintWriter(socketTx));
-        socketclient.run();
+        this.model = new ClientModel(client.getName());
+        this.input = new BufferedReader(socketRx);
+        this.server = new ServerProxy(new PrintWriter(socketTx));
+        this.run();
     }
 
     public void run() {
@@ -181,34 +177,34 @@ public class SocketClient implements CommonClient {
     }
 
     @Override
-    public void leaveGame(String name, CommonClient client) {
-        LeaveGameMessage msg = new LeaveGameMessage(name, client);
+    public void leaveGame(String name) {
+        LeaveGameMessage msg = new LeaveGameMessage(name);
         String gson = msg.MessageToJson();
         server.leaveGame(gson);
     }
 
     @Override
-    public void placeCard(CommonClient client, int whichInHand, int x, int y, FB face) {
-        PlaceCardMessage msg = new PlaceCardMessage(client, name, whichInHand, x, y, face);
+    public void placeCard(int whichInHand, int x, int y, FB face) {
+        PlaceCardMessage msg = new PlaceCardMessage(name, whichInHand, x, y, face);
         String gson = msg.MessageToJson();
         server.placeCard(gson);
     }
 
     @Override
-    public void setStartCardFace(boolean face, CommonClient client) {
-        SetStartCardFaceMessage msg = new SetStartCardFaceMessage(face, client);
+    public void setStartCardFace(boolean face) {
+        SetStartCardFaceMessage msg = new SetStartCardFaceMessage(face);
         String gson = msg.MessageToJson();
         server.setStartCardFace(gson);
     }
 
     @Override
-    public void chooseGoalCard(int i, CommonClient client)  {
-        ChooseGoalCardMessage msg = new ChooseGoalCardMessage(i, client);
+    public void chooseGoalCard(int i, String name)  {
+        ChooseGoalCardMessage msg = new ChooseGoalCardMessage(i, name);
         String gson = msg.MessageToJson();
         server.chooseGoalcard(gson);
     }
-    public void drawCard(int i, int whichOne, CommonClient client){
-        DrawCardMessage msg = new DrawCardMessage(i, whichOne, client);
+    public void drawCard(int i, int whichOne, String name){
+        DrawCardMessage msg = new DrawCardMessage(i, whichOne, name);
         String gson = msg.MessageToJson();
         server.drawCard(gson);
     }
