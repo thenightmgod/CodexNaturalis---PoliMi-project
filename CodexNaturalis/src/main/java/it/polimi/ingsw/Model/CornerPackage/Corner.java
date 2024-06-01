@@ -5,6 +5,7 @@ import java.io.Serial;
 import java.io.Serializable;
 
 import java.io.*;
+import java.util.stream.Stream;
 
 /**
  * Represents a corner of a card on the game board, which can be covered or uncovered and can possess objects or resources.
@@ -17,6 +18,19 @@ public class Corner implements Serializable {
     private transient CardRes Res;
 
     @Serial
+    private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+
+        if (Res != null) {
+            out.writeObject(((Enum<?>) Res).name()); // Write the enum name first
+            out.writeObject(Res.getClass().getName()); // Write the class name second
+        } else {
+            out.writeObject(null); // Write null for enum name
+            out.writeObject(null); // Write null for class name
+        }
+    }
+
+    @Serial
     private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
 
@@ -24,25 +38,16 @@ public class Corner implements Serializable {
         String className = (String) in.readObject();
 
         if (name != null && className != null) {
-            Class<?> enumClass = Class.forName(className);
-            Res = (CardRes) Enum.valueOf((Class<Enum>) enumClass, name);
+            Res = Stream.of(CornerState.values(), it.polimi.ingsw.Model.CornerPackage.Objects.values(), Resources.values())
+                    .flatMap(Stream::of)
+                    .filter(x -> x.name().equals(name) && x.getClass().getName().equals(className))
+                    .findAny()
+                    .orElse(null);
         } else {
             Res = null;
         }
     }
 
-    @Serial
-    private void writeObject(java.io.ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-
-        if (Res != null) {
-            out.writeObject(Res.getClass().getName()); // Write the class name
-            out.writeObject(((Enum<?>) Res).name()); // Write the enum name
-        } else {
-            out.writeObject(null);
-            out.writeObject(null);
-        }
-    }
 
     /**
      * Constructs a new corner with the specified CardRes and orientation.
