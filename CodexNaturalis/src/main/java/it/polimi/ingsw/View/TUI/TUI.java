@@ -29,7 +29,7 @@ public class TUI implements GameView {
 
     boolean connectionType;
 
-    CardsTUI cards;
+    CardsTUI cards = new CardsTUI();
 
     Player Turn;
 
