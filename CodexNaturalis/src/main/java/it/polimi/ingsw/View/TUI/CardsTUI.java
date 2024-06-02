@@ -33,9 +33,9 @@ public class CardsTUI {
     //public static final String ANSI_BG_PURPLE = "\u001B[45m";
     // public static final String ANSI_BG_GREEN = "\u001B[42m";
     public static final String GREEN_SQUARE = "🟩";
-    public static final String PURPLE_SQUARE="\uD83D\uDFEA";
-    public static final String RED_SQUARE="\uD83D\uDFE5";
-    public static final String BLUE_SQUARE="🟦";
+    public static final String PURPLE_SQUARE = "\uD83D\uDFEA";
+    public static final String RED_SQUARE = "\uD83D\uDFE5";
+    public static final String BLUE_SQUARE = "🟦";
 
     public CardsTUI() {
     }
@@ -73,12 +73,12 @@ public class CardsTUI {
         System.out.println(ANSI_RESET);
     }
 
-    public void printStartCardJackie(StartCard c){
+    public void printStartCardJackie(StartCard c) {
         System.out.print(ANSI_BRIGHT_YELLOW);
         System.out.print("———————————————");
     }
 
-    public void printFrontStartCardFirstLine(StartCard c){
+    public void printFrontStartCardFirstLine(StartCard c) {
         System.out.print(ANSI_BRIGHT_YELLOW);
         System.out.print("|");
         StringBuilder sb = new StringBuilder();
@@ -91,7 +91,7 @@ public class CardsTUI {
         System.out.print("|");
     }
 
-    public void printFrontStartCardSecondLine(StartCard c){
+    public void printFrontStartCardSecondLine(StartCard c) {
         System.out.print(ANSI_BRIGHT_YELLOW);
         System.out.print("|  ");
 
@@ -101,7 +101,7 @@ public class CardsTUI {
         System.out.print("   |");
     }
 
-    public void printFrontStartCardThirdLine(StartCard c){
+    public void printFrontStartCardThirdLine(StartCard c) {
         System.out.print(ANSI_BRIGHT_YELLOW);
         System.out.print("|");
         StringBuilder sb3 = new StringBuilder();
@@ -204,7 +204,7 @@ public class CardsTUI {
         System.out.print("           |");
     }
 
-    public void printBackStartCardThirdLine(StartCard c){
+    public void printBackStartCardThirdLine(StartCard c) {
         System.out.print(ANSI_BRIGHT_YELLOW);
         System.out.print("|");
 
@@ -671,26 +671,26 @@ public class CardsTUI {
         System.out.print(ANSI_YELLOW);
         System.out.println("———————————————");
         System.out.print("|");
-        int id= c.getId();
-        if(id== 87 || id==89) {
+        int id = c.getId();
+        if (id == 87 || id == 89) {
             printDiagonalUp(c);
-        } else if (id == 88 || id== 90){
+        } else if (id == 88 || id == 90) {
             printDiagonalDown(c);
-        }else if(id==91) {
+        } else if (id == 91) {
             printL(c);
-        }else if(id==92) {
+        } else if (id == 92) {
             printReverseL(c);
-        }else if(id==93) {
+        } else if (id == 93) {
             printGoalCard93(c);
-        }else if(id==94) {
+        } else if (id == 94) {
             printGoalCard94(c);
-        }else {
+        } else {
             System.out.print("      ");
-            if (id>94 && id<99) {
+            if (id > 94 && id < 99) {
                 System.out.println("2      |");
                 System.out.print("|   ");
                 System.out.print("[");
-                switch(id) {
+                switch (id) {
                     case 95 -> {
                         System.out.print(FUNGI_KINGDOM.getShortName());
                         System.out.print(FUNGI_KINGDOM.getShortName());
@@ -713,33 +713,30 @@ public class CardsTUI {
                     }
                 }
                 System.out.print("]");
-            }else if (id>98 && id<=102) {
-                int[] o= ((ObjectsGoalCard)c).getObj();
-                if(id == 102 ) {
+            } else if (id > 98 && id <= 102) {
+                int[] o = ((ObjectsGoalCard) c).getObj();
+                if (id == 102) {
                     System.out.println("2      |");
                     System.out.print("|   ");
                     System.out.print("[");
                     System.out.print(Objects.QUILL.getShortName());
                     System.out.print(Objects.QUILL.getShortName());
                     System.out.print("]  ");
-                }
-                else if(id==101) {
+                } else if (id == 101) {
                     System.out.println("2      |");
                     System.out.print("|   ");
                     System.out.print("[");
                     System.out.print(Objects.INKWELL.getShortName());
                     System.out.print(Objects.INKWELL.getShortName());
                     System.out.print("]  ");
-                }
-                else if(id==100) {
+                } else if (id == 100) {
                     System.out.println("2      |");
                     System.out.print("|   ");
                     System.out.print("[");
                     System.out.print(Objects.MANUSCRIPT.getShortName());
                     System.out.print(Objects.MANUSCRIPT.getShortName());
                     System.out.print("]  ");
-                }
-                else {
+                } else {
                     System.out.println("3      |");
                     System.out.print("|   ");
                     System.out.print("[");
@@ -825,7 +822,7 @@ public class CardsTUI {
             System.out.print(GREEN_SQUARE);
             System.out.println("  |");
             System.out.println("———————————————");
-        }else if (c.getId()==90) {
+        } else if (c.getId() == 90) {
             System.out.print("  2");
             System.out.print("  ");
             System.out.print(PURPLE_SQUARE);
@@ -841,7 +838,7 @@ public class CardsTUI {
     }
 
     public void printDiagonalUp(GoalCard c) {
-        if (c.getId() ==89) {
+        if (c.getId() == 89) {
             System.out.print("  2");
             System.out.print("    ");
             System.out.print(BLUE_SQUARE);
@@ -853,7 +850,7 @@ public class CardsTUI {
             System.out.print(BLUE_SQUARE);
             System.out.println("        |");
             System.out.println("———————————————");
-        }else if(c.getId()==87) {
+        } else if (c.getId() == 87) {
             System.out.print("  2");
             System.out.print("    ");
             System.out.print(RED_SQUARE);
@@ -871,10 +868,10 @@ public class CardsTUI {
     //----------------------------PRINTARE ANGOLI (UGUALE SIA PER GOLD CHE PER RISORSA)---------------------------------
 
     public void printCorner(Corner c, StringBuilder sb) {
-  //      if (c.getCovered()) {
+        if (c.getCovered()) {
             sb.append("X");
-  //      } else {
-/*            if (c.getRes().equals(Resources.PLANT_KINGDOM)) {
+        } else {
+            if (c.getRes().equals(Resources.PLANT_KINGDOM)) {
                 sb.append(Resources.PLANT_KINGDOM.getShortName());
             } else if (c.getRes().equals(Resources.ANIMAL_KINGDOM)) {
                 sb.append(Resources.ANIMAL_KINGDOM.getShortName());
@@ -893,6 +890,7 @@ public class CardsTUI {
             } else if (c.getRes().equals(CornerState.EMPTY)) {
                 sb.append(CornerState.EMPTY.getShortName());
             }
-         */   System.out.print(sb.toString());
+            System.out.print(sb.toString());
         }
     }
+}

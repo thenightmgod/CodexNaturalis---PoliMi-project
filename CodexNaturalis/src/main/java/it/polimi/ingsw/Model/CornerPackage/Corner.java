@@ -21,12 +21,23 @@ public class Corner implements Serializable {
     private void writeObject(java.io.ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
 
-        if (Res != null) {
-            out.writeObject(((Enum<?>) Res).name()); // Write the enum name first
-            out.writeObject(Res.getClass().getName()); // Write the class name second
-        } else {
-            out.writeObject(null); // Write null for enum name
-            out.writeObject(null); // Write null for class name
+        switch (Res) {
+            case CornerState cornerState -> {
+                out.writeObject("CornerState"); // Write the enum name first
+                out.writeObject(cornerState.getName()); // Write the class name second
+            }
+            case Objects objects -> {
+                out.writeObject("Objects");
+                out.writeObject(objects.getName());
+            }
+            case Resources resources -> {
+                out.writeObject("Resources");
+                out.writeObject(resources.getName());
+            }
+            case null, default -> {
+                out.writeObject(null);
+                out.writeObject(null);
+            }
         }
     }
 
@@ -37,15 +48,12 @@ public class Corner implements Serializable {
         String name = (String) in.readObject();
         String className = (String) in.readObject();
 
-        if (name != null && className != null) {
-            Res = Stream.of(CornerState.values(), it.polimi.ingsw.Model.CornerPackage.Objects.values(), Resources.values())
-                    .flatMap(Stream::of)
-                    .filter(x -> x.name().equals(name) && x.getClass().getName().equals(className))
-                    .findAny()
-                    .orElse(null);
-        } else {
-            Res = null;
-        }
+        Res = Stream.of(CornerState.values(), it.polimi.ingsw.Model.CornerPackage.Objects.values(), Resources.values())
+                .flatMap(Stream::of)
+                .filter(x -> x.name().equals(name) && x.getClass().getName().equals(className))
+                .findAny()
+                .orElse(null);
+
     }
 
 

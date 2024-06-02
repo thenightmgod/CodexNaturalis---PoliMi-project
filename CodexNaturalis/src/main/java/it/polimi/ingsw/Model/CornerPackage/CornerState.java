@@ -24,4 +24,8 @@ public enum CornerState implements CardRes {
     CornerState(String shortName) {
         this.shortName = shortName;
     }
+
+    public CornerState getName() {
+        return this;
+    }
 }

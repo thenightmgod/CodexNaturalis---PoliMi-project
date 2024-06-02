@@ -41,4 +41,8 @@ public enum Objects implements CardRes {
     public static int hash(Orientation orient, boolean covered, CardRes res) {
         return Objects.hash(orient, covered, res);
     }
+
+    public Objects getName(){
+        return this;
+    }
 }

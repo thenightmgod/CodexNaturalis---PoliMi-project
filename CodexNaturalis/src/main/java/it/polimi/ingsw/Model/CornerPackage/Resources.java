@@ -35,4 +35,8 @@ public enum Resources implements CardRes {
         this.shortName = shortName;
     }
 
+    public Resources getName(){
+        return this;
+    }
+
     }
