@@ -13,6 +13,10 @@ import it.polimi.ingsw.Model.DeckPackage.GoldDeck;
 import it.polimi.ingsw.Model.DeckPackage.ResourceDeck;
 import it.polimi.ingsw.Model.CornerPackage.CardRes;
 import it.polimi.ingsw.Model.DeckPackage.StartDeck;
+import it.polimi.ingsw.Model.PlayerPackage.FB;
+import it.polimi.ingsw.Model.PlayerPackage.Player;
+import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
+import it.polimi.ingsw.Model.PlayerPackage.Position;
 
 import java.security.interfaces.RSAKey;
 import java.sql.SQLOutput;
@@ -21,6 +25,7 @@ import java.util.LinkedList;
 import static it.polimi.ingsw.Model.CornerPackage.Resources.*;
 
 import static it.polimi.ingsw.Model.CornerPackage.Resources.*;
+import static it.polimi.ingsw.Model.PlayerPackage.FB.FRONT;
 
 public class CardsTUI {
     public static final String ANSI_RED = "\u001B[31m";
@@ -124,17 +129,17 @@ public class CardsTUI {
         }
         System.out.print("[");
         if (BackRes.contains(ANIMAL_KINGDOM)) {
-            System.out.print((Resources.ANIMAL_KINGDOM.getShortName()));
+            System.out.print((ANIMAL_KINGDOM.getShortName()));
             ;
         }
         if (BackRes.contains(PLANT_KINGDOM)) {
-            System.out.print((Resources.PLANT_KINGDOM.getShortName()));
+            System.out.print((PLANT_KINGDOM.getShortName()));
         }
         if (BackRes.contains(FUNGI_KINGDOM)) {
             System.out.print((FUNGI_KINGDOM.getShortName()));
         }
         if (BackRes.contains(INSECT_KINGDOM)) {
-            System.out.print((Resources.INSECT_KINGDOM.getShortName()));
+            System.out.print((INSECT_KINGDOM.getShortName()));
         }
         System.out.print("]");
         if (size == 1) {
@@ -367,7 +372,7 @@ public class CardsTUI {
         System.out.println("|");
         System.out.print("|      ");
         switch (c) {
-            case GREEN -> System.out.print((Resources.PLANT_KINGDOM.getShortName()));
+            case GREEN -> System.out.print((PLANT_KINGDOM.getShortName()));
             case RED -> System.out.print((FUNGI_KINGDOM.getShortName()));
             case PURPLE -> System.out.print((INSECT_KINGDOM.getShortName()));
             case BLUE -> System.out.print((ANIMAL_KINGDOM.getShortName()));
@@ -395,7 +400,7 @@ public class CardsTUI {
         System.out.print("|      ");
         CardColor c = card.getColor();
         switch (c) {
-            case GREEN -> System.out.print((Resources.PLANT_KINGDOM.getShortName()));
+            case GREEN -> System.out.print((PLANT_KINGDOM.getShortName()));
             case RED -> System.out.print((FUNGI_KINGDOM.getShortName()));
             case PURPLE -> System.out.print((INSECT_KINGDOM.getShortName()));
             case BLUE -> System.out.print((ANIMAL_KINGDOM.getShortName()));
@@ -574,13 +579,13 @@ public class CardsTUI {
                 int x = requirements[i];
                 System.out.print("" + x);
                 if (i == 0) {
-                    System.out.print((Resources.PLANT_KINGDOM.getShortName()));
+                    System.out.print((PLANT_KINGDOM.getShortName()));
                 } else if (i == 1) {
-                    System.out.print((Resources.ANIMAL_KINGDOM.getShortName()));
+                    System.out.print((ANIMAL_KINGDOM.getShortName()));
                 } else if (i == 2) {
                     System.out.print((FUNGI_KINGDOM.getShortName()));
                 } else {
-                    System.out.print((Resources.INSECT_KINGDOM.getShortName()));
+                    System.out.print((INSECT_KINGDOM.getShortName()));
                 }
             }
         }
@@ -612,7 +617,7 @@ public class CardsTUI {
         System.out.println("|");
         System.out.print("|      ");
         switch (c) {
-            case GREEN -> System.out.print((Resources.PLANT_KINGDOM.getShortName()));
+            case GREEN -> System.out.print((PLANT_KINGDOM.getShortName()));
             case RED -> System.out.print((FUNGI_KINGDOM.getShortName()));
             case PURPLE -> System.out.print((INSECT_KINGDOM.getShortName()));
             case BLUE -> System.out.print((ANIMAL_KINGDOM.getShortName()));
@@ -646,7 +651,7 @@ public class CardsTUI {
         }
         System.out.print("|      ");
         switch (c) {
-            case GREEN -> System.out.print((Resources.PLANT_KINGDOM.getShortName()));
+            case GREEN -> System.out.print((PLANT_KINGDOM.getShortName()));
             case RED -> System.out.print((FUNGI_KINGDOM.getShortName()));
             case PURPLE -> System.out.print((INSECT_KINGDOM.getShortName()));
             case BLUE -> System.out.print((ANIMAL_KINGDOM.getShortName()));
@@ -892,4 +897,50 @@ public class CardsTUI {
             }*/
             System.out.print(sb.toString());
         }
+
+    //----------------------------------------------PLOTTING------------------------------------------------------------
+
+    public void plotPlayingField(Player p){
+        PlayingField Field = p.getPlayerField();
+        int maxX = Field.getField().keySet().stream().mapToInt(Position::getX).max().orElse(400);
+        int minX = Field.getField().keySet().stream().mapToInt(Position::getX).min().orElse(400);
+        int maxY = Field.getField().keySet().stream().mapToInt(Position::getY).max().orElse(400);
+        int minY = Field.getField().keySet().stream().mapToInt(Position::getY).min().orElse(400);
+
+
+        for(int i = maxY; i >= minY; i--){
+            for(int j = minX; j <= maxX; j++){
+                Position tocheck = new Position(j,i);
+                PlayableCard card = Field.getField().get(tocheck);
+
+                int Carlos = 0;
+                while(Carlos < 5) {
+                    if (card != null) {
+                        FB roba = Field.getFace(tocheck);
+                        if (card.getId() >= 1 && card.getId() <= 40) {
+                            ResourceCard c = (ResourceCard) card;
+                            switch (Carlos){
+                                switch(Field.getFace(tocheck)){
+                                    case FRONT -> {
+
+                                    }
+                                    case BACK -> {
+                                    }
+                                }
+                            }
+                        } else if (card.getId() >= 41 && card.getId() <= 81) {
+                        } else {
+                        }
+
+                    } else {
+
+                    }
+
+                    Carlos++;
+                }
+            }
+
+        }
     }
+}
+

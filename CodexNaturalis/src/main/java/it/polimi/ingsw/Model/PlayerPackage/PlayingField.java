@@ -25,6 +25,11 @@ public class PlayingField implements Serializable {
         FreePositions = new LinkedList<Position>();
     }
 
+    public FB getFace(Position p){
+        List<Position> k = Field.entrySet().stream().filter(x -> x.getKey().equals(p)).map(Map.Entry::getKey).toList();
+        return k.getFirst().getFace();
+    }
+
     /**
      * Retrieves the list of positions on the playing field that are currently free.
      * @return The list of free positions.
