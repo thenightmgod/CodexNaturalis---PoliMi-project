@@ -62,7 +62,6 @@ public class TUI implements GameView {
 
     @Override
     public void updateGoals(LinkedList<GoalCard> goals, String name) throws RemoteException {
-        client.getClient().setCommonGoals(goals);
         if(name.equals("ivebeenwaitingforaguidetocometakemebythehand")){
             System.out.println("The common goals have been chosen!");
         }
@@ -71,6 +70,10 @@ public class TUI implements GameView {
             cards.printGoalCard(goals.getLast());
             chooseGoalCard();
         }
+    }
+
+    public void updateCommonGoals(LinkedList<GoalCard> goals, String name) throws RemoteException{
+        client.getClient().setCommonGoals(goals);
     }
 
     public void chooseGoalCard() throws RemoteException {
@@ -92,7 +95,7 @@ public class TUI implements GameView {
             } catch (NumberFormatException e){
                 System.out.println("Please enter a number!");
             }
-        }while (!goon) ;
+        } while (!goon);
     }
 
     @Override
@@ -158,7 +161,6 @@ public class TUI implements GameView {
             }
         }
     }
-
     @Override
     public void showStartCard(StartCard card) {
         cards.printFrontStartCard(card);
@@ -185,7 +187,6 @@ public class TUI implements GameView {
             }
         } while(!goon);
     }
-
     @Override
     public void showException(String exception, String details) throws RemoteException, NotBoundException {
         switch(exception) {
@@ -234,7 +235,6 @@ public class TUI implements GameView {
                     System.out.println("There has been an error");
         }
     }
-
 
     public void createGame() throws RemoteException, NotBoundException {
 
@@ -352,7 +352,6 @@ public class TUI implements GameView {
         return client;
     }
 
-
     public void getNickname(){
         String nickname = "Carlos";
 
@@ -367,8 +366,6 @@ public class TUI implements GameView {
 
         name = nickname;
     }
-
-
 
     public void isYourTurn() throws RemoteException {
         if(Turn.getName().equals(client.getName())) {
@@ -392,10 +389,13 @@ public class TUI implements GameView {
                         case "hand" -> {
                             LinkedList<PlayableCard> toPrint = client.getClient().getHand();
                             for(PlayableCard pc : toPrint){
-                                if(pc.getId() >= 1 && pc.getId() <= 40)
+                                if(pc.getId() >= 1 && pc.getId() <= 40) {
                                     cards.printFrontResourceCard((ResourceCard) pc);
+
+                                }
                                 else cards.printFrontGoldCard((GoldCard) pc);
                             }
+
                             // poi può flippare
                         }
                         case "score" -> {
@@ -431,9 +431,67 @@ public class TUI implements GameView {
                     System.out.println("There has been a problem, try again!");
                 }
             } while (!goon);
+            do {
+                try {
+                    Menu2();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                    roba = reader.readLine();
+                    switch (roba) {
+                        case "help" -> {
 
-            // do while parte 2 per pescare
-
+                        }
+                        case "pgc" -> {
+                            LinkedList<GoalCard> toPrint = client.getClient().getCommonGoals();
+                            //for(GoalCard gc : toPrint)
+                            //cards.printGoalCard(gc);
+                            //plot goal cards da modellino (?)
+                        }
+                        case "hand" -> {
+                            LinkedList<PlayableCard> toPrint = client.getClient().getHand();
+                            for(PlayableCard pc : toPrint){
+                                if(pc.getId() >= 1 && pc.getId() <= 40) {
+                                    cards.printFrontResourceCard((ResourceCard) pc);
+                                    cards.printBackResourceCard((ResourceCard) pc);
+                                }
+                                else {
+                                    cards.printFrontGoldCard((GoldCard) pc);
+                                    cards.printBackGoldCard((GoldCard) pc);
+                                }
+                            }
+                        }
+                        case "score" -> {
+                            //GameController Grian = client.
+                            //plot points
+                        }
+                        case "other" -> {
+                            //choose player e poi plotti il suo field
+                        }
+                        case "draw" -> {
+                            drawCard();
+                            goon = true;
+                        }
+                        case "myField" -> {
+                            //plot playing field
+                        }
+                        // case "freePosition" eventuale
+                        case "toDraw" -> {
+                            //plotti quelle pescabili
+                        }
+                        case "chat" -> {
+                            //scrivi in chat
+                        }
+                        case "showChat" -> {
+                            //show chat
+                        }
+                        case "q" -> {
+                            //leave game
+                        }
+                        default -> System.out.println("Write a command in the menu");
+                    }
+                }catch(IOException e){
+                    System.out.println("There has been a problem, try again!");
+                }
+            } while (!goon);
             endTurn();
         }
         else{
@@ -448,7 +506,6 @@ public class TUI implements GameView {
         isYourTurn();
 
     }
-
     public void endTurn() throws RemoteException {
         client.endTurn(Turn.getName());
     }
@@ -522,24 +579,6 @@ public class TUI implements GameView {
                         f = FB.BACK;
                     client.placeCard(client, i, x, y, f);
                     goon = true;
-                    /*switch (error) {
-                        case "WrongIndexException" -> {
-                            System.out.println("You chose a card which wasn't in your hand, put an index between 1 and 3!");
-                            error = "default";
-                        }
-                        case "RequirementsNotSatisfied" -> {
-                            System.out.println("The requirements for the card you chose aren't satisfied! ");
-                            System.out.println("Flip this gold card or play another one!");
-                            error = "default";
-                        }
-                        case "WrongPositionException" -> {
-                            System.out.println("The position you chose isn't in the free ones!");
-                            System.out.println("Look at the free position and choose one in those");
-                            error = "default";
-                        }
-                        default -> goon = true;
-                    }*/
-
                 }
                 else{
                     System.out.println("the face of the card should be 1 or 0");

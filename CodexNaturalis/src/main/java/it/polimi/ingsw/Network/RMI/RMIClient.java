@@ -149,6 +149,9 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
         this.view.updateGoals(goals, name);
     }
 
+    public void updateCommonGoals(LinkedList<GoalCard> goals) throws RemoteException {
+        this.view.updateCommonGoals(goals, name);
+    }
     @Override
     public void showHand(LinkedList<PlayableCard> hand) throws RemoteException {
         this.view.updateHands(hand, name);

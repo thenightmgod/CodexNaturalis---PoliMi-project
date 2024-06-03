@@ -119,6 +119,4 @@ public class RMIServer implements VirtualServer{
             }
         }).start();
     }
-
-
 }

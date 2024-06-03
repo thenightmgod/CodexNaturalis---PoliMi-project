@@ -28,9 +28,9 @@ public interface VirtualView extends Remote {
     void updatePoints(int points, String name) throws RemoteException;
     // int points, String name
 
-    void updateGoals(LinkedList<GoalCard> goals) throws RemoteException;
+    void updateGoals(LinkedList<GoalCard> goals) throws RemoteException;  //mostro due carte goal da scegliere
     // LinkedList<GoalCard> goals
-
+    void updateCommonGoals(LinkedList<GoalCard> goals) throws RemoteException; //setto i common goals (non li faccio vedere)
     void showHand(LinkedList<PlayableCard> hand) throws RemoteException;
     // LinkedList<PlayableCard> hand
 

@@ -115,7 +115,7 @@ public class Room implements Serializable {
         CommonGoals.add((GoalCard) GoalDeck.getGoalCard());
         CommonGoals.add((GoalCard) GoalDeck.getGoalCard());
         for(Player p: Players){
-            observerManager.showGoals(p.getName(), CommonGoals);
+            observerManager.showCommonGoals(p.getName(), CommonGoals);
         }
     }
 

@@ -68,6 +68,9 @@ public class ObserverManager {
         observers.get(name).updateGoals(goals);
     }
 
+    public void showCommonGoals(String name, LinkedList<GoalCard> goals) throws RemoteException {
+        observers.get(name).updateCommonGoals(goals);
+    }
     public void showNewHand(String name, LinkedList<PlayableCard> hand) throws RemoteException {
         observers.get(name).showHand(hand);
         //anche per starter card, eventuali sbatti con l'id farli qua
