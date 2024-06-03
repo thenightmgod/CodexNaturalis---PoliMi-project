@@ -21,23 +21,41 @@ public class Corner implements Serializable {
     private void writeObject(java.io.ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
 
-        switch (Res) {
-            case CornerState cornerState -> {
-                out.writeObject("CornerState"); // Write the enum name first
-                out.writeObject(cornerState.getName()); // Write the class name second
+        if (Res instanceof it.polimi.ingsw.Model.CornerPackage.Objects){
+            out.writeObject("Objects");
+            if(Res.equals(Objects.MANUSCRIPT)){
+                out.writeObject("MANUSCRIPT");
+            } else if (Res.equals(Objects.QUILL)) {
+                out.writeObject("QUILL");
+            } else {
+                out.writeObject("INKWELL");
             }
-            case Objects objects -> {
-                out.writeObject("Objects");
-                out.writeObject(objects.getName());
+        }
+        else if(Res instanceof Resources){
+            if(Res.equals(Resources.FUNGI_KINGDOM)){
+                out.writeObject("FUNGI_KINGDOM");
             }
-            case Resources resources -> {
-                out.writeObject("Resources");
-                out.writeObject(resources.getName());
+            else if(Res.equals(Resources.ANIMAL_KINGDOM)){
+                out.writeObject("ANIMAL_KINGDOM");
             }
-            case null, default -> {
-                out.writeObject(null);
-                out.writeObject(null);
+            else if(Res.equals(Resources.INSECT_KINGDOM)){
+                out.writeObject("INSECT_KINGDOM");
             }
+            else{
+                out.writeObject("PLANT_KINGDOM");
+            }
+        }
+        else if(Res instanceof CornerState){
+            if(Res.equals(CornerState.EMPTY)){
+                out.writeObject("EMPTY");
+            }
+            else{
+                out.writeObject("CORNER");
+            }
+        }
+        else{
+            out.writeObject(null);
+            out.writeObject(null);
         }
     }
 
@@ -53,7 +71,6 @@ public class Corner implements Serializable {
                 .filter(x -> x.name().equals(name) && x.getClass().getName().equals(className))
                 .findAny()
                 .orElse(null);
-
     }
 
 

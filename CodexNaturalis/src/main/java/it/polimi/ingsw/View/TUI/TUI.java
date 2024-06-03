@@ -612,6 +612,7 @@ public class TUI implements GameView {
             int whichDeck, whichCard;
             do {
                 try {
+
                     System.out.println("From which deck do you want to draw?\n1 --> ResourceDeck\n2 --> GoldDeck");
                     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
                     whichDeck = Integer.parseInt(reader.readLine());

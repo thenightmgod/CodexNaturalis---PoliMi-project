@@ -161,22 +161,24 @@ public class Room implements Serializable {
      */
     public void placeCard(ResourceCard c, FB face, int x, int y) throws RemoteException, NotBoundException {
         Position p = new Position(face, x, y);
-        if(!Turn.getPlayerField().getField().containsKey(p)) {
+        if(Turn.getPlayerField().getField().containsKey(p) || !Turn.getPlayerField().getFreePositions().contains(p)) {
             observerManager.showException("WrongPositionException", "Nothing", Turn.getName());
         }
-        else if(c.getId() >= 41 && c.getId() < 81 && !((GoldCard) c).RequirementsOk(Turn)){
-            observerManager.showException("RequirementsNotSatisfied", "Nothing", Turn.getName());
-        }
         else {
-            Turn.placeCard(c, p);
-            observerManager.showNewHand(Turn.getName(), Turn.getHand());
-            for(Player player: Players){
-                observerManager.updateField(player.getName(), Turn.getPlayerField());
+            if(c.getId() >= 41 && c.getId() < 81 && !((GoldCard) c).RequirementsOk(Turn)){
+                observerManager.showException("RequirementsNotSatisfied", "Nothing", Turn.getName());
             }
-            for(Player player: Players) {
-                observerManager.updatePoints(player.getPointsCounter(), Turn.getName());
+            else {
+                Turn.placeCard(c, p);
+                observerManager.showNewHand(Turn.getName(), Turn.getHand());
+                for(Player player: Players){
+                    observerManager.updateField(player.getName(), Turn.getPlayerField());
+                }
+                for(Player player: Players) {
+                    observerManager.updatePoints(player.getPointsCounter(), Turn.getName());
+                }
+                observerManager.showFreePositions(Turn.getName(), Turn.getPlayerField().getFreePositions());
             }
-            observerManager.showFreePositions(Turn.getName(), Turn.getPlayerField().getFreePositions());
         }
     } //per il collegamento col controller
 
