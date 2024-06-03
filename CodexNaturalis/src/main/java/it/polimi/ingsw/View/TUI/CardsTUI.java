@@ -981,14 +981,17 @@ public class CardsTUI {
                         }
 
                     } else {
-
+                        printEmpty();
                     }
                     System.out.println("\n");
                     Carlos++;
                 }
             }
-
         }
+    }
+
+    public void printEmpty(){
+        System.out.println("               ");
     }
 }
 
