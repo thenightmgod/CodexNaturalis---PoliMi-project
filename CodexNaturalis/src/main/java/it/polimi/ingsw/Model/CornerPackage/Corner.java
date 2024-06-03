@@ -72,8 +72,6 @@ public class Corner implements Serializable {
                 .findAny()
                 .orElse(null);
     }
-
-
     /**
      * Constructs a new corner with the specified CardRes and orientation.
      *
