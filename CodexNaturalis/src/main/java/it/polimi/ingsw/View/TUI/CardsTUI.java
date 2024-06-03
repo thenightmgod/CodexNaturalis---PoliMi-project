@@ -21,10 +21,12 @@ import it.polimi.ingsw.Model.PlayerPackage.Position;
 import java.security.interfaces.RSAKey;
 import java.sql.SQLOutput;
 import java.util.LinkedList;
+import java.util.List;
 
 import static it.polimi.ingsw.Model.CornerPackage.Resources.*;
 
 import static it.polimi.ingsw.Model.CornerPackage.Resources.*;
+import static it.polimi.ingsw.Model.PlayerPackage.FB.BACK;
 import static it.polimi.ingsw.Model.PlayerPackage.FB.FRONT;
 
 public class CardsTUI {
@@ -908,34 +910,80 @@ public class CardsTUI {
         int minY = Field.getField().keySet().stream().mapToInt(Position::getY).min().orElse(400);
 
 
-        for(int i = maxY; i >= minY; i--){
-            for(int j = minX; j <= maxX; j++){
+        for(int j = maxY; j >= minY; j--){
+            for(int i = minX; i <= maxX; i++){
+
                 Position tocheck = new Position(j,i);
                 PlayableCard card = Field.getField().get(tocheck);
 
                 int Carlos = 0;
                 while(Carlos < 5) {
                     if (card != null) {
-                        FB roba = Field.getFace(tocheck);
+                        int finalI = i;
+                        int finalJ = j;
+                        List<Position> positions = Field.getField().keySet().stream().filter(s -> s.getX()== finalI && s.getY()== finalJ).toList();
+                        Position position = positions.getFirst();
+                        FB roba = position.getFace();
                         if (card.getId() >= 1 && card.getId() <= 40) {
                             ResourceCard c = (ResourceCard) card;
-                            switch (Carlos){
-                                switch(Field.getFace(tocheck)){
-                                    case FRONT -> {
-
-                                    }
-                                    case BACK -> {
-                                    }
+                            if(roba== FRONT){
+                                switch (Carlos){
+                                    case 0, 4 -> printResourceCardJackie(c);
+                                    case 1 -> printFrontResourceCardFirstLine(c);
+                                    case 2 -> printFrontResourceCardSecondLine(c);
+                                    case 3 -> printFrontResourceCardThirdLine(c);
                                 }
                             }
-                        } else if (card.getId() >= 41 && card.getId() <= 81) {
+                            else if(roba == BACK){
+                                switch (Carlos){
+                                    case 0, 4 -> printResourceCardJackie(c);
+                                    case 1 -> printBackResourceCardFirstLine(c);
+                                    case 2 -> printBackResourceCardSecondLine(c);
+                                    case 3 -> printBackResourceCardThirdLine(c);
+                                }
+                            }
+                        } else if(card.getId() >= 41 && card.getId() <= 81) {
+                            GoldCard c = (GoldCard) card;
+                            if(roba== FRONT){
+                                switch (Carlos){
+                                    case 0, 4 -> printGoldCardJackie(c);
+                                    case 1 -> printFrontGoldCardFirstLine(c);
+                                    case 2 -> printFrontGoldCardSecondLine(c);
+                                    case 3 -> printFrontGoldCardThirdLine(c);
+                                }
+                            }
+                            else if(roba== BACK){
+                                switch (Carlos){
+                                    case 0, 4 -> printGoldCardJackie(c);
+                                    case 1 -> printBackGoldCardFirstLine(c);
+                                    case 2 -> printBackGoldCardSecondLine(c);
+                                    case 3 -> printBackGoldCardThirdLine(c);
+                                }
+                            }
                         } else {
+                            StartCard c = (StartCard) card;
+                            if(roba== FRONT){
+                                switch (Carlos){
+                                    case 0, 4 -> printStartCardJackie(c);
+                                    case 1 -> printFrontStartCardFirstLine(c);
+                                    case 2 -> printFrontStartCardSecondLine(c);
+                                    case 3 -> printFrontStartCardThirdLine(c);
+                                }
+                            }
+                            else if(roba== BACK){
+                                switch (Carlos){
+                                    case 0, 4 -> printStartCardJackie(c);
+                                    case 1 -> printBackStartCardFirstLine(c);
+                                    case 2 -> printBackStartCardSecondLine(c);
+                                    case 3 -> printBackStartCardThirdLine(c);
+                                }
+                            }
                         }
 
                     } else {
 
                     }
-
+                    System.out.println("\n");
                     Carlos++;
                 }
             }

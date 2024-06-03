@@ -22,12 +22,13 @@ public class PlayingField implements Serializable {
 
     public PlayingField(){
         Field = new HashMap<>();
-        FreePositions = new LinkedList<Position>();
+        FreePositions = new LinkedList<>();
     }
 
-    public FB getFace(Position p){
-        List<Position> k = Field.entrySet().stream().filter(x -> x.getKey().equals(p)).map(Map.Entry::getKey).toList();
-        return k.getFirst().getFace();
+    public Position getPosition(int x, int y){
+        Position position = new Position(x, y);
+        List<Position> k = Field.keySet().stream().filter(s -> s.equals(position)).toList();
+        return k.getFirst();
     }
 
     /**
