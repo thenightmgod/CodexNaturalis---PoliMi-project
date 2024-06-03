@@ -72,6 +72,8 @@ import static org.junit.jupiter.api.Assertions.*;
             // Deserialize the object
             Corner deserialized = (Corner) deserializeObject(serializedData);
 
+            int x = 5;
+
             // Verify the object was deserialized correctly
             assertNotNull(deserialized.getRes());
             assertEquals(Resources.ANIMAL_KINGDOM, deserialized.getRes());
@@ -127,4 +129,3 @@ import static org.junit.jupiter.api.Assertions.*;
             assertTrue(deserialized.getCovered());
         }
     }
-}

@@ -48,6 +48,11 @@ class RoomTest {
             }
 
             @Override
+            public void updateCommonGoals(LinkedList<GoalCard> goals) throws RemoteException {
+
+            }
+
+            @Override
             public void showHand(LinkedList<PlayableCard> hand) throws RemoteException {
 
             }
@@ -63,12 +68,12 @@ class RoomTest {
             }
 
             @Override
-            public void updateResourceDeck(String name, LinkedList<ResourceCard> deck) throws RemoteException {
+            public void updateResourceDeck(String name, boolean start, LinkedList<ResourceCard> deck) throws RemoteException {
 
             }
 
             @Override
-            public void updateGoldDeck(String name, LinkedList<GoldCard> deck) throws RemoteException {
+            public void updateGoldDeck(String name, boolean start, LinkedList<GoldCard> deck) throws RemoteException {
 
             }
 
@@ -124,6 +129,11 @@ class RoomTest {
             }
 
             @Override
+            public void updateCommonGoals(LinkedList<GoalCard> goals) throws RemoteException {
+
+            }
+
+            @Override
             public void showHand(LinkedList<PlayableCard> hand) throws RemoteException {
 
             }
@@ -139,12 +149,12 @@ class RoomTest {
             }
 
             @Override
-            public void updateResourceDeck(String name, LinkedList<ResourceCard> deck) throws RemoteException {
+            public void updateResourceDeck(String name, boolean start, LinkedList<ResourceCard> deck) throws RemoteException {
 
             }
 
             @Override
-            public void updateGoldDeck(String name, LinkedList<GoldCard> deck) throws RemoteException {
+            public void updateGoldDeck(String name, boolean start, LinkedList<GoldCard> deck) throws RemoteException {
 
             }
 
@@ -200,6 +210,11 @@ class RoomTest {
             }
 
             @Override
+            public void updateCommonGoals(LinkedList<GoalCard> goals) throws RemoteException {
+
+            }
+
+            @Override
             public void showHand(LinkedList<PlayableCard> hand) throws RemoteException {
 
             }
@@ -215,12 +230,12 @@ class RoomTest {
             }
 
             @Override
-            public void updateResourceDeck(String name, LinkedList<ResourceCard> deck) throws RemoteException {
+            public void updateResourceDeck(String name, boolean start, LinkedList<ResourceCard> deck) throws RemoteException {
 
             }
 
             @Override
-            public void updateGoldDeck(String name, LinkedList<GoldCard> deck) throws RemoteException {
+            public void updateGoldDeck(String name, boolean start, LinkedList<GoldCard> deck) throws RemoteException {
 
             }
 
@@ -276,6 +291,11 @@ class RoomTest {
             }
 
             @Override
+            public void updateCommonGoals(LinkedList<GoalCard> goals) throws RemoteException {
+
+            }
+
+            @Override
             public void showHand(LinkedList<PlayableCard> hand) throws RemoteException {
 
             }
@@ -291,12 +311,12 @@ class RoomTest {
             }
 
             @Override
-            public void updateResourceDeck(String name, LinkedList<ResourceCard> deck) throws RemoteException {
+            public void updateResourceDeck(String name, boolean start, LinkedList<ResourceCard> deck) throws RemoteException {
 
             }
 
             @Override
-            public void updateGoldDeck(String name, LinkedList<GoldCard> deck) throws RemoteException {
+            public void updateGoldDeck(String name, boolean start, LinkedList<GoldCard> deck) throws RemoteException {
 
             }
 
