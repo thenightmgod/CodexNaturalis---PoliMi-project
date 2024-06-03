@@ -4,8 +4,6 @@ import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.ObjectsGoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.*;
 import it.polimi.ingsw.Model.CornerPackage.*;
-
-import java.util.HashMap;
 import java.util.LinkedList;
 
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.*;
@@ -15,9 +13,6 @@ import it.polimi.ingsw.Model.DeckPackage.GoldDeck;
 import it.polimi.ingsw.Model.DeckPackage.ResourceDeck;
 import it.polimi.ingsw.Model.CornerPackage.CardRes;
 import it.polimi.ingsw.Model.DeckPackage.StartDeck;
-import it.polimi.ingsw.Model.PlayerPackage.Player;
-import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
-import it.polimi.ingsw.Model.PlayerPackage.Position;
 
 import java.security.interfaces.RSAKey;
 import java.sql.SQLOutput;
@@ -896,7 +891,5 @@ public class CardsTUI {
                 sb.append(CornerState.EMPTY.getShortName());
             }*/
             System.out.print(sb.toString());
-
+        }
     }
-
-}
