@@ -377,9 +377,6 @@ public class TUI implements GameView {
                     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
                     roba = reader.readLine();
                     switch (roba) {
-                        case "help" -> {
-
-                        }
                         case "pgc" -> {
                             LinkedList<GoalCard> toPrint = client.getClient().getCommonGoals();
                             //for(GoalCard gc : toPrint)
@@ -410,7 +407,7 @@ public class TUI implements GameView {
                             goon = true;
                         }
                         case "myField" -> {
-                            //plot playing field
+
                         }
                         // case "freePosition" eventuale
                         case "toDraw" -> {
@@ -433,13 +430,11 @@ public class TUI implements GameView {
             } while (!goon);
             do {
                 try {
+                    goon = false;
                     Menu2();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
                     roba = reader.readLine();
                     switch (roba) {
-                        case "help" -> {
-
-                        }
                         case "pgc" -> {
                             LinkedList<GoalCard> toPrint = client.getClient().getCommonGoals();
                             //for(GoalCard gc : toPrint)
@@ -643,7 +638,6 @@ public class TUI implements GameView {
         System.out.println("+-----------------------------------------------------------+");
         System.out.println("|                          MENU:                            |");
         System.out.println("|                                                           |");
-        System.out.println("|   /help: to show all the commands available               |");
         System.out.println("|   /pgc: to show the goal cards                            |");
         System.out.println("|   /hand: to show your hand                                |");
         System.out.println("|   /score: to get yours and others score                   |");
@@ -662,7 +656,6 @@ public class TUI implements GameView {
         System.out.println("+-----------------------------------------------------------+");
         System.out.println("|                          MENU:                            |");
         System.out.println("|                                                           |");
-        System.out.println("|   /help: to show all the commands available               |");
         System.out.println("|   /pgc: to show the goal cards                            |");
         System.out.println("|   /hand: to show your hand                                |");
         System.out.println("|   /score: to get yours and others score                   |");
