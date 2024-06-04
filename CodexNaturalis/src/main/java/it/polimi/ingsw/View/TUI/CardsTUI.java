@@ -867,7 +867,7 @@ public class CardsTUI {
 
     //----------------------------PRINTARE ANGOLI (UGUALE SIA PER GOLD CHE PER RISORSA)---------------------------------
 
-    public void printCorner(Corner c, StringBuilder sb) {
+  /*  public void printCorner(Corner c, StringBuilder sb) {
         if (c.getCovered()) {
             sb.append("❌");
         } else {
@@ -892,5 +892,49 @@ public class CardsTUI {
             }
             System.out.print(sb.toString());
         }
+    }*/
+
+    public void printCorner(Corner c, StringBuilder sb) {
+        CardRes res = c.getRes();
+        if (res instanceof Resources) {
+            switch ((Resources) res) {
+                case PLANT_KINGDOM:
+                    sb.append(Resources.PLANT_KINGDOM.getShortName());
+                    break;
+                case ANIMAL_KINGDOM:
+                    sb.append(Resources.ANIMAL_KINGDOM.getShortName());
+                    break;
+                case FUNGI_KINGDOM:
+                    sb.append(Resources.FUNGI_KINGDOM.getShortName());
+                    break;
+                case INSECT_KINGDOM:
+                    sb.append(Resources.INSECT_KINGDOM.getShortName());
+                    break;
+            }
+        } else if (res instanceof Objects) {
+            switch ((Objects) res) {
+                case QUILL:
+                    sb.append(Objects.QUILL.getShortName());
+                    break;
+                case MANUSCRIPT:
+                    sb.append(Objects.MANUSCRIPT.getShortName());
+                    break;
+                case INKWELL:
+                    sb.append(Objects.INKWELL.getShortName());
+                    break;
+            }
+        } else if (res instanceof CornerState) {
+            switch ((CornerState) res) {
+                case ABSENT:
+                    sb.append(CornerState.ABSENT.getShortName());
+                    break;
+                case EMPTY:
+                    sb.append(CornerState.EMPTY.getShortName());
+                    break;
+            }
+        }
+
+        // Stampa il contenuto del StringBuilder fuori dalle condizioni
+        System.out.print(sb.toString());
     }
 }

@@ -24,6 +24,83 @@ public class Corner implements Serializable {
         if (Res instanceof it.polimi.ingsw.Model.CornerPackage.Objects){
             out.writeObject("Objects");
             if(Res.equals(Objects.MANUSCRIPT)){
+                out.writeObject(((Objects) Res).name());
+            } else if (Res.equals(Objects.QUILL)) {
+                out.writeObject(((Objects) Res).name());
+            } else {
+                out.writeObject(((Objects) Res).name());
+            }
+        }
+        else if(Res instanceof Resources){
+            out.writeObject("Resources");
+            if(Res.equals(Resources.FUNGI_KINGDOM)){
+                out.writeObject(((Resources) Res).name());
+            }
+            else if(Res.equals(Resources.ANIMAL_KINGDOM)){
+                out.writeObject(((Resources) Res).name());
+            }
+            else if(Res.equals(Resources.INSECT_KINGDOM)){
+                out.writeObject(((Resources) Res).name());
+            }
+            else{
+                out.writeObject(((Resources) Res).name());
+            }
+        }
+        else if(Res instanceof CornerState){
+            out.writeObject("CornerState");
+            if(Res.equals(CornerState.EMPTY)){
+                out.writeObject(((CornerState) Res).name()
+                );
+            }
+            else{
+                out.writeObject(((CornerState) Res).name());
+            }
+        }
+        else{
+            out.writeObject(null);
+            out.writeObject(null);
+        }
+    }
+
+    @Serial
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+
+        // Legge il nome dell'enum
+        String className = (String) in.readObject();
+        String name = (String) in.readObject();
+
+        // Se entrambe le stringhe non sono null, cerca e assegna l'enum corrispondente a Res
+        if (className != null && name != null) {
+            // Utilizza il nome della classe per determinare l'enum corrispondente
+            switch (className) {
+                case "Objects":
+                    Res = Objects.valueOf(name);
+                    break;
+                case "Resources":
+                    Res = Resources.valueOf(name);
+                    break;
+                case "CornerState":
+                    Res = CornerState.valueOf(name);
+                    break;
+                default:
+                    // Gesto il caso in cui il nome dell'enum non è valido
+                    Res = null;
+            }
+        } else {
+            Res = null; // Se una delle stringhe è null, imposta Res su null
+        }
+    }
+
+
+
+/*    @Serial
+    private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+
+        if (Res instanceof it.polimi.ingsw.Model.CornerPackage.Objects){
+            out.writeObject("Objects");
+            if(Res.equals(Objects.MANUSCRIPT)){
                 out.writeObject("MANUSCRIPT");
             } else if (Res.equals(Objects.QUILL)) {
                 out.writeObject("QUILL");
@@ -71,7 +148,7 @@ public class Corner implements Serializable {
                 .filter(x -> x.name().equals(name) && x.getClass().getName().equals(className))
                 .findAny()
                 .orElse(null);
-    }
+    }*/
     /**
      * Constructs a new corner with the specified CardRes and orientation.
      *
