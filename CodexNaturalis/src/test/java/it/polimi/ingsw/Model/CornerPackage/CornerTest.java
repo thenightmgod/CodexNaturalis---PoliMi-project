@@ -22,6 +22,11 @@ import org.junit.jupiter.api.Test;
     package it.polimi.ingsw.Model.CornerPackage;
     */
 
+import it.polimi.ingsw.Model.CardPackage.Card;
+import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
+import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.StartCard;
+import it.polimi.ingsw.Model.DeckPackage.ResourceDeck;
+import it.polimi.ingsw.Model.DeckPackage.StartDeck;
 import org.junit.jupiter.api.Test;
 import java.io.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -79,6 +84,28 @@ import static org.junit.jupiter.api.Assertions.*;
             assertEquals(Resources.ANIMAL_KINGDOM, deserialized.getRes());
             assertEquals(Orientation.LL, deserialized.getOrientation());
             assertFalse(deserialized.getCovered());
+        }
+
+        @Test
+        public void testSerializationAndDeserializationWithResources2() throws IOException, ClassNotFoundException {
+            ResourceDeck deck = new ResourceDeck();
+            ResourceCard card = (ResourceCard) deck.getCardById(1);
+            Corner original = card.getCorner(Orientation.HL);
+
+            // Serialize the object
+            byte[] serializedData = serializeObject(original);
+
+            // Deserialize the object
+            Corner deserialized = (Corner) deserializeObject(serializedData);
+
+            int x = 5;
+
+            // Verify the object was deserialized correct
+            assertEquals(Resources.FUNGI_KINGDOM, deserialized.getRes());
+ //           assertNotNull(deserialized.getRes());
+ //           assertEquals(Resources.ANIMAL_KINGDOM, deserialized.getRes());
+ //           assertEquals(Orientation.LL, deserialized.getOrientation());
+  //          assertFalse(deserialized.getCovered());
         }
 
         @Test

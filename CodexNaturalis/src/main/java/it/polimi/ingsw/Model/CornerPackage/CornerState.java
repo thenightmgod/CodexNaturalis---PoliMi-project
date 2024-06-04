@@ -7,7 +7,7 @@ import java.io.Serializable;
  * This enum implements the {@link CardRes} interface, indicating that it represents what an angle possesses or not.
  * An angle can be either EMPTY or ABSENT.
  */
-public enum CornerState implements CardRes, Serializable {
+public enum CornerState implements CardRes {
     /**
      * Empty is when the angle does not contain any resource or object.
      */

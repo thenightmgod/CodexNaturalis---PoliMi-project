@@ -15,9 +15,9 @@ import java.util.stream.Stream;
 public class Corner implements Serializable {
     private final Orientation Orient;
     private boolean Covered;
-    private transient CardRes Res;
+    private CardRes Res;
 
-    @Serial
+   /* @Serial
     private void writeObject(java.io.ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
 
@@ -83,72 +83,12 @@ public class Corner implements Serializable {
                 case "CornerState":
                     Res = CornerState.valueOf(name);
                     break;
-                default:
-                    // Gesto il caso in cui il nome dell'enum non è valido
-                    Res = null;
             }
         } else {
             Res = null; // Se una delle stringhe è null, imposta Res su null
         }
-    }
-
-
-
-/*    @Serial
-    private void writeObject(java.io.ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-
-        if (Res instanceof it.polimi.ingsw.Model.CornerPackage.Objects){
-            out.writeObject("Objects");
-            if(Res.equals(Objects.MANUSCRIPT)){
-                out.writeObject("MANUSCRIPT");
-            } else if (Res.equals(Objects.QUILL)) {
-                out.writeObject("QUILL");
-            } else {
-                out.writeObject("INKWELL");
-            }
-        }
-        else if(Res instanceof Resources){
-            if(Res.equals(Resources.FUNGI_KINGDOM)){
-                out.writeObject("FUNGI_KINGDOM");
-            }
-            else if(Res.equals(Resources.ANIMAL_KINGDOM)){
-                out.writeObject("ANIMAL_KINGDOM");
-            }
-            else if(Res.equals(Resources.INSECT_KINGDOM)){
-                out.writeObject("INSECT_KINGDOM");
-            }
-            else{
-                out.writeObject("PLANT_KINGDOM");
-            }
-        }
-        else if(Res instanceof CornerState){
-            if(Res.equals(CornerState.EMPTY)){
-                out.writeObject("EMPTY");
-            }
-            else{
-                out.writeObject("CORNER");
-            }
-        }
-        else{
-            out.writeObject(null);
-            out.writeObject(null);
-        }
-    }
-
-    @Serial
-    private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-
-        String name = (String) in.readObject();
-        String className = (String) in.readObject();
-
-        Res = Stream.of(CornerState.values(), it.polimi.ingsw.Model.CornerPackage.Objects.values(), Resources.values())
-                .flatMap(Stream::of)
-                .filter(x -> x.name().equals(name) && x.getClass().getName().equals(className))
-                .findAny()
-                .orElse(null);
     }*/
+
     /**
      * Constructs a new corner with the specified CardRes and orientation.
      *

@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Represents specific objects that can be possessed by a corner.
  * These objects are implementations of the abstract interface CardRes.
  */
-public enum Objects implements CardRes, Serializable {
+public enum Objects implements CardRes {
     QUILL("\uD83E\uDEB6"),
     INKWELL("\uD83E\uDED9"),
     MANUSCRIPT("\uD83D\uDCDC");

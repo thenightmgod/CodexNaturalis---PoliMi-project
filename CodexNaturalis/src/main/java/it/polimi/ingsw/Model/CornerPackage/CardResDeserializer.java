@@ -21,7 +21,7 @@ public class CardResDeserializer implements JsonDeserializer<CardRes> {
      * @throws JsonParseException If there is an error while parsing the JSON element.
      */
     public CardRes deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException{
-        return Stream.of(CornerState.values(), it.polimi.ingsw.Model.CornerPackage.Objects.values(), Resources.values())
+        return Stream.of(CornerState.values(), Objects.values(), Resources.values())
                 .flatMap(Stream :: of)
                 .filter(x ->x.name().equals(json.getAsString()))
                 .findAny().orElse(null);
