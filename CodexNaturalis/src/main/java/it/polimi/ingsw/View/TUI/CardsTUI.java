@@ -76,8 +76,8 @@ public class CardsTUI {
         Corner c4 = c.getCorner(Orientation.LR);
         printCorner(c4, sb4);
         System.out.println("|");
-        System.out.print("———————————————");
-        System.out.println(ANSI_RESET);
+        System.out.println("———————————————");
+        System.out.print(ANSI_RESET);
     }
 
     public void printStartCardJackie(StartCard c) {
@@ -182,10 +182,10 @@ public class CardsTUI {
         Corner c4 = c.getBackCorner(Orientation.LR);
         printCorner(c4, sb4);
         System.out.println("|");
-        System.out.print("———————————————");
+        System.out.println("———————————————");
 
 
-        System.out.println(ANSI_RESET);
+        System.out.print(ANSI_RESET);
     }
 
     public void printBackStartCardFirstLine(StartCard c) {
@@ -265,7 +265,7 @@ public class CardsTUI {
         printCorner(c4, sb4);
         System.out.println("|");
 
-        System.out.print("———————————————");
+        System.out.println("———————————————");
         System.out.print(ANSI_RESET);
     }
 
@@ -462,7 +462,7 @@ public class CardsTUI {
         printCorner(c4, sb4);
         System.out.println("|");
 
-        System.out.print("———————————————");
+        System.out.println("———————————————");
         System.out.print(ANSI_RESET);
     }
 

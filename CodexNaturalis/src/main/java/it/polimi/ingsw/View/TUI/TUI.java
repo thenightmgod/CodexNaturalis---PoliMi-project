@@ -121,7 +121,6 @@ public class TUI implements GameView {
     public void updateFreePosition(String name, LinkedList<Position> freePositions) {
         client.getClient().setFreePositions(freePositions);
         System.out.println("Your new free positions are:");
-        //plotFreePositions();
     }
 
     @Override
@@ -384,13 +383,16 @@ public class TUI implements GameView {
                             //plot goal cards da modellino (?)
                         }
                         case "hand" -> {
-                            LinkedList<PlayableCard> toPrint = client.getClient().getHand();
-                            for(PlayableCard pc : toPrint){
-                                if(pc.getId() >= 1 && pc.getId() <= 40) {
-                                    cards.printFrontResourceCard((ResourceCard) pc);
-
+                            LinkedList<PlayableCard> toPrint = Turn.getHand();
+                            for(int i =0; i<3; i++){
+                                if(Turn.getCardFromHand(i).getId()>=1 && Turn.getCardFromHand(i).getId()<=40) {
+                                    cards.printFrontResourceCard(Turn.getCardFromHand(i));
+                                    cards.printBackResourceCard(Turn.getCardFromHand(i));
                                 }
-                                else cards.printFrontGoldCard((GoldCard) pc);
+                                else {
+                                    cards.printFrontGoldCard((GoldCard) Turn.getCardFromHand(i));
+                                    cards.printBackGoldCard((GoldCard) Turn.getCardFromHand(i));
+                            }
                             }
 
                             // poi può flippare
@@ -407,7 +409,7 @@ public class TUI implements GameView {
                             goon = true;
                         }
                         case "myField" -> {
-
+                            cards.plotPlayingField(Turn);
                         }
                         // case "freePosition" eventuale
                         case "toDraw" -> {
@@ -428,9 +430,9 @@ public class TUI implements GameView {
                     System.out.println("There has been a problem, try again!");
                 }
             } while (!goon);
+            goon = false;
             do {
                 try {
-                    goon = false;
                     Menu2();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
                     roba = reader.readLine();

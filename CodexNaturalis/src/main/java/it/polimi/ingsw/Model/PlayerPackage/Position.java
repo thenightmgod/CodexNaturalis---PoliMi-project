@@ -1,11 +1,12 @@
 package it.polimi.ingsw.Model.PlayerPackage;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Represents a position on the playing field.
  */
-public class Position {
+public class Position implements Serializable {
     private int x;
     private int y;
     private final FB face;

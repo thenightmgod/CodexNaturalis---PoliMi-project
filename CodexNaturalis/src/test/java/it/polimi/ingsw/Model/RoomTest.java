@@ -362,6 +362,8 @@ class RoomTest {
         beppe.placeStartCard("venditti", FB.BACK);
         beppe.placeStartCard("dalla", FB.FRONT);
         beppe.placeStartCard("degregori", FB.BACK);
+
+        beppe.getPlayerByName("hamingway").getPlayerField().getFreePositions();
     }
 }
     /**

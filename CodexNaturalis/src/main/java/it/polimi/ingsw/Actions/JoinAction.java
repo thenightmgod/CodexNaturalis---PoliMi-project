@@ -20,6 +20,5 @@ public class JoinAction extends Actions {
 
     public void executor() throws RemoteException, NotBoundException {
         getManager().joinGame(name, getView());
-
     }
 }

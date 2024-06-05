@@ -38,6 +38,7 @@ public class PlaceCardAction extends Actions{
             GameController controller = getManager().getControllersPerGame().get(k);
             //cambiare dinamica di place card con l'int della mano
             controller.placeCard(whichInHand, x, y, face);
+            System.out.println("PLACED CARD");
         }
     }
 }

@@ -20,10 +20,12 @@ public class SetStartCardFaceAction extends Actions {
 
     @Override
     public void executor() throws RemoteException {
+        System.out.println("franco1");
         int k = -1;
         for(Map.Entry<Integer, GameController> entry : getManager().getControllersPerGame().entrySet()){
             if(entry.getValue().getPlayers().stream().map(Player::getName).toList().contains(getView().getName())){
                 k = entry.getKey();
+                System.out.println("franco2");
             }
         }
         if(k != -1){
@@ -31,6 +33,7 @@ public class SetStartCardFaceAction extends Actions {
             FB f = FB.FRONT;
             if(!face) f = FB.BACK;
             controller.placeStartCard(getView().getName(), f);
+            System.out.println("franco3");
         }
     }
 }

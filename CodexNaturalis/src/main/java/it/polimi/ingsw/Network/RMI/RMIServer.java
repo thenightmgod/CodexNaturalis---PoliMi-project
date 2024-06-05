@@ -29,11 +29,13 @@ public class RMIServer implements VirtualServer{
     int port;
 
     BlockingQueue<Actions> actions;
+    BlockingQueue<Actions> actions2;
 
     public RMIServer(MainController controller) throws RemoteException{
         this.controller = controller;
         port = 4446;
         actions = new ArrayBlockingQueue<>(100);
+        actions2 = new ArrayBlockingQueue<>(100);
         execute();
     }
 
@@ -77,7 +79,6 @@ public class RMIServer implements VirtualServer{
         Actions pAction = new PlaceCardAction(controller, client, whichInHand, x, y, face, this);
         actions.add(pAction);
     }
-
     @Override
     public void setStartCardFace(boolean face, VirtualView client) throws RemoteException{ //ordine initialize game tutto gestito nella view
         Actions ssAction = new SetStartCardFaceAction(face, client, controller, this);
