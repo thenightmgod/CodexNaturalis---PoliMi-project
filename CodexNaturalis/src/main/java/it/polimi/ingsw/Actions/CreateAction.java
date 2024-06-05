@@ -25,6 +25,7 @@ public class CreateAction extends Actions{
     @Override
     public void executor() throws RemoteException {
         getManager().createGame(name, i, getView());
+        System.out.println("createeee");
     }
 }
 

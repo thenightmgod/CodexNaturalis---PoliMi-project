@@ -2,6 +2,7 @@ package it.polimi.ingsw.Controller;
 
 //questo controlla un game specifico
 
+import it.polimi.ingsw.Actions.Actions;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
@@ -69,20 +70,27 @@ public class GameController {
         this.Game = new Room(RoomId, Players, clients);
     }
 
+    public void run(){
+        new Thread(() -> {
+
+
+        }).start();
+    }
+
     public void startGame() throws RemoteException { //in virtual view
         initializeRoom();
-        for(Player p: Players)
+        for (Player p : Players)
             this.Game.startingGame(p);
         State = GameState.RUNNING;
         createDecks();
-        for(Player p: Players)
-            giveStartCard(p);
-        for(Player p: Players)
-            giveInitialCards(p);
         createCommonGoals();
+/*        for(Player p: Players)
+            giveStartCard(p);
+        for (Player p : Players)
+            giveInitialCards(p);
         for(Player p: Players)
             show2goalCards(p);
-        this.Game.start();
+        this.Game.start();*/
     }
 
     public void createCommonGoals() throws RemoteException {
