@@ -19,6 +19,8 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.LinkedList;
 import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class GameController {
 
@@ -35,6 +37,7 @@ public class GameController {
         this.RoomId = id;
         this.Players = new LinkedList<>();
         this.clients = new LinkedList<>();
+        run();
     }
 
     public Room getGame() {
@@ -61,9 +64,7 @@ public class GameController {
         Player player = new Player(name, color);
         this.Players.add(player);
         this.clients.add(client);
-        if(this.Players.size() == numPlayers) {
-            startGame();
-        }
+
     }
 
     public void initializeRoom() { //pre inizializzazione è una specie di waiting room
@@ -72,7 +73,22 @@ public class GameController {
 
     public void run(){
         new Thread(() -> {
+            TimerTask task = new TimerTask() {
+                public void run() {
+                    if(Players.size() == numPlayers) {
+                        try {
+                            startGame();
+                        } catch (RemoteException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }
+            };
 
+            Timer timer = new Timer("Timer");
+            long delay = 10000L;
+
+            timer.schedule(task, delay);
 
         }).start();
     }
@@ -84,13 +100,13 @@ public class GameController {
         State = GameState.RUNNING;
         createDecks();
         createCommonGoals();
-/*        for(Player p: Players)
+        for(Player p: Players)
             giveStartCard(p);
         for (Player p : Players)
             giveInitialCards(p);
         for(Player p: Players)
             show2goalCards(p);
-        this.Game.start();*/
+        this.Game.start();
     }
 
     public void createCommonGoals() throws RemoteException {
