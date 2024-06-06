@@ -399,7 +399,7 @@ public class TUI implements GameView {
         name = nickname;
     }
 
-    public void isYourTurn() throws RemoteException {
+    public void isYourTurnPt1() throws RemoteException {
         if(Turn.getName().equals(client.getName())) {
             boolean goon = false;
             String roba;
@@ -463,71 +463,77 @@ public class TUI implements GameView {
                     System.out.println("There has been a problem, try again!");
                 }
             } while (!goon);
-            goon = false;
-            do {
-                try {
-                    Menu2();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-                    roba = reader.readLine();
-                    switch (roba) {
-                        case "pgc" -> {
-                            LinkedList<GoalCard> toPrint = client.getClient().getCommonGoals();
-                            //for(GoalCard gc : toPrint)
-                            //cards.printGoalCard(gc);
-                            //plot goal cards da modellino (?)
-                        }
-                        case "hand" -> {
-                            LinkedList<PlayableCard> toPrint = client.getClient().getHand();
-                            for(PlayableCard pc : toPrint){
-                                if(pc.getId() >= 1 && pc.getId() <= 40) {
-                                    cards.printFrontResourceCard((ResourceCard) pc);
-                                    cards.printBackResourceCard((ResourceCard) pc);
-                                }
-                                else {
-                                    cards.printFrontGoldCard((GoldCard) pc);
-                                    cards.printBackGoldCard((GoldCard) pc);
-                                }
-                            }
-                        }
-                        case "score" -> {
-                            //GameController Grian = client.
-                            //plot points
-                        }
-                        case "other" -> {
-                            //choose player e poi plotti il suo field
-                        }
-                        case "draw" -> {
-                            drawCard();
-                            goon = true;
-                        }
-                        case "myField" -> {
-                            //plot playing field
-                        }
-                        // case "freePosition" eventuale
-                        case "toDraw" -> {
-                            //plotti quelle pescabili
-                        }
-                        case "chat" -> {
-                            //scrivi in chat
-                        }
-                        case "showChat" -> {
-                            //show chat
-                        }
-                        case "q" -> {
-                            //leave game
-                        }
-                        default -> System.out.println("Write a command in the menu");
-                    }
-                }catch(IOException e){
-                    System.out.println("There has been a problem, try again!");
-                }
-            } while (!goon);
-            endTurn("NormalTurn");
+
         }
         else{
             System.out.println("it's"+ Turn.getName()+ "'s turn");
             //magari altre funzioni, o magari no
         }
+    }
+
+    public void isYourTurnPt2() throws RemoteException {
+        boolean goon = false;
+        String roba;
+
+        do {
+            try {
+                Menu2();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                roba = reader.readLine();
+                switch (roba) {
+                    case "pgc" -> {
+                        LinkedList<GoalCard> toPrint = client.getClient().getCommonGoals();
+                        //for(GoalCard gc : toPrint)
+                        //cards.printGoalCard(gc);
+                        //plot goal cards da modellino (?)
+                    }
+                    case "hand" -> {
+                        LinkedList<PlayableCard> toPrint = client.getClient().getHand();
+                        for(PlayableCard pc : toPrint){
+                            if(pc.getId() >= 1 && pc.getId() <= 40) {
+                                cards.printFrontResourceCard((ResourceCard) pc);
+                                cards.printBackResourceCard((ResourceCard) pc);
+                            }
+                            else {
+                                cards.printFrontGoldCard((GoldCard) pc);
+                                cards.printBackGoldCard((GoldCard) pc);
+                            }
+                        }
+                    }
+                    case "score" -> {
+                        //GameController Grian = client.
+                        //plot points
+                    }
+                    case "other" -> {
+                        //choose player e poi plotti il suo field
+                    }
+                    case "draw" -> {
+                        drawCard();
+                        goon = true;
+                    }
+                    case "myField" -> {
+                        //plot playing field
+                    }
+                    // case "freePosition" eventuale
+                    case "toDraw" -> {
+                        //plotti quelle pescabili
+                    }
+                    case "chat" -> {
+                        //scrivi in chat
+                    }
+                    case "showChat" -> {
+                        //show chat
+                    }
+                    case "q" -> {
+                        //leave game
+                    }
+                    default -> System.out.println("Write a command in the menu");
+                }
+            }catch(IOException e){
+                System.out.println("There has been a problem, try again!");
+            }
+        } while (!goon);
+        endTurn("NormalTurn");
     }
 
 
@@ -541,7 +547,7 @@ public class TUI implements GameView {
             switch (mex) {
                 case "StartCard" -> setStartCardFace();
                 case "GoalCard" -> chooseGoalCard();
-                case "NormalTurn" -> isYourTurn();
+                case "NormalTurn" -> isYourTurnPt1();
             }
         }
 
@@ -597,7 +603,7 @@ public class TUI implements GameView {
 
     //            FUNZIONI PER GIOCARE
 
-    private void placeCard() {
+    private void placeCard() throws RemoteException {
         boolean goon = false;
         int i, x, y;
         boolean face = false;
@@ -627,6 +633,7 @@ public class TUI implements GameView {
                 throw new RuntimeException(e);
             }
         } while (!goon) ;
+        isYourTurnPt2();
     }
 
 
