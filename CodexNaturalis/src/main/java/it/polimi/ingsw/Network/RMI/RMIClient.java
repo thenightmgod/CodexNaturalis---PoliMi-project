@@ -105,8 +105,8 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     }
 
     @Override
-    public void endTurn(String name) throws RemoteException {
-        server.endTurn(this);
+    public void endTurn(String name, String mex) throws RemoteException {
+        server.endTurn(this, mex);
     }
 
 

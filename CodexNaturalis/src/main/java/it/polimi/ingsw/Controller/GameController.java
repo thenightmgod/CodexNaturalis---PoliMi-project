@@ -100,15 +100,15 @@ public class GameController {
         createDecks();
         createCommonGoals();
 
-        giveStartCard();
+        //giveStartCard();
 
         /*for(Player p: Players)
             giveStartCard(p);
         for (Player p : Players)
             giveInitialCards(p);
         for(Player p: Players)
-            show2goalCards(p);
-        this.Game.start();*/
+            show2goalCards(p);*/
+        this.Game.start();
     }
 
     public void createCommonGoals() throws RemoteException {
@@ -193,8 +193,8 @@ public class GameController {
         }
     }
 
-    public void changeTurns() throws RemoteException {
-        this.Game.changeTurns();
+    public void changeTurns(String mex) throws RemoteException {
+        this.Game.changeTurns(mex);
 
     }
 

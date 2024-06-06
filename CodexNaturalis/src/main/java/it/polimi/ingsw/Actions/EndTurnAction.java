@@ -11,9 +11,11 @@ import java.util.Map;
 
 public class EndTurnAction extends Actions{
 
+    String mex;
 
-    public EndTurnAction(VirtualView view, MainController manager, RMIServer server){
+    public EndTurnAction(VirtualView view, MainController manager, RMIServer server, String mex){
         super(view, manager, server);
+        this.mex = mex;
     }
 
     @Override
@@ -26,7 +28,7 @@ public class EndTurnAction extends Actions{
         }
         if(k != -1){
             GameController controller = getManager().getControllersPerGame().get(k);
-            controller.changeTurns();
+            controller.changeTurns(mex);
         }
     }
 
