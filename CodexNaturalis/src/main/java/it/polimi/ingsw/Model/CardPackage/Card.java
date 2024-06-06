@@ -7,7 +7,6 @@ import java.io.Serializable;
  */
 public abstract class Card implements Serializable {
     private final int Id;
-
     /**
      * Constructs a new Card with the specified identifier.
      *
