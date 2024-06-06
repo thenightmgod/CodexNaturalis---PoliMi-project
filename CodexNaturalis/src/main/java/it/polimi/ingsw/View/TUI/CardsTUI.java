@@ -6,31 +6,19 @@ import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.ObjectsGoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.*;
 import it.polimi.ingsw.Model.CornerPackage.*;
 
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.*;
-import it.polimi.ingsw.Model.CornerPackage.*;
-import it.polimi.ingsw.Model.CardPackage.*;
-import it.polimi.ingsw.Model.DeckPackage.Deck;
 import it.polimi.ingsw.Model.DeckPackage.GoldDeck;
 import it.polimi.ingsw.Model.DeckPackage.ResourceDeck;
 import it.polimi.ingsw.Model.CornerPackage.CardRes;
 import it.polimi.ingsw.Model.DeckPackage.StartDeck;
 import it.polimi.ingsw.Model.PlayerPackage.*;
-import it.polimi.ingsw.Model.RoomPackage.Room;
-import it.polimi.ingsw.Network.VirtualView;
 
-import java.security.interfaces.RSAKey;
-import java.sql.SQLOutput;
-import java.util.LinkedList;
 import java.util.List;
 
 import static it.polimi.ingsw.Model.CornerPackage.Resources.*;
 
-import static it.polimi.ingsw.Model.CornerPackage.Resources.*;
 import static it.polimi.ingsw.Model.PlayerPackage.FB.BACK;
 import static it.polimi.ingsw.Model.PlayerPackage.FB.FRONT;
 
@@ -278,11 +266,11 @@ public class CardsTUI {
         if (card.getColor().equals(CardColor.GREEN)) {
             System.out.print(ANSI_GREEN);
         } else if (card.getColor().equals(CardColor.PURPLE)) {
-            System.out.println(ANSI_PURPLE);
+            System.out.print(ANSI_PURPLE);
         } else if (card.getColor().equals(CardColor.BLUE)) {
-            System.out.println(ANSI_BLUE);
+            System.out.print(ANSI_BLUE);
         } else if (card.getColor().equals(CardColor.RED))
-            System.out.println(ANSI_RED);
+            System.out.print(ANSI_RED);
         System.out.print("———————————————");
     }
 
@@ -290,11 +278,11 @@ public class CardsTUI {
         if (card.getColor().equals(CardColor.GREEN)) {
             System.out.print(ANSI_GREEN);
         } else if (card.getColor().equals(CardColor.PURPLE)) {
-            System.out.println(ANSI_PURPLE);
+            System.out.print(ANSI_PURPLE);
         } else if (card.getColor().equals(CardColor.BLUE)) {
-            System.out.println(ANSI_BLUE);
+            System.out.print(ANSI_BLUE);
         } else if (card.getColor().equals(CardColor.RED))
-            System.out.println(ANSI_RED);
+            System.out.print(ANSI_RED);
 
         System.out.print("|");
         StringBuilder sb = new StringBuilder();
@@ -314,11 +302,11 @@ public class CardsTUI {
         if (card.getColor().equals(CardColor.GREEN)) {
             System.out.print(ANSI_GREEN);
         } else if (card.getColor().equals(CardColor.PURPLE)) {
-            System.out.println(ANSI_PURPLE);
+            System.out.print(ANSI_PURPLE);
         } else if (card.getColor().equals(CardColor.BLUE)) {
-            System.out.println(ANSI_BLUE);
+            System.out.print(ANSI_BLUE);
         } else if (card.getColor().equals(CardColor.RED))
-            System.out.println(ANSI_RED);
+            System.out.print(ANSI_RED);
 
         System.out.print("|             |");
     }
@@ -327,11 +315,11 @@ public class CardsTUI {
         if (card.getColor().equals(CardColor.GREEN)) {
             System.out.print(ANSI_GREEN);
         } else if (card.getColor().equals(CardColor.PURPLE)) {
-            System.out.println(ANSI_PURPLE);
+            System.out.print(ANSI_PURPLE);
         } else if (card.getColor().equals(CardColor.BLUE)) {
-            System.out.println(ANSI_BLUE);
+            System.out.print(ANSI_BLUE);
         } else if (card.getColor().equals(CardColor.RED))
-            System.out.println(ANSI_RED);
+            System.out.print(ANSI_RED);
 
         System.out.print("|");
         StringBuilder sb3 = new StringBuilder();
@@ -930,84 +918,197 @@ public class CardsTUI {
         int maxY = Field.getField().keySet().stream().mapToInt(Position::getY).max().orElse(400);
         int minY = Field.getField().keySet().stream().mapToInt(Position::getY).min().orElse(400);
 
-
-        for(int j = maxY; j >= minY; j--){
-            for(int i = minX; i <= maxX; i++){
-                Position tocheck = new Position(j,i);
-                PlayableCard card = Field.getField().get(tocheck);
-                int Carlos = 0;
-                while(Carlos < 5) {
+        for (int j = maxY; j >= minY; j--) {
+                for (int i = minX; i <= maxX; i++) {
+                    Position toCheck = new Position(i, j);
+                    PlayableCard card = Field.getField().get(toCheck);
                     if (card != null) {
                         int finalI = i;
                         int finalJ = j;
-                        List<Position> positions = Field.getField().keySet().stream().filter(s -> s.getX()== finalI
-                                && s.getY()== finalJ).toList();
+                        List<Position> positions = Field.getField().keySet().stream().filter(s -> s.getX() == finalI
+                                && s.getY() == finalJ).toList();
                         Position position = positions.getFirst();
                         FB roba = position.getFace();
                         if (card.getId() >= 1 && card.getId() <= 40) {
                             ResourceCard c = (ResourceCard) card;
-                            if(roba== FRONT){
-                                switch (Carlos){
-                                    case 0, 4 -> printResourceCardJackie(c);
-                                    case 1 -> printFrontResourceCardFirstLine(c);
-                                    case 2 -> printFrontResourceCardSecondLine(c);
-                                    case 3 -> printFrontResourceCardThirdLine(c);
-                                }
+                            if (roba == FRONT) {
+                                printResourceCardJackie(c);
+                            } else if (roba == BACK) {
+                                printResourceCardJackie(c);
                             }
-                            else if(roba == BACK){
-                                switch (Carlos){
-                                    case 0, 4 -> printResourceCardJackie(c);
-                                    case 1 -> printBackResourceCardFirstLine(c);
-                                    case 2 -> printBackResourceCardSecondLine(c);
-                                    case 3 -> printBackResourceCardThirdLine(c);
-                                }
-                            }
-                        } else if(card.getId() >= 41 && card.getId() <= 81) {
+                        } else if (card.getId() >= 41 && card.getId() <= 81) {
                             GoldCard c = (GoldCard) card;
-                            if(roba== FRONT){
-                                switch (Carlos){
-                                    case 0, 4 -> printGoldCardJackie(c);
-                                    case 1 -> printFrontGoldCardFirstLine(c);
-                                    case 2 -> printFrontGoldCardSecondLine(c);
-                                    case 3 -> printFrontGoldCardThirdLine(c);
-                                }
-                            }
-                            else if(roba== BACK){
-                                switch (Carlos){
-                                    case 0, 4 -> printGoldCardJackie(c);
-                                    case 1 -> printBackGoldCardFirstLine(c);
-                                    case 2 -> printBackGoldCardSecondLine(c);
-                                    case 3 -> printBackGoldCardThirdLine(c);
-                                }
+                            if (roba == FRONT) {
+                                printGoldCardJackie(c);
+                            } else if (roba == BACK) {
+                                printGoldCardJackie(c);
                             }
                         } else {
                             StartCard c = (StartCard) card;
-                            if(roba== FRONT){
-                                switch (Carlos){
-                                    case 0, 4 -> printStartCardJackie(c);
-                                    case 1 -> printFrontStartCardFirstLine(c);
-                                    case 2 -> printFrontStartCardSecondLine(c);
-                                    case 3 -> printFrontStartCardThirdLine(c);
-                                }
-                            }
-                            else if(roba== BACK){
-                                switch (Carlos){
-                                    case 0, 4 -> printStartCardJackie(c);
-                                    case 1 -> printBackStartCardFirstLine(c);
-                                    case 2 -> printBackStartCardSecondLine(c);
-                                    case 3 -> printBackStartCardThirdLine(c);
-                                }
+                            if (roba == FRONT) {
+                                printStartCardJackie(c);
+                            } else if (roba == BACK) {
+                                printStartCardJackie(c);
                             }
                         }
-
                     } else {
                         printEmpty();
                     }
-                    System.out.println();
-                    Carlos++;
                 }
+                System.out.println();
+
+                for (int i = minX; i <= maxX; i++) {
+                    Position toCheck = new Position(i, j);
+                    PlayableCard card = Field.getField().get(toCheck);
+                    if (card != null) {
+                        int finalI = i;
+                        int finalJ = j;
+                        List<Position> positions = Field.getField().keySet().stream().filter(s -> s.getX() == finalI
+                                && s.getY() == finalJ).toList();
+                        Position position = positions.get(0);
+                        FB roba = position.getFace();
+                        if (card.getId() >= 1 && card.getId() <= 40) {
+                            ResourceCard c = (ResourceCard) card;
+                            if (roba == FRONT) {
+                                printFrontResourceCardFirstLine(c);
+                            } else if (roba == BACK) {
+                                printBackResourceCardFirstLine(c);
+                            }
+                        } else if (card.getId() >= 41 && card.getId() <= 81) {
+                            GoldCard c = (GoldCard) card;
+                            if (roba == FRONT) {
+                                printFrontGoldCardFirstLine(c);
+                            } else if (roba == BACK) {
+                                printBackGoldCardFirstLine(c);
+                            }
+                        } else {
+                            StartCard c = (StartCard) card;
+                            if (roba == FRONT) {
+                                printFrontStartCardFirstLine(c);
+                            } else if (roba == BACK) {
+                                printBackStartCardFirstLine(c);
+                            }
+                        }
+                    } else {
+                        printEmpty();
+                    }
+                }
+                System.out.println();
+
+                for (int i = minX; i <= maxX; i++) {
+                    Position toCheck = new Position(i, j);
+                    PlayableCard card = Field.getField().get(toCheck);
+                    if (card != null) {
+                        int finalI = i;
+                        int finalJ = j;
+                        List<Position> positions = Field.getField().keySet().stream().filter(s -> s.getX() == finalI
+                                && s.getY() == finalJ).toList();
+                        Position position = positions.get(0);
+                        FB roba = position.getFace();
+                        if (card.getId() >= 1 && card.getId() <= 40) {
+                            ResourceCard c = (ResourceCard) card;
+                            if (roba == FRONT) {
+                                printFrontResourceCardSecondLine(c);
+                            } else if (roba == BACK) {
+                                printBackResourceCardSecondLine(c);
+                            }
+                        } else if (card.getId() >= 41 && card.getId() <= 81) {
+                            GoldCard c = (GoldCard) card;
+                            if (roba == FRONT) {
+                                printFrontGoldCardSecondLine(c);
+                            } else if (roba == BACK) {
+                                printBackGoldCardSecondLine(c);
+                            }
+                        } else {
+                            StartCard c = (StartCard) card;
+                            if (roba == FRONT) {
+                                printFrontStartCardSecondLine(c);
+                            } else if (roba == BACK) {
+                                printBackStartCardSecondLine(c);
+                            }
+                        }
+                    } else {
+                        printEmpty();
+                    }
+                }
+                System.out.println();
+
+                for (int i = minX; i <= maxX; i++) {
+                    Position toCheck = new Position(i, j);
+                    PlayableCard card = Field.getField().get(toCheck);
+                    if (card != null) {
+                        int finalI = i;
+                        int finalJ = j;
+                        List<Position> positions = Field.getField().keySet().stream().filter(s -> s.getX() == finalI
+                                && s.getY() == finalJ).toList();
+                        Position position = positions.get(0);
+                        FB roba = position.getFace();
+                        if (card.getId() >= 1 && card.getId() <= 40) {
+                            ResourceCard c = (ResourceCard) card;
+                            if (roba == FRONT) {
+                                printFrontResourceCardThirdLine(c);
+                            } else if (roba == BACK) {
+                                 printBackResourceCardThirdLine(c);
+                            }
+                        } else if (card.getId() >= 41 && card.getId() <= 81) {
+                            GoldCard c = (GoldCard) card;
+                            if (roba == FRONT) {
+                                printFrontGoldCardThirdLine(c);
+                            } else if (roba == BACK) {
+                                printBackGoldCardThirdLine(c);
+                            }
+                        } else {
+                            StartCard c = (StartCard) card;
+                            if (roba == FRONT) {
+                                printFrontStartCardThirdLine(c);
+                            } else if (roba == BACK) {
+                                printBackStartCardThirdLine(c);
+                            }
+                        }
+                    } else {
+                        printEmpty();
+                    }
+                }
+                System.out.println();
+
+                for (int i = minX; i <= maxX; i++) {
+                    Position toCheck = new Position(i, j);
+                    PlayableCard card = Field.getField().get(toCheck);
+                    if (card != null) {
+                        int finalI = i;
+                        int finalJ = j;
+                        List<Position> positions = Field.getField().keySet().stream().filter(s -> s.getX() == finalI
+                                && s.getY() == finalJ).toList();
+                        Position position = positions.getFirst();
+                        FB roba = position.getFace();
+                        if (card.getId() >= 1 && card.getId() <= 40) {
+                            ResourceCard c = (ResourceCard) card;
+                            if (roba == FRONT) {
+                                printResourceCardJackie(c);
+                            } else if (roba == BACK) {
+                                printResourceCardJackie(c);
+                            }
+                        } else if (card.getId() >= 41 && card.getId() <= 81) {
+                            GoldCard c = (GoldCard) card;
+                            if (roba == FRONT) {
+                                printGoldCardJackie(c);
+                            } else if (roba == BACK) {
+                                printGoldCardJackie(c);
+                            }
+                        } else {
+                            StartCard c = (StartCard) card;
+                            if (roba == FRONT) {
+                                printStartCardJackie(c);
+                            } else if (roba == BACK) {
+                                printStartCardJackie(c);
+                            }
+                        }
+                    } else {
+                        printEmpty();
+                    }
+                }
+                System.out.println();
             }
-        }
     }
 
     public void printEmpty(){
@@ -1026,9 +1127,13 @@ public class CardsTUI {
         Position position3 = new Position(3,3);
         Position position4 = new Position(0,0);
         Position position5 = new Position(0,2);
+        Position position6 = new Position(-1,1);
+        Position position7 = new Position(-2,2);
+        Position position8 = new Position(-3,3);
 
         ResourceDeck rd = new ResourceDeck();
         StartDeck sd = new StartDeck();
+        GoldDeck gd = new GoldDeck();
 
         ResourceCard r1 = (ResourceCard) rd.getCardById(1);
         ResourceCard r2 = (ResourceCard) rd.getCardById(2);
@@ -1036,13 +1141,19 @@ public class CardsTUI {
         StartCard s1 = (StartCard) sd.getCardById(85);
         ResourceCard r4 = (ResourceCard)rd.getCardById(6);
 
+        GoldCard g1 = (GoldCard) gd.getCardById(41);
+        GoldCard g2 = (GoldCard) gd.getCardById(43);
+        GoldCard g3 = (GoldCard) gd.getCardById(45);
+
         HashMap<Position, PlayableCard> mappa = p.getPlayerField().getField();
         mappa.put(position1, r1);
         mappa.put(position2, r2);
         mappa.put(position3, r3);
         mappa.put(position5, r4);
         mappa.put(position4, s1);
-
+        mappa.put(position6, g1);
+        mappa.put(position7, g2);
+        mappa.put(position8, g3);
         tui.plotPlayingField(p);
 
     }
