@@ -64,7 +64,6 @@ public class GameController {
         Player player = new Player(name, color);
         this.Players.add(player);
         this.clients.add(client);
-
     }
 
     public void initializeRoom() { //pre inizializzazione è una specie di waiting room
@@ -128,9 +127,9 @@ public class GameController {
     }*/
     //non penso serva perchè è il model che la manda al client
 
-    public void chooseGoalCard(Player p, int i) throws RemoteException {
+    public void chooseGoalCard(String name, int i) throws RemoteException {
         boolean choice = i != 1;
-        this.Game.pickGoalCard(p, choice);
+        this.Game.pickGoalCard(getPlayerByName(name), choice);
     }
 
     public void show2goalCards(Player p) throws RemoteException {

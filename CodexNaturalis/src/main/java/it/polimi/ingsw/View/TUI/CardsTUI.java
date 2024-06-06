@@ -1,22 +1,27 @@
 package it.polimi.ingsw.View.TUI;
 
+import it.polimi.ingsw.Controller.GameController;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.ObjectsGoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.*;
 import it.polimi.ingsw.Model.CornerPackage.*;
+
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.*;
 import it.polimi.ingsw.Model.CornerPackage.*;
 import it.polimi.ingsw.Model.CardPackage.*;
+import it.polimi.ingsw.Model.DeckPackage.Deck;
 import it.polimi.ingsw.Model.DeckPackage.GoldDeck;
 import it.polimi.ingsw.Model.DeckPackage.ResourceDeck;
 import it.polimi.ingsw.Model.CornerPackage.CardRes;
 import it.polimi.ingsw.Model.DeckPackage.StartDeck;
-import it.polimi.ingsw.Model.PlayerPackage.FB;
-import it.polimi.ingsw.Model.PlayerPackage.Player;
-import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
-import it.polimi.ingsw.Model.PlayerPackage.Position;
+import it.polimi.ingsw.Model.PlayerPackage.*;
+import it.polimi.ingsw.Model.RoomPackage.Room;
+import it.polimi.ingsw.Network.VirtualView;
 
 import java.security.interfaces.RSAKey;
 import java.sql.SQLOutput;
@@ -874,33 +879,6 @@ public class CardsTUI {
 
     //----------------------------PRINTARE ANGOLI (UGUALE SIA PER GOLD CHE PER RISORSA)---------------------------------
 
-  /*  public void printCorner(Corner c, StringBuilder sb) {
-        if (c.getCovered()) {
-            sb.append("❌");
-        } else {
-            if (c.getRes().equals(Resources.PLANT_KINGDOM)) {
-                sb.append(Resources.PLANT_KINGDOM.getShortName());
-            } else if (c.getRes().equals(Resources.ANIMAL_KINGDOM)) {
-                sb.append(Resources.ANIMAL_KINGDOM.getShortName());
-            } else if (c.getRes().equals(FUNGI_KINGDOM)) {
-                sb.append(FUNGI_KINGDOM.getShortName());
-            } else if (c.getRes().equals(Resources.INSECT_KINGDOM)) {
-                sb.append(Resources.INSECT_KINGDOM.getShortName());
-            } else if (c.getRes().equals(Objects.QUILL)) {
-                sb.append(Objects.QUILL.getShortName());
-            } else if (c.getRes().equals(Objects.MANUSCRIPT)) {
-                sb.append(Objects.MANUSCRIPT.getShortName());
-            } else if (c.getRes().equals(Objects.INKWELL)) {
-                sb.append(Objects.INKWELL.getShortName());
-            } else if (c.getRes().equals(CornerState.ABSENT)) {
-                sb.append(CornerState.ABSENT.getShortName());
-            } else if (c.getRes().equals(CornerState.EMPTY)) {
-                sb.append(CornerState.EMPTY.getShortName());
-            }
-            System.out.print(sb.toString());
-        }
-    }*/
-
     public void printCorner(Corner c, StringBuilder sb) {
         CardRes res = c.getRes();
         if (res instanceof Resources) {
@@ -955,16 +933,15 @@ public class CardsTUI {
 
         for(int j = maxY; j >= minY; j--){
             for(int i = minX; i <= maxX; i++){
-
                 Position tocheck = new Position(j,i);
                 PlayableCard card = Field.getField().get(tocheck);
-
                 int Carlos = 0;
                 while(Carlos < 5) {
                     if (card != null) {
                         int finalI = i;
                         int finalJ = j;
-                        List<Position> positions = Field.getField().keySet().stream().filter(s -> s.getX()== finalI && s.getY()== finalJ).toList();
+                        List<Position> positions = Field.getField().keySet().stream().filter(s -> s.getX()== finalI
+                                && s.getY()== finalJ).toList();
                         Position position = positions.getFirst();
                         FB roba = position.getFace();
                         if (card.getId() >= 1 && card.getId() <= 40) {
@@ -1026,7 +1003,7 @@ public class CardsTUI {
                     } else {
                         printEmpty();
                     }
-                    System.out.println("\n");
+                    System.out.println();
                     Carlos++;
                 }
             }
@@ -1034,6 +1011,39 @@ public class CardsTUI {
     }
 
     public void printEmpty(){
-        System.out.println("               ");
+        System.out.print("               ");
+    }
+
+    public static void main(String[] args) {
+        CardsTUI tui = new CardsTUI();
+        GameController beppe = new GameController(5, 4);
+
+        Player p = new Player("frank", PlayerColor.YELLOW);
+        Player p2 = new Player("djfrr", PlayerColor.BLUE);
+
+        Position position1 = new Position(1,1);
+        Position position2 = new Position(2,2);
+        Position position3 = new Position(3,3);
+        Position position4 = new Position(0,0);
+        Position position5 = new Position(0,2);
+
+        ResourceDeck rd = new ResourceDeck();
+        StartDeck sd = new StartDeck();
+
+        ResourceCard r1 = (ResourceCard) rd.getCardById(1);
+        ResourceCard r2 = (ResourceCard) rd.getCardById(2);
+        ResourceCard r3 = (ResourceCard) rd.getCardById(3);
+        StartCard s1 = (StartCard) sd.getCardById(85);
+        ResourceCard r4 = (ResourceCard)rd.getCardById(6);
+
+        HashMap<Position, PlayableCard> mappa = p.getPlayerField().getField();
+        mappa.put(position1, r1);
+        mappa.put(position2, r2);
+        mappa.put(position3, r3);
+        mappa.put(position5, r4);
+        mappa.put(position4, s1);
+
+        tui.plotPlayingField(p);
+
     }
 }

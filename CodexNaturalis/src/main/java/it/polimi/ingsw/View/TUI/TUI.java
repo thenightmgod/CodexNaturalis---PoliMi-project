@@ -409,7 +409,7 @@ public class TUI implements GameView {
                             goon = true;
                         }
                         case "myField" -> {
-                            cards.plotPlayingField(Turn);
+//                            cards.plotPlayingField(Turn);
                         }
                         // case "freePosition" eventuale
                         case "toDraw" -> {
