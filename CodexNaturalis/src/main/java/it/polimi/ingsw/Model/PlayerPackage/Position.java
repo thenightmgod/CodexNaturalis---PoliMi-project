@@ -99,4 +99,12 @@ public class Position implements Serializable {
         return Objects.hash(x, y, face);
     }
 
+    @Override
+    public String toString() {
+        return "{" +
+                 + x + " , "
+                 + y +
+                '}';
+    }
+
 }

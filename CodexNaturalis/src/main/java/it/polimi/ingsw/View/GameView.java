@@ -31,7 +31,7 @@ public interface GameView {
 
     public void showException(String name, String exception) throws RemoteException, NotBoundException;
 
-    public void showStartCard(StartCard card);
+    public void showStartCard(StartCard card) throws RemoteException;
 
     public void updateTurn(Player player) throws RemoteException;
 

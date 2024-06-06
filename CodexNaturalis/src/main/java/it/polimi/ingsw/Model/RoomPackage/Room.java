@@ -257,10 +257,10 @@ public class Room implements Serializable {
      * Distributes start cards to players.
      //* @param  face The face of the start card.
      */
-    public void giveStartCards(Player player) throws RemoteException {
+    public void giveStartCards() throws RemoteException {
         synchronized (StartDeck) { //boh
-            StartDeck.giveCard(player, 0);
-            observerManager.showStartCard(player.getName(), (StartCard) player.getHand().getFirst());
+            StartDeck.giveCard(Turn, 0);
+            observerManager.showStartCard(Turn.getName(), (StartCard) Turn.getHand().getFirst());
         }
     }
 

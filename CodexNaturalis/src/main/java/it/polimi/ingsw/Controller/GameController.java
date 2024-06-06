@@ -85,7 +85,7 @@ public class GameController {
             };
 
             Timer timer = new Timer("Timer");
-            long delay = 10000L;
+            long delay = 7000L;
 
             timer.schedule(task, delay);
 
@@ -99,13 +99,16 @@ public class GameController {
         State = GameState.RUNNING;
         createDecks();
         createCommonGoals();
-        for(Player p: Players)
+
+        giveStartCard();
+
+        /*for(Player p: Players)
             giveStartCard(p);
         for (Player p : Players)
             giveInitialCards(p);
         for(Player p: Players)
             show2goalCards(p);
-        this.Game.start();
+        this.Game.start();*/
     }
 
     public void createCommonGoals() throws RemoteException {
@@ -136,8 +139,8 @@ public class GameController {
         this.Game.show2GoalCards(p);
     }
 
-    public void giveStartCard(Player p) throws RemoteException {
-        this.Game.giveStartCards(p);
+    public void giveStartCard() throws RemoteException {
+        this.Game.giveStartCards();
     }
 
     public void giveInitialCards(Player p) throws RemoteException {

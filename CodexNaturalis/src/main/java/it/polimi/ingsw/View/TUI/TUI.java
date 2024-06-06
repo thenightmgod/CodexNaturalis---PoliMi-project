@@ -121,6 +121,8 @@ public class TUI implements GameView {
     public void updateFreePosition(String name, LinkedList<Position> freePositions) {
         client.getClient().setFreePositions(freePositions);
         System.out.println("Your new free positions are:");
+        LinkedList<Position> positions = client.getClient().getFreePositions();
+        System.out.println(positions);
     }
 
     @Override
@@ -161,7 +163,7 @@ public class TUI implements GameView {
         }
     }
     @Override
-    public void showStartCard(StartCard card) {
+    public void showStartCard(StartCard card) throws RemoteException {
         cards.printFrontStartCard(card);
         cards.printBackStartCard(card);
         String f;
@@ -185,7 +187,12 @@ public class TUI implements GameView {
                 System.out.println("There was an error while reading the front or back");
             }
         } while(!goon);
+
+
+        endTurn();
     }
+
+
     @Override
     public void showException(String exception, String details) throws RemoteException, NotBoundException {
         switch(exception) {
@@ -409,7 +416,7 @@ public class TUI implements GameView {
                             goon = true;
                         }
                         case "myField" -> {
-//                            cards.plotPlayingField(Turn);
+                            cards.plotPlayingField(Turn);
                         }
                         // case "freePosition" eventuale
                         case "toDraw" -> {
@@ -496,6 +503,7 @@ public class TUI implements GameView {
             //magari altre funzioni, o magari no
         }
     }
+
 
     @Override
     public void updateTurn(Player player) throws RemoteException {
