@@ -99,7 +99,7 @@ public class GameController {
         State = GameState.RUNNING;
         createDecks();
         createCommonGoals();
-
+        this.Game.giveStartCards();
         //giveStartCard();
 
         /*for(Player p: Players)
@@ -202,8 +202,8 @@ public class GameController {
         this.Game.checkGoals(getPlayerByName(name));
     }
 
-    public void endTurn() throws RemoteException {
-        this.Game.changeTurns();
+    public void endTurn(String mex) throws RemoteException {
+        this.Game.changeTurns(mex);
     }
 
     public LinkedList<Player> getPlayers() {

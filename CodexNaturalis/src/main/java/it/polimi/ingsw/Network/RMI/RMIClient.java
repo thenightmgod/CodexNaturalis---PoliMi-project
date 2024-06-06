@@ -119,8 +119,8 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     //    FUNZIONI DELLA VIRTUAL VIEW
 
     @Override
-    public void updateTurn(Player p) throws RemoteException {
-        this.view.updateTurn(p);
+    public void updateTurn(Player p, String mex) throws RemoteException {
+        this.view.updateTurn(p, mex);
     }
 
     @Override

@@ -258,9 +258,11 @@ public class Room implements Serializable {
      //* @param  face The face of the start card.
      */
     public void giveStartCards() throws RemoteException {
-        synchronized (StartDeck) { //boh
-            StartDeck.giveCard(Turn, 0);
-            observerManager.showStartCard(Turn.getName(), (StartCard) Turn.getHand().getFirst());
+        synchronized (StartDeck) {
+            for(Player p : Players) {
+                StartDeck.giveCard(Turn, 0);
+                observerManager.showStartCard(p.getName(), (StartCard) p.getHand().getFirst());
+            }
         }
     }
 
@@ -317,7 +319,7 @@ public class Room implements Serializable {
     }
 
     public void start() throws RemoteException {
-        giveStartCards();
+        this.observerManager.updateTurn(Turn, "StartCard");
     }
 
     public void declareWinner() throws RemoteException {
@@ -346,15 +348,18 @@ public class Room implements Serializable {
 
             switch(mex) {
                 case "StartCard" -> {
-                    if(Turn.equals(Players.getFirst()))
-                        observerManager.updateTurn(Turn, "InitialCards");
+                    if(Turn.equals(Players.getFirst())) {
+                        for(Player p: Players) {
+                            giveInitialCards(p);
+                        }
+                        for(Player p: Players) {
+                            show2GoalCards(p);
+                        }
+                        observerManager.updateTurn(Turn, "GoalCard");
+                    }
                     else observerManager.updateTurn(Turn, "StartCard");
                 }
-                case "InitialCards" -> {
-                    if(Turn.equals(Players.getFirst()))
-                        observerManager.updateTurn(Turn, "GoalCard");
-                    else observerManager.updateTurn(Turn, "InitialCards");
-                }
+
                 case "GoalCard" -> {
                     if(Turn.equals(Players.getFirst()))
                         observerManager.updateTurn(Turn, "NormalTurn");

@@ -33,7 +33,7 @@ public interface GameView {
 
     public void showStartCard(StartCard card) throws RemoteException;
 
-    public void updateTurn(Player player) throws RemoteException;
+    public void updateTurn(Player player, String mex) throws RemoteException;
 
     public void updateGoldDeck(LinkedList<GoldCard> deck, boolean start, String name);
 

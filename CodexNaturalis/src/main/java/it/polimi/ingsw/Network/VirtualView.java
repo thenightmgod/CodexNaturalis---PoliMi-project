@@ -21,7 +21,7 @@ public interface VirtualView extends Remote {
 
     //le funzioni del client che vuole chiamare il server
 
-    void updateTurn(Player p) throws RemoteException;
+    void updateTurn(Player p, String mex) throws RemoteException;
 
     void showException(String exception, String details) throws RemoteException, NotBoundException;
 
@@ -31,6 +31,7 @@ public interface VirtualView extends Remote {
     void updateGoals(LinkedList<GoalCard> goals) throws RemoteException;  //mostro due carte goal da scegliere
     // LinkedList<GoalCard> goals
     void updateCommonGoals(LinkedList<GoalCard> goals) throws RemoteException; //setto i common goals (non li faccio vedere)
+
     void showHand(LinkedList<PlayableCard> hand) throws RemoteException;
     // LinkedList<PlayableCard> hand
 

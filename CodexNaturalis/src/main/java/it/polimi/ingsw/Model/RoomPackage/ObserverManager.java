@@ -46,9 +46,9 @@ public class ObserverManager {
         }
     }
 
-    public void updateTurn(Player turn) throws RemoteException {
+    public void updateTurn(Player turn, String mex) throws RemoteException {
         for(String s : observers.keySet()) {
-            observers.get(s).updateTurn(turn);
+            observers.get(s).updateTurn(turn, mex);
         }
     }
 
