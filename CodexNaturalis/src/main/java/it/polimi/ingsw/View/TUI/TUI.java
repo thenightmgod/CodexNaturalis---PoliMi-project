@@ -189,7 +189,7 @@ public class TUI implements GameView {
         } while(!goon);
 
 
-        endTurn();
+        endTurn("StartCard");
     }
 
 
@@ -511,8 +511,8 @@ public class TUI implements GameView {
         isYourTurn();
 
     }
-    public void endTurn() throws RemoteException {
-        client.endTurn(Turn.getName());
+    public void endTurn(String mex) throws RemoteException {
+        client.endTurn(Turn.getName(), mex);
     }
 
     @Override

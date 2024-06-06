@@ -317,7 +317,7 @@ public class Room implements Serializable {
     }
 
     public void start() throws RemoteException {
-        observerManager.updateTurn(Turn);
+        giveStartCards();
     }
 
     public void declareWinner() throws RemoteException {
@@ -330,7 +330,7 @@ public class Room implements Serializable {
         }
     }
 
-    public void changeTurns() throws RemoteException {
+    public void changeTurns(String mex) throws RemoteException {
         setLL();
         if(LL){
             for(Player p: Players)
@@ -338,36 +338,33 @@ public class Room implements Serializable {
             declareWinner();
         }
         else {
-            int size = Players.size();
-            //magari cambiare sta stronzata
-            switch (size) {
-                case 2 -> {
-                    if (Turn.equals(Players.getFirst())) {
-                        setTurn(Players.get(1));
-                        break;
-                    }
-                    setTurn(Players.getFirst());
-                }
-                case 3 -> {
-                    if (Turn.equals(Players.getFirst()))
-                        setTurn(Players.get(1));
-                    else if (Turn.equals(Players.get(1)))
-                        setTurn(Players.get(2));
-                    else setTurn(Players.getFirst());
-                }
-                case 4 -> {
-                    if (Turn.equals(Players.getFirst()))
-                        setTurn(Players.get(1));
-                    else if (Turn.equals(Players.get(1)))
-                        setTurn(Players.get(2));
-                    else if (Turn.equals(Players.get(2)))
-                        setTurn(Players.get(3));
-                    else setTurn(Players.getFirst());
-                }
-            }
             setTwentyFlag();
             setLastRound();
-            observerManager.updateTurn(Turn);
+
+            int index = Players.indexOf(Turn);
+            Turn = Players.getLast().equals(Turn) ? Players.getFirst() : Players.get(index + 1);
+
+            switch(mex) {
+                case "StartCard" -> {
+                    if(Turn.equals(Players.getFirst()))
+                        observerManager.updateTurn(Turn, "InitialCards");
+                    else observerManager.updateTurn(Turn, "StartCard");
+                }
+                case "InitialCards" -> {
+                    if(Turn.equals(Players.getFirst()))
+                        observerManager.updateTurn(Turn, "GoalCard");
+                    else observerManager.updateTurn(Turn, "InitialCards");
+                }
+                case "GoalCard" -> {
+                    if(Turn.equals(Players.getFirst()))
+                        observerManager.updateTurn(Turn, "NormalTurn");
+                    else observerManager.updateTurn(Turn, "GoalCard");
+                }
+                case "NormalTurn" -> {
+                    observerManager.updateTurn(Turn, "NormalTurn");
+                }
+            }
+
         }
     }
 }

@@ -98,8 +98,8 @@ public class RMIServer implements VirtualServer{
     }
 
     @Override
-    public void endTurn(VirtualView client) throws RemoteException {
-        Actions eAction = new EndTurnAction(client, controller, this);
+    public void endTurn(VirtualView client, String mex) throws RemoteException {
+        Actions eAction = new EndTurnAction(client, controller, this, mex);
         actions.add(eAction);
     }
 
