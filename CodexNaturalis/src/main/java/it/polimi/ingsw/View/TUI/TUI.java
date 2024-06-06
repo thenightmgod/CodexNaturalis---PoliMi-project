@@ -536,6 +536,7 @@ public class TUI implements GameView {
 
         this.Turn = player;
 
+        //robaccia per printare che non è il tuo turno e bla bla
         if(Turn.getName().equals(client.getName())) {
             switch (mex) {
                 case "StartCard" -> setStartCardFace();

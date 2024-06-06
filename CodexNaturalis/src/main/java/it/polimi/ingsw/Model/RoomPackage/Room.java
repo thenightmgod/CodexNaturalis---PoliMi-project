@@ -260,7 +260,7 @@ public class Room implements Serializable {
     public void giveStartCards() throws RemoteException {
         synchronized (StartDeck) {
             for(Player p : Players) {
-                StartDeck.giveCard(Turn, 0);
+                StartDeck.giveCard(p, 0);
                 observerManager.showStartCard(p.getName(), (StartCard) p.getHand().getFirst());
             }
         }
