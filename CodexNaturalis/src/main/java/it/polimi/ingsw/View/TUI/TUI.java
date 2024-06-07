@@ -326,25 +326,7 @@ public class TUI implements GameView {
                 this.client = chooseClient(name);
                 this.client.joinGame(name);
                 goon = true;
-               /* switch (error) {
-                    case "NameAlreadyTakenException" -> {
-                        System.out.println("Name already taken! Please try again!");
-                        error = "default";
-                    }
-                    case "RoomFullException" -> {
-                        System.out.println("Room full! Please create a Game!");
-                        error = "default";
-                        createGame();
-                        goon = true;
-                    }
-                    case "RoomNotExistsException" -> {
-                        System.out.println("The room doesn't exist! Please create a game from scratch!");
-                        error = "default";
-                        createGame();
-                        goon = true;
-                    }
-                    default -> goon = true;
-                }*/
+
             } catch (RemoteException e){
                 System.out.println("there has been a problem in the join game");
             }
@@ -399,7 +381,7 @@ public class TUI implements GameView {
         name = nickname;
     }
 
-    public void isYourTurnPt1() throws RemoteException {
+    /*public void isYourTurnPt1() throws RemoteException {
         if(Turn.getName().equals(client.getName())) {
             boolean goon = false;
             String roba;
@@ -425,7 +407,7 @@ public class TUI implements GameView {
                                 else {
                                     cards.printFrontGoldCard((GoldCard) Turn.getCardFromHand(i));
                                     cards.printBackGoldCard((GoldCard) Turn.getCardFromHand(i));
-                            }
+                                }
                             }
 
                             // poi può flippare
@@ -531,6 +513,10 @@ public class TUI implements GameView {
             }
         } while (!goon);
         endTurn("NormalTurn");
+    }*/
+
+    private void isYourTurn() throws RemoteException {
+        placeCard();
     }
 
 
@@ -544,7 +530,7 @@ public class TUI implements GameView {
             switch (mex) {
                 case "StartCard" -> setStartCardFace();
                 case "GoalCard" -> chooseGoalCard();
-                case "NormalTurn" -> isYourTurnPt1();
+                case "NormalTurn" -> isYourTurn();
             }
         }
         else{
@@ -603,25 +589,46 @@ public class TUI implements GameView {
 
     //            FUNZIONI PER GIOCARE
 
+    private int getIndex() {
+
+        int input = 77;
+
+        boolean goon = false;
+
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            input = Integer.parseInt(reader.readLine());
+
+        } catch (NumberFormatException e) {
+            System.out.println("Please enter a number!");
+        } catch (IOException e) {
+            System.out.println("getindex sbatti!");
+            throw new RuntimeException();
+        }
+
+
+        return input;
+    }
+
+
     private void placeCard() throws RemoteException {
         boolean goon = false;
         int i, x, y;
         boolean face = false;
         FB f = FB.FRONT;
-        String fac;
+        int fac;
         do {
             try {
                 System.out.println("What card do you want to place?");
-                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-                i = Integer.parseInt(reader.readLine());
+                i = getIndex();
                 System.out.println("in what position do you want to place it? Send the x first!");
-                x = Integer.parseInt(reader.readLine());
+                x = getIndex();
                 System.out.println("And now the y!");
-                y = Integer.parseInt(reader.readLine());
+                y = getIndex();
                 System.out.println("Do you want to place it Front or Back? Send a 1 for front and a 0 for back");
-                fac = reader.readLine();
-                if (fac.equals("1") || fac.equals("0")) {
-                    if (fac.equals("0"))
+                fac = getIndex();
+                if (fac == 1 || fac == 0) {
+                    if (fac == 0)
                         f = FB.BACK;
                     client.placeCard(client, i, x, y, f);
                     goon = true;
@@ -630,10 +637,18 @@ public class TUI implements GameView {
                     System.out.println("the face of the card should be 1 or 0");
                 }
             } catch (IOException e){
-                throw new RuntimeException(e);
+                System.out.println("I/O exception in place card");
+            } catch (NumberFormatException e){
+                System.out.println("Please enter a number");
             }
         } while (!goon) ;
-        isYourTurnPt2();
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException bla){
+            System.out.println(bla.getMessage());
+        }
+        cards.plotPlayingField(Turn);
+        drawCard();
     }
 
 
@@ -659,17 +674,16 @@ public class TUI implements GameView {
     } */
 
 
-    public void drawCard() {
+    public void drawCard() throws RemoteException {
             boolean goon = false;
             int whichDeck, whichCard;
             do {
                 try {
 
                     System.out.println("From which deck do you want to draw?\n1 --> ResourceDeck\n2 --> GoldDeck");
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-                    whichDeck = Integer.parseInt(reader.readLine());
+                    whichDeck = getIndex();
                     System.out.println("Which card do you want to pick?");
-                    whichCard = Integer.parseInt(reader.readLine());
+                    whichCard = getIndex();
                     client.drawCard(whichDeck, whichCard, client);
                     /*if(error.equals("WrongIndexException")) {
                         System.out.println("You chose indexes which are not between 1 and 3!");
@@ -684,6 +698,10 @@ public class TUI implements GameView {
                 }
 
             }while (!goon) ;
+
+            cards.plotPlayingField(Turn);
+
+            endTurn("NormalTurn");
         }
 
 

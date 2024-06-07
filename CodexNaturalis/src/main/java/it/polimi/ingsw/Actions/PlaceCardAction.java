@@ -24,6 +24,7 @@ public class PlaceCardAction extends Actions{
         this.whichInHand = whichInHand;
         this.x = x;
         this.y = y;
+        this.face = face;
     }
 
     @Override
