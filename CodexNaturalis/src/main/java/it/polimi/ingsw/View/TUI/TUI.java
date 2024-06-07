@@ -465,10 +465,7 @@ public class TUI implements GameView {
             } while (!goon);
 
         }
-        else{
-            System.out.println("it's"+ Turn.getName()+ "'s turn");
-            //magari altre funzioni, o magari no
-        }
+
     }
 
     public void isYourTurnPt2() throws RemoteException {
@@ -549,6 +546,9 @@ public class TUI implements GameView {
                 case "GoalCard" -> chooseGoalCard();
                 case "NormalTurn" -> isYourTurnPt1();
             }
+        }
+        else{
+            System.out.println("It's" + Turn.getName() + "'s turn");
         }
 
     }
