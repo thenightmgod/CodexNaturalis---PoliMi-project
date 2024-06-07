@@ -25,6 +25,25 @@ public class PlayingField implements Serializable {
         FreePositions = new LinkedList<>();
     }
 
+    public boolean containsFreePosition(Position p){
+        for(Position pos : FreePositions){
+            if(pos.equals(p)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean containsInField(Position p){
+        Set<Position> set = Field.keySet();
+        for(Position p1 : set){
+            if(p.equals(p1)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public Position getPosition(int x, int y){
         Position position = new Position(x, y);
         List<Position> k = Field.keySet().stream().filter(s -> s.equals(position)).toList();

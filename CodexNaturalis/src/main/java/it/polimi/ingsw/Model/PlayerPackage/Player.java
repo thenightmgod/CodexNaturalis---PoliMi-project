@@ -183,6 +183,7 @@ public class Player implements Serializable {
                 }
             }
             this.PlayerField.updateFreePositions(new Position(0, 0));
+
         }
         else{
             for(Orientation Orien : Orientation.values()){
@@ -275,7 +276,7 @@ public class Player implements Serializable {
 
 
     public ResourceCard getCardFromHand(int i){
-        return (ResourceCard) this.Hand.get(i);
+        return (ResourceCard) this.Hand.get(i-1);
     }
 
     /**

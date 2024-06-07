@@ -87,7 +87,7 @@ public class Position implements Serializable {
             return false;
         }
         Position position = (Position) obj;
-        return this.x == position.getX() && this.y == position.getY() && this.face == position.getFace();
+        return this.x == position.getX() && this.y == position.getY();
     }
 
     /**

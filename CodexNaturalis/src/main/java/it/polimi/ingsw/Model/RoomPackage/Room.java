@@ -161,7 +161,7 @@ public class Room implements Serializable {
      */
     public void placeCard(ResourceCard c, FB face, int x, int y) throws RemoteException, NotBoundException {
         Position p = new Position(face, x, y);
-        if(Turn.getPlayerField().getField().containsKey(p) || !Turn.getPlayerField().getFreePositions().contains(p)) {
+        if(Turn.getPlayerField().containsInField(p) || !(Turn.getPlayerField().containsFreePosition(p))) {
             observerManager.showException("WrongPositionException", "Nothing", Turn.getName());
         }
         else {
