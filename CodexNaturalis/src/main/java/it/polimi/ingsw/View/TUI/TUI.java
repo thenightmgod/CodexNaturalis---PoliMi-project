@@ -65,6 +65,7 @@ public class TUI implements GameView {
 
     @Override
     public void updateGoals(LinkedList<GoalCard> goals, String name) throws RemoteException {
+        System.out.println("Choose your personal GoalCard");
         cards.printGoalCard(goals.getFirst());
         cards.printGoalCard(goals.getLast());
     }
@@ -78,7 +79,7 @@ public class TUI implements GameView {
         int i;
         do {
             try {
-                System.out.println("Choose your personal GoalCard: 1 or 2?");
+                System.out.println("write '1' for the card on the top or '2' for the card on the bottom?");
                 BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
                 i = Integer.parseInt(reader.readLine());
                 if (i == 1 || i == 2) {
@@ -101,7 +102,7 @@ public class TUI implements GameView {
     public void updateHands(LinkedList<PlayableCard> hand, String name) {
         client.getClient().setHand(hand);
         System.out.println("This is your new hand");
-        cards.plotHand(client.getClient());
+        cards.plotHandSeria(client.getClient());
     }
 
     @Override

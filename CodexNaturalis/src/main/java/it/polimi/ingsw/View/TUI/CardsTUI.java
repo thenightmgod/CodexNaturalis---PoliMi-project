@@ -1115,6 +1115,7 @@ public class CardsTUI {
                     }
                 }
                 System.out.println();
+            System.out.print(ANSI_RESET);
             }
     }
 
@@ -1531,6 +1532,140 @@ public class CardsTUI {
         }
     }
 
+    public void plotHandSeria(ClientModel model){
+        LinkedList<PlayableCard> toPrint= model.getHand();
+        System.out.println("");
+        System.out.println("CARD 1               CARD 2               CARD 3");
+        for(PlayableCard card : toPrint){
+            if (card.getId() >= 1 && card.getId() <= 40) {
+                ResourceCard c = (ResourceCard) card;
+                printResourceCardJackie(c);
+                }
+            else if (card.getId() >= 41 && card.getId() <= 80){
+                GoldCard c = (GoldCard) card;
+                    printGoldCardJackie(c);
+            }
+            System.out.print("      ");
+            System.out.print(ANSI_RESET);
+        }
+        System.out.println("");
+        for(PlayableCard card : toPrint){
+            if (card.getId() >= 1 && card.getId() <= 40) {
+                ResourceCard c = (ResourceCard) card;
+                printFrontResourceCardFirstLine(c);
+            }
+            else if (card.getId() >= 41 && card.getId() <= 80){
+                GoldCard c = (GoldCard) card;
+                printFrontGoldCardFirstLine(c);
+            }
+            System.out.print("     ");
+        }
+        System.out.println("");
+        for(PlayableCard card : toPrint){
+            if (card.getId() >= 1 && card.getId() <= 40) {
+                ResourceCard c = (ResourceCard) card;
+                printFrontResourceCardSecondLine(c);
+            }
+            else if (card.getId() >= 41 && card.getId() <= 80){
+                GoldCard c = (GoldCard) card;
+                printFrontGoldCardSecondLine(c);
+            }
+            System.out.print("     ");
+            System.out.print(ANSI_RESET);
+        }
+        System.out.println("");
+        for(PlayableCard card : toPrint){
+            if (card.getId() >= 1 && card.getId() <= 40) {
+                ResourceCard c = (ResourceCard) card;
+                printFrontResourceCardThirdLine(c);
+            }
+            else if (card.getId() >= 41 && card.getId() <= 80){
+                GoldCard c = (GoldCard) card;
+                printFrontGoldCardThirdLine(c);
+            }
+            System.out.print("     ");
+            System.out.print(ANSI_RESET);
+        }
+        System.out.println("");
+        for(PlayableCard card : toPrint){
+            if (card.getId() >= 1 && card.getId() <= 40) {
+                ResourceCard c = (ResourceCard) card;
+                printResourceCardJackie(c);
+            }
+            else if (card.getId() >= 41 && card.getId() <= 80){
+                GoldCard c = (GoldCard) card;
+                printGoldCardJackie(c);
+            }
+            System.out.print("      ");
+            System.out.print(ANSI_RESET);
+        }
+        System.out.println("");
+        for(PlayableCard card : toPrint){
+            if (card.getId() >= 1 && card.getId() <= 40) {
+                ResourceCard c = (ResourceCard) card;
+                printResourceCardJackie(c);
+            }
+            else if (card.getId() >= 41 && card.getId() <= 80){
+                GoldCard c = (GoldCard) card;
+                printGoldCardJackie(c);
+            }
+            System.out.print("      ");
+            System.out.print(ANSI_RESET);
+        }
+        System.out.println("");
+        for(PlayableCard card : toPrint){
+            if (card.getId() >= 1 && card.getId() <= 40) {
+                ResourceCard c = (ResourceCard) card;
+                printBackResourceCardFirstLine(c);
+            }
+            else if (card.getId() >= 41 && card.getId() <= 80){
+                GoldCard c = (GoldCard) card;
+                printBackGoldCardFirstLine(c);
+            }
+            System.out.print("     ");
+            System.out.print(ANSI_RESET);
+        }
+        System.out.println("");
+        for(PlayableCard card : toPrint){
+            if (card.getId() >= 1 && card.getId() <= 40) {
+                ResourceCard c = (ResourceCard) card;
+                printBackResourceCardSecondLine(c);
+            }
+            else if (card.getId() >= 41 && card.getId() <= 80){
+                GoldCard c = (GoldCard) card;
+                printBackGoldCardSecondLine(c);
+            }
+            System.out.print("     ");
+        }
+        System.out.println("");
+        for(PlayableCard card : toPrint){
+            if (card.getId() >= 1 && card.getId() <= 40) {
+                ResourceCard c = (ResourceCard) card;
+                printBackResourceCardThirdLine(c);
+            }
+            else if (card.getId() >= 41 && card.getId() <= 80){
+                GoldCard c = (GoldCard) card;
+                printBackGoldCardThirdLine(c);
+            }
+            System.out.print("     ");
+            System.out.print(ANSI_RESET);
+        }
+        System.out.println("");
+        for(PlayableCard card : toPrint){
+            if (card.getId() >= 1 && card.getId() <= 40) {
+                ResourceCard c = (ResourceCard) card;
+                printResourceCardJackie(c);
+            }
+            else if (card.getId() >= 41 && card.getId() <= 80){
+                GoldCard c = (GoldCard) card;
+                printGoldCardJackie(c);
+            }
+            System.out.print("      ");
+        }
+        System.out.println("");
+        System.out.println("");
+        System.out.print(ANSI_RESET);
+    }
     //---------------------------------------GOLDDECK--------------------------------------------------------------
 
     public void plotGoldDeck(ClientModel model){

@@ -30,7 +30,6 @@ public class ChooseGoalCardAction extends Actions{
         if(k != -1){
             GameController controller = getManager().getControllersPerGame().get(k);
             controller.chooseGoalCard(getView().getName(), i);
-            System.out.println("Goal card chosen");
         }
     }
 }
