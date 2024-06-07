@@ -296,4 +296,10 @@ public class Player implements Serializable {
     public void setObjectCounter(int[] objectCounter) {
         ObjectCounter = objectCounter;
     }
+
+    @Override
+    public String toString() {
+        return Name;
+    }
+
 }

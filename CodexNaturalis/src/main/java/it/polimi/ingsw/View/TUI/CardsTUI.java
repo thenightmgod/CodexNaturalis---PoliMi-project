@@ -6,6 +6,8 @@ import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.ObjectsGoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.*;
 import it.polimi.ingsw.Model.CornerPackage.*;
 
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -14,6 +16,8 @@ import it.polimi.ingsw.Model.DeckPackage.ResourceDeck;
 import it.polimi.ingsw.Model.CornerPackage.CardRes;
 import it.polimi.ingsw.Model.DeckPackage.StartDeck;
 import it.polimi.ingsw.Model.PlayerPackage.*;
+import it.polimi.ingsw.Model.RoomPackage.Room;
+import it.polimi.ingsw.Network.VirtualView;
 
 import java.util.List;
 
@@ -1115,12 +1119,344 @@ public class CardsTUI {
         System.out.print("               ");
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws RemoteException {
         CardsTUI tui = new CardsTUI();
         GameController beppe = new GameController(5, 4);
 
         Player p = new Player("frank", PlayerColor.YELLOW);
-        Player p2 = new Player("djfrr", PlayerColor.BLUE);
+        Player p2 = new Player("CARLOS O'CONNELL", PlayerColor.BLUE);
+        Player p3 = new Player("MARCO DEVI MORIRE", PlayerColor.GREEN);
+
+        VirtualView v1 = new VirtualView() {
+            @Override
+            public void updateTurn(Player p, String mex) throws RemoteException {
+
+            }
+
+            @Override
+            public void showException(String exception, String details) throws RemoteException, NotBoundException {
+
+            }
+
+            @Override
+            public void updatePoints(int points, String name) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateGoals(LinkedList<GoalCard> goals) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateCommonGoals(LinkedList<GoalCard> goals) throws RemoteException {
+
+            }
+
+            @Override
+            public void showHand(LinkedList<PlayableCard> hand) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateField(String name, PlayingField field) throws RemoteException {
+
+            }
+
+            @Override
+            public void showFreePositions(String name, LinkedList<Position> freePosition) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateResourceDeck(String name, boolean start, LinkedList<ResourceCard> deck) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateGoldDeck(String name, boolean start, LinkedList<GoldCard> deck) throws RemoteException {
+
+            }
+
+            @Override
+            public void declareWinner(HashMap<String, Integer> classifica) throws RemoteException {
+
+            }
+
+            @Override
+            public String getName() throws RemoteException {
+                return "";
+            }
+
+            @Override
+            public void showStartCard(StartCard card) throws RemoteException {
+
+            }
+
+            @Override
+            public void startingGame(Player p) throws RemoteException {
+
+            }
+
+            @Override
+            public void update() throws RemoteException {
+
+            }
+
+            @Override
+            public void showOtherField(String player) throws RemoteException {
+
+            }
+        };
+        VirtualView v2 = new VirtualView() {
+            @Override
+            public void updateTurn(Player p, String mex) throws RemoteException {
+
+            }
+
+            @Override
+            public void showException(String exception, String details) throws RemoteException, NotBoundException {
+
+            }
+
+            @Override
+            public void updatePoints(int points, String name) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateGoals(LinkedList<GoalCard> goals) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateCommonGoals(LinkedList<GoalCard> goals) throws RemoteException {
+
+            }
+
+            @Override
+            public void showHand(LinkedList<PlayableCard> hand) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateField(String name, PlayingField field) throws RemoteException {
+
+            }
+
+            @Override
+            public void showFreePositions(String name, LinkedList<Position> freePosition) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateResourceDeck(String name, boolean start, LinkedList<ResourceCard> deck) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateGoldDeck(String name, boolean start, LinkedList<GoldCard> deck) throws RemoteException {
+
+            }
+
+            @Override
+            public void declareWinner(HashMap<String, Integer> classifica) throws RemoteException {
+
+            }
+
+            @Override
+            public String getName() throws RemoteException {
+                return "";
+            }
+
+            @Override
+            public void showStartCard(StartCard card) throws RemoteException {
+
+            }
+
+            @Override
+            public void startingGame(Player p) throws RemoteException {
+
+            }
+
+            @Override
+            public void update() throws RemoteException {
+
+            }
+
+            @Override
+            public void showOtherField(String player) throws RemoteException {
+
+            }
+        };
+        VirtualView v3 = new VirtualView() {
+            @Override
+            public void updateTurn(Player p, String mex) throws RemoteException {
+
+            }
+
+            @Override
+            public void showException(String exception, String details) throws RemoteException, NotBoundException {
+
+            }
+
+            @Override
+            public void updatePoints(int points, String name) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateGoals(LinkedList<GoalCard> goals) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateCommonGoals(LinkedList<GoalCard> goals) throws RemoteException {
+
+            }
+
+            @Override
+            public void showHand(LinkedList<PlayableCard> hand) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateField(String name, PlayingField field) throws RemoteException {
+
+            }
+
+            @Override
+            public void showFreePositions(String name, LinkedList<Position> freePosition) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateResourceDeck(String name, boolean start, LinkedList<ResourceCard> deck) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateGoldDeck(String name, boolean start, LinkedList<GoldCard> deck) throws RemoteException {
+
+            }
+
+            @Override
+            public void declareWinner(HashMap<String, Integer> classifica) throws RemoteException {
+
+            }
+
+            @Override
+            public String getName() throws RemoteException {
+                return "";
+            }
+
+            @Override
+            public void showStartCard(StartCard card) throws RemoteException {
+
+            }
+
+            @Override
+            public void startingGame(Player p) throws RemoteException {
+
+            }
+
+            @Override
+            public void update() throws RemoteException {
+
+            }
+
+            @Override
+            public void showOtherField(String player) throws RemoteException {
+
+            }
+        };
+        VirtualView v4 = new VirtualView() {
+            @Override
+            public void updateTurn(Player p, String mex) throws RemoteException {
+
+            }
+
+            @Override
+            public void showException(String exception, String details) throws RemoteException, NotBoundException {
+
+            }
+
+            @Override
+            public void updatePoints(int points, String name) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateGoals(LinkedList<GoalCard> goals) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateCommonGoals(LinkedList<GoalCard> goals) throws RemoteException {
+
+            }
+
+            @Override
+            public void showHand(LinkedList<PlayableCard> hand) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateField(String name, PlayingField field) throws RemoteException {
+
+            }
+
+            @Override
+            public void showFreePositions(String name, LinkedList<Position> freePosition) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateResourceDeck(String name, boolean start, LinkedList<ResourceCard> deck) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateGoldDeck(String name, boolean start, LinkedList<GoldCard> deck) throws RemoteException {
+
+            }
+
+            @Override
+            public void declareWinner(HashMap<String, Integer> classifica) throws RemoteException {
+
+            }
+
+            @Override
+            public String getName() throws RemoteException {
+                return "";
+            }
+
+            @Override
+            public void showStartCard(StartCard card) throws RemoteException {
+
+            }
+
+            @Override
+            public void startingGame(Player p) throws RemoteException {
+
+            }
+
+            @Override
+            public void update() throws RemoteException {
+
+            }
+
+            @Override
+            public void showOtherField(String player) throws RemoteException {
+
+            }
+        };
+
+        beppe.addPlayer("frank", PlayerColor.YELLOW, v1);
+        beppe.addPlayer("CARLOS O'CONNELL", PlayerColor.BLUE,v2);
+        beppe.addPlayer("MARCO DEVI MORIRE", PlayerColor.GREEN, v3);
+
+        tui.plotPoints(beppe);
 
         Position position1 = new Position(1,1);
         Position position2 = new Position(2,2);
@@ -1156,5 +1492,37 @@ public class CardsTUI {
         mappa.put(position8, g3);
         tui.plotPlayingField(p);
 
+        tui.plotPoints(beppe);
+
+    }
+
+    //-------------------------------PUNTIIIIII--------------------------------------------------------------------------
+
+    public void plotPoints(GameController controller){
+        System.out.printf("%-20s %-10s%n", "Player", "Points");
+        System.out.println("---------------------------------");
+
+        int carlos = controller.getPlayers().size();
+        int zero = 0;
+        for(int i  = zero ; i < carlos; i++){
+
+            System.out.printf("%-20s %-10d%n", controller.getPlayers().get(i).getName(), controller.getPlayers().get(i).getPointsCounter());
+        }
+    }
+
+    //-----------------------------------------HAND--------------------------------------------------------------------
+
+    public void plotHand(LinkedList<PlayableCard> hand, Player Turn){
+        LinkedList<PlayableCard> toPrint = Turn.getHand();
+        for(int i =0; i<3; i++){
+            if(Turn.getCardFromHand(i).getId()>=1 && Turn.getCardFromHand(i).getId()<=40) {
+                printFrontResourceCard(Turn.getCardFromHand(i));
+                printBackResourceCard(Turn.getCardFromHand(i));
+            }
+            else {
+                printFrontGoldCard((GoldCard) Turn.getCardFromHand(i));
+                printBackGoldCard((GoldCard) Turn.getCardFromHand(i));
+            }
+        }
     }
 }

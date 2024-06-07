@@ -29,13 +29,11 @@ public class RMIServer implements VirtualServer{
     int port;
 
     BlockingQueue<Actions> actions;
-    BlockingQueue<Actions> actions2;
 
     public RMIServer(MainController controller) throws RemoteException{
         this.controller = controller;
         port = 4446;
         actions = new ArrayBlockingQueue<>(100);
-        actions2 = new ArrayBlockingQueue<>(100);
         execute();
     }
 

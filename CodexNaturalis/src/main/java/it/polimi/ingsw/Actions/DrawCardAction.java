@@ -23,6 +23,7 @@ public class DrawCardAction extends Actions {
 
     @Override
     public void executor() throws RemoteException, NotBoundException {
+        System.out.println("DRAW CARD 111");
         int k = -1;
         for(Map.Entry<Integer, GameController> entry : getManager().getControllersPerGame().entrySet()){
             if(entry.getValue().getPlayers().stream().map(Player::getName).toList().contains(getView().getName())){
@@ -32,5 +33,6 @@ public class DrawCardAction extends Actions {
         if(k != -1){
             GameController controller = getManager().getControllersPerGame().get(k);
             controller.drawCard(i, whichOne);}
+        System.out.println("DRAW CARD 22222");
     }
 }
