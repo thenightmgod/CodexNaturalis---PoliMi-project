@@ -179,6 +179,7 @@ public class GameController {
         for(Player p: Players) {
             this.Game.getObserverManager().updateResourceDeck(p.getName(), false, cards);
         }
+        changeTurns("NormalTurn");
     }
 
     public void pickGoldCard(int i) throws RemoteException {
@@ -192,6 +193,7 @@ public class GameController {
         for(Player p: Players) {
             this.Game.getObserverManager().updateGoldDeck(p.getName(), false, cards);
         }
+        changeTurns("NormalTurn");
     }
 
     public void changeTurns(String mex) throws RemoteException {

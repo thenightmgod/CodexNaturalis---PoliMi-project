@@ -170,11 +170,11 @@ public class Room implements Serializable {
             }
             else {
                 Turn.placeCard(c, p);
-
                 observerManager.showNewHand(Turn.getName(), Turn.getHand());
                 observerManager.updateField(Turn.getName(), Turn.getPlayerField());
                 observerManager.updatePoints(Turn.getPointsCounter(), Turn.getName());
                 observerManager.showFreePositions(Turn.getName(), Turn.getPlayerField().getFreePositions());
+                observerManager.showException("Nothing", "PlaceCardWell", Turn.getName());
             }
         }
     } //per il collegamento col controller

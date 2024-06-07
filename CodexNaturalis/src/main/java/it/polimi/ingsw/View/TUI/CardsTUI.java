@@ -1513,19 +1513,18 @@ public class CardsTUI {
 
     public void plotHand(ClientModel model){
         LinkedList<PlayableCard> toPrint = model.getHand();
-        for(int i =0; i<3; i++){
-            if(toPrint.get(i).getId()>=1 && toPrint.get(i).getId()<=40) {
-                printFrontResourceCard((ResourceCard) toPrint.get(i));
-                printBackResourceCard((ResourceCard) toPrint.get(i));
+        for(PlayableCard p : toPrint){
+            if (p.getId() >= 1 && p.getId() <= 40) {
+                printFrontResourceCard((ResourceCard) p);
+                printBackResourceCard((ResourceCard) p);
+            } else if (p.getId() >= 41 && p.getId() <= 80) {
+                printFrontGoldCard((GoldCard) p);
+                printBackGoldCard((GoldCard) p);
+            } else {
+                printFrontStartCard((StartCard) p);
+                printBackStartCard((StartCard) p);
             }
-            else if (toPrint.get(i).getId()>=41 && toPrint.get(i).getId()<=80){
-                printFrontGoldCard((GoldCard) toPrint.get(i));
-                printBackGoldCard((GoldCard) toPrint.get(i));
-            }
-            else{
-                printFrontStartCard((StartCard) toPrint.get(i));
-                printBackStartCard((StartCard) toPrint.get(i));
-            }
+
         }
     }
 

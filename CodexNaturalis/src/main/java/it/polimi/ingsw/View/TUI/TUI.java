@@ -216,6 +216,10 @@ public class TUI implements GameView {
                     }
                 }
             }
+            case "Nothing" -> {
+                if(details.equals("PlaceCardWell"))
+                    drawCard();
+            }
             case "WrongPositionException" -> {
                 System.out.println("The position you chose isn't in the free ones!");
                 System.out.println("Look at the free position and choose one in those");
@@ -620,13 +624,7 @@ public class TUI implements GameView {
                 System.out.println("Please enter a number");
             }
         } while (!goon) ;
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException bla){
-            System.out.println(bla.getMessage());
-        }
 
-        drawCard();
     }
 
 
@@ -677,9 +675,6 @@ public class TUI implements GameView {
 
             }while (!goon) ;
 
-            cards.plotPlayingField(client.getClient());
-
-            endTurn("NormalTurn");
         }
 
 
