@@ -183,7 +183,7 @@ public class Room implements Serializable {
         p.placeStartCard((StartCard) p.getHand().getFirst(), face);
         observerManager.updateField(p.getName(), p.getPlayerField());
         observerManager.showFreePositions(Turn.getName(), Turn.getPlayerField().getFreePositions());
-        observerManager.showNewHand(Turn.getName(), Turn.getHand());
+        //observerManager.showNewHand(Turn.getName(), Turn.getHand());
     }
 
     public void startingGame(Player p) throws RemoteException {
