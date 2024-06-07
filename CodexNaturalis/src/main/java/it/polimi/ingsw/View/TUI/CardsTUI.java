@@ -872,6 +872,9 @@ public class CardsTUI {
     //----------------------------PRINTARE ANGOLI (UGUALE SIA PER GOLD CHE PER RISORSA)---------------------------------
 
     public void printCorner(Corner c, StringBuilder sb) {
+        if (c.getCovered()) {
+            sb.append("❌");
+        } else {
         CardRes res = c.getRes();
         if (res instanceof Resources) {
             switch ((Resources) res) {
@@ -910,10 +913,10 @@ public class CardsTUI {
                     break;
             }
         }
-
+        }
         // Stampa il contenuto del StringBuilder fuori dalle condizioni
         System.out.print(sb.toString());
-    }
+        }
 
     public void plotPlayingField(ClientModel model){
         PlayingField Field = model.getField();
