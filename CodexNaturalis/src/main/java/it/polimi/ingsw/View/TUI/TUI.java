@@ -51,13 +51,16 @@ public class TUI implements GameView {
 
     @Override
     public void updatePoints(int points, String name){
-        if(name.equals(Turn.getName())) {
+
+        //DA RIFARE COL MENU'
+
+        /*if(name.equals(Turn.getName())) {
             client.getClient().setPointsCounter(points);
             System.out.println("Your new points are" + points);
         }
         else{
-            System.out.println(name + "new points are" + points);
-        }
+            System.out.println(name+ "'s new points are" + points);
+        }*/
     }
 
     @Override
@@ -98,7 +101,7 @@ public class TUI implements GameView {
     public void updateHands(LinkedList<PlayableCard> hand, String name) {
         client.getClient().setHand(hand);
         System.out.println("This is your new hand");
-        //eventuale plot
+        cards.plotHand(client.getClient());
     }
 
     @Override
@@ -106,7 +109,7 @@ public class TUI implements GameView {
         if(name.equals(client.getName())) {
             client.getClient().setField(field);
             System.out.println("Your new field is:\n");
-            //plotField();
+            cards.plotPlayingField(client.getClient());
         }
         else{
             System.out.println(name + "has placed a card");
@@ -128,14 +131,13 @@ public class TUI implements GameView {
             client.getClient().setDrawableGoldCards(goldDeck);
         }
         else {
+            client.getClient().setDrawableGoldCards(goldDeck);
             if (name.equals(Turn.getName())) {
-                client.getClient().setDrawableGoldCards(goldDeck);
-                System.out.println("These are the new drawable cards");
-                //plot.GoldDeck
+                cards.plotGoldDeck(client.getClient());
             } else {
                 System.out.println(name + "has drawn a card");
                 System.out.println("These are the new drawable cards");
-                //plot.GoldDeck
+                cards.plotGoldDeck(client.getClient());
             }
         }
 
@@ -147,47 +149,23 @@ public class TUI implements GameView {
             System.out.println("The resource deck has been created!\n");
             client.getClient().setDrawableResourceCards(resourceCards);
         } else {
+            client.getClient().setDrawableResourceCards(resourceCards);
             if (name.equals(Turn.getName())) {
-                client.getClient().setDrawableResourceCards(resourceCards);
                 System.out.println("These are the new drawable cards");
-                //plot.ResDeck
+                client.getClient().setDrawableResourceCards(resourceCards);
             } else {
                 System.out.println(name + "has drawn a card");
                 System.out.println("These are the new drawable cards");
-                //plot.ResDeck
+                client.getClient().setDrawableResourceCards(resourceCards);
             }
         }
     }
+
     @Override
     public void showStartCard(StartCard card) throws RemoteException {
         cards.printFrontStartCard(card);
         cards.printBackStartCard(card);
-        /*String f;
-        boolean face;
-        boolean goon = false;
-        do {
-            try {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-                System.out.println("Write 'front' or 'back' to decide which way you want to place the start card");
-                f = reader.readLine();
-                if(f.equals("front") || f.equals("back")){
-                    if(f.equals("front"))
-                        face = true;
-                    else face = false;
-                    client.setStartCardFace(face, client);
-                    goon = true;
-                } else {
-                    System.out.println("You need to write front or back");
-                }
-            } catch(IOException e){
-                System.out.println("There was an error while reading the front or back");
-            }
-        } while(!goon);
 
-
-        endTurn("StartCard");
-
-         */
     }
 
     public void setStartCardFace() throws RemoteException {
@@ -647,7 +625,7 @@ public class TUI implements GameView {
         } catch (InterruptedException bla){
             System.out.println(bla.getMessage());
         }
-        cards.plotPlayingField(Turn);
+
         drawCard();
     }
 
@@ -699,7 +677,7 @@ public class TUI implements GameView {
 
             }while (!goon) ;
 
-            cards.plotPlayingField(Turn);
+            cards.plotPlayingField(client.getClient());
 
             endTurn("NormalTurn");
         }

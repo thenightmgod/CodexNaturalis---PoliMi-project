@@ -915,8 +915,8 @@ public class CardsTUI {
         System.out.print(sb.toString());
     }
 
-    public void plotPlayingField(Player p){
-        PlayingField Field = p.getPlayerField();
+    public void plotPlayingField(ClientModel model){
+        PlayingField Field = model.getField();
         int maxX = Field.getField().keySet().stream().mapToInt(Position::getX).max().orElse(400);
         int minX = Field.getField().keySet().stream().mapToInt(Position::getX).min().orElse(400);
         int maxY = Field.getField().keySet().stream().mapToInt(Position::getY).max().orElse(400);
@@ -940,7 +940,7 @@ public class CardsTUI {
                             } else if (roba == BACK) {
                                 printResourceCardJackie(c);
                             }
-                        } else if (card.getId() >= 41 && card.getId() <= 81) {
+                        } else if (card.getId() >= 41 && card.getId() <= 80) {
                             GoldCard c = (GoldCard) card;
                             if (roba == FRONT) {
                                 printGoldCardJackie(c);
@@ -978,7 +978,7 @@ public class CardsTUI {
                             } else if (roba == BACK) {
                                 printBackResourceCardFirstLine(c);
                             }
-                        } else if (card.getId() >= 41 && card.getId() <= 81) {
+                        } else if (card.getId() >= 41 && card.getId() <= 80) {
                             GoldCard c = (GoldCard) card;
                             if (roba == FRONT) {
                                 printFrontGoldCardFirstLine(c);
@@ -1016,7 +1016,7 @@ public class CardsTUI {
                             } else if (roba == BACK) {
                                 printBackResourceCardSecondLine(c);
                             }
-                        } else if (card.getId() >= 41 && card.getId() <= 81) {
+                        } else if (card.getId() >= 41 && card.getId() <= 80) {
                             GoldCard c = (GoldCard) card;
                             if (roba == FRONT) {
                                 printFrontGoldCardSecondLine(c);
@@ -1054,7 +1054,7 @@ public class CardsTUI {
                             } else if (roba == BACK) {
                                  printBackResourceCardThirdLine(c);
                             }
-                        } else if (card.getId() >= 41 && card.getId() <= 81) {
+                        } else if (card.getId() >= 41 && card.getId() <= 80) {
                             GoldCard c = (GoldCard) card;
                             if (roba == FRONT) {
                                 printFrontGoldCardThirdLine(c);
@@ -1092,7 +1092,7 @@ public class CardsTUI {
                             } else if (roba == BACK) {
                                 printResourceCardJackie(c);
                             }
-                        } else if (card.getId() >= 41 && card.getId() <= 81) {
+                        } else if (card.getId() >= 41 && card.getId() <= 80) {
                             GoldCard c = (GoldCard) card;
                             if (roba == FRONT) {
                                 printGoldCardJackie(c);
@@ -1490,7 +1490,6 @@ public class CardsTUI {
         mappa.put(position6, g1);
         mappa.put(position7, g2);
         mappa.put(position8, g3);
-        tui.plotPlayingField(p);
 
         tui.plotPoints(beppe);
 
@@ -1512,17 +1511,38 @@ public class CardsTUI {
 
     //-----------------------------------------HAND--------------------------------------------------------------------
 
-    public void plotHand(LinkedList<PlayableCard> hand, Player Turn){
-        LinkedList<PlayableCard> toPrint = Turn.getHand();
+    public void plotHand(ClientModel model){
+        LinkedList<PlayableCard> toPrint = model.getHand();
         for(int i =0; i<3; i++){
-            if(Turn.getCardFromHand(i).getId()>=1 && Turn.getCardFromHand(i).getId()<=40) {
-                printFrontResourceCard(Turn.getCardFromHand(i));
-                printBackResourceCard(Turn.getCardFromHand(i));
+            if(toPrint.get(i).getId()>=1 && toPrint.get(i).getId()<=40) {
+                printFrontResourceCard((ResourceCard) toPrint.get(i));
+                printBackResourceCard((ResourceCard) toPrint.get(i));
             }
-            else {
-                printFrontGoldCard((GoldCard) Turn.getCardFromHand(i));
-                printBackGoldCard((GoldCard) Turn.getCardFromHand(i));
+            else if (toPrint.get(i).getId()>=41 && toPrint.get(i).getId()<=80){
+                printFrontGoldCard((GoldCard) toPrint.get(i));
+                printBackGoldCard((GoldCard) toPrint.get(i));
+            }
+            else{
+                printFrontStartCard((StartCard) toPrint.get(i));
+                printBackStartCard((StartCard) toPrint.get(i));
             }
         }
     }
+
+    //---------------------------------------GOLDDECK--------------------------------------------------------------
+
+    public void plotGoldDeck(ClientModel model){
+        LinkedList<GoldCard> toPrint = model.getDrawableGoldCards();
+        printFrontGoldCard(toPrint.get(0));
+        printFrontGoldCard(toPrint.get(1));
+        printBackGoldCard(toPrint.get(2));
+    }
+
+    public void plotResourceDeck(ClientModel model){
+        LinkedList<ResourceCard> toPrint = model.getDrawableResourceCards();
+        printFrontResourceCard(toPrint.get(0));
+        printFrontResourceCard(toPrint.get(1));
+        printBackResourceCard( toPrint.get(2));
+    }
+
 }
