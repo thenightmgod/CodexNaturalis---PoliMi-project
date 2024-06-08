@@ -18,8 +18,8 @@ import it.polimi.ingsw.Network.VirtualView;
 import java.io.Serializable;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Represents a game room where players participate.
@@ -294,38 +294,61 @@ public class Room implements Serializable {
         for(int i=0; i<3; i++){
             if(toCheck.get(i).getId() >= 87 && toCheck.get(i).getId() <= 94) {
                 CompositionGoalCard nostra = (CompositionGoalCard) toCheck.get(i);
-                p.addPoints(nostra.pointsCalc(p, nostra.getColor()));
+                p.addGoalPoints(nostra.pointsCalc(p, nostra.getColor()));
             }
             if(toCheck.get(i).getId() >= 95 && toCheck.get(i).getId() <= 98) {
                 ResourceGoalCard nostra = (ResourceGoalCard) toCheck.get(i);
-                p.addPoints(nostra.pointsCalc(p));
+                p.addGoalPoints(nostra.pointsCalc(p));
             }
             if(toCheck.get(i).getId() >= 99 && toCheck.get(i).getId() <= 102) {
                 ObjectsGoalCard nostra = (ObjectsGoalCard) toCheck.get(i);
-                p.addPoints(nostra.pointsCalc(p));
+                p.addGoalPoints(nostra.pointsCalc(p));
             }
         }
-    }
-
-    public Deck getGoalDeck() {
-        return GoalDeck;
-    }
-
-    public StartDeck getStartDeck() {
-        return StartDeck;
+        p.addTotalPoints(p.getPointsCounter());
+        p.addTotalPoints(p.getGoalPointsCounter());
     }
 
     public void start() throws RemoteException {
         this.observerManager.updateTurn(Turn, "StartCard");
     }
 
+    private String getNextKey(LinkedHashMap<String, Integer> map, String currentKey) {
+        Iterator<String> iterator = map.keySet().iterator();
+        while (iterator.hasNext()) {
+            if (iterator.next().equals(currentKey) && iterator.hasNext()) {
+                return iterator.next();
+            }
+        }
+        return null;
+    }
+
     public void declareWinner() throws RemoteException {
-        HashMap<String, Integer> points = new HashMap<>();
+        LinkedHashMap<String, Integer> goalPoints = new LinkedHashMap<>();
+        LinkedHashMap<String, Integer> totalPoints = new LinkedHashMap<>();
+
+
         for(Player p: Players) {
-            points.put(p.getName(), p.getPointsCounter());
+            goalPoints.put(p.getName(), p.getGoalPointsCounter());
         }
         for(Player p: Players) {
-            observerManager.declareWinner(p.getName(), points);
+            totalPoints.put(p.getName(), p.getTotalPointsCounter());
+        }
+
+        LinkedHashMap<String, Integer> classGoal = goalPoints.entrySet().stream().sorted(Map.Entry.comparingByValue()).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2, LinkedHashMap::new));
+        LinkedHashMap<String, Integer> classTotal = totalPoints.entrySet().stream().sorted(Map.Entry.comparingByValue()).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2, LinkedHashMap::new));
+
+        HashMap<String, String> standings = new HashMap<>();
+
+        for(String s: classTotal.keySet()) {
+            int next = classGoal.get(getNextKey(classTotal, s));
+            if(Objects.equals(classTotal.get(s), next)) {
+
+            }
+        }
+
+        for(Player p: Players) {
+            observerManager.declareWinner(p.getName(), classTotal);
         }
     }
 

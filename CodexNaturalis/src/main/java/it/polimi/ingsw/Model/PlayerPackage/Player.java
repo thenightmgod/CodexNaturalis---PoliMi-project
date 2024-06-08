@@ -30,6 +30,8 @@ public class Player implements Serializable {
     private final String Name;
     private final PlayerColor Color;
     private int PointsCounter;
+    private int GoalPointsCounter;
+    private int TotalPointsCounter;
     private int[] ResourceCounter;
     private int[] ObjectCounter;
     private LinkedList<PlayableCard> Hand;
@@ -58,6 +60,22 @@ public class Player implements Serializable {
             ObjectCounter[i]=0;
         }
         PlayerField = new PlayingField();
+    }
+
+    public int getGoalPointsCounter(){
+        return GoalPointsCounter;
+    }
+
+    public void addGoalPoints(int points){
+        GoalPointsCounter += points;
+    }
+
+    public int getTotalPointsCounter(){
+        return TotalPointsCounter;
+    }
+
+    public void addTotalPoints(int points){
+        TotalPointsCounter += points;
     }
 
     public PlayingField getPlayerField(){
