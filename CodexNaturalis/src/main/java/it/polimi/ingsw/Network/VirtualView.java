@@ -52,6 +52,10 @@ public interface VirtualView extends Remote {
 
     void startingGame(Player p) throws RemoteException;
 
+    void twenty(String name) throws RemoteException;
+
+    void lastRound() throws RemoteException;
+
     void update() throws RemoteException; //update il clientModel
 
     void showOtherField(String player) throws RemoteException;

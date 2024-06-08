@@ -338,10 +338,17 @@ public class Room implements Serializable {
         }
         else {
             setTwentyFlag();
+            if(Twenty && !LastRound)
+                observerManager.twenty(Turn.getName());
             setLastRound();
+
+
 
             int index = Players.indexOf(Turn);
             Turn = Players.getLast().equals(Turn) ? Players.getFirst() : Players.get(index + 1);
+
+            if(LastRound)
+                observerManager.lastRound(Turn.getName());
 
             switch(mex) {
                 case "StartCard" -> {
