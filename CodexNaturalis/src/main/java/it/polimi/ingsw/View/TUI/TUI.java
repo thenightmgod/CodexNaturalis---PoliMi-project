@@ -125,7 +125,7 @@ public class TUI implements GameView {
             cards.plotPlayingField(client.getClient());
         }
         else{
-            System.out.println(name + "has placed a card");
+            System.out.println(name + " has placed a card");
         }
     }
 
@@ -137,7 +137,7 @@ public class TUI implements GameView {
         System.out.println(positions);
     }
 
-    @Override
+/*    @Override
     public void updateGoldDeck(LinkedList<GoldCard> goldDeck, boolean start, String name) {
         if (start) {
             System.out.println("The gold deck has been created!\n");
@@ -145,16 +145,15 @@ public class TUI implements GameView {
         }
         else {
             client.getClient().setDrawableGoldCards(goldDeck);
-            if (name.equals(Turn.getName())) {
-                cards.plotGoldDeck(client.getClient());
+            if (name.equals(Turn.getName())){
+                cards.plotDrawables(client.getClient());
             } else {
                 System.out.println(name + "has drawn a card");
                 System.out.println("These are the new drawable cards");
                 cards.plotGoldDeck(client.getClient());
             }
         }
-
-    }
+    }*/
 
     @Override
     public void updateResourceDeck(LinkedList<ResourceCard> resourceCards, boolean start, String name){
@@ -164,12 +163,30 @@ public class TUI implements GameView {
         } else {
             client.getClient().setDrawableResourceCards(resourceCards);
             if (name.equals(Turn.getName())) {
-                System.out.println("These are the new drawable cards");
+//                System.out.println("These are the new drawable cards");
                 client.getClient().setDrawableResourceCards(resourceCards);
             } else {
                 System.out.println(name + "has drawn a card");
-                System.out.println("These are the new drawable cards");
+//                System.out.println("These are the new drawable cards");
                 client.getClient().setDrawableResourceCards(resourceCards);
+            }
+        }
+    }
+
+    @Override
+    public void updateGoldDeck(LinkedList<GoldCard> goldCards, boolean start, String name){
+        if(start){
+            System.out.println("The gold deck has been created!\n");
+            client.getClient().setDrawableGoldCards(goldCards);
+        } else {
+            client.getClient().setDrawableGoldCards(goldCards);
+            if (name.equals(Turn.getName())) {
+//                System.out.println("These are the new drawable cards");
+                client.getClient().setDrawableGoldCards(goldCards);
+            } else {
+                System.out.println(name + "has drawn a card");
+//                System.out.println("These are the new drawable cards");
+                client.getClient().setDrawableGoldCards(goldCards);
             }
         }
     }
@@ -517,10 +534,8 @@ public class TUI implements GameView {
 
     @Override
     public void updateTurn(Player player, String mex) throws RemoteException {
-
-        this.Turn = player;
-
         //robaccia per printare che non è il tuo turno e bla bla
+        this.Turn = player;
         if(Turn.getName().equals(client.getName())) {
             switch (mex) {
                 case "StartCard" -> setStartCardFace();
@@ -528,11 +543,15 @@ public class TUI implements GameView {
                 case "NormalTurn" -> isYourTurn();
             }
         }
-        else{
-            System.out.println("It's" + Turn.getName() + "'s turn");
-        }
-
+        return;
     }
+
+    @Override
+    public void printNotYourTurn(Player player) {
+        this.Turn = player;
+        System.out.println("It's " + Turn.getName() + "'s turn");
+    }
+
     public void endTurn(String mex) throws RemoteException {
         client.endTurn(Turn.getName(), mex);
     }
@@ -668,7 +687,7 @@ public class TUI implements GameView {
             int whichDeck, whichCard;
             do {
                 try {
-
+                    cards.plotDrawables(client.getClient());
                     System.out.println("From which deck do you want to draw?\n1 --> ResourceDeck\n2 --> GoldDeck");
                     whichDeck = getIndex();
                     System.out.println("Which card do you want to pick?");

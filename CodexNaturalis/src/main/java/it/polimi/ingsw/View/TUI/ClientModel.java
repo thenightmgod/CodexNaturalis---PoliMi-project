@@ -30,6 +30,8 @@ public class ClientModel {
         PointsCounter = 0;
         CommonGoals = new LinkedList<>();
         FreePosition = new LinkedList<>();
+        DrawableGoldCards = new LinkedList<>();
+        DrawableResourceCards = new LinkedList<>();
     }
 
     public LinkedList<GoldCard> getDrawableGoldCards(){

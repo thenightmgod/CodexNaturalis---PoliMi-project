@@ -46,6 +46,8 @@ public interface GameView {
     void twenty(String name);
 
     void lastRound();
+    void printNotYourTurn(Player turn);
+
 
     //public void joinGame
 }
