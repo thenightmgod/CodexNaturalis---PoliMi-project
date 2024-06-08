@@ -1211,10 +1211,19 @@ public class CardsTUI {
             public void showOtherField(String player) throws RemoteException {
 
             }
+
+            public void notYourTurn(Player turn) throws RemoteException {
+
+            }
         };
         VirtualView v2 = new VirtualView() {
             @Override
             public void updateTurn(Player p, String mex) throws RemoteException {
+
+            }
+
+            @Override
+            public void notYourTurn(Player turn) throws RemoteException {
 
             }
 
@@ -1300,6 +1309,11 @@ public class CardsTUI {
             }
 
             @Override
+            public void notYourTurn(Player turn) throws RemoteException {
+
+            }
+
+            @Override
             public void showException(String exception, String details) throws RemoteException, NotBoundException {
 
             }
@@ -1377,6 +1391,11 @@ public class CardsTUI {
         VirtualView v4 = new VirtualView() {
             @Override
             public void updateTurn(Player p, String mex) throws RemoteException {
+
+            }
+
+            @Override
+            public void notYourTurn(Player turn) throws RemoteException {
 
             }
 

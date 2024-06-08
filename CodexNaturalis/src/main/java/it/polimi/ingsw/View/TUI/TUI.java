@@ -50,6 +50,18 @@ public class TUI implements GameView {
     public void showPoints(){}
 
     @Override
+    public void twenty(String name){
+        if(name.equals(client.getName()))
+            System.out.println("You arrived at 20 points");
+        else System.out.println( name + " arrived at 20 points");
+    }
+
+    @Override
+    public void lastRound(){
+        System.out.println("This is your last turn");
+    }
+
+    @Override
     public void updatePoints(int points, String name){
 
         //DA RIFARE COL MENU'
@@ -113,7 +125,7 @@ public class TUI implements GameView {
             cards.plotPlayingField(client.getClient());
         }
         else{
-            System.out.println(name + "has placed a card");
+            System.out.println(name + " has placed a card");
         }
     }
 
@@ -522,10 +534,8 @@ public class TUI implements GameView {
 
     @Override
     public void updateTurn(Player player, String mex) throws RemoteException {
-
-        this.Turn = player;
-
         //robaccia per printare che non è il tuo turno e bla bla
+        this.Turn = player;
         if(Turn.getName().equals(client.getName())) {
             switch (mex) {
                 case "StartCard" -> setStartCardFace();
@@ -533,11 +543,15 @@ public class TUI implements GameView {
                 case "NormalTurn" -> isYourTurn();
             }
         }
-        else{
-            System.out.println("It's" + Turn.getName() + "'s turn");
-        }
-
+        return;
     }
+
+    @Override
+    public void printNotYourTurn(Player player) {
+        this.Turn = player;
+        System.out.println("It's " + Turn.getName() + "'s turn");
+    }
+
     public void endTurn(String mex) throws RemoteException {
         client.endTurn(Turn.getName(), mex);
     }

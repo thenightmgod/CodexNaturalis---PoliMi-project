@@ -72,7 +72,7 @@ public class MainController {
                 if (this.controllers.getLast().getHowManyPlayers() == this.controllers.getLast().getNumPlayers()) {
                     client.showException("RoomFullException", "Nothing");
                 } else {
-                    switch (this.controllers.getLast().getNumPlayers()) {
+                    switch (this.controllers.getLast().getHowManyPlayers()) {
                         case 1 -> {
                             this.controllers.getLast().addPlayer(Name, PlayerColor.YELLOW, client);
                             LinkedList<VirtualView> Grian = this.viewPerGame.get(this.controllers.getLast().getRoomId());

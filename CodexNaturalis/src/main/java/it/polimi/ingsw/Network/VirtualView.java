@@ -23,6 +23,8 @@ public interface VirtualView extends Remote {
 
     void updateTurn(Player p, String mex) throws RemoteException;
 
+    void notYourTurn(Player turn) throws RemoteException;
+
     void showException(String exception, String details) throws RemoteException, NotBoundException;
 
     void updatePoints(int points, String name) throws RemoteException;
@@ -51,6 +53,10 @@ public interface VirtualView extends Remote {
     void showStartCard(StartCard card) throws RemoteException;
 
     void startingGame(Player p) throws RemoteException;
+
+    void twenty(String name) throws RemoteException;
+
+    void lastRound() throws RemoteException;
 
     void update() throws RemoteException; //update il clientModel
 

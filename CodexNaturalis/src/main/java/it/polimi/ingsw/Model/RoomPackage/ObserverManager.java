@@ -48,7 +48,14 @@ public class ObserverManager {
 
     public void updateTurn(Player turn, String mex) throws RemoteException {
         for(String s : observers.keySet()) {
-            observers.get(s).updateTurn(turn, mex);
+            if(!observers.get(s).getName().equals(turn.getName())){ //printo is not your turn a tutti quelli che non sono in turno
+                observers.get(s).notYourTurn(turn);
+            }
+        }
+        for(String s : observers.keySet()) {
+            if(observers.get(s).getName().equals(turn.getName())){  //inizio a chiamare azioni sul player che ha il turno
+                observers.get(s).updateTurn(turn, mex);
+            }
         }
     }
 
@@ -92,6 +99,16 @@ public class ObserverManager {
     public void updateResourceDeck(String name, boolean start, LinkedList<ResourceCard> deck) throws RemoteException{
         observers.get(name).updateResourceDeck(name, start, deck);
     }
+
+    public void twenty(String name) throws RemoteException {
+        for(String s : observers.keySet())
+            observers.get(s).twenty(name);
+    }
+
+    public void lastRound(String name) throws RemoteException {
+        observers.get(name).lastRound();
+    }
+
 
     //eventualmente implementarli
     public void message(String name, String mex){};
