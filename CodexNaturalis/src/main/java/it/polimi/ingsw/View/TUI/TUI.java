@@ -113,7 +113,7 @@ public class TUI implements GameView {
             cards.plotPlayingField(client.getClient());
         }
         else{
-            System.out.println(name + "has placed a card");
+            System.out.println(name + " has placed a card");
         }
     }
 
@@ -505,10 +505,8 @@ public class TUI implements GameView {
 
     @Override
     public void updateTurn(Player player, String mex) throws RemoteException {
-
-        this.Turn = player;
-
         //robaccia per printare che non è il tuo turno e bla bla
+        this.Turn = player;
         if(Turn.getName().equals(client.getName())) {
             switch (mex) {
                 case "StartCard" -> setStartCardFace();
@@ -516,11 +514,15 @@ public class TUI implements GameView {
                 case "NormalTurn" -> isYourTurn();
             }
         }
-        else{
-            System.out.println("It's" + Turn.getName() + "'s turn");
-        }
-
+        return;
     }
+
+    @Override
+    public void printNotYourTurn(Player player) {
+        this.Turn = player;
+        System.out.println("It's " + Turn.getName() + "'s turn");
+    }
+
     public void endTurn(String mex) throws RemoteException {
         client.endTurn(Turn.getName(), mex);
     }

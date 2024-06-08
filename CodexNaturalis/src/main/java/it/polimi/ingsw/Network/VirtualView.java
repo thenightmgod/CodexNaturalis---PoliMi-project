@@ -23,6 +23,8 @@ public interface VirtualView extends Remote {
 
     void updateTurn(Player p, String mex) throws RemoteException;
 
+    void notYourTurn(Player turn) throws RemoteException;
+
     void showException(String exception, String details) throws RemoteException, NotBoundException;
 
     void updatePoints(int points, String name) throws RemoteException;

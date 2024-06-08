@@ -43,6 +43,8 @@ public interface GameView {
 
     void declareWinner(HashMap<String, Integer> classifica);
 
+    void printNotYourTurn(Player turn);
+
 
     //public void joinGame
 }

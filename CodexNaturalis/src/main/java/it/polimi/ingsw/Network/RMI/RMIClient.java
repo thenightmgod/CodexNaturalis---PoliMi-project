@@ -123,6 +123,10 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
         this.view.updateTurn(p, mex);
     }
 
+    public void notYourTurn(Player turn) throws RemoteException {
+        this.view.printNotYourTurn(turn);
+    }
+
     @Override
     public void showException(String exception, String details) throws RemoteException, NotBoundException {
        this.view.showException(exception, details);
