@@ -88,7 +88,7 @@ public class Room implements Serializable {
      * Sets the flag indicating whether the game has reached the twenty points threshold.
      */
     public void setTwentyFlag(){ //vede se il punteggio di qualcuno è >= 20 per mettere lastRound=true
-        if(Turn.getPointsCounter()>=20)
+        if(Turn.getPointsCounter()>=2)
             this.Twenty = true;
     }
 

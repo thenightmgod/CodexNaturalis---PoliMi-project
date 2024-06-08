@@ -14,7 +14,6 @@ public class MainClient {
     public static final String ANSI_REDD = "\033[103m";
     public static final String ANSI_GIANNI = "\033[106m";
 
-
     public static void main(String[] args) {
         int input;
         boolean goon = false;

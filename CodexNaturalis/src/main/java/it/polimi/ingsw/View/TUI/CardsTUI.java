@@ -1131,7 +1131,7 @@ public class CardsTUI {
         Player p = new Player("frank", PlayerColor.YELLOW);
         Player p2 = new Player("CARLOS O'CONNELL", PlayerColor.BLUE);
         Player p3 = new Player("MARCO DEVI MORIRE", PlayerColor.GREEN);
-
+/*
         VirtualView v1 = new VirtualView() {
             @Override
             public void updateTurn(Player p, String mex) throws RemoteException {
@@ -1180,6 +1180,11 @@ public class CardsTUI {
 
             @Override
             public void updateGoldDeck(String name, boolean start, LinkedList<GoldCard> deck) throws RemoteException {
+
+            }
+
+            @Override
+            public void declareWinner(LinkedList<String> standings) throws RemoteException {
 
             }
 
@@ -1284,6 +1289,11 @@ public class CardsTUI {
             }
 
             @Override
+            public void declareWinner(LinkedList<String> standings) throws RemoteException {
+
+            }
+
+            @Override
             public void declareWinner(HashMap<String, Integer> classifica) throws RemoteException {
 
             }
@@ -1376,6 +1386,11 @@ public class CardsTUI {
 
             @Override
             public void updateGoldDeck(String name, boolean start, LinkedList<GoldCard> deck) throws RemoteException {
+
+            }
+
+            @Override
+            public void declareWinner(LinkedList<String> standings) throws RemoteException {
 
             }
 
@@ -1476,6 +1491,11 @@ public class CardsTUI {
             }
 
             @Override
+            public void declareWinner(LinkedList<String> standings) throws RemoteException {
+
+            }
+
+            @Override
             public void declareWinner(HashMap<String, Integer> classifica) throws RemoteException {
 
             }
@@ -1516,9 +1536,12 @@ public class CardsTUI {
             }
         };
 
+
+
         beppe.addPlayer("frank", PlayerColor.YELLOW, v1);
         beppe.addPlayer("CARLOS O'CONNELL", PlayerColor.BLUE,v2);
         beppe.addPlayer("MARCO DEVI MORIRE", PlayerColor.GREEN, v3);
+        */
 
         tui.plotPoints(beppe);
 
