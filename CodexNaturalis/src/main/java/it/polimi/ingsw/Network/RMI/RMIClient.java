@@ -119,6 +119,16 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     //    FUNZIONI DELLA VIRTUAL VIEW
 
     @Override
+    public void twenty(String name) throws RemoteException {
+        this.view.twenty(name);
+    }
+
+    @Override
+    public void lastRound() throws RemoteException {
+        this.view.lastRound();
+    }
+
+    @Override
     public void updateTurn(Player p, String mex) throws RemoteException {
         this.view.updateTurn(p, mex);
     }

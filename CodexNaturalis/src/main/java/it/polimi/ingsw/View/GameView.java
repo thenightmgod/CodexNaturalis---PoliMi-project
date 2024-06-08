@@ -43,6 +43,9 @@ public interface GameView {
 
     void declareWinner(HashMap<String, Integer> classifica);
 
+    void twenty(String name);
+
+    void lastRound();
     void printNotYourTurn(Player turn);
 
 

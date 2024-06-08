@@ -50,6 +50,18 @@ public class TUI implements GameView {
     public void showPoints(){}
 
     @Override
+    public void twenty(String name){
+        if(name.equals(client.getName()))
+            System.out.println("You arrived at 20 points");
+        else System.out.println( name + " arrived at 20 points");
+    }
+
+    @Override
+    public void lastRound(){
+        System.out.println("This is your last turn");
+    }
+
+    @Override
     public void updatePoints(int points, String name){
 
         //DA RIFARE COL MENU'

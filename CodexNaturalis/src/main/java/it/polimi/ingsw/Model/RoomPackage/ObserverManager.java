@@ -100,6 +100,16 @@ public class ObserverManager {
         observers.get(name).updateResourceDeck(name, start, deck);
     }
 
+    public void twenty(String name) throws RemoteException {
+        for(String s : observers.keySet())
+            observers.get(s).twenty(name);
+    }
+
+    public void lastRound(String name) throws RemoteException {
+        observers.get(name).lastRound();
+    }
+
+
     //eventualmente implementarli
     public void message(String name, String mex){};
 
