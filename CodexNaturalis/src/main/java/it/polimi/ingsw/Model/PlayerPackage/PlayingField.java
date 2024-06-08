@@ -34,6 +34,16 @@ public class PlayingField implements Serializable {
         return false;
     }
 
+    public PlayableCard getCardFromPos(Position p){
+        Set<Position> positions = Field.keySet();
+        for(Position pos : positions){
+            if(pos.equals(p)){
+                return Field.get(pos);
+            }
+        }
+        return null;
+    }
+
     public boolean containsInField(Position p){
         Set<Position> set = Field.keySet();
         for(Position p1 : set){

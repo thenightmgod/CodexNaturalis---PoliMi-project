@@ -928,7 +928,7 @@ public class CardsTUI {
         for (int j = maxY; j >= minY; j--) {
                 for (int i = minX; i <= maxX; i++) {
                     Position toCheck = new Position(i, j);
-                    PlayableCard card = Field.getField().get(toCheck);
+                    PlayableCard card = Field.getCardFromPos(toCheck);
                     if (card != null) {
                         int finalI = i;
                         int finalJ = j;
@@ -966,7 +966,7 @@ public class CardsTUI {
 
                 for (int i = minX; i <= maxX; i++) {
                     Position toCheck = new Position(i, j);
-                    PlayableCard card = Field.getField().get(toCheck);
+                    PlayableCard card = Field.getCardFromPos(toCheck);
                     if (card != null) {
                         int finalI = i;
                         int finalJ = j;
@@ -1004,7 +1004,7 @@ public class CardsTUI {
 
                 for (int i = minX; i <= maxX; i++) {
                     Position toCheck = new Position(i, j);
-                    PlayableCard card = Field.getField().get(toCheck);
+                    PlayableCard card = Field.getCardFromPos(toCheck);
                     if (card != null) {
                         int finalI = i;
                         int finalJ = j;
@@ -1042,7 +1042,7 @@ public class CardsTUI {
 
                 for (int i = minX; i <= maxX; i++) {
                     Position toCheck = new Position(i, j);
-                    PlayableCard card = Field.getField().get(toCheck);
+                    PlayableCard card = Field.getCardFromPos(toCheck);
                     if (card != null) {
                         int finalI = i;
                         int finalJ = j;
@@ -1080,7 +1080,7 @@ public class CardsTUI {
 
                 for (int i = minX; i <= maxX; i++) {
                     Position toCheck = new Position(i, j);
-                    PlayableCard card = Field.getField().get(toCheck);
+                    PlayableCard card = Field.getCardFromPos(toCheck);
                     if (card != null) {
                         int finalI = i;
                         int finalJ = j;
