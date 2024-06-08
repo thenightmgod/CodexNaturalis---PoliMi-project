@@ -205,16 +205,16 @@ public class TUI implements GameView {
         do {
             try {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-                System.out.println("Write 'front' or 'back' to decide which way you want to place the start card");
+                System.out.println("Do you want to place your Start Card Front or Back?\n1 --> Front\n0 --> Back");
                 f = reader.readLine();
-                if(f.equals("front") || f.equals("back")){
-                    if(f.equals("front"))
+                if(f.equals("1") || f.equals("0")){
+                    if(f.equals("1"))
                         face = true;
                     else face = false;
                     client.setStartCardFace(face, client);
                     goon = true;
                 } else {
-                    System.out.println("You need to write front or back");
+                    System.out.println("You must choose between 1(front) or 0(back)");
                 }
             } catch(IOException e){
                 System.out.println("There was an error while reading the front or back");
@@ -289,7 +289,7 @@ public class TUI implements GameView {
 
         do {
             try {
-                System.out.println("Enter the number of players: ");
+                System.out.println("Enter the number of players");
 
                 BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
                 input = Integer.parseInt(reader.readLine());
@@ -340,7 +340,7 @@ public class TUI implements GameView {
                 goon = true;
 
             } catch (RemoteException e){
-                System.out.println("there has been a problem in the join game");
+                System.out.println("there's been a problem in the join game");
             }
         } while(!goon);
 
@@ -350,8 +350,7 @@ public class TUI implements GameView {
         Scanner scan = new Scanner(System.in);
         String connection;
 
-
-        System.out.println("What kind of connection would you like?");
+        System.out.println("Choose the kind of connection you want to play with");
 
         do{
             System.out.println("0 --> RMI\n1 --> Socket");
@@ -382,7 +381,7 @@ public class TUI implements GameView {
         String nickname = "Carlos";
 
         try {
-            System.out.println("What kind of nickname would you like?");
+            System.out.println("Write your nickname");
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             nickname = reader.readLine();
 
@@ -633,13 +632,13 @@ public class TUI implements GameView {
         int fac;
         do {
             try {
-                System.out.println("What card do you want to place?");
+                System.out.println("Which card do you want to place?");
                 i = getIndex();
-                System.out.println("in what position do you want to place it? Send the x first!");
+                System.out.println("In what position do you want to place it?\n Send the X first");
                 x = getIndex();
-                System.out.println("And now the y!");
+                System.out.println("And now the Y");
                 y = getIndex();
-                System.out.println("Do you want to place it Front or Back? Send a 1 for front and a 0 for back");
+                System.out.println("Do you want to place it Front or Back?\n1 --> Front\n0 --> Back");
                 fac = getIndex();
                 if (fac == 1 || fac == 0) {
                     if (fac == 0)
@@ -648,7 +647,7 @@ public class TUI implements GameView {
                     goon = true;
                 }
                 else{
-                    System.out.println("the face of the card should be 1 or 0");
+                    System.out.println("You must choose between 1(front) or 0(back)");
                 }
             } catch (IOException e){
                 System.out.println("I/O exception in place card");
@@ -687,7 +686,7 @@ public class TUI implements GameView {
             int whichDeck, whichCard;
             do {
                 try {
-                    cards.plotDrawables(client.getClient());
+//                    cards.plotDrawables(client.getClient());
                     System.out.println("From which deck do you want to draw?\n1 --> ResourceDeck\n2 --> GoldDeck");
                     whichDeck = getIndex();
                     System.out.println("Which card do you want to pick?");
