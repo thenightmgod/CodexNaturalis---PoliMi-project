@@ -165,7 +165,7 @@ public class Room implements Serializable {
             observerManager.showException("WrongPositionException", "Nothing", Turn.getName());
         }
         else {
-            if(c.getId() >= 41 && c.getId() < 81 && !((GoldCard) c).RequirementsOk(Turn)){
+            if(c.getId() >= 41 && c.getId() < 81 && face == FB.FRONT && !((GoldCard) c).RequirementsOk(Turn)){
                 observerManager.showException("RequirementsNotSatisfied", "Nothing", Turn.getName());
             }
             else {

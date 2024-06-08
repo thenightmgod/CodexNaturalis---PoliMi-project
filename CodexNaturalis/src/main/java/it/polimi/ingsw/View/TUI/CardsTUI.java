@@ -753,8 +753,9 @@ public class CardsTUI {
             System.out.println("  |");
             System.out.println("|             |");
             System.out.println("———————————————");
-            System.out.print(ANSI_RESET);
+            System.out.println(ANSI_RESET);
         }
+        System.out.print(ANSI_RESET);
     }
 
     private void printL(GoalCard c) {
@@ -1203,6 +1204,16 @@ public class CardsTUI {
             }
 
             @Override
+            public void twenty(String name) throws RemoteException {
+
+            }
+
+            @Override
+            public void lastRound() throws RemoteException {
+
+            }
+
+            @Override
             public void update() throws RemoteException {
 
             }
@@ -1293,6 +1304,16 @@ public class CardsTUI {
             }
 
             @Override
+            public void twenty(String name) throws RemoteException {
+
+            }
+
+            @Override
+            public void lastRound() throws RemoteException {
+
+            }
+
+            @Override
             public void update() throws RemoteException {
 
             }
@@ -1379,6 +1400,16 @@ public class CardsTUI {
             }
 
             @Override
+            public void twenty(String name) throws RemoteException {
+
+            }
+
+            @Override
+            public void lastRound() throws RemoteException {
+
+            }
+
+            @Override
             public void update() throws RemoteException {
 
             }
@@ -1461,6 +1492,16 @@ public class CardsTUI {
 
             @Override
             public void startingGame(Player p) throws RemoteException {
+
+            }
+
+            @Override
+            public void twenty(String name) throws RemoteException {
+
+            }
+
+            @Override
+            public void lastRound() throws RemoteException {
 
             }
 
