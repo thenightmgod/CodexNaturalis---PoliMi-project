@@ -41,7 +41,7 @@ public interface GameView {
 
     void startingGame() throws RemoteException;
 
-    void declareWinner(HashMap<String, Integer> classifica);
+    void declareWinner(LinkedList<String> standings);
 
     void twenty(String name);
 

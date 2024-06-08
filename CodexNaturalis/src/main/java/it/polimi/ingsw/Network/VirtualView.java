@@ -46,7 +46,7 @@ public interface VirtualView extends Remote {
 
     void updateGoldDeck(String name, boolean start, LinkedList<GoldCard> deck) throws RemoteException;
 
-    void declareWinner(HashMap<String, Integer> classifica) throws RemoteException;
+    void declareWinner(LinkedList<String> standings) throws RemoteException;
 
     String getName() throws RemoteException;
 

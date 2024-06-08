@@ -193,8 +193,8 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     }
 
     @Override
-    public void declareWinner(HashMap<String, Integer> classifica) throws RemoteException {
-        this.view.declareWinner(classifica);
+    public void declareWinner(LinkedList<String> standings) throws RemoteException {
+        this.view.declareWinner(standings);
     }
 
     @Override

@@ -59,8 +59,8 @@ public class ObserverManager {
         }
     }
 
-    public void declareWinner(String name, HashMap<String, Integer> classifica) throws RemoteException{
-        observers.get(name).declareWinner(classifica);
+    public void declareWinner(String name, LinkedList<String> standings) throws RemoteException{
+        observers.get(name).declareWinner(standings);
     }
 
     public void showStartCard(String name, StartCard card) throws RemoteException{

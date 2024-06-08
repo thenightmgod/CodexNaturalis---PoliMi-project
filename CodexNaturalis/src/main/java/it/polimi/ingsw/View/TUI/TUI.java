@@ -557,46 +557,25 @@ public class TUI implements GameView {
     }
 
     @Override
-    public void declareWinner(HashMap<String, Integer> classifica) {
-        int i = 0;
-        String first;
-        String second;
-        String third;
-        System.out.println("These are your points now...");
-        showPoints();
-        System.out.println("Let's now check the goals...");
+    public void declareWinner(LinkedList<String> standings) {
+
         System.out.println("...");
         System.out.println("You are jackie down the line...");
         System.out.println("...");
-        System.out.println("These are the final points!");
-        classifica.entrySet().stream().sorted(Map.Entry.comparingByValue()).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2, LinkedHashMap::new));
-        for (String name: classifica.keySet()) {
-            if(name.equals(client.getName())){
-                switch (i) {
-                    case 0 -> {
-                        System.out.println("with" + classifica.get(name) + "you won");
-                    }
-                    case 1 -> {
-                        System.out.println("with" + classifica.get(name) + "you got the second place");
-                    }
-                    case 2 -> {
-                        System.out.println("with" + classifica.get(name) + "you got the third place");
-                    }
-                    case 3 -> {
-                        System.out.println("with" + classifica.get(name) + "you got the first place");
-                    }
-                }
+        System.out.println("...");
+        System.out.println("...");
+        System.out.println("...");
 
-            }
-            else{
-                switch (i) {
-                    case 0 -> System.out.println("at the first place, "+ name + "with" + classifica.get(name));
-                    case 1 -> System.out.println("at the second place, "+ name + "with" + classifica.get(name));
-                    case 2 -> System.out.println("at the third place, "+ name + "with" + classifica.get(name));
-                    case 3 -> System.out.println("at the fourth place, "+ name + "with" + classifica.get(name));
-                }
-            }
-            i++;
+
+        if(client.getName().equals(standings.get(0)))
+            System.out.println("JACKIE DOWN THE LINE YOU WON");
+        else if (client.getName().equals(standings.get(1))) {
+            System.out.println("JACKIE DOWN THE LINE YOU GOT THE SECOND PLACE");
+        }
+        else if (client.getName().equals(standings.get(2))) {
+            System.out.println("JACKIE DOWN THE LINE YOU GOT THE THIRD PLACE");
+        } else {
+            System.out.println("JACKIE DOWN THE LINE YOU GOT THE FOURTH PLACE COGLIONE");
         }
         //far finire tutto
     }

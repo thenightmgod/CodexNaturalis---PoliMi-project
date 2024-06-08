@@ -324,9 +324,9 @@ public class Room implements Serializable {
     }
 
     public void declareWinner() throws RemoteException {
-        LinkedHashMap<String, Integer> goalPoints = new LinkedHashMap<>();
-        LinkedHashMap<String, Integer> totalPoints = new LinkedHashMap<>();
 
+        TreeMap<String, Integer> goalPoints = new TreeMap<>();
+        TreeMap<String, Integer> totalPoints = new TreeMap<>();
 
         for(Player p: Players) {
             goalPoints.put(p.getName(), p.getGoalPointsCounter());
@@ -335,20 +335,27 @@ public class Room implements Serializable {
             totalPoints.put(p.getName(), p.getTotalPointsCounter());
         }
 
-        LinkedHashMap<String, Integer> classGoal = goalPoints.entrySet().stream().sorted(Map.Entry.comparingByValue()).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2, LinkedHashMap::new));
-        LinkedHashMap<String, Integer> classTotal = totalPoints.entrySet().stream().sorted(Map.Entry.comparingByValue()).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2, LinkedHashMap::new));
+        LinkedList<String> standings = new LinkedList<>();
 
-        HashMap<String, String> standings = new HashMap<>();
+        Set<String> keys = totalPoints.descendingKeySet();
+        LinkedList<String> NamesInOrder = new LinkedList<>(keys);
 
-        for(String s: classTotal.keySet()) {
-            int next = classGoal.get(getNextKey(classTotal, s));
-            if(Objects.equals(classTotal.get(s), next)) {
+        for(int i=0; i<NamesInOrder.size() - 1; i++) {
 
+            if(!standings.contains(NamesInOrder.get(i))) {
+                if (Objects.equals(totalPoints.get(NamesInOrder.get(i)), totalPoints.get(NamesInOrder.get(i + 1)))) {
+                    if (goalPoints.get(NamesInOrder.get(i)) < goalPoints.get(NamesInOrder.get(i + 1))) {
+                        standings.add(NamesInOrder.get(i + 1));
+                        standings.add(NamesInOrder.get(i));
+                    } else standings.add(NamesInOrder.get(i));
+                } else {
+                    standings.add(NamesInOrder.get(i));
+                }
             }
         }
 
         for(Player p: Players) {
-            observerManager.declareWinner(p.getName(), classTotal);
+            observerManager.declareWinner(p.getName(), standings);
         }
     }
 
