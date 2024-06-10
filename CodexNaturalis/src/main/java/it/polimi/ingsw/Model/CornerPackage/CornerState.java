@@ -1,5 +1,7 @@
 package it.polimi.ingsw.Model.CornerPackage;
 
+import java.io.Serializable;
+
 /**
  * Enumeration representing the state of a corner on a card.
  * This enum implements the {@link CardRes} interface, indicating that it represents what an angle possesses or not.
@@ -23,5 +25,9 @@ public enum CornerState implements CardRes {
 
     CornerState(String shortName) {
         this.shortName = shortName;
+    }
+
+    public CornerState getName() {
+        return this;
     }
 }

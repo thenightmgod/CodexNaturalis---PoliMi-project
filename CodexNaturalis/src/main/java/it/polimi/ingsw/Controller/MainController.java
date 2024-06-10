@@ -6,6 +6,7 @@ import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import it.polimi.ingsw.Model.RoomPackage.ObserverManager;
 import it.polimi.ingsw.Network.VirtualView;
 
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Collection;
 import java.util.HashMap;
@@ -59,7 +60,7 @@ public class MainController {
         //fare sbatti per aggiunta client
     }
 
-    public void joinGame(String Name, VirtualView client) throws RemoteException {
+    public void joinGame(String Name, VirtualView client) throws RemoteException, NotBoundException {
 
         if (this.controllers.isEmpty()) {
             client.showException("RoomNotExistsException", "Nothing");
@@ -71,7 +72,7 @@ public class MainController {
                 if (this.controllers.getLast().getHowManyPlayers() == this.controllers.getLast().getNumPlayers()) {
                     client.showException("RoomFullException", "Nothing");
                 } else {
-                    switch (this.controllers.getLast().getNumPlayers()) {
+                    switch (this.controllers.getLast().getHowManyPlayers()) {
                         case 1 -> {
                             this.controllers.getLast().addPlayer(Name, PlayerColor.YELLOW, client);
                             LinkedList<VirtualView> Grian = this.viewPerGame.get(this.controllers.getLast().getRoomId());

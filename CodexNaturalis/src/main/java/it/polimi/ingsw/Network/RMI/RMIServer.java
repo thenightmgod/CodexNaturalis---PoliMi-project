@@ -77,7 +77,6 @@ public class RMIServer implements VirtualServer{
         Actions pAction = new PlaceCardAction(controller, client, whichInHand, x, y, face, this);
         actions.add(pAction);
     }
-
     @Override
     public void setStartCardFace(boolean face, VirtualView client) throws RemoteException{ //ordine initialize game tutto gestito nella view
         Actions ssAction = new SetStartCardFaceAction(face, client, controller, this);
@@ -97,21 +96,26 @@ public class RMIServer implements VirtualServer{
     }
 
     @Override
-    public void endTurn(VirtualView client) throws RemoteException {
-        Actions eAction = new EndTurnAction(client, controller, this);
+    public void endTurn(VirtualView client, String mex) throws RemoteException {
+        Actions eAction = new EndTurnAction(client, controller, this, mex);
         actions.add(eAction);
     }
 
     public void execute() {
-        new Thread(()->{
-            Actions now = null;
+        new Thread(() -> {
             try {
-                now = actions.take();
-                now.executor();
-            } catch (InterruptedException | RemoteException e) {
-                System.out.println("Perbacco");
+                while(true) {
+                    Actions now = actions.take();
+                    now.executor();
+                }
+            } catch (InterruptedException e) {
+                System.err.println("Execution interrupted: " + e.getMessage());
+                Thread.currentThread().interrupt();
+            } catch (RemoteException e) {
+                System.err.println("Remote exception: " + e.getMessage());
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }).start();
     }
-
 }

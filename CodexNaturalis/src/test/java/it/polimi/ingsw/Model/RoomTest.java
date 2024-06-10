@@ -13,6 +13,7 @@ import it.polimi.ingsw.Model.RoomPackage.ObserverManager;
 import it.polimi.ingsw.Network.VirtualView;
 import org.junit.jupiter.api.Test;
 
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -32,7 +33,7 @@ class RoomTest {
             }
 
             @Override
-            public void showException(String details) throws RemoteException {
+            public void showException(String exception, String details) throws RemoteException, NotBoundException {
 
             }
 
@@ -43,6 +44,11 @@ class RoomTest {
 
             @Override
             public void updateGoals(LinkedList<GoalCard> goals) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateCommonGoals(LinkedList<GoalCard> goals) throws RemoteException {
 
             }
 
@@ -62,12 +68,12 @@ class RoomTest {
             }
 
             @Override
-            public void updateResourceDeck(String name, LinkedList<ResourceCard> deck) throws RemoteException {
+            public void updateResourceDeck(String name, boolean start, LinkedList<ResourceCard> deck) throws RemoteException {
 
             }
 
             @Override
-            public void updateGoldDeck(String name, LinkedList<GoldCard> deck) throws RemoteException {
+            public void updateGoldDeck(String name, boolean start, LinkedList<GoldCard> deck) throws RemoteException {
 
             }
 
@@ -83,6 +89,11 @@ class RoomTest {
 
             @Override
             public void showStartCard(StartCard card) throws RemoteException {
+
+            }
+
+            @Override
+            public void startingGame(Player p) throws RemoteException {
 
             }
 
@@ -103,7 +114,7 @@ class RoomTest {
             }
 
             @Override
-            public void showException(String details) throws RemoteException {
+            public void showException(String exception, String details) throws RemoteException, NotBoundException {
 
             }
 
@@ -114,6 +125,11 @@ class RoomTest {
 
             @Override
             public void updateGoals(LinkedList<GoalCard> goals) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateCommonGoals(LinkedList<GoalCard> goals) throws RemoteException {
 
             }
 
@@ -133,12 +149,12 @@ class RoomTest {
             }
 
             @Override
-            public void updateResourceDeck(String name, LinkedList<ResourceCard> deck) throws RemoteException {
+            public void updateResourceDeck(String name, boolean start, LinkedList<ResourceCard> deck) throws RemoteException {
 
             }
 
             @Override
-            public void updateGoldDeck(String name, LinkedList<GoldCard> deck) throws RemoteException {
+            public void updateGoldDeck(String name, boolean start, LinkedList<GoldCard> deck) throws RemoteException {
 
             }
 
@@ -154,6 +170,11 @@ class RoomTest {
 
             @Override
             public void showStartCard(StartCard card) throws RemoteException {
+
+            }
+
+            @Override
+            public void startingGame(Player p) throws RemoteException {
 
             }
 
@@ -174,7 +195,7 @@ class RoomTest {
             }
 
             @Override
-            public void showException(String details) throws RemoteException {
+            public void showException(String exception, String details) throws RemoteException, NotBoundException {
 
             }
 
@@ -185,6 +206,11 @@ class RoomTest {
 
             @Override
             public void updateGoals(LinkedList<GoalCard> goals) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateCommonGoals(LinkedList<GoalCard> goals) throws RemoteException {
 
             }
 
@@ -204,12 +230,12 @@ class RoomTest {
             }
 
             @Override
-            public void updateResourceDeck(String name, LinkedList<ResourceCard> deck) throws RemoteException {
+            public void updateResourceDeck(String name, boolean start, LinkedList<ResourceCard> deck) throws RemoteException {
 
             }
 
             @Override
-            public void updateGoldDeck(String name, LinkedList<GoldCard> deck) throws RemoteException {
+            public void updateGoldDeck(String name, boolean start, LinkedList<GoldCard> deck) throws RemoteException {
 
             }
 
@@ -225,6 +251,11 @@ class RoomTest {
 
             @Override
             public void showStartCard(StartCard card) throws RemoteException {
+
+            }
+
+            @Override
+            public void startingGame(Player p) throws RemoteException {
 
             }
 
@@ -245,7 +276,7 @@ class RoomTest {
             }
 
             @Override
-            public void showException(String details) throws RemoteException {
+            public void showException(String exception, String details) throws RemoteException, NotBoundException {
 
             }
 
@@ -256,6 +287,11 @@ class RoomTest {
 
             @Override
             public void updateGoals(LinkedList<GoalCard> goals) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateCommonGoals(LinkedList<GoalCard> goals) throws RemoteException {
 
             }
 
@@ -275,12 +311,12 @@ class RoomTest {
             }
 
             @Override
-            public void updateResourceDeck(String name, LinkedList<ResourceCard> deck) throws RemoteException {
+            public void updateResourceDeck(String name, boolean start, LinkedList<ResourceCard> deck) throws RemoteException {
 
             }
 
             @Override
-            public void updateGoldDeck(String name, LinkedList<GoldCard> deck) throws RemoteException {
+            public void updateGoldDeck(String name, boolean start, LinkedList<GoldCard> deck) throws RemoteException {
 
             }
 
@@ -300,6 +336,11 @@ class RoomTest {
             }
 
             @Override
+            public void startingGame(Player p) throws RemoteException {
+
+            }
+
+            @Override
             public void update() throws RemoteException {
 
             }
@@ -310,6 +351,8 @@ class RoomTest {
             }
         };
 
+
+
         beppe.addPlayer("hamingway", PlayerColor.YELLOW, client1);
         beppe.addPlayer("venditti", PlayerColor.BLUE, client2);
         beppe.addPlayer("dalla", PlayerColor.RED, client3);
@@ -319,6 +362,8 @@ class RoomTest {
         beppe.placeStartCard("venditti", FB.BACK);
         beppe.placeStartCard("dalla", FB.FRONT);
         beppe.placeStartCard("degregori", FB.BACK);
+
+        beppe.getPlayerByName("hamingway").getPlayerField().getFreePositions();
     }
 }
     /**

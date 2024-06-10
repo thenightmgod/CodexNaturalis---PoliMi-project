@@ -4,6 +4,7 @@ import it.polimi.ingsw.Model.CornerPackage.Corner;
 import it.polimi.ingsw.Model.CornerPackage.Orientation;
 import it.polimi.ingsw.Model.CornerPackage.Resources;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
 import static it.polimi.ingsw.Model.CornerPackage.CornerState.ABSENT;
@@ -15,7 +16,7 @@ import static it.polimi.ingsw.Model.CornerPackage.Resources.INSECT_KINGDOM;
  * Represents the starting card used in the game.
  * Each player receives a StartCard in their first turn, and it will be the first card placed in their playing field.
  */
-public class StartCard extends PlayableCard {
+public class StartCard extends PlayableCard implements Serializable {
     private LinkedList<Corner> BackCorners;
 
     /**

@@ -46,8 +46,14 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
 
     public void initializeClient(String name) throws RemoteException, NotBoundException {
         final String serverName = "CodexServer";
-        Registry registry = LocateRegistry.getRegistry("localhost", 4446);
+        /*
+        registry = LocateRegistry.getRegistry("localhost", 4446);
+        VirtualServer stub = (VirtualServer) registry.lookup(serverName);
+        server = (VirtualServer) UnicastRemoteObject.exportObject(stub, 4446);*/
+
+        registry = LocateRegistry.getRegistry("localhost", 4446);
         this.server = (VirtualServer) registry.lookup(serverName);
+
     }
 
     public String getName(){
@@ -99,8 +105,8 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     }
 
     @Override
-    public void endTurn(String name) throws RemoteException {
-        server.endTurn(this);
+    public void endTurn(String name, String mex) throws RemoteException {
+        server.endTurn(this, mex);
     }
 
 
@@ -113,12 +119,26 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     //    FUNZIONI DELLA VIRTUAL VIEW
 
     @Override
-    public void updateTurn(Player p) throws RemoteException {
-        this.view.updateTurn(p);
+    public void twenty(String name) throws RemoteException {
+        this.view.twenty(name);
     }
 
     @Override
-    public void showException(String exception, String details) throws RemoteException {
+    public void lastRound() throws RemoteException {
+        this.view.lastRound();
+    }
+
+    @Override
+    public void updateTurn(Player p, String mex) throws RemoteException {
+        this.view.updateTurn(p, mex);
+    }
+
+    public void notYourTurn(Player turn) throws RemoteException {
+        this.view.printNotYourTurn(turn);
+    }
+
+    @Override
+    public void showException(String exception, String details) throws RemoteException, NotBoundException {
        this.view.showException(exception, details);
     }
 
@@ -134,10 +154,18 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     }
 
     @Override
+    public void startingGame(Player p) throws RemoteException {
+        this.view.startingGame();
+    }
+
+    @Override
     public void updateGoals(LinkedList<GoalCard> goals) throws RemoteException {
         this.view.updateGoals(goals, name);
     }
 
+    public void updateCommonGoals(LinkedList<GoalCard> goals) throws RemoteException {
+        this.view.updateCommonGoals(goals, name);
+    }
     @Override
     public void showHand(LinkedList<PlayableCard> hand) throws RemoteException {
         this.view.updateHands(hand, name);
@@ -155,18 +183,18 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     }
 
     @Override
-    public void updateResourceDeck(String name, LinkedList<ResourceCard> deck) throws RemoteException {
-        this.view.updateResourceDeck(deck, name);
+    public void updateResourceDeck(String name, boolean start, LinkedList<ResourceCard> deck) throws RemoteException {
+        this.view.updateResourceDeck(deck, start, name);
     }
 
     @Override
-    public void updateGoldDeck(String name, LinkedList<GoldCard> deck) throws RemoteException {
-        this.view.updateGoldDeck(deck, name);
+    public void updateGoldDeck(String name, boolean start, LinkedList<GoldCard> deck) throws RemoteException {
+        this.view.updateGoldDeck(deck, start, name);
     }
 
     @Override
-    public void declareWinner(HashMap<String, Integer> classifica) throws RemoteException {
-        this.view.declareWinner(classifica);
+    public void declareWinner(LinkedList<String> standings) throws RemoteException {
+        this.view.declareWinner(standings);
     }
 
     @Override

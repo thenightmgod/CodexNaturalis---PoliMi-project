@@ -3,13 +3,14 @@ package it.polimi.ingsw.Model.PlayerPackage;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.CornerPackage.Orientation;
 
+import java.io.Serializable;
 import java.util.*;
 
 import static it.polimi.ingsw.Model.CornerPackage.CornerState.ABSENT;
 /**
  * Represents the playing field where cards are placed during the game.
  */
-public class PlayingField {
+public class PlayingField implements Serializable {
 
     private HashMap<Position, PlayableCard> Field;
     private LinkedList<Position> FreePositions;
@@ -21,7 +22,42 @@ public class PlayingField {
 
     public PlayingField(){
         Field = new HashMap<>();
-        FreePositions = new LinkedList<Position>();
+        FreePositions = new LinkedList<>();
+    }
+
+    public boolean containsFreePosition(Position p){
+        for(Position pos : FreePositions){
+            if(pos.equals(p)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public PlayableCard getCardFromPos(Position p){
+        Set<Position> positions = Field.keySet();
+        for(Position pos : positions){
+            if(pos.equals(p)){
+                return Field.get(pos);
+            }
+        }
+        return null;
+    }
+
+    public boolean containsInField(Position p){
+        Set<Position> set = Field.keySet();
+        for(Position p1 : set){
+            if(p.equals(p1)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Position getPosition(int x, int y){
+        Position position = new Position(x, y);
+        List<Position> k = Field.keySet().stream().filter(s -> s.equals(position)).toList();
+        return k.getFirst();
     }
 
     /**

@@ -10,6 +10,7 @@ import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
 
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -20,23 +21,32 @@ public interface GameView {
 
      void updateGoals(LinkedList<GoalCard> goals, String name) throws RemoteException;
 
+    public void updateCommonGoals(LinkedList<GoalCard> goals, String name) throws RemoteException;
+
     public void updateHands(LinkedList<PlayableCard> hand, String name);
 
     public void updateField(PlayingField field, String name);
 
     public void updateFreePosition(String name, LinkedList<Position> freePositions);
 
-    public void showException(String name, String exception) throws RemoteException;
+    public void showException(String name, String exception) throws RemoteException, NotBoundException;
 
-    public void showStartCard(StartCard card);
+    public void showStartCard(StartCard card) throws RemoteException;
 
-    public void updateTurn(Player player) throws RemoteException;
+    public void updateTurn(Player player, String mex) throws RemoteException;
 
-    public void updateGoldDeck(LinkedList<GoldCard> deck, String name);
+    public void updateGoldDeck(LinkedList<GoldCard> deck, boolean start, String name);
 
-    public void updateResourceDeck(LinkedList<ResourceCard> deck, String name);
+    public void updateResourceDeck(LinkedList<ResourceCard> deck, boolean start, String name);
 
-    void declareWinner(HashMap<String, Integer> classifica);
+    void startingGame() throws RemoteException;
+
+    void declareWinner(LinkedList<String> standings);
+
+    void twenty(String name);
+
+    void lastRound();
+    void printNotYourTurn(Player turn);
 
 
     //public void joinGame

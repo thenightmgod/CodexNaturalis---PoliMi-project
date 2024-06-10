@@ -1,14 +1,93 @@
 package it.polimi.ingsw.Model.CornerPackage;
 
+import java.io.IOException;
+import java.io.Serial;
+import java.io.Serializable;
+
+import java.io.*;
+import java.util.stream.Stream;
+
 /**
  * Represents a corner of a card on the game board, which can be covered or uncovered and can possess objects or resources.
  */
 
 
-public class   Corner {
+public class Corner implements Serializable {
     private final Orientation Orient;
     private boolean Covered;
     private CardRes Res;
+
+   /* @Serial
+    private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+
+        if (Res instanceof it.polimi.ingsw.Model.CornerPackage.Objects){
+            out.writeObject("Objects");
+            if(Res.equals(Objects.MANUSCRIPT)){
+                out.writeObject(((Objects) Res).name());
+            } else if (Res.equals(Objects.QUILL)) {
+                out.writeObject(((Objects) Res).name());
+            } else {
+                out.writeObject(((Objects) Res).name());
+            }
+        }
+        else if(Res instanceof Resources){
+            out.writeObject("Resources");
+            if(Res.equals(Resources.FUNGI_KINGDOM)){
+                out.writeObject(((Resources) Res).name());
+            }
+            else if(Res.equals(Resources.ANIMAL_KINGDOM)){
+                out.writeObject(((Resources) Res).name());
+            }
+            else if(Res.equals(Resources.INSECT_KINGDOM)){
+                out.writeObject(((Resources) Res).name());
+            }
+            else{
+                out.writeObject(((Resources) Res).name());
+            }
+        }
+        else if(Res instanceof CornerState){
+            out.writeObject("CornerState");
+            if(Res.equals(CornerState.EMPTY)){
+                out.writeObject(((CornerState) Res).name()
+                );
+            }
+            else{
+                out.writeObject(((CornerState) Res).name());
+            }
+        }
+        else{
+            out.writeObject(null);
+            out.writeObject(null);
+        }
+    }
+
+    @Serial
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+
+        // Legge il nome dell'enum
+        String className = (String) in.readObject();
+        String name = (String) in.readObject();
+
+        // Se entrambe le stringhe non sono null, cerca e assegna l'enum corrispondente a Res
+        if (className != null && name != null) {
+            // Utilizza il nome della classe per determinare l'enum corrispondente
+            switch (className) {
+                case "Objects":
+                    Res = Objects.valueOf(name);
+                    break;
+                case "Resources":
+                    Res = Resources.valueOf(name);
+                    break;
+                case "CornerState":
+                    Res = CornerState.valueOf(name);
+                    break;
+            }
+        } else {
+            Res = null; // Se una delle stringhe è null, imposta Res su null
+        }
+    }*/
 
     /**
      * Constructs a new corner with the specified CardRes and orientation.

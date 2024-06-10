@@ -15,14 +15,16 @@ import it.polimi.ingsw.Model.PlayerPackage.Position;
 import it.polimi.ingsw.Network.CommonClient;
 import it.polimi.ingsw.Network.VirtualView;
 
+import java.io.Serializable;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Represents a game room where players participate.
  */
-public class Room {
+public class Room implements Serializable {
 
     private ObserverManager observerManager = new ObserverManager();
     private final int RoomId;
@@ -86,7 +88,7 @@ public class Room {
      * Sets the flag indicating whether the game has reached the twenty points threshold.
      */
     public void setTwentyFlag(){ //vede se il punteggio di qualcuno è >= 20 per mettere lastRound=true
-        if(Turn.getPointsCounter()>=20)
+        if(Turn.getPointsCounter()>=2)
             this.Twenty = true;
     }
 
@@ -113,7 +115,7 @@ public class Room {
         CommonGoals.add((GoalCard) GoalDeck.getGoalCard());
         CommonGoals.add((GoalCard) GoalDeck.getGoalCard());
         for(Player p: Players){
-            observerManager.showGoals(p.getName(), CommonGoals);
+            observerManager.showCommonGoals(p.getName(), CommonGoals);
         }
     }
 
@@ -157,24 +159,23 @@ public class Room {
      * Places a card on the playing field for the specified player at the given position.
      * @param c The card to place.
      */
-    public void placeCard(ResourceCard c, FB face, int x, int y) throws RemoteException {
+    public void placeCard(ResourceCard c, FB face, int x, int y) throws RemoteException, NotBoundException {
         Position p = new Position(face, x, y);
-        if(!Turn.getPlayerField().getField().containsKey(p)) {
+        if(Turn.getPlayerField().containsInField(p) || !(Turn.getPlayerField().containsFreePosition(p))) {
             observerManager.showException("WrongPositionException", "Nothing", Turn.getName());
         }
-        else if(c.getId() >= 41 && c.getId() < 81 && !((GoldCard) c).RequirementsOk(Turn)){
-            observerManager.showException("RequirementsNotSatisfied", "Nothing", Turn.getName());
-        }
         else {
-            Turn.placeCard(c, p);
-            observerManager.showNewHand(Turn.getName(), Turn.getHand());
-            for(Player player: Players){
-                observerManager.updateField(player.getName(), Turn.getPlayerField());
+            if(c.getId() >= 41 && c.getId() < 81 && face == FB.FRONT && !((GoldCard) c).RequirementsOk(Turn)){
+                observerManager.showException("RequirementsNotSatisfied", "Nothing", Turn.getName());
             }
-            for(Player player: Players) {
-                observerManager.updatePoints(player.getPointsCounter(), Turn.getName());
+            else {
+                Turn.placeCard(c, p);
+                observerManager.showNewHand(Turn.getName(), Turn.getHand());
+                observerManager.updateField(Turn.getName(), Turn.getPlayerField());
+                observerManager.updatePoints(Turn.getPointsCounter(), Turn.getName());
+                observerManager.showFreePositions(Turn.getName(), Turn.getPlayerField().getFreePositions());
+                observerManager.showException("Nothing", "PlaceCardWell", Turn.getName());
             }
-            observerManager.showFreePositions(Turn.getName(), Turn.getPlayerField().getFreePositions());
         }
     } //per il collegamento col controller
 
@@ -182,9 +183,12 @@ public class Room {
         p.placeStartCard((StartCard) p.getHand().getFirst(), face);
         observerManager.updateField(p.getName(), p.getPlayerField());
         observerManager.showFreePositions(Turn.getName(), Turn.getPlayerField().getFreePositions());
-        observerManager.showNewHand(Turn.getName(), Turn.getHand());
+        //observerManager.showNewHand(Turn.getName(), Turn.getHand());
     }
 
+    public void startingGame(Player p) throws RemoteException {
+        observerManager.getObserver(p.getName()).startingGame(p);
+    }
 
     /**
      * Picks a goal card for the specified player based on their choice.
@@ -205,6 +209,7 @@ public class Room {
      * Creates all decks required for the game and shuffles them.
      */
     public void createDecks() throws RemoteException {
+        boolean robo = true;
         this.StartDeck = new StartDeck();
         this.ResourceDeck = new ResourceDeck();
         this.GoldDeck = new GoldDeck();
@@ -230,7 +235,7 @@ public class Room {
         cards.add((ResourceCard) deck.getCards().get(1));
         cards.add((ResourceCard) deck.getCards().get(2));
         for(Player p: Players) {
-            observerManager.updateResourceDeck(p.getName(), cards);
+            observerManager.updateResourceDeck(p.getName(), robo, cards);
         }
 
         // robe per observers
@@ -240,7 +245,7 @@ public class Room {
         cards.add((GoldCard) d3ck.getCards().get(1));
         cards.add((GoldCard) d3ck.getCards().get(2));
         for(Player p: Players) {
-            observerManager.updateGoldDeck(p.getName(), card5);
+            observerManager.updateGoldDeck(p.getName(), robo, card5);
         }
     }
 
@@ -249,10 +254,12 @@ public class Room {
      * Distributes start cards to players.
      //* @param  face The face of the start card.
      */
-    public void giveStartCards(Player player) throws RemoteException {
-        synchronized (StartDeck) { //boh
-            StartDeck.giveCard(player, 0);
-            observerManager.showStartCard(player.getName(), (StartCard) player.getHand().getFirst());
+    public void giveStartCards() throws RemoteException {
+        synchronized (StartDeck) {
+            for(Player p : Players) {
+                StartDeck.giveCard(p, 0);
+                observerManager.showStartCard(p.getName(), (StartCard) p.getHand().getFirst());
+            }
         }
     }
 
@@ -287,42 +294,72 @@ public class Room {
         for(int i=0; i<3; i++){
             if(toCheck.get(i).getId() >= 87 && toCheck.get(i).getId() <= 94) {
                 CompositionGoalCard nostra = (CompositionGoalCard) toCheck.get(i);
-                p.addPoints(nostra.pointsCalc(p, nostra.getColor()));
+                p.addGoalPoints(nostra.pointsCalc(p, nostra.getColor()));
             }
             if(toCheck.get(i).getId() >= 95 && toCheck.get(i).getId() <= 98) {
                 ResourceGoalCard nostra = (ResourceGoalCard) toCheck.get(i);
-                p.addPoints(nostra.pointsCalc(p));
+                p.addGoalPoints(nostra.pointsCalc(p));
             }
             if(toCheck.get(i).getId() >= 99 && toCheck.get(i).getId() <= 102) {
                 ObjectsGoalCard nostra = (ObjectsGoalCard) toCheck.get(i);
-                p.addPoints(nostra.pointsCalc(p));
+                p.addGoalPoints(nostra.pointsCalc(p));
             }
         }
-    }
-
-    public Deck getGoalDeck() {
-        return GoalDeck;
-    }
-
-    public StartDeck getStartDeck() {
-        return StartDeck;
+        p.addTotalPoints(p.getPointsCounter());
+        p.addTotalPoints(p.getGoalPointsCounter());
     }
 
     public void start() throws RemoteException {
-        observerManager.updateTurn(Turn);
+        this.observerManager.updateTurn(Turn, "StartCard");
+    }
+
+    private String getNextKey(LinkedHashMap<String, Integer> map, String currentKey) {
+        Iterator<String> iterator = map.keySet().iterator();
+        while (iterator.hasNext()) {
+            if (iterator.next().equals(currentKey) && iterator.hasNext()) {
+                return iterator.next();
+            }
+        }
+        return null;
     }
 
     public void declareWinner() throws RemoteException {
-        HashMap<String, Integer> points = new HashMap<>();
+
+        TreeMap<String, Integer> goalPoints = new TreeMap<>();
+        TreeMap<String, Integer> totalPoints = new TreeMap<>();
+
         for(Player p: Players) {
-            points.put(p.getName(), p.getPointsCounter());
+            goalPoints.put(p.getName(), p.getGoalPointsCounter());
         }
         for(Player p: Players) {
-            observerManager.declareWinner(p.getName(), points);
+            totalPoints.put(p.getName(), p.getTotalPointsCounter());
+        }
+
+        LinkedList<String> standings = new LinkedList<>();
+
+        Set<String> keys = totalPoints.descendingKeySet();
+        LinkedList<String> NamesInOrder = new LinkedList<>(keys);
+
+        for(int i=0; i<NamesInOrder.size() - 1; i++) {
+
+            if(!standings.contains(NamesInOrder.get(i))) {
+                if (Objects.equals(totalPoints.get(NamesInOrder.get(i)), totalPoints.get(NamesInOrder.get(i + 1)))) {
+                    if (goalPoints.get(NamesInOrder.get(i)) < goalPoints.get(NamesInOrder.get(i + 1))) {
+                        standings.add(NamesInOrder.get(i + 1));
+                        standings.add(NamesInOrder.get(i));
+                    } else standings.add(NamesInOrder.get(i));
+                } else {
+                    standings.add(NamesInOrder.get(i));
+                }
+            }
+        }
+
+        for(Player p: Players) {
+            observerManager.declareWinner(p.getName(), standings);
         }
     }
 
-    public void changeTurns() throws RemoteException {
+    public void changeTurns(String mex) throws RemoteException {
         setLL();
         if(LL){
             for(Player p: Players)
@@ -330,36 +367,43 @@ public class Room {
             declareWinner();
         }
         else {
-            int size = Players.size();
-            //magari cambiare sta stronzata
-            switch (size) {
-                case 2 -> {
-                    if (Turn.equals(Players.getFirst())) {
-                        setTurn(Players.get(1));
-                        break;
+            setTwentyFlag();
+            if(Twenty && !LastRound)
+                observerManager.twenty(Turn.getName());
+            setLastRound();
+
+
+
+            int index = Players.indexOf(Turn);
+            Turn = Players.getLast().equals(Turn) ? Players.getFirst() : Players.get(index + 1);
+
+            if(LastRound)
+                observerManager.lastRound(Turn.getName());
+
+            switch(mex) {
+                case "StartCard" -> {
+                    if(Turn.equals(Players.getFirst())) {
+                        for(Player p: Players) {
+                            giveInitialCards(p);
+                        }
+                        for(Player p: Players) {
+                            show2GoalCards(p);
+                        }
+                        observerManager.updateTurn(Turn, "GoalCard");
                     }
-                    setTurn(Players.getFirst());
+                    else observerManager.updateTurn(Turn, "StartCard");
                 }
-                case 3 -> {
-                    if (Turn.equals(Players.getFirst()))
-                        setTurn(Players.get(1));
-                    else if (Turn.equals(Players.get(1)))
-                        setTurn(Players.get(2));
-                    else setTurn(Players.getFirst());
+
+                case "GoalCard" -> {
+                    if(Turn.equals(Players.getFirst()))
+                        observerManager.updateTurn(Turn, "NormalTurn");
+                    else observerManager.updateTurn(Turn, "GoalCard");
                 }
-                case 4 -> {
-                    if (Turn.equals(Players.getFirst()))
-                        setTurn(Players.get(1));
-                    else if (Turn.equals(Players.get(1)))
-                        setTurn(Players.get(2));
-                    else if (Turn.equals(Players.get(2)))
-                        setTurn(Players.get(3));
-                    else setTurn(Players.getFirst());
+                case "NormalTurn" -> {
+                    observerManager.updateTurn(Turn, "NormalTurn");
                 }
             }
-            setTwentyFlag();
-            setLastRound();
-            observerManager.updateTurn(Turn);
+
         }
     }
 }

@@ -12,6 +12,7 @@ import it.polimi.ingsw.Model.PlayerPackage.Position;
 import it.polimi.ingsw.Network.CommonClient;
 import it.polimi.ingsw.Network.VirtualView;
 
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -45,21 +46,28 @@ public class ObserverManager {
         }
     }
 
-    public void updateTurn(Player turn) throws RemoteException {
+    public void updateTurn(Player turn, String mex) throws RemoteException {
         for(String s : observers.keySet()) {
-            observers.get(s).updateTurn(turn);
+            if(!observers.get(s).getName().equals(turn.getName())){ //printo is not your turn a tutti quelli che non sono in turno
+                observers.get(s).notYourTurn(turn);
+            }
+        }
+        for(String s : observers.keySet()) {
+            if(observers.get(s).getName().equals(turn.getName())){  //inizio a chiamare azioni sul player che ha il turno
+                observers.get(s).updateTurn(turn, mex);
+            }
         }
     }
 
-    public void declareWinner(String name, HashMap<String, Integer> classifica) throws RemoteException{
-        observers.get(name).declareWinner(classifica);
+    public void declareWinner(String name, LinkedList<String> standings) throws RemoteException{
+        observers.get(name).declareWinner(standings);
     }
 
     public void showStartCard(String name, StartCard card) throws RemoteException{
         observers.get(name).showStartCard(card);
     }
 
-    public void showException(String exception, String details, String name) throws RemoteException {
+    public void showException(String exception, String details, String name) throws RemoteException, NotBoundException {
         observers.get(name).showException(exception, details);
     }
 
@@ -67,6 +75,9 @@ public class ObserverManager {
         observers.get(name).updateGoals(goals);
     }
 
+    public void showCommonGoals(String name, LinkedList<GoalCard> goals) throws RemoteException {
+        observers.get(name).updateCommonGoals(goals);
+    }
     public void showNewHand(String name, LinkedList<PlayableCard> hand) throws RemoteException {
         observers.get(name).showHand(hand);
         //anche per starter card, eventuali sbatti con l'id farli qua
@@ -81,13 +92,23 @@ public class ObserverManager {
         observers.get(name).showFreePositions(name, freePosition);
     }
 
-    public void updateGoldDeck(String name, LinkedList<GoldCard> deck) throws RemoteException{
-        observers.get(name).updateGoldDeck(name, deck);
+    public void updateGoldDeck(String name, boolean start, LinkedList<GoldCard> deck) throws RemoteException{
+        observers.get(name).updateGoldDeck(name, start, deck);
     }
 
-    public void updateResourceDeck(String name, LinkedList<ResourceCard> deck) throws RemoteException{
-        observers.get(name).updateResourceDeck(name, deck);
+    public void updateResourceDeck(String name, boolean start, LinkedList<ResourceCard> deck) throws RemoteException{
+        observers.get(name).updateResourceDeck(name, start, deck);
     }
+
+    public void twenty(String name) throws RemoteException {
+        for(String s : observers.keySet())
+            observers.get(s).twenty(name);
+    }
+
+    public void lastRound(String name) throws RemoteException {
+        observers.get(name).lastRound();
+    }
+
 
     //eventualmente implementarli
     public void message(String name, String mex){};

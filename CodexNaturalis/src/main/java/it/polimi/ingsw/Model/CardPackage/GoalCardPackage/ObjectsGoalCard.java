@@ -9,7 +9,7 @@ import it.polimi.ingsw.Model.CornerPackage.Objects;
  * certain number of one of the three objects on the player's playing field.
  */
 public class ObjectsGoalCard extends GoalCard {
-    private final int[] obj;
+    private final int[] obj = new int[3];
     //la prima posizione è la QUILL, la seconda è la INKWELL, la terza MANUSCRIPT,
     // quando le istanzio metto un '2' al primo posto se la carta obiettivo
     //richiede 2 QUILL ecc...
@@ -31,7 +31,6 @@ public class ObjectsGoalCard extends GoalCard {
         if (arrayInput.length != 3) {
             throw new IllegalArgumentException("L'array di input deve essere di dimensione 3");
         }
-        obj = new int[3];
         // Copia gli elementi dall'array di input a obj
         for (int i = 0; i < 3; i++) {
             obj[i] = arrayInput[i];

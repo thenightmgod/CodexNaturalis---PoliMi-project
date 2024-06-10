@@ -7,6 +7,7 @@ import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Network.RMI.RMIServer;
 import it.polimi.ingsw.Network.VirtualView;
 
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Map;
 
@@ -21,7 +22,8 @@ public class DrawCardAction extends Actions {
     }
 
     @Override
-    public void executor() throws RemoteException {
+    public void executor() throws RemoteException, NotBoundException {
+        System.out.println("DRAW CARD inizio");
         int k = -1;
         for(Map.Entry<Integer, GameController> entry : getManager().getControllersPerGame().entrySet()){
             if(entry.getValue().getPlayers().stream().map(Player::getName).toList().contains(getView().getName())){
@@ -31,5 +33,6 @@ public class DrawCardAction extends Actions {
         if(k != -1){
             GameController controller = getManager().getControllersPerGame().get(k);
             controller.drawCard(i, whichOne);}
+        System.out.println("DRAW CARD fine");
     }
 }

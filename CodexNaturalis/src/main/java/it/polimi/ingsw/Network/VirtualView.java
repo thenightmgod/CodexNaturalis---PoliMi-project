@@ -6,7 +6,6 @@ import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.StartCard;
-import it.polimi.ingsw.Model.Messages.Message;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
@@ -22,15 +21,18 @@ public interface VirtualView extends Remote {
 
     //le funzioni del client che vuole chiamare il server
 
-    void updateTurn(Player p) throws RemoteException;
+    void updateTurn(Player p, String mex) throws RemoteException;
 
-    void showException(String exception, String details) throws RemoteException;
+    void notYourTurn(Player turn) throws RemoteException;
+
+    void showException(String exception, String details) throws RemoteException, NotBoundException;
 
     void updatePoints(int points, String name) throws RemoteException;
     // int points, String name
 
-    void updateGoals(LinkedList<GoalCard> goals) throws RemoteException;
+    void updateGoals(LinkedList<GoalCard> goals) throws RemoteException;  //mostro due carte goal da scegliere
     // LinkedList<GoalCard> goals
+    void updateCommonGoals(LinkedList<GoalCard> goals) throws RemoteException; //setto i common goals (non li faccio vedere)
 
     void showHand(LinkedList<PlayableCard> hand) throws RemoteException;
     // LinkedList<PlayableCard> hand
@@ -40,15 +42,21 @@ public interface VirtualView extends Remote {
 
     void showFreePositions(String name, LinkedList<Position> freePosition) throws RemoteException;
 
-    void updateResourceDeck(String name, LinkedList<ResourceCard> deck) throws RemoteException;
+    void updateResourceDeck(String name, boolean start, LinkedList<ResourceCard> deck) throws RemoteException;
 
-    void updateGoldDeck(String name, LinkedList<GoldCard> deck) throws RemoteException;
+    void updateGoldDeck(String name, boolean start, LinkedList<GoldCard> deck) throws RemoteException;
 
-    void declareWinner(HashMap<String, Integer> classifica) throws RemoteException;
+    void declareWinner(LinkedList<String> standings) throws RemoteException;
 
     String getName() throws RemoteException;
 
     void showStartCard(StartCard card) throws RemoteException;
+
+    void startingGame(Player p) throws RemoteException;
+
+    void twenty(String name) throws RemoteException;
+
+    void lastRound() throws RemoteException;
 
     void update() throws RemoteException; //update il clientModel
 

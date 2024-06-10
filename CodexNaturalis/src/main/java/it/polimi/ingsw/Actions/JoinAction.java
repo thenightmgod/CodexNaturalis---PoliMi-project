@@ -7,6 +7,7 @@ import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Network.RMI.RMIServer;
 import it.polimi.ingsw.Network.VirtualView;
 
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Map;
 
@@ -17,8 +18,7 @@ public class JoinAction extends Actions {
         this.name = name;
     }
 
-    public void executor() throws RemoteException {
+    public void executor() throws RemoteException, NotBoundException {
         getManager().joinGame(name, getView());
-
     }
 }

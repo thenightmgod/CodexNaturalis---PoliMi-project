@@ -5,6 +5,7 @@ import it.polimi.ingsw.Model.CornerPackage.Corner;
 import it.polimi.ingsw.Model.CornerPackage.Orientation;
 import it.polimi.ingsw.Model.CornerPackage.Resources;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
 
@@ -12,7 +13,7 @@ import java.util.LinkedList;
  * Represents the generic Card that the player can draw and place in his playing field at each turn.
  * The PlayableCard includes ResourceCard and GoldCard.
  */
-public abstract class PlayableCard extends Card{
+public abstract class PlayableCard extends Card implements Serializable {
 
     private final boolean[] BackRes;
     private LinkedList<Corner> Corners;

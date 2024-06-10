@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Model.PlayerPackage;
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.rmi.RemoteException;
 import java.util.*;
@@ -24,11 +25,13 @@ import static it.polimi.ingsw.Model.CornerPackage.Resources.INSECT_KINGDOM;
 /**
  * Represents a player in the game. Each player has a name, a color, and keeps track of their points, resources, objects, hand, player goal, and playing field.
  */
-public class Player {
+public class Player implements Serializable {
     //bisogna fare override della equals
     private final String Name;
     private final PlayerColor Color;
     private int PointsCounter;
+    private int GoalPointsCounter;
+    private int TotalPointsCounter;
     private int[] ResourceCounter;
     private int[] ObjectCounter;
     private LinkedList<PlayableCard> Hand;
@@ -57,6 +60,22 @@ public class Player {
             ObjectCounter[i]=0;
         }
         PlayerField = new PlayingField();
+    }
+
+    public int getGoalPointsCounter(){
+        return GoalPointsCounter;
+    }
+
+    public void addGoalPoints(int points){
+        GoalPointsCounter += points;
+    }
+
+    public int getTotalPointsCounter(){
+        return TotalPointsCounter;
+    }
+
+    public void addTotalPoints(int points){
+        TotalPointsCounter += points;
     }
 
     public PlayingField getPlayerField(){
@@ -182,6 +201,7 @@ public class Player {
                 }
             }
             this.PlayerField.updateFreePositions(new Position(0, 0));
+
         }
         else{
             for(Orientation Orien : Orientation.values()){
@@ -274,7 +294,7 @@ public class Player {
 
 
     public ResourceCard getCardFromHand(int i){
-        return (ResourceCard) this.Hand.get(i);
+        return (ResourceCard) this.Hand.get(i-1);
     }
 
     /**
@@ -295,4 +315,10 @@ public class Player {
     public void setObjectCounter(int[] objectCounter) {
         ObjectCounter = objectCounter;
     }
+
+    @Override
+    public String toString() {
+        return Name;
+    }
+
 }

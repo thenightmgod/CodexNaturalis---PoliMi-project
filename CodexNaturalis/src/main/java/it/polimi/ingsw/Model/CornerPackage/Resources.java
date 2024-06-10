@@ -1,10 +1,12 @@
 package it.polimi.ingsw.Model.CornerPackage;
 
+import java.io.Serializable;
+
 /**
  * Represents the different types of resources that can be possessed by a corner on a card.
  * This enum implements the abstract interface {@code CardRes}.
  */
-public enum Resources implements CardRes {
+public enum Resources implements CardRes{
     /**
      * Represents the resource type for plants.
      */
@@ -33,6 +35,10 @@ public enum Resources implements CardRes {
 
     Resources(String shortName) {
         this.shortName = shortName;
+    }
+
+    public Resources getName(){
+        return this;
     }
 
     }

@@ -1,11 +1,12 @@
 package it.polimi.ingsw.Model.PlayerPackage;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Represents a position on the playing field.
  */
-public class Position {
+public class Position implements Serializable {
     private int x;
     private int y;
     private final FB face;
@@ -86,7 +87,7 @@ public class Position {
             return false;
         }
         Position position = (Position) obj;
-        return this.x == position.getX() && this.y == position.getY() && this.face == position.getFace();
+        return this.x == position.getX() && this.y == position.getY();
     }
 
     /**
@@ -96,6 +97,14 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(x, y, face);
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                 + x + " , "
+                 + y +
+                '}';
     }
 
 }
