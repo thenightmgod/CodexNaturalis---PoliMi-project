@@ -28,7 +28,7 @@ class RoomTest {
 
         VirtualView client1 = new VirtualView() {
             @Override
-            public void updateTurn(Player p) throws RemoteException {
+            public void updateTurn(Player p, String mex) throws RemoteException {
 
             }
 
@@ -78,7 +78,7 @@ class RoomTest {
             }
 
             @Override
-            public void declareWinner(HashMap<String, Integer> classifica) throws RemoteException {
+            public void declareWinner(LinkedList<String> classifica) throws RemoteException {
 
             }
 
@@ -109,7 +109,12 @@ class RoomTest {
         };
         VirtualView client2 = new VirtualView() {
             @Override
-            public void updateTurn(Player p) throws RemoteException {
+            public void updateTurn(Player p, String mex) throws RemoteException {
+
+            }
+
+            @Override
+            public void notYourTurn(Player turn) throws RemoteException {
 
             }
 
@@ -159,7 +164,7 @@ class RoomTest {
             }
 
             @Override
-            public void declareWinner(HashMap<String, Integer> classifica) throws RemoteException {
+            public void declareWinner(LinkedList<String> standings) throws RemoteException {
 
             }
 
@@ -175,6 +180,16 @@ class RoomTest {
 
             @Override
             public void startingGame(Player p) throws RemoteException {
+
+            }
+
+            @Override
+            public void twenty(String name) throws RemoteException {
+
+            }
+
+            @Override
+            public void lastRound() throws RemoteException {
 
             }
 
@@ -190,7 +205,12 @@ class RoomTest {
         };
         VirtualView client3 = new VirtualView() {
             @Override
-            public void updateTurn(Player p) throws RemoteException {
+            public void updateTurn(Player p, String s) throws RemoteException {
+
+            }
+
+            @Override
+            public void notYourTurn(Player turn) throws RemoteException {
 
             }
 
@@ -240,7 +260,7 @@ class RoomTest {
             }
 
             @Override
-            public void declareWinner(HashMap<String, Integer> classifica) throws RemoteException {
+            public void declareWinner(LinkedList<String> classifica) throws RemoteException {
 
             }
 
@@ -256,6 +276,16 @@ class RoomTest {
 
             @Override
             public void startingGame(Player p) throws RemoteException {
+
+            }
+
+            @Override
+            public void twenty(String name) throws RemoteException {
+
+            }
+
+            @Override
+            public void lastRound() throws RemoteException {
 
             }
 
@@ -271,7 +301,12 @@ class RoomTest {
         };
         VirtualView client4 = new VirtualView() {
             @Override
-            public void updateTurn(Player p) throws RemoteException {
+            public void updateTurn(Player p, String mex) throws RemoteException {
+
+            }
+
+            @Override
+            public void notYourTurn(Player turn) throws RemoteException {
 
             }
 
@@ -321,7 +356,7 @@ class RoomTest {
             }
 
             @Override
-            public void declareWinner(HashMap<String, Integer> classifica) throws RemoteException {
+            public void declareWinner(LinkedList<String> standings) throws RemoteException {
 
             }
 
@@ -337,6 +372,16 @@ class RoomTest {
 
             @Override
             public void startingGame(Player p) throws RemoteException {
+
+            }
+
+            @Override
+            public void twenty(String name) throws RemoteException {
+
+            }
+
+            @Override
+            public void lastRound() throws RemoteException {
 
             }
 

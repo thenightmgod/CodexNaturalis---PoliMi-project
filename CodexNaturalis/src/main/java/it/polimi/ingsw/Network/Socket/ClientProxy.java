@@ -14,6 +14,9 @@ public class ClientProxy {
     public void showException(String StringMessage) {
         sendMessage(StringMessage);
     }
+    public void twenty(String StringMessage) { sendMessage(StringMessage); }
+    public void lastRound(String StringMessage) { sendMessage(StringMessage); }
+    public void notYourTurn(String StringMessage) { sendMessage(StringMessage); }
     public void updatePoints(String StringMessage) {
         sendMessage(StringMessage);
     }

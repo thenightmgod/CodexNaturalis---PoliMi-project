@@ -19,13 +19,14 @@ import it.polimi.ingsw.View.GameView;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
-public class TUI implements GameView {
+public class TUI implements GameView, Serializable {
 
     boolean connectionType;
 
@@ -95,7 +96,7 @@ public class TUI implements GameView {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
                 i = Integer.parseInt(reader.readLine());
                 if (i == 1 || i == 2) {
-                    client.chooseGoalCard(i, this.client);
+                    client.chooseGoalCard(i, client.getName());
                     goon = true;
                 } else {
                     System.out.println("You put a number which isn't ");
@@ -211,7 +212,7 @@ public class TUI implements GameView {
                     if(f.equals("1"))
                         face = true;
                     else face = false;
-                    client.setStartCardFace(face, client);
+                    client.setStartCardFace(face);
                     goon = true;
                 } else {
                     System.out.println("You must choose between 1(front) or 0(back)");

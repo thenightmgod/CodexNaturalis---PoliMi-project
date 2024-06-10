@@ -18,6 +18,7 @@ import it.polimi.ingsw.View.TUI.ClientModel;
 
 import java.io.*;
 import java.net.Socket;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -96,15 +97,22 @@ public class SocketClient implements CommonClient {
                     Message mex = gson.fromJson(receivedMessage, Message.class);
                     handleCommand(mex);
                 }
-            } catch (RuntimeException | IOException e) {
+            } catch (RuntimeException | IOException | NotBoundException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public void handleCommand(Message mex) throws RemoteException {
+    public void handleCommand(Message mex) throws RemoteException, NotBoundException {
         switch(mex.getType()) {
-            case"ExceptionMessage" -> {
+            case "TwentyMessage" -> {
+                String name = ((TwentyMessage)mex).getName();
+                this.view.twenty(name);
+            }
+            case "LastRoundMessage" -> {
+                this.view.lastRound();
+            }
+            case "ExceptionMessage" -> {
                 String details= ((ExceptionMessage)mex).getDetails();
                 String exception = ((ExceptionMessage)mex).getException();
                 this.view.showException(exception, details);
@@ -116,12 +124,18 @@ public class SocketClient implements CommonClient {
             }
             case "UpdateTurnMessage" -> {
                 Player p = ((UpdateTurnMessage)mex).getPlayer();
-                this.view.updateTurn(p);
+                String messaggio = ((UpdateTurnMessage)mex).getMex();
+                this.view.updateTurn(p, messaggio);
+            }
+            case "NotYourTurnMessage" -> {
+                Player p = ((NotYourTurnMessage)mex).getPlayer();
+                this.view.printNotYourTurn(p);
             }
             case "DeclareWinnerMessage" -> {
                 HashMap<String, Integer> c = ((DeclareWinnerMessage)mex).getClassifica();
                 this.view.declareWinner(c);
             }
+
             case "ShowStartCardMessage" -> {
                 StartCard card = ((ShowStartCardMessage)mex).getStart();
                 this.view.showStartCard(card);
@@ -209,10 +223,7 @@ public class SocketClient implements CommonClient {
         server.drawCard(gson);
     }
     public void setView(GameView view){
-        this.view=view;
-        SetViewMessage msg = new SetViewMessage(view);
-        String gson = msg.MessageToJson();
-        server.setView(gson);
+        this.view = view;
     }
     //il client deve avere un main che
     //si connette al socket del server
@@ -228,8 +239,8 @@ public class SocketClient implements CommonClient {
         String gson = msg.MessageToJson();
         server.checkGoals(gson);
     }
-    public void endTurn(String name){
-        EndTurnMessage msg = new EndTurnMessage(name);
+    public void endTurn(String name, String mex){
+        EndTurnMessage msg = new EndTurnMessage(name, mex);
         String gson = msg.MessageToJson();
         server.endTurn(gson);
     }

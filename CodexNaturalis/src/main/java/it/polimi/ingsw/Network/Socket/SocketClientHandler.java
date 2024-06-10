@@ -18,6 +18,7 @@ import it.polimi.ingsw.Model.RoomPackage.Room;
 import it.polimi.ingsw.Network.VirtualView;
 
 import java.io.*;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -66,7 +67,7 @@ public class SocketClientHandler extends Thread implements VirtualView {
             System.out.println("Error in Socket connection");
         }
     }
-    public void handleCommand(Message msg) throws RemoteException {
+    public void handleCommand(Message msg) throws RemoteException, NotBoundException {
         switch(msg.getType()){
             case "JoinExistingGameMessage" -> {
                 String name = ((JoinExistingGameMessage) msg).getName();
@@ -100,8 +101,7 @@ public class SocketClientHandler extends Thread implements VirtualView {
                 int i= ((ChooseGoalCardMessage)msg).getI();
                 String name = ((ChooseGoalCardMessage)msg).getName();
                 GameController gc = findGameController(name);
-                Player p= gc.getPlayerByName(name);
-                gc.chooseGoalCard(p,i);
+                gc.chooseGoalCard(name, i);
             }
             case "DrawCardMessage" -> {
                 int i= ((DrawCardMessage)msg).getI();
@@ -117,13 +117,25 @@ public class SocketClientHandler extends Thread implements VirtualView {
             }
             case "EndTurnMessage" -> {
                 String name = ((EndTurnMessage)msg).getName();
+                String mex = ((EndTurnMessage)msg).getMex();
                 GameController gc = findGameController(name);
-                gc.endTurn();
+                gc.changeTurns(mex);
             }
         }
     }
 
     @Override
+    public void twenty(String name){
+        TwentyMessage message = new TwentyMessage(name);
+        String gson = message.MessageToJson();
+        proxy.twenty(gson);
+    }
+    @Override
+    public void lastRound(){
+        LastRoundMessage message = new LastRoundMessage();
+        String gson = message.MessageToJson();
+        proxy.lastRound(gson);
+    }
     public void showException(String exception, String details) throws RemoteException{
         ExceptionMessage message= new ExceptionMessage(exception, details);
         String gson = message.MessageToJson();
@@ -137,10 +149,16 @@ public class SocketClientHandler extends Thread implements VirtualView {
         proxy.updatePoints(gson);
     }
 
-    public void updateTurn(Player turn) throws RemoteException {
-        UpdateTurnMessage message = new UpdateTurnMessage(turn);
+    public void updateTurn(Player turn, String mex) throws RemoteException {
+        UpdateTurnMessage message = new UpdateTurnMessage(turn, mex);
         String gson = message.MessageToJson();
         proxy.updateTurn(gson);
+    }
+
+    public void notYourTurn(Player turn){
+        NotYourTurnMessage message = new NotYourTurnMessage(turn);
+        String gson = message.MessageToJson();
+        proxy.notYourTurn(gson);
     }
     public void declareWinner(HashMap<String, Integer> classifica){
         DeclareWinnerMessage message = new DeclareWinnerMessage(classifica);

@@ -70,27 +70,27 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
 
 
     @Override
-    public void setStartCardFace(boolean face, CommonClient client) throws RemoteException {
+    public void setStartCardFace(boolean face) throws RemoteException {
         server.setStartCardFace(face, this);
     }
 
     @Override
-    public void leaveGame(String name, CommonClient client) throws RemoteException {
+    public void leaveGame(String name) throws RemoteException {
         server.leaveGame(name, this);
     }
 
     @Override
-    public void placeCard(CommonClient client, int whichInHand, int x, int y, FB face) throws RemoteException {
+    public void placeCard(int whichInHand, int x, int y, FB face) throws RemoteException {
         server.placeCard(this, whichInHand, x, y, face);
     }
 
     @Override
-    public void chooseGoalCard(int i, CommonClient client) throws RemoteException {
+    public void chooseGoalCard(int i, String name) throws RemoteException {
         server.chooseGoalCard(i, this);
     }
 
     @Override
-    public void drawCard(int whichDeck, int whichone, CommonClient client) throws RemoteException {
+    public void drawCard(int whichDeck, int whichone, String name) throws RemoteException {
         server.drawCard(whichDeck, whichone, this);
     }
 
