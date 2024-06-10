@@ -32,5 +32,5 @@ public interface CommonClient {
 
     ClientModel getClient();
 
-    void endTurn(String name, String mex) throws RemoteException;
+    void endTurn(String name) throws RemoteException;
 }
