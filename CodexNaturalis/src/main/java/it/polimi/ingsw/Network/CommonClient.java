@@ -16,15 +16,15 @@ public interface CommonClient {
 
     void createGame(String Name, int numPlayers) throws RemoteException;
 
-    void leaveGame(String name) throws RemoteException;
+    void leaveGame(String name, CommonClient client) throws RemoteException;
 
-    void placeCard(int whichInHand, int x, int y, FB face) throws RemoteException;
+    void placeCard(CommonClient client, int whichInHand, int x, int y, FB face) throws RemoteException;
 
-    void setStartCardFace(boolean face) throws RemoteException; //il player setta la variabile face della sua start card
+    void setStartCardFace(boolean face, CommonClient client) throws RemoteException; //il player setta la variabile face della sua start card
 
-    void chooseGoalCard(int i, String name) throws RemoteException;
+    void chooseGoalCard(int i, CommonClient client) throws RemoteException;
 
-    void drawCard(int i, int whichOne, String name) throws RemoteException;
+    void drawCard(int i, int whichOne, CommonClient client) throws RemoteException;
 
     void setView(GameView view);
 
@@ -32,5 +32,5 @@ public interface CommonClient {
 
     ClientModel getClient();
 
-    void endTurn(String name) throws RemoteException;
+    void endTurn(String name, String mex) throws RemoteException;
 }
