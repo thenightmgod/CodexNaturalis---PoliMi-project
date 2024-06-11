@@ -1784,7 +1784,7 @@ public class CardsTUI {
         LinkedList<ResourceCard> Res = model.getDrawableResourceCards();
 
         System.out.println("");
-        System.out.println("RESOURCE CARDS               GOLD CARDS");
+        System.out.println("RESOURCE CARDS           GOLD CARDS");
 
         printResourceCardJackie(Res.get(0));
         System.out.print("      ");
@@ -1813,6 +1813,70 @@ public class CardsTUI {
         printResourceCardJackie(Res.get(0));
         System.out.print("      ");
         printGoldCardJackie(Gold.get(0));
+        System.out.print(ANSI_RESET);
+        System.out.println("");
+        System.out.println("");
+
+
+        printResourceCardJackie(Res.get(1));
+        System.out.print("      ");
+        printGoldCardJackie(Gold.get(1));
+        System.out.print(ANSI_RESET);
+        System.out.println("");
+
+        printFrontResourceCardFirstLine(Res.get(1));
+        System.out.print("      ");
+        printFrontGoldCardFirstLine(Gold.get(1));
+        System.out.print(ANSI_RESET);
+        System.out.println("");
+
+        printFrontResourceCardSecondLine(Res.get(1));
+        System.out.print("      ");
+        printFrontGoldCardSecondLine(Gold.get(1));
+        System.out.print(ANSI_RESET);
+        System.out.println("");
+
+        printFrontResourceCardThirdLine(Res.get(1));
+        System.out.print("      ");
+        printFrontGoldCardThirdLine(Gold.get(1));
+        System.out.print(ANSI_RESET);
+        System.out.println("");
+
+        printResourceCardJackie(Res.get(1));
+        System.out.print("      ");
+        printGoldCardJackie(Gold.get(1));
+        System.out.print(ANSI_RESET);
+        System.out.println("");
+        System.out.println("");
+
+
+        printResourceCardJackie(Res.get(2));
+        System.out.print("      ");
+        printGoldCardJackie(Gold.get(2));
+        System.out.print(ANSI_RESET);
+        System.out.println("");
+
+        printFrontResourceCardFirstLine(Res.get(2));
+        System.out.print("      ");
+        printFrontGoldCardFirstLine(Gold.get(2));
+        System.out.print(ANSI_RESET);
+        System.out.println("");
+
+        printFrontResourceCardSecondLine(Res.get(2));
+        System.out.print("      ");
+        printFrontGoldCardSecondLine(Gold.get(2));
+        System.out.print(ANSI_RESET);
+        System.out.println("");
+
+        printFrontResourceCardThirdLine(Res.get(2));
+        System.out.print("      ");
+        printFrontGoldCardThirdLine(Gold.get(2));
+        System.out.print(ANSI_RESET);
+        System.out.println("");
+
+        printResourceCardJackie(Res.get(2));
+        System.out.print("      ");
+        printGoldCardJackie(Gold.get(2));
         System.out.print(ANSI_RESET);
         System.out.println("");
 
