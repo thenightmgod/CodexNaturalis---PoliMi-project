@@ -117,10 +117,8 @@ public class GameController {
     }
 
     public void chooseGoalCard(String name, int i) throws RemoteException {
-        boolean choice = false;
-        if(i == 1)
-            choice = true;
-        this.Game.pickGoalCard(getPlayerByName(name), choice);
+
+        this.Game.pickGoalCard(getPlayerByName(name), i);
     }
 
     public void placeCard(int i, int x, int y, FB face) throws RemoteException, NotBoundException {

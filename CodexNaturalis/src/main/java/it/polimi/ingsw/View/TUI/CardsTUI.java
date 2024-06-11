@@ -1870,11 +1870,10 @@ public class CardsTUI {
 
     public void plotGoals(ClientModel model){
         LinkedList<GoalCard> common = model.getCommonGoals();
-        System.out.println("COMMON GOALS");
-        printGoalCard(common.get(0));
-        printGoalCard(common.get(1));
-        System.out.println("PERSONAL GOAL");
-        printGoalCard(common.get(2));
+        for(GoalCard c: common){
+            printGoalCard(c);
+        }
+
     }
 
 }
