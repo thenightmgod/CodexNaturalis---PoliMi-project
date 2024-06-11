@@ -88,7 +88,7 @@ public class Room implements Serializable {
      * Sets the flag indicating whether the game has reached the twenty points threshold.
      */
     public void setTwentyFlag(){ //vede se il punteggio di qualcuno è >= 20 per mettere lastRound=true
-        if(Turn.getPointsCounter()>=2)
+        if(Turn.getPointsCounter()>=1)
             this.Twenty = true;
     }
 
@@ -318,34 +318,27 @@ public class Room implements Serializable {
         TreeMap<String, Integer> goalPoints = new TreeMap<>();
         TreeMap<String, Integer> totalPoints = new TreeMap<>();
 
-        for(Player p: Players) {
+        for (Player p : Players) {
             goalPoints.put(p.getName(), p.getGoalPointsCounter());
         }
-        for(Player p: Players) {
+        for (Player p : Players) {
             totalPoints.put(p.getName(), p.getTotalPointsCounter());
         }
 
-        LinkedList<String> standings = new LinkedList<>();
 
-        Set<String> keys = totalPoints.descendingKeySet();
-        LinkedList<String> NamesInOrder = new LinkedList<>(keys);
+        LinkedList<String> NamesInOrder = new LinkedList<>(totalPoints.keySet());
 
-        for(int i=0; i<NamesInOrder.size() - 1; i++) {
-
-            if(!standings.contains(NamesInOrder.get(i))) {
-                if (Objects.equals(totalPoints.get(NamesInOrder.get(i)), totalPoints.get(NamesInOrder.get(i + 1)))) {
-                    if (goalPoints.get(NamesInOrder.get(i)) < goalPoints.get(NamesInOrder.get(i + 1))) {
-                        standings.add(NamesInOrder.get(i + 1));
-                        standings.add(NamesInOrder.get(i));
-                    } else standings.add(NamesInOrder.get(i));
-                } else {
-                    standings.add(NamesInOrder.get(i));
-                }
+        NamesInOrder.sort((player1, player2) -> {
+            int totalComparison = totalPoints.get(player2).compareTo(totalPoints.get(player1));
+            if (totalComparison != 0) {
+                return totalComparison;
+            } else {
+                return goalPoints.get(player2).compareTo(goalPoints.get(player1));
             }
-        }
+        });
 
         for(Player p: Players) {
-            observerManager.declareWinner(p.getName(), standings);
+            observerManager.declareWinner(p.getName(), NamesInOrder);
         }
     }
 
@@ -359,7 +352,8 @@ public class Room implements Serializable {
         else {
             setTwentyFlag();
             if(Twenty && !LastRound)
-                observerManager.twenty(Turn.getName());
+                if(Turn.getPointsCounter()>=1)
+                    observerManager.twenty(Turn.getName());
             setLastRound();
 
 
