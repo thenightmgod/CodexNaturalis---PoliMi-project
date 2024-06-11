@@ -90,8 +90,8 @@ public class GameController {
                 }
             };
 
-            long delay = 10000L;
-            long period = 3000L;
+            long delay = 3000L;
+            long period = 1500L;
 
             timer.scheduleAtFixedRate(task, delay, period);
 
@@ -116,9 +116,9 @@ public class GameController {
         this.Game.createDecks();
     }
 
-    public void chooseGoalCard(String name, int i) {
-        boolean choice = i != 1;
-        this.Game.pickGoalCard(getPlayerByName(name), choice);
+    public void chooseGoalCard(String name, int i) throws RemoteException {
+        this.Game.pickGoalCard(getPlayerByName(name), i);
+
     }
 
     public void placeCard(int i, int x, int y, FB face) throws RemoteException, NotBoundException {
@@ -184,8 +184,8 @@ public class GameController {
                 getGame().getObserverManager().showException("WrongIndexException", "DrawIndex", getGame().getTurn().getName());
             else {
                 if (i == 1)
-                    pickResCard(whichOne);
-                else pickGoldCard(whichOne);
+                    pickResCard(whichOne-1);
+                else pickGoldCard(whichOne-1);
             }
         }
     }

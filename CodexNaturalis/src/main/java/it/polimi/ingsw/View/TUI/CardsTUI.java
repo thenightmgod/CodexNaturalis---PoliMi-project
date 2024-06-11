@@ -1818,4 +1818,11 @@ public class CardsTUI {
 
     }
 
+    public void plotGoals(ClientModel model){
+        LinkedList<GoalCard> common = model.getCommonGoals();
+        for(GoalCard c: common){
+            printGoalCard(c);
+        }
+
+    }
 }

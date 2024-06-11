@@ -39,42 +39,33 @@ public class TUI implements GameView, Serializable {
 
     CommonClient client;
 
-    int ServerPort= 4444;
+    int ServerPort = 4444;
 
-    String error = "default";
-
-    public TUI(){}
+    public TUI() {
+    }
 
     public void startTui() throws RemoteException {
         joinGame();
     }
 
-    public void showPoints(){}
-
-    @Override
-    public void twenty(String name){
-        if(name.equals(client.getName()))
-            System.out.println("You arrived at 20 points");
-        else System.out.println( name + " arrived at 20 points");
+    public void showPoints() {
     }
 
     @Override
-    public void lastRound(){
+    public void twenty(String name) {
+        if (name.equals(client.getName()))
+            System.out.println("You arrived at 20 points");
+        else System.out.println(name + " arrived at 20 points");
+    }
+
+    @Override
+    public void lastRound() {
         System.out.println("This is your last turn");
     }
 
     @Override
-    public void updatePoints(int points, String name){
-
-        //DA RIFARE COL MENU'
-
-        /*if(name.equals(Turn.getName())) {
-            client.getClient().setPointsCounter(points);
-            System.out.println("Your new points are" + points);
-        }
-        else{
-            System.out.println(name+ "'s new points are" + points);
-        }*/
+    public void updatePoints(int points, String name) {
+        //TODO
     }
 
     @Override
@@ -84,7 +75,7 @@ public class TUI implements GameView, Serializable {
         cards.printGoalCard(goals.getLast());
     }
 
-    public void updateCommonGoals(LinkedList<GoalCard> goals, String name) throws RemoteException{
+    public void updateCommonGoals(LinkedList<GoalCard> goals, String name) throws RemoteException {
         client.getClient().setCommonGoals(goals);
     }
 
@@ -104,7 +95,7 @@ public class TUI implements GameView, Serializable {
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
-            } catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 System.out.println("Please enter a number!");
             }
         } while (!goon);
@@ -121,12 +112,11 @@ public class TUI implements GameView, Serializable {
 
     @Override
     public void updateField(PlayingField field, String name) {
-        if(name.equals(client.getName())) {
+        if (name.equals(client.getName())) {
             client.getClient().setField(field);
             System.out.println("Your new field is:\n");
             cards.plotPlayingField(client.getClient());
-        }
-        else{
+        } else {
             System.out.println(name + " has placed a card");
         }
     }
@@ -139,27 +129,10 @@ public class TUI implements GameView, Serializable {
         System.out.println(positions);
     }
 
-/*    @Override
-    public void updateGoldDeck(LinkedList<GoldCard> goldDeck, boolean start, String name) {
-        if (start) {
-            System.out.println("The gold deck has been created!\n");
-            client.getClient().setDrawableGoldCards(goldDeck);
-        }
-        else {
-            client.getClient().setDrawableGoldCards(goldDeck);
-            if (name.equals(Turn.getName())){
-                cards.plotDrawables(client.getClient());
-            } else {
-                System.out.println(name + "has drawn a card");
-                System.out.println("These are the new drawable cards");
-                cards.plotGoldDeck(client.getClient());
-            }
-        }
-    }*/
 
     @Override
-    public void updateResourceDeck(LinkedList<ResourceCard> resourceCards, boolean start, String name){
-        if(start){
+    public void updateResourceDeck(LinkedList<ResourceCard> resourceCards, boolean start, String name) {
+        if (start) {
             System.out.println("The resource deck has been created!\n");
             client.getClient().setDrawableResourceCards(resourceCards);
         } else {
@@ -176,8 +149,8 @@ public class TUI implements GameView, Serializable {
     }
 
     @Override
-    public void updateGoldDeck(LinkedList<GoldCard> goldCards, boolean start, String name){
-        if(start){
+    public void updateGoldDeck(LinkedList<GoldCard> goldCards, boolean start, String name) {
+        if (start) {
             System.out.println("The gold deck has been created!\n");
             client.getClient().setDrawableGoldCards(goldCards);
         } else {
@@ -209,8 +182,8 @@ public class TUI implements GameView, Serializable {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
                 System.out.println("Do you want to place your Start Card Front or Back?\n1 --> Front\n0 --> Back");
                 f = reader.readLine();
-                if(f.equals("1") || f.equals("0")){
-                    if(f.equals("1"))
+                if (f.equals("1") || f.equals("0")) {
+                    if (f.equals("1"))
                         face = true;
                     else face = false;
                     client.setStartCardFace(face);
@@ -218,10 +191,10 @@ public class TUI implements GameView, Serializable {
                 } else {
                     System.out.println("You must choose between 1(front) or 0(back)");
                 }
-            } catch(IOException e){
+            } catch (IOException e) {
                 System.out.println("There was an error while reading the front or back");
             }
-        } while(!goon);
+        } while (!goon);
 
         //da controllare sta situa
         endTurn("StartCard");
@@ -231,9 +204,9 @@ public class TUI implements GameView, Serializable {
 
     @Override
     public void showException(String exception, String details) throws RemoteException, NotBoundException {
-        switch(exception) {
+        switch (exception) {
             case "WrongIndexException" -> {
-                switch(details) {
+                switch (details) {
                     case "DrawDeck" -> {
                         System.out.println("you put an index which isn't 1 or 2");
                         drawCard();
@@ -249,7 +222,7 @@ public class TUI implements GameView, Serializable {
                 }
             }
             case "Nothing" -> {
-                if(details.equals("PlaceCardWell"))
+                if (details.equals("PlaceCardWell"))
                     drawCard();
             }
             case "WrongPositionException" -> {
@@ -277,8 +250,7 @@ public class TUI implements GameView, Serializable {
                 System.out.println("Name already taken! Please try again!");
                 joinGame();
             }
-            case "Exception" ->
-                    System.out.println("There has been an error");
+            case "Exception" -> System.out.println("There has been an error");
         }
     }
 
@@ -306,29 +278,22 @@ public class TUI implements GameView, Serializable {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        } while(!goon);
+        } while (!goon);
 
         //try{
-        if(connectionType){
+        if (connectionType) {
 
-        } else{
+        } else {
             client = new RMIClient(name);
             client.setView(this);
         }
 
         client.createGame(name, input);// è tutto nullo perchè così è inizializzata la view
 
-        /*} catch (RemoteException e) {
-            System.out.println("an exception occurred while starting the client");
-        } catch (NotBoundException e){
-            System.out.print("NotBoundException occurred while initializing the client");
-        } catch (WrongPlayersNumberException e){
-            System.out.print("The number of players isn't supported");
-        }*/
 
     }
 
-    public void startingGame(){
+    public void startingGame() {
         System.out.println("Game is starting...");
     }
 
@@ -341,45 +306,45 @@ public class TUI implements GameView, Serializable {
                 this.client.joinGame(name);
                 goon = true;
 
-            } catch (RemoteException e){
+            } catch (RemoteException e) {
                 System.out.println("there's been a problem in the join game");
             }
-        } while(!goon);
+        } while (!goon);
 
     }
 
-    public CommonClient chooseClient(String name){
+    public CommonClient chooseClient(String name) {
         Scanner scan = new Scanner(System.in);
         String connection;
 
         System.out.println("Choose the kind of connection you want to play with");
 
-        do{
+        do {
             System.out.println("0 --> RMI\n1 --> Socket");
             connection = scan.next();
 
-            if(connection.equals("0")){
-                try{
+            if (connection.equals("0")) {
+                try {
                     client = new RMIClient(name);
                     client.setView(this);
                     connectionType = false;
                 } catch (RemoteException e) {
                     System.out.println("an exception occurred while starting the client");
-                } catch (NotBoundException e){
+                } catch (NotBoundException e) {
                     System.out.print("NotBoundException occurred while initializing the client");
                 }
-            }else {
+            } else {
                 client = new SocketClient(name);
                 client.setView(this);
                 connectionType = true;
             }
 
-        } while(!connection.equals("0") && !connection.equals("1"));
+        } while (!connection.equals("0") && !connection.equals("1"));
 
         return client;
     }
 
-    public void getNickname(){
+    public void getNickname() {
         String nickname = "Carlos";
 
         try {
@@ -394,139 +359,6 @@ public class TUI implements GameView, Serializable {
         name = nickname;
     }
 
-    /*public void isYourTurnPt1() throws RemoteException {
-        if(Turn.getName().equals(client.getName())) {
-            boolean goon = false;
-            String roba;
-            do {
-                try {
-                    Menu1();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-                    roba = reader.readLine();
-                    switch (roba) {
-                        case "pgc" -> {
-                            LinkedList<GoalCard> toPrint = client.getClient().getCommonGoals();
-                            //for(GoalCard gc : toPrint)
-                                //cards.printGoalCard(gc);
-                            //plot goal cards da modellino (?)
-                        }
-                        case "hand" -> {
-                            LinkedList<PlayableCard> toPrint = Turn.getHand();
-                            for(int i =0; i<3; i++){
-                                if(Turn.getCardFromHand(i).getId()>=1 && Turn.getCardFromHand(i).getId()<=40) {
-                                    cards.printFrontResourceCard(Turn.getCardFromHand(i));
-                                    cards.printBackResourceCard(Turn.getCardFromHand(i));
-                                }
-                                else {
-                                    cards.printFrontGoldCard((GoldCard) Turn.getCardFromHand(i));
-                                    cards.printBackGoldCard((GoldCard) Turn.getCardFromHand(i));
-                                }
-                            }
-
-                            // poi può flippare
-                        }
-                        case "score" -> {
-                            //GameController Grian = client.
-                            //plot points
-                        }
-                        case "other" -> {
-                            //choose player e poi plotti il suo field
-                        }
-                        case "place" -> {
-                            placeCard();
-                            goon = true;
-                        }
-                        case "myField" -> {
-                            cards.plotPlayingField(Turn);
-                        }
-                        // case "freePosition" eventuale
-                        case "toDraw" -> {
-                            //plotti quelle pescabili
-                        }
-                        case "chat" -> {
-                            //scrivi in chat
-                        }
-                        case "showChat" -> {
-                            //show chat
-                        }
-                        case "q" -> {
-                            //leave game
-                        }
-                        default -> System.out.println("Write a command in the menu");
-                    }
-                }catch(IOException e){
-                    System.out.println("There has been a problem, try again!");
-                }
-            } while (!goon);
-
-        }
-
-    }
-
-    public void isYourTurnPt2() throws RemoteException {
-        boolean goon = false;
-        String roba;
-
-        do {
-            try {
-                Menu2();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-                roba = reader.readLine();
-                switch (roba) {
-                    case "pgc" -> {
-                        LinkedList<GoalCard> toPrint = client.getClient().getCommonGoals();
-                        //for(GoalCard gc : toPrint)
-                        //cards.printGoalCard(gc);
-                        //plot goal cards da modellino (?)
-                    }
-                    case "hand" -> {
-                        LinkedList<PlayableCard> toPrint = client.getClient().getHand();
-                        for(PlayableCard pc : toPrint){
-                            if(pc.getId() >= 1 && pc.getId() <= 40) {
-                                cards.printFrontResourceCard((ResourceCard) pc);
-                                cards.printBackResourceCard((ResourceCard) pc);
-                            }
-                            else {
-                                cards.printFrontGoldCard((GoldCard) pc);
-                                cards.printBackGoldCard((GoldCard) pc);
-                            }
-                        }
-                    }
-                    case "score" -> {
-                        //GameController Grian = client.
-                        //plot points
-                    }
-                    case "other" -> {
-                        //choose player e poi plotti il suo field
-                    }
-                    case "draw" -> {
-                        drawCard();
-                        goon = true;
-                    }
-                    case "myField" -> {
-                        //plot playing field
-                    }
-                    // case "freePosition" eventuale
-                    case "toDraw" -> {
-                        //plotti quelle pescabili
-                    }
-                    case "chat" -> {
-                        //scrivi in chat
-                    }
-                    case "showChat" -> {
-                        //show chat
-                    }
-                    case "q" -> {
-                        //leave game
-                    }
-                    default -> System.out.println("Write a command in the menu");
-                }
-            }catch(IOException e){
-                System.out.println("There has been a problem, try again!");
-            }
-        } while (!goon);
-        endTurn("NormalTurn");
-    }*/
 
     private void isYourTurn() throws RemoteException {
         placeCard();
@@ -537,7 +369,7 @@ public class TUI implements GameView, Serializable {
     public void updateTurn(Player player, String mex) throws RemoteException {
         //robaccia per printare che non è il tuo turno e bla bla
         this.Turn = player;
-        if(Turn.getName().equals(client.getName())) {
+        if (Turn.getName().equals(client.getName())) {
             switch (mex) {
                 case "StartCard" -> setStartCardFace();
                 case "GoalCard" -> chooseGoalCard();
@@ -568,12 +400,11 @@ public class TUI implements GameView, Serializable {
         System.out.println("...");
 
 
-        if(client.getName().equals(standings.get(0)))
+        if (client.getName().equals(standings.get(0)))
             System.out.println("JACKIE DOWN THE LINE YOU WON");
         else if (client.getName().equals(standings.get(1))) {
             System.out.println("JACKIE DOWN THE LINE YOU GOT THE SECOND PLACE");
-        }
-        else if (client.getName().equals(standings.get(2))) {
+        } else if (client.getName().equals(standings.get(2))) {
             System.out.println("JACKIE DOWN THE LINE YOU GOT THE THIRD PLACE");
         } else {
             System.out.println("JACKIE DOWN THE LINE YOU GOT THE FOURTH PLACE COGLIONE");
@@ -626,104 +457,39 @@ public class TUI implements GameView, Serializable {
                         f = FB.BACK;
                     client.placeCard(i, x, y, f);
                     goon = true;
-                }
-                else{
+                } else {
                     System.out.println("You must choose between 1(front) or 0(back)");
                 }
-            } catch (IOException e){
+            } catch (IOException e) {
                 System.out.println("I/O exception in place card");
-            } catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 System.out.println("Please enter a number");
             }
-        } while (!goon) ;
+        } while (!goon);
 
     }
-
-
-    /*public void setStartCardFace(){
-        boolean face = true;
-        boolean goon = false;
-        String fac;
-        do{
-            try{
-                System.out.println("Do you want to place the StartCard Front or Back?");
-                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-                fac = reader.readLine();
-                if(fac.equals("1") || fac.equals("0") ) {
-                    if (fac.equals("0"))
-                        face = false;
-                    client.setStartCardFace(face, this.client);
-                    goon = true;
-                }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        } while(!goon);
-    } */
 
 
     public void drawCard() throws RemoteException {
-            boolean goon = false;
-            int whichDeck, whichCard;
-            do {
-                try {
-//                    cards.plotDrawables(client.getClient());
-                    System.out.println("From which deck do you want to draw?\n1 --> ResourceDeck\n2 --> GoldDeck");
-                    whichDeck = getIndex();
-                    System.out.println("Which card do you want to pick?");
-                    whichCard = getIndex();
-                    client.drawCard(whichDeck, whichCard, client.getName());
-                    /*if(error.equals("WrongIndexException")) {
-                        System.out.println("You chose indexes which are not between 1 and 3!");
-                        System.out.println("Please try again! ");
-                    }
-                    else*/
-                        goon = true;
-                } catch (IOException e) {
-                    System.out.println("There has been a i/o problem, try again!");
-                } catch (NumberFormatException e){
-                    System.out.println("Please enter a number!");
-                }
+        boolean goon = false;
+        int whichDeck, whichCard;
+        do {
+            try {
+                cards.plotDrawables(client.getClient());
+                System.out.println("From which deck do you want to draw?\n1 --> ResourceDeck\n2 --> GoldDeck");
+                whichDeck = getIndex();
+                System.out.println("Which card do you want to pick?");
+                whichCard = getIndex();
+                client.drawCard(whichDeck, whichCard, client.getName());
+                goon = true;
+            } catch (IOException e) {
+                System.out.println("There has been a i/o problem, try again!");
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a number!");
+            }
 
-            }while (!goon) ;
+        } while (!goon);
 
-        }
-
-
-    private void Menu1(){
-        System.out.println("+-----------------------------------------------------------+");
-        System.out.println("|                          MENU:                            |");
-        System.out.println("|                                                           |");
-        System.out.println("|   /pgc: to show the goal cards                            |");
-        System.out.println("|   /hand: to show your hand                                |");
-        System.out.println("|   /score: to get yours and others score                   |");
-        System.out.println("|   /others: to show other player field                     |");
-        System.out.println("|   /place: to place a card                                 |");
-        System.out.println("|   /myField: to show your field                            |");
-        System.out.println("|   /toDraw: to see the cards that you can draw             |");
-        System.out.println("|   /chat: to write a message in the chat                   |");
-        System.out.println("|   /showChat: to show the chat                             |");
-        System.out.println("|   /q: to leave the game                                   |");
-        System.out.println("|                                                           |");
-        System.out.println("+-----------------------------------------------------------+");
-    }
-
-    private void Menu2(){
-        System.out.println("+-----------------------------------------------------------+");
-        System.out.println("|                          MENU:                            |");
-        System.out.println("|                                                           |");
-        System.out.println("|   /pgc: to show the goal cards                            |");
-        System.out.println("|   /hand: to show your hand                                |");
-        System.out.println("|   /score: to get yours and others score                   |");
-        System.out.println("|   /others: to show other player field                     |");
-        System.out.println("|   /draw: to draw   a card                                 |");
-        System.out.println("|   /myField: to show your field                            |");
-        System.out.println("|   /toDraw: to see the cards that you can draw             |");
-        System.out.println("|   /chat: to write a message in the chat                   |");
-        System.out.println("|   /showChat: to show the chat                             |");
-        System.out.println("|   /q: to leave the game                                   |");
-        System.out.println("|                                                           |");
-        System.out.println("+-----------------------------------------------------------+");
     }
 
 }
