@@ -184,8 +184,8 @@ public class GameController {
                 getGame().getObserverManager().showException("WrongIndexException", "DrawIndex", getGame().getTurn().getName());
             else {
                 if (i == 1)
-                    pickResCard(whichOne);
-                else pickGoldCard(whichOne);
+                    pickResCard(whichOne-1);
+                else pickGoldCard(whichOne-1);
             }
         }
     }

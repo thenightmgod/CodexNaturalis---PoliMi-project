@@ -48,17 +48,17 @@ class RoomTest {
             }
 
             @Override
-            public void updateGoals(LinkedList<GoalCard> goals, String name) throws RemoteException {
+            public void updateGoals(LinkedList<GoalCard> goals) throws RemoteException {
 
             }
 
             @Override
-            public void updateCommonGoals(LinkedList<GoalCard> goals, String name) throws RemoteException {
+            public void updateCommonGoals(LinkedList<GoalCard> goals) throws RemoteException {
 
             }
 
             @Override
-            public void showHand(LinkedList<PlayableCard> hand, String name) throws RemoteException {
+            public void showHand(LinkedList<PlayableCard> hand) throws RemoteException {
 
             }
 
@@ -83,7 +83,7 @@ class RoomTest {
             }
 
             @Override
-            public void declareWinner(LinkedList<String> classifica) throws RemoteException {
+            public void declareWinner(LinkedList<String> standings) throws RemoteException {
 
             }
 
@@ -144,17 +144,17 @@ class RoomTest {
             }
 
             @Override
-            public void updateGoals(LinkedList<GoalCard> goals, String name) throws RemoteException {
+            public void updateGoals(LinkedList<GoalCard> goals) throws RemoteException {
 
             }
 
             @Override
-            public void updateCommonGoals(LinkedList<GoalCard> goals, String name) throws RemoteException {
+            public void updateCommonGoals(LinkedList<GoalCard> goals) throws RemoteException {
 
             }
 
             @Override
-            public void showHand(LinkedList<PlayableCard> hand, String name) throws RemoteException {
+            public void showHand(LinkedList<PlayableCard> hand) throws RemoteException {
 
             }
 
@@ -220,7 +220,7 @@ class RoomTest {
         };
         VirtualView client3 = new VirtualView() {
             @Override
-            public void updateTurn(Player p, String s) throws RemoteException {
+            public void updateTurn(Player p, String mex) throws RemoteException {
 
             }
 
@@ -240,17 +240,17 @@ class RoomTest {
             }
 
             @Override
-            public void updateGoals(LinkedList<GoalCard> goals, String name) throws RemoteException {
+            public void updateGoals(LinkedList<GoalCard> goals) throws RemoteException {
 
             }
 
             @Override
-            public void updateCommonGoals(LinkedList<GoalCard> goals, String name) throws RemoteException {
+            public void updateCommonGoals(LinkedList<GoalCard> goals) throws RemoteException {
 
             }
 
             @Override
-            public void showHand(LinkedList<PlayableCard> hand, String name) throws RemoteException {
+            public void showHand(LinkedList<PlayableCard> hand) throws RemoteException {
 
             }
 
@@ -275,7 +275,7 @@ class RoomTest {
             }
 
             @Override
-            public void declareWinner(LinkedList<String> classifica) throws RemoteException {
+            public void declareWinner(LinkedList<String> standings) throws RemoteException {
 
             }
 
@@ -336,17 +336,17 @@ class RoomTest {
             }
 
             @Override
-            public void updateGoals(LinkedList<GoalCard> goals, String name) throws RemoteException {
+            public void updateGoals(LinkedList<GoalCard> goals) throws RemoteException {
 
             }
 
             @Override
-            public void updateCommonGoals(LinkedList<GoalCard> goals, String name) throws RemoteException {
+            public void updateCommonGoals(LinkedList<GoalCard> goals) throws RemoteException {
 
             }
 
             @Override
-            public void showHand(LinkedList<PlayableCard> hand, String name) throws RemoteException {
+            public void showHand(LinkedList<PlayableCard> hand) throws RemoteException {
 
             }
 
@@ -412,18 +412,35 @@ class RoomTest {
         };
 
 
-
         beppe.addPlayer("hamingway", PlayerColor.YELLOW, client1);
         beppe.addPlayer("venditti", PlayerColor.BLUE, client2);
         beppe.addPlayer("dalla", PlayerColor.RED, client3);
         beppe.addPlayer("degregori", PlayerColor.GREEN, client4);
+
+        beppe.startGame();
 
         beppe.placeStartCard("hamingway", FB.FRONT);
         beppe.placeStartCard("venditti", FB.BACK);
         beppe.placeStartCard("dalla", FB.FRONT);
         beppe.placeStartCard("degregori", FB.BACK);
 
-        beppe.getPlayerByName("hamingway").getPlayerField().getFreePositions();
+        beppe.getPlayerByName("hamingway").setPointsCounter(24);
+        beppe.getPlayerByName("dalla").setPointsCounter(20);
+        beppe.getPlayerByName("venditti").setPointsCounter(14);
+        beppe.getPlayerByName("degregori").setPointsCounter(18);
+
+        beppe.getPlayerByName("hamingway").setGoalPointsCounter(2);
+        beppe.getPlayerByName("dalla").setGoalPointsCounter(6);
+        beppe.getPlayerByName("venditti").setGoalPointsCounter(4);
+        beppe.getPlayerByName("degregori").setGoalPointsCounter(2);
+
+        beppe.getPlayerByName("hamingway").setTotalPointsCounter(26);
+        beppe.getPlayerByName("dalla").setTotalPointsCounter(26);
+        beppe.getPlayerByName("venditti").setTotalPointsCounter(18);
+        beppe.getPlayerByName("degregori").setTotalPointsCounter(20);
+
+        beppe.getGame().declareWinner();
+//        assertEquals("hamingway", );
     }
 }
     /**
