@@ -665,7 +665,7 @@ public class TUI implements GameView {
             int whichDeck, whichCard;
             do {
                 try {
-//                    cards.plotDrawables(client.getClient());
+                    cards.plotDrawables(client.getClient());
                     System.out.println("From which deck do you want to draw?\n1 --> ResourceDeck\n2 --> GoldDeck");
                     whichDeck = getIndex();
                     System.out.println("Which card do you want to pick?");

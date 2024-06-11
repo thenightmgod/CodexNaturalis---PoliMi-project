@@ -241,9 +241,9 @@ public class Room implements Serializable {
         // robe per observers
         LinkedList<GoldCard> card5 = new LinkedList<>();
         GoldDeck d3ck = getGoldDeck();
-        cards.add((GoldCard) d3ck.getCards().get(0));
-        cards.add((GoldCard) d3ck.getCards().get(1));
-        cards.add((GoldCard) d3ck.getCards().get(2));
+        card5.add((GoldCard) d3ck.getCards().get(0));
+        card5.add((GoldCard) d3ck.getCards().get(1));
+        card5.add((GoldCard) d3ck.getCards().get(2));
         for(Player p: Players) {
             observerManager.updateGoldDeck(p.getName(), robo, card5);
         }

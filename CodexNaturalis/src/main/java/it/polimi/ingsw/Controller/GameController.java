@@ -90,8 +90,8 @@ public class GameController {
                 }
             };
 
-            long delay = 10000L;
-            long period = 3000L;
+            long delay = 3000L;
+            long period = 1500L;
 
             timer.scheduleAtFixedRate(task, delay, period);
 
