@@ -17,6 +17,8 @@ public abstract class GoalCard extends Card {
      *  @param id
      * @param p
      */
+
+
     public GoalCard(int id, int p) {
         super(id);
         this.points=p;

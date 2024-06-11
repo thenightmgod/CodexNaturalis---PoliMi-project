@@ -165,6 +165,10 @@ public class Player implements Serializable {
             return ObjectCounter[2];
     }
 
+    public int[] getObjects(){
+        return ObjectCounter;
+    }
+
     public LinkedList<GoalCard> get2Goals(){
         return PlayerGoal;
     }
