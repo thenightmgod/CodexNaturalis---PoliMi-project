@@ -120,8 +120,8 @@ public class Player implements Serializable {
      *
      */
     public void setPlayerGoal(boolean choice){
-        if(choice) PlayerGoal.remove(0);
-        else PlayerGoal.remove(1);
+        if(choice) PlayerGoal.remove(3);
+        else PlayerGoal.remove(2);
     }
 
     public void addGoalCard(GoalCard card){
@@ -163,7 +163,7 @@ public class Player implements Serializable {
             return ObjectCounter[2];
     }
 
-    public LinkedList<GoalCard> get2goals(){
+    public LinkedList<GoalCard> getGoals(){
         return PlayerGoal;
     }
 

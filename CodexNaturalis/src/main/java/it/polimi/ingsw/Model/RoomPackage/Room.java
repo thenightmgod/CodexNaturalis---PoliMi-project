@@ -115,6 +115,8 @@ public class Room implements Serializable {
         CommonGoals.add((GoalCard) GoalDeck.getGoalCard());
         CommonGoals.add((GoalCard) GoalDeck.getGoalCard());
         for(Player p: Players){
+            p.addGoalCard(CommonGoals.get(0));
+            p.addGoalCard(CommonGoals.get(1));
             observerManager.showCommonGoals(p.getName(), CommonGoals);
         }
     }
@@ -195,14 +197,15 @@ public class Room implements Serializable {
      * @param player The player picking the goal card.
      */
 
-    public void pickGoalCard(Player player, boolean i) {
+    public void pickGoalCard(Player player, boolean i) throws RemoteException {
         player.setPlayerGoal(i);
+        observerManager.showCommonGoals(player.getName(), player.getGoals());
     }
 
     public void show2GoalCards(Player player) throws RemoteException {
         player.addGoalCard((GoalCard) GoalDeck.getGoalCard()); //in teoria funge
         player.addGoalCard((GoalCard) GoalDeck.getGoalCard());
-        observerManager.showGoals(player.getName(), player.get2goals());
+        observerManager.showGoals(player.getName(), player.getGoals());
     }
 
     /**
@@ -274,19 +277,6 @@ public class Room implements Serializable {
     /**
      * Sets common goals for the game.
      */
-
-    public void commonGoals(){
-        GoalCard Goal_1= (GoalCard)GoalDeck.getCards().get(0);
-        GoalCard Goal_2= (GoalCard)GoalDeck.getCards().get(1);
-        CommonGoals.add(Goal_1);
-        CommonGoals.add(Goal_2);
-        GoalDeck.getCards().remove(Goal_1);
-        GoalDeck.getCards().remove(Goal_2);
-    }
-
-    public LinkedList<GoalCard> getCommonGoals(){
-        return this.CommonGoals;
-    }
 
     public void checkGoals(Player p) throws RemoteException {
         LinkedList<GoalCard> toCheck = CommonGoals;

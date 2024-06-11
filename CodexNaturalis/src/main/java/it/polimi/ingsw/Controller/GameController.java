@@ -116,8 +116,10 @@ public class GameController {
         this.Game.createDecks();
     }
 
-    public void chooseGoalCard(String name, int i) {
-        boolean choice = i != 1;
+    public void chooseGoalCard(String name, int i) throws RemoteException {
+        boolean choice = false;
+        if(i == 1)
+            choice = true;
         this.Game.pickGoalCard(getPlayerByName(name), choice);
     }
 
