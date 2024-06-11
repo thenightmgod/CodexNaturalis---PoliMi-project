@@ -1765,20 +1765,6 @@ public class CardsTUI {
 
     //---------------------------------------GOLDDECK--------------------------------------------------------------
 
-    public void plotGoldDeck(ClientModel model){
-        LinkedList<GoldCard> toPrint = model.getDrawableGoldCards();
-        printFrontGoldCard(toPrint.get(0));
-        printFrontGoldCard(toPrint.get(1));
-        printBackGoldCard(toPrint.get(2));
-    }
-
-    public void plotResourceDeck(ClientModel model){
-        LinkedList<ResourceCard> toPrint = model.getDrawableResourceCards();
-        printFrontResourceCard(toPrint.get(0));
-        printFrontResourceCard(toPrint.get(1));
-        printBackResourceCard( toPrint.get(2));
-    }
-
     public void plotDrawables(ClientModel model){
         LinkedList<GoldCard> Gold = model.getDrawableGoldCards();
         LinkedList<ResourceCard> Res = model.getDrawableResourceCards();
@@ -1856,21 +1842,21 @@ public class CardsTUI {
         System.out.print(ANSI_RESET);
         System.out.println("");
 
-        printFrontResourceCardFirstLine(Res.get(2));
+        printBackResourceCardFirstLine(Res.get(2));
         System.out.print("      ");
-        printFrontGoldCardFirstLine(Gold.get(2));
+        printBackGoldCardFirstLine(Gold.get(2));
         System.out.print(ANSI_RESET);
         System.out.println("");
 
-        printFrontResourceCardSecondLine(Res.get(2));
+        printBackResourceCardSecondLine(Res.get(2));
         System.out.print("      ");
-        printFrontGoldCardSecondLine(Gold.get(2));
+        printBackGoldCardSecondLine(Gold.get(2));
         System.out.print(ANSI_RESET);
         System.out.println("");
 
-        printFrontResourceCardThirdLine(Res.get(2));
+        printBackResourceCardThirdLine(Res.get(2));
         System.out.print("      ");
-        printFrontGoldCardThirdLine(Gold.get(2));
+        printBackGoldCardThirdLine(Gold.get(2));
         System.out.print(ANSI_RESET);
         System.out.println("");
 
@@ -1884,9 +1870,11 @@ public class CardsTUI {
 
     public void plotGoals(ClientModel model){
         LinkedList<GoalCard> common = model.getCommonGoals();
-        for(GoalCard c: common){
-            printGoalCard(c);
-        }
-
+        System.out.println("COMMON GOALS");
+        printGoalCard(common.get(0));
+        printGoalCard(common.get(1));
+        System.out.println("PERSONAL GOAL");
+        printGoalCard(common.get(2));
     }
+
 }

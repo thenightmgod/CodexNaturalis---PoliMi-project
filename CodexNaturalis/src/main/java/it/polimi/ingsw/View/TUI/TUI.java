@@ -14,7 +14,6 @@ import it.polimi.ingsw.Model.PlayerPackage.Position;
 import it.polimi.ingsw.Network.CommonClient;
 import it.polimi.ingsw.Network.RMI.RMIClient;
 //import it.polimi.ingsw.Network.Socket.SocketClient;
-import it.polimi.ingsw.Network.Socket.SocketClient;
 import it.polimi.ingsw.View.GameView;
 
 import java.io.BufferedReader;
@@ -96,7 +95,8 @@ public class TUI implements GameView {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
                 i = Integer.parseInt(reader.readLine());
                 if (i == 1 || i == 2) {
-                    client.chooseGoalCard(i, client.getName());
+                    client.chooseGoalCard(i, this.client);
+                    cards.plotGoals(client.getClient());
                     goon = true;
                 } else {
                     System.out.println("You put a number which isn't ");
@@ -212,7 +212,7 @@ public class TUI implements GameView {
                     if(f.equals("1"))
                         face = true;
                     else face = false;
-                    client.setStartCardFace(face, client.getName());
+                    client.setStartCardFace(face, client);
                     goon = true;
                 } else {
                     System.out.println("You must choose between 1(front) or 0(back)");
@@ -368,9 +368,9 @@ public class TUI implements GameView {
                     System.out.print("NotBoundException occurred while initializing the client");
                 }
             }else {
-                client = new SocketClient(name);
+                /*client = new SocketClient(name);
                 client.setView(this);
-                connectionType = true;
+                connectionType = true;*/
             }
 
         } while(!connection.equals("0") && !connection.equals("1"));
@@ -527,7 +527,7 @@ public class TUI implements GameView {
         endTurn("NormalTurn");
     }*/
 
-    public void isYourTurn() throws RemoteException {
+    private void isYourTurn() throws RemoteException {
         placeCard();
     }
 
@@ -623,7 +623,7 @@ public class TUI implements GameView {
                 if (fac == 1 || fac == 0) {
                     if (fac == 0)
                         f = FB.BACK;
-                    client.placeCard(i, x, y, f);
+                    client.placeCard(client, i, x, y, f);
                     goon = true;
                 }
                 else{
@@ -671,7 +671,7 @@ public class TUI implements GameView {
                     whichDeck = getIndex();
                     System.out.println("Which card do you want to pick?");
                     whichCard = getIndex();
-                    client.drawCard(whichDeck, whichCard, client.getName());
+                    client.drawCard(whichDeck, whichCard, client);
                     /*if(error.equals("WrongIndexException")) {
                         System.out.println("You chose indexes which are not between 1 and 3!");
                         System.out.println("Please try again! ");
@@ -683,7 +683,9 @@ public class TUI implements GameView {
                 } catch (NumberFormatException e){
                     System.out.println("Please enter a number!");
                 }
+
             }while (!goon) ;
+
         }
 
 
