@@ -59,7 +59,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     public String getName(){
         return name;
     }
-
+    @Override
     public ClientModel getClient(){
         return model;
     }
@@ -159,15 +159,15 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     }
 
     @Override
-    public void updateGoals(LinkedList<GoalCard> goals) throws RemoteException {
+    public void updateGoals(LinkedList<GoalCard> goals, String name) throws RemoteException {
         this.view.updateGoals(goals, name);
     }
 
-    public void updateCommonGoals(LinkedList<GoalCard> goals) throws RemoteException {
+    public void updateCommonGoals(LinkedList<GoalCard> goals, String name) throws RemoteException {
         this.view.updateCommonGoals(goals, name);
     }
     @Override
-    public void showHand(LinkedList<PlayableCard> hand) throws RemoteException {
+    public void showHand(LinkedList<PlayableCard> hand, String name) throws RemoteException {
         this.view.updateHands(hand, name);
         //farla, forse sbatti con playablecard
     }

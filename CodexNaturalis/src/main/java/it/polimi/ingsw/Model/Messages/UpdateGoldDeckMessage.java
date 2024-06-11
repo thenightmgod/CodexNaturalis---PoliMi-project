@@ -7,18 +7,23 @@ import java.util.LinkedList;
 
 public class UpdateGoldDeckMessage extends Message{
     private String name;
-    LinkedList<GoldCard> deck;
-    public UpdateGoldDeckMessage(String n, LinkedList<GoldCard> d){
+    private LinkedList<GoldCard> deck;
+    private boolean start;
+    public UpdateGoldDeckMessage(String n, boolean start, LinkedList<GoldCard> d){
         super("UpdateGoldDeckMessage");
         this.name = n;
         this.deck = d;
+        this.start = start;
     }
 
     public String getName() {
         return name;
     }
-
     public LinkedList<GoldCard> getDeck() {
         return deck;
+    }
+
+    public boolean isStart() {
+        return start;
     }
 }

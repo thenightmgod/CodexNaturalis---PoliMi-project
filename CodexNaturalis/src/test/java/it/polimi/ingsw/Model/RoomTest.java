@@ -33,6 +33,11 @@ class RoomTest {
             }
 
             @Override
+            public void notYourTurn(Player turn) throws RemoteException {
+
+            }
+
+            @Override
             public void showException(String exception, String details) throws RemoteException, NotBoundException {
 
             }
@@ -43,17 +48,17 @@ class RoomTest {
             }
 
             @Override
-            public void updateGoals(LinkedList<GoalCard> goals) throws RemoteException {
+            public void updateGoals(LinkedList<GoalCard> goals, String name) throws RemoteException {
 
             }
 
             @Override
-            public void updateCommonGoals(LinkedList<GoalCard> goals) throws RemoteException {
+            public void updateCommonGoals(LinkedList<GoalCard> goals, String name) throws RemoteException {
 
             }
 
             @Override
-            public void showHand(LinkedList<PlayableCard> hand) throws RemoteException {
+            public void showHand(LinkedList<PlayableCard> hand, String name) throws RemoteException {
 
             }
 
@@ -98,6 +103,16 @@ class RoomTest {
             }
 
             @Override
+            public void twenty(String name) throws RemoteException {
+
+            }
+
+            @Override
+            public void lastRound() throws RemoteException {
+
+            }
+
+            @Override
             public void update() throws RemoteException {
 
             }
@@ -129,17 +144,17 @@ class RoomTest {
             }
 
             @Override
-            public void updateGoals(LinkedList<GoalCard> goals) throws RemoteException {
+            public void updateGoals(LinkedList<GoalCard> goals, String name) throws RemoteException {
 
             }
 
             @Override
-            public void updateCommonGoals(LinkedList<GoalCard> goals) throws RemoteException {
+            public void updateCommonGoals(LinkedList<GoalCard> goals, String name) throws RemoteException {
 
             }
 
             @Override
-            public void showHand(LinkedList<PlayableCard> hand) throws RemoteException {
+            public void showHand(LinkedList<PlayableCard> hand, String name) throws RemoteException {
 
             }
 
@@ -225,17 +240,17 @@ class RoomTest {
             }
 
             @Override
-            public void updateGoals(LinkedList<GoalCard> goals) throws RemoteException {
+            public void updateGoals(LinkedList<GoalCard> goals, String name) throws RemoteException {
 
             }
 
             @Override
-            public void updateCommonGoals(LinkedList<GoalCard> goals) throws RemoteException {
+            public void updateCommonGoals(LinkedList<GoalCard> goals, String name) throws RemoteException {
 
             }
 
             @Override
-            public void showHand(LinkedList<PlayableCard> hand) throws RemoteException {
+            public void showHand(LinkedList<PlayableCard> hand, String name) throws RemoteException {
 
             }
 
@@ -321,17 +336,17 @@ class RoomTest {
             }
 
             @Override
-            public void updateGoals(LinkedList<GoalCard> goals) throws RemoteException {
+            public void updateGoals(LinkedList<GoalCard> goals, String name) throws RemoteException {
 
             }
 
             @Override
-            public void updateCommonGoals(LinkedList<GoalCard> goals) throws RemoteException {
+            public void updateCommonGoals(LinkedList<GoalCard> goals, String name) throws RemoteException {
 
             }
 
             @Override
-            public void showHand(LinkedList<PlayableCard> hand) throws RemoteException {
+            public void showHand(LinkedList<PlayableCard> hand, String name) throws RemoteException {
 
             }
 

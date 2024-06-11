@@ -2,6 +2,7 @@ package it.polimi.ingsw.Main;
 
 import it.polimi.ingsw.Controller.MainController;
 import it.polimi.ingsw.Network.RMI.RMIServer;
+import it.polimi.ingsw.Network.Socket.SocketServer;
 
 
 import java.io.IOException;
@@ -27,7 +28,7 @@ public class MainServer {
 
         RMIServer rmi = new RMIServer(mc);
         rmi.startServer();
-        /*SocketServer server = SocketServer.createServer(mc);
-        server.startServer();*/
+        SocketServer server = SocketServer.createServer(mc);
+        server.startServer();
     }
 }

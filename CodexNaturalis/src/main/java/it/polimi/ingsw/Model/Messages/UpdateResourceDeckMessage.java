@@ -7,11 +7,13 @@ import java.util.LinkedList;
 
 public class UpdateResourceDeckMessage extends Message{
     private String name;
-    LinkedList<ResourceCard> deck;
-    public UpdateResourceDeckMessage(String n, LinkedList<ResourceCard> d){
+    private LinkedList<ResourceCard> deck;
+    private boolean start;
+    public UpdateResourceDeckMessage(String n, boolean start, LinkedList<ResourceCard> d){
         super("UpdateResourceDeckMessage");
         this.name = n;
         this.deck = d;
+        this.start = start;
     }
 
     public String getName() {
@@ -20,5 +22,9 @@ public class UpdateResourceDeckMessage extends Message{
 
     public LinkedList<ResourceCard> getDeck() {
         return deck;
+    }
+
+    public boolean isStart() {
+        return start;
     }
 }

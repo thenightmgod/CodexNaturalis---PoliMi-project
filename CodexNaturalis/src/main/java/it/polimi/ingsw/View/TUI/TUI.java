@@ -14,6 +14,7 @@ import it.polimi.ingsw.Model.PlayerPackage.Position;
 import it.polimi.ingsw.Network.CommonClient;
 import it.polimi.ingsw.Network.RMI.RMIClient;
 //import it.polimi.ingsw.Network.Socket.SocketClient;
+import it.polimi.ingsw.Network.Socket.SocketClient;
 import it.polimi.ingsw.View.GameView;
 
 import java.io.BufferedReader;
@@ -368,9 +369,9 @@ public class TUI implements GameView, Serializable {
                     System.out.print("NotBoundException occurred while initializing the client");
                 }
             }else {
-                /*client = new SocketClient(name);
+                client = new SocketClient(name);
                 client.setView(this);
-                connectionType = true;*/
+                connectionType = true;
             }
 
         } while(!connection.equals("0") && !connection.equals("1"));
@@ -623,7 +624,7 @@ public class TUI implements GameView, Serializable {
                 if (fac == 1 || fac == 0) {
                     if (fac == 0)
                         f = FB.BACK;
-                    client.placeCard(client, i, x, y, f);
+                    client.placeCard(i, x, y, f);
                     goon = true;
                 }
                 else{
@@ -671,7 +672,7 @@ public class TUI implements GameView, Serializable {
                     whichDeck = getIndex();
                     System.out.println("Which card do you want to pick?");
                     whichCard = getIndex();
-                    client.drawCard(whichDeck, whichCard, client);
+                    client.drawCard(whichDeck, whichCard, client.getName());
                     /*if(error.equals("WrongIndexException")) {
                         System.out.println("You chose indexes which are not between 1 and 3!");
                         System.out.println("Please try again! ");

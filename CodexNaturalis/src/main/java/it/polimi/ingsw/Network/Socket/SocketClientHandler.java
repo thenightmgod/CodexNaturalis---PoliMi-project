@@ -39,7 +39,7 @@ public class SocketClientHandler extends Thread implements VirtualView {
         this.controller = controller;
         this.server = server;
         this.clientSocket = socket;
-        this.name = "Lazz";
+        this.name = "a";
     }
 
     @Override
@@ -60,6 +60,8 @@ public class SocketClientHandler extends Thread implements VirtualView {
                     }
                 } catch (RuntimeException | IOException e) {
                     e.printStackTrace();
+                } catch (NotBoundException e) {
+                    throw new RuntimeException(e);
                 }
             }
         }
@@ -136,6 +138,7 @@ public class SocketClientHandler extends Thread implements VirtualView {
         String gson = message.MessageToJson();
         proxy.lastRound(gson);
     }
+    @Override
     public void showException(String exception, String details) throws RemoteException{
         ExceptionMessage message= new ExceptionMessage(exception, details);
         String gson = message.MessageToJson();
@@ -148,20 +151,20 @@ public class SocketClientHandler extends Thread implements VirtualView {
         String gson = message.MessageToJson();
         proxy.updatePoints(gson);
     }
-
+    @Override
     public void updateTurn(Player turn, String mex) throws RemoteException {
         UpdateTurnMessage message = new UpdateTurnMessage(turn, mex);
         String gson = message.MessageToJson();
         proxy.updateTurn(gson);
     }
-
+    @Override
     public void notYourTurn(Player turn){
         NotYourTurnMessage message = new NotYourTurnMessage(turn);
         String gson = message.MessageToJson();
         proxy.notYourTurn(gson);
     }
-    public void declareWinner(HashMap<String, Integer> classifica){
-        DeclareWinnerMessage message = new DeclareWinnerMessage(classifica);
+    public void declareWinner(LinkedList<String> standings){
+        DeclareWinnerMessage message = new DeclareWinnerMessage(standings);
         String gson = message.MessageToJson();
         proxy.declareWinner(gson);
     }
@@ -170,23 +173,35 @@ public class SocketClientHandler extends Thread implements VirtualView {
     public String getNames() throws RemoteException {
         return this.name;
     }
-
+    @Override
+    public void startingGame(Player p){
+        StartingGameMessage message = new StartingGameMessage();
+        String gson = message.MessageToJson();
+        proxy.startingGame(gson);
+    }
+    @Override
     public void showStartCard(StartCard card){
         ShowStartCardMessage message = new ShowStartCardMessage(card);
         String gson = message.MessageToJson();
         proxy.showStartCard(gson);
     }
     @Override
-    public void updateGoals(LinkedList<GoalCard> goals) throws RemoteException {
-        ShowGoalsMessage message= new ShowGoalsMessage(goals);
-        String gson=message.MessageToJson();
+    public void updateGoals(LinkedList<GoalCard> goals, String name) throws RemoteException {
+        ShowGoalsMessage message= new ShowGoalsMessage(goals, name);
+        String gson = message.MessageToJson();
         proxy.showGoals(gson);
+    }
+    @Override
+    public void updateCommonGoals(LinkedList<GoalCard> goals, String name) throws RemoteException{
+        UpdateCommonGoalsMessage message = new UpdateCommonGoalsMessage(goals, name);
+        String gson = message.MessageToJson();
+        proxy.updateCommonGoals(gson);
     }
 
     @Override
-    public void showHand(LinkedList<PlayableCard> hand) throws RemoteException {
-        ShowHandMessage message= new ShowHandMessage(hand);
-        String gson=message.MessageToJson();
+    public void showHand(LinkedList<PlayableCard> hand, String name) throws RemoteException {
+        ShowHandMessage message= new ShowHandMessage(hand, name);
+        String gson = message.MessageToJson();
         proxy.showHand(gson);
     }
 
@@ -203,15 +218,15 @@ public class SocketClientHandler extends Thread implements VirtualView {
         String gson = message.MessageToJson();
         proxy.showFreePositions(gson);
     }
-
-    public void updateGoldDeck(String name, LinkedList<GoldCard> deck){
-        UpdateGoldDeckMessage message = new UpdateGoldDeckMessage(name, deck);
+    @Override
+    public void updateGoldDeck(String name, boolean start, LinkedList<GoldCard> deck){
+        UpdateGoldDeckMessage message = new UpdateGoldDeckMessage(name, start, deck);
         String gson = message.MessageToJson();
         proxy.updateGoldDeck(gson);
     }
-
-    public void updateResourceDeck(String name, LinkedList<ResourceCard> deck){
-        UpdateResourceDeckMessage message = new UpdateResourceDeckMessage(name, deck);
+    @Override
+    public void updateResourceDeck(String name, boolean start, LinkedList<ResourceCard> deck){
+        UpdateResourceDeckMessage message = new UpdateResourceDeckMessage(name, start, deck);
         String gson = message.MessageToJson();
         proxy.updateResourceDeck(gson);
     }

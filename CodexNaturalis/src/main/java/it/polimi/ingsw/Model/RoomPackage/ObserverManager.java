@@ -72,14 +72,14 @@ public class ObserverManager {
     }
 
     public void showGoals(String name, LinkedList<GoalCard> goals) throws RemoteException {
-        observers.get(name).updateGoals(goals);
+        observers.get(name).updateGoals(goals, name);
     }
 
     public void showCommonGoals(String name, LinkedList<GoalCard> goals) throws RemoteException {
-        observers.get(name).updateCommonGoals(goals);
+        observers.get(name).updateCommonGoals(goals, name);
     }
     public void showNewHand(String name, LinkedList<PlayableCard> hand) throws RemoteException {
-        observers.get(name).showHand(hand);
+        observers.get(name).showHand(hand, name);
         //anche per starter card, eventuali sbatti con l'id farli qua
     }
 

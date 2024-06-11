@@ -22,10 +22,12 @@ public class ClientProxy {
     }
     public void updateTurn(String StringMessage) { sendMessage(StringMessage); }
     public void declareWinner(String StringMessage) { sendMessage(StringMessage); }
+    public void startingGame(String StringMessage) { sendMessage(StringMessage);}
     public void showStartCard(String StringMessage) {  sendMessage(StringMessage);}
     public void showGoals(String StringMessage) {
         sendMessage(StringMessage);
     }
+    public void updateCommonGoals(String StringMessage) { sendMessage(StringMessage); }
     public void showHand(String StringMessage) {  sendMessage(StringMessage);  }
     public void updateField(String StringMessage) {
         sendMessage(StringMessage);

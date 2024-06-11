@@ -1,15 +1,15 @@
 package it.polimi.ingsw.Model.Messages;
 
-import java.util.HashMap;
+import java.util.LinkedList;
 
 public class DeclareWinnerMessage extends Message{
-    private HashMap<String,Integer> classifica;
-    public DeclareWinnerMessage(HashMap<String, Integer> c ){
+    private LinkedList<String> standings;
+    public DeclareWinnerMessage(LinkedList<String> standings ){
         super("DeclareWinnerMessage");
-        this.classifica = c;
+        this.standings = standings;
     }
 
-    public HashMap<String, Integer> getClassifica() {
-        return classifica;
+    public LinkedList<String> getStandings() {
+        return standings;
     }
 }

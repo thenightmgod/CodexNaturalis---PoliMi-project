@@ -4,13 +4,13 @@ import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 
 import java.util.LinkedList;
 
-public class ShowGoalsMessage extends Message{
+public class UpdateCommonGoalsMessage extends Message {
     private LinkedList<GoalCard> goals;
     private String name;
 
-    public ShowGoalsMessage(LinkedList<GoalCard> cards, String name) {
-        super("ShowGoalsMessage");
-        this.goals=cards;
+    public UpdateCommonGoalsMessage(LinkedList<GoalCard> cards, String name) {
+        super("UpdateCommonGoalsMessage");
+        this.goals = cards;
         this.name = name;
     }
     public LinkedList<GoalCard> getGoals() {

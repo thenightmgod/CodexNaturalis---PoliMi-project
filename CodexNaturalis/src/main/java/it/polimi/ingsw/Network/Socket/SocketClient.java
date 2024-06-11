@@ -43,7 +43,6 @@ public class SocketClient implements CommonClient {
         return this.name;
     }
 
-    public ClientModel getClient() {  return this.model; }
 
     //VA ASSOCIATO IL BUFFERED READER INPUT del client al PRINT WRITER DEL CLIENT PROXY
     public void initializeClient(SocketClient client, String ip, int ServerPort) {
@@ -131,26 +130,32 @@ public class SocketClient implements CommonClient {
                 Player p = ((NotYourTurnMessage)mex).getPlayer();
                 this.view.printNotYourTurn(p);
             }
-            case "DeclareWinnerMessage" -> {
-                HashMap<String, Integer> c = ((DeclareWinnerMessage)mex).getClassifica();
-                this.view.declareWinner(c);
+            case "StartingGameMessage" -> {
+                this.view.startingGame();
             }
-
             case "ShowStartCardMessage" -> {
                 StartCard card = ((ShowStartCardMessage)mex).getStart();
                 this.view.showStartCard(card);
             }
             case "ShowGoalsMessage" -> {
                 LinkedList<GoalCard> cards= ((ShowGoalsMessage)mex).getGoals();
-                this.view.updateGoals(cards, this.name);
+                String name = ((ShowGoalsMessage)mex).getName();
+                this.view.updateGoals(cards, name);
+            }
+            case "UpdateCommonGoalsMessage" -> {
+                LinkedList<GoalCard> cards= ((UpdateCommonGoalsMessage)mex).getGoals();
+                String name = ((UpdateCommonGoalsMessage)mex).getName();
+                this.view.updateCommonGoals(cards, name);
             }
             case "ShowHandMessage" -> {
                 LinkedList<PlayableCard> hand = ((ShowHandMessage)mex).getHand();
-                this.view.updateHands(hand, this.name);
+                String name = ((ShowHandMessage)mex).getName();
+                this.view.updateHands(hand, name);
             }
             case "UpdateFieldMessage" -> {
                 PlayingField playingField= ((UpdateFieldMessage)mex).getPlayingField();
-                this.view.updateField(playingField, this.name);
+                String name = ((UpdateFieldMessage)mex).getName();
+                this.view.updateField(playingField, name);
             }
             case "ShowFreePositionsMessage" -> {
                 String name = ((ShowFreePositionsMessage)mex).getName();
@@ -160,17 +165,21 @@ public class SocketClient implements CommonClient {
             case "UpdateGoldDeckMessage" -> {
                 String name = ((UpdateGoldDeckMessage)mex).getName();
                 LinkedList<GoldCard> goldy = ((UpdateGoldDeckMessage)mex).getDeck();
-                this.view.updateGoldDeck(goldy, name);
+                boolean start = ((UpdateGoldDeckMessage)mex).isStart();
+                this.view.updateGoldDeck(goldy, start, name);
             }
             case "UpdateResourceDeckMessage" -> {
                 String name = ((UpdateResourceDeckMessage)mex).getName();
                 LinkedList<ResourceCard> resourcy = ((UpdateResourceDeckMessage)mex).getDeck();
-                this.view.updateResourceDeck(resourcy, name);
+                boolean start = ((UpdateResourceDeckMessage)mex).isStart();
+                this.view.updateResourceDeck(resourcy, start, name);
             }
             case "ShowOtherField"-> {
                 //Lori non sa ancora se mettere la showOtherField nella GameView o no
             }
-
+            /*case "DeclareWinnerMessage" -> {
+                HashMap<String, Integer> c = ((DeclareWinnerMessage)mex).getClassifica();
+                this.view.declareWinner(c); */
         }
     }
 
@@ -217,6 +226,7 @@ public class SocketClient implements CommonClient {
         String gson = msg.MessageToJson();
         server.chooseGoalcard(gson);
     }
+    @Override
     public void drawCard(int i, int whichOne, String name){
         DrawCardMessage msg = new DrawCardMessage(i, whichOne, name);
         String gson = msg.MessageToJson();
@@ -230,8 +240,8 @@ public class SocketClient implements CommonClient {
     //passandogli negli argomenti del main al posto 0 l'host,
     //al posto 1 la porta
     //
-
-    public ClientModel getModel() {
+    @Override
+    public ClientModel getClient() {
         return model;
     }
     public void checkGoals(String name){
@@ -239,6 +249,7 @@ public class SocketClient implements CommonClient {
         String gson = msg.MessageToJson();
         server.checkGoals(gson);
     }
+    @Override
     public void endTurn(String name, String mex){
         EndTurnMessage msg = new EndTurnMessage(name, mex);
         String gson = msg.MessageToJson();
