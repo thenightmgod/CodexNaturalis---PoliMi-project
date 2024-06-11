@@ -84,6 +84,7 @@ public class TUI implements GameView {
 
     public void updateCommonGoals(LinkedList<GoalCard> goals, String name) throws RemoteException{
         client.getClient().setCommonGoals(goals);
+        cards.plotGoals(client.getClient());
     }
 
     public void chooseGoalCard() throws RemoteException {
@@ -96,7 +97,6 @@ public class TUI implements GameView {
                 i = Integer.parseInt(reader.readLine());
                 if (i == 1 || i == 2) {
                     client.chooseGoalCard(i, this.client);
-                    cards.plotGoals(client.getClient());
                     goon = true;
                 } else {
                     System.out.println("You put a number which isn't ");
@@ -107,7 +107,6 @@ public class TUI implements GameView {
                 System.out.println("Please enter a number!");
             }
         } while (!goon);
-
         endTurn("GoalCard");
     }
 

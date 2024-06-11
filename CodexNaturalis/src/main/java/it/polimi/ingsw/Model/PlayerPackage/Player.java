@@ -36,6 +36,7 @@ public class Player implements Serializable {
     private int[] ObjectCounter;
     private LinkedList<PlayableCard> Hand;
     private LinkedList<GoalCard> PlayerGoal;
+    private LinkedList<GoalCard> commonGoals = new LinkedList<>();
     private PlayingField PlayerField;
 
     /**
@@ -119,17 +120,18 @@ public class Player implements Serializable {
      * Sets the goal card for the player.
      *
      */
-    public void setPlayerGoal(boolean choice){
-        if(choice) PlayerGoal.remove(3);
-        else PlayerGoal.remove(2);
+    public void setPlayerGoal(int i){
+
+        if(i==1)
+            commonGoals.add(PlayerGoal.get(0));
+        else commonGoals.add(PlayerGoal.get(1));
     }
 
-    public void addGoalCard(GoalCard card){
-        PlayerGoal.add(card);
-    }
-
-    public GoalCard getPlayerGoal(){
-        return PlayerGoal.getFirst();
+    public void addGoalCard(GoalCard card, String mex){
+        switch(mex){
+            case "personal" -> PlayerGoal.add(card);
+            case "common" -> commonGoals.add(card);
+        }
     }
 
     /**
@@ -163,8 +165,12 @@ public class Player implements Serializable {
             return ObjectCounter[2];
     }
 
-    public LinkedList<GoalCard> getGoals(){
+    public LinkedList<GoalCard> get2Goals(){
         return PlayerGoal;
+    }
+
+    public LinkedList<GoalCard> getCommonGoals(){
+        return commonGoals;
     }
 
     /**

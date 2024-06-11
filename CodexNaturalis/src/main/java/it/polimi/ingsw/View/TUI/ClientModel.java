@@ -95,7 +95,7 @@ public class ClientModel {
     }
 
     public void setCommonGoals(LinkedList<GoalCard> commonGoals){
-        this.CommonGoals.addAll(commonGoals);
+        this.CommonGoals = commonGoals;
     }
 
 }
