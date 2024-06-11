@@ -19,21 +19,17 @@ public class ObjectsGoalCard extends GoalCard {
      *
      * @param id The unique identifier of the ObjectsGoalCard.
      * @param points The number of points associated with the ObjectsGoalCard.
-     * @param arrayInput An array representing the required number of objects for each type (Quill, Inkwell, Manuscript).
+     * @param Obj An array representing the required number of objects for each type (Quill, Inkwell, Manuscript).
      *                   The array must be of size 3, where:
      *                   - The first position represents the number of Quill objects required.
      *                   - The second position represents the number of Inkwell objects required.
      *                   - The third position represents the number of Manuscript objects required.
      * @throws IllegalArgumentException if the size of the arrayInput is not equal to 3.
      */
-    public ObjectsGoalCard(int id, int points, int[] arrayInput) {
+    public ObjectsGoalCard(int id, int points, int[] Obj) {
         super(id, points);
-        if (arrayInput.length != 3) {
-            throw new IllegalArgumentException("L'array di input deve essere di dimensione 3");
-        }
-        // Copia gli elementi dall'array di input a obj
         for (int i = 0; i < 3; i++) {
-            obj[i] = arrayInput[i];
+            obj[i] = Obj[i];
         }
     }
 

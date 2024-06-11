@@ -96,6 +96,7 @@ public class TUI implements GameView {
                 i = Integer.parseInt(reader.readLine());
                 if (i == 1 || i == 2) {
                     client.chooseGoalCard(i, this.client);
+                    cards.plotGoals(client.getClient());
                     goon = true;
                 } else {
                     System.out.println("You put a number which isn't ");
