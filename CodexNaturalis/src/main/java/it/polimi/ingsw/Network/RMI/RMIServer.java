@@ -105,6 +105,7 @@ public class RMIServer implements VirtualServer{
         new Thread(() -> {
             try {
                 while(true) {
+                    System.out.println("ahahahahaspdjccjsd");
                     Actions now = actions.take();
                     now.executor();
                 }

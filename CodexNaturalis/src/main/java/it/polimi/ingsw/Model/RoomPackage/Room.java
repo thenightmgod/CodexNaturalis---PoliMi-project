@@ -88,7 +88,7 @@ public class Room implements Serializable {
      * Sets the flag indicating whether the game has reached the twenty points threshold.
      */
     public void setTwentyFlag(){ //vede se il punteggio di qualcuno è >= 20 per mettere lastRound=true
-        if(Turn.getPointsCounter()>=1)
+        if(Turn.getPointsCounter()>=2)
             this.Twenty = true;
     }
 
@@ -115,8 +115,8 @@ public class Room implements Serializable {
         CommonGoals.add((GoalCard) GoalDeck.getGoalCard());
         CommonGoals.add((GoalCard) GoalDeck.getGoalCard());
         for(Player p: Players){
-            p.addGoalCard(CommonGoals.get(0), "common");
-            p.addGoalCard(CommonGoals.get(1), "common");
+            p.addGoalCard(CommonGoals.get(0));
+            p.addGoalCard(CommonGoals.get(1));
             observerManager.showCommonGoals(p.getName(), CommonGoals);
         }
     }
@@ -197,15 +197,15 @@ public class Room implements Serializable {
      * @param player The player picking the goal card.
      */
 
-    public void pickGoalCard(Player player, int i) throws RemoteException {
+    public void pickGoalCard(Player player, boolean i) throws RemoteException {
         player.setPlayerGoal(i);
-        observerManager.showCommonGoals(player.getName(), player.getCommonGoals());
+        observerManager.showCommonGoals(player.getName(), player.getGoals());
     }
 
     public void show2GoalCards(Player player) throws RemoteException {
-        player.addGoalCard((GoalCard) GoalDeck.getGoalCard(), "personal"); //in teoria funge
-        player.addGoalCard((GoalCard) GoalDeck.getGoalCard(), "personal");
-        observerManager.showGoals(player.getName(), player.get2Goals());
+        player.addGoalCard((GoalCard) GoalDeck.getGoalCard()); //in teoria funge
+        player.addGoalCard((GoalCard) GoalDeck.getGoalCard());
+        observerManager.showGoals(player.getName(), player.getGoals());
     }
 
     /**
@@ -279,8 +279,8 @@ public class Room implements Serializable {
      */
 
     public void checkGoals(Player p) throws RemoteException {
-        LinkedList<GoalCard> toCheck = p.getCommonGoals();
-
+        LinkedList<GoalCard> toCheck = CommonGoals;
+        toCheck.add(p.getPlayerGoal());
         for(int i=0; i<3; i++){
             if(toCheck.get(i).getId() >= 87 && toCheck.get(i).getId() <= 94) {
                 CompositionGoalCard nostra = (CompositionGoalCard) toCheck.get(i);
@@ -318,27 +318,34 @@ public class Room implements Serializable {
         TreeMap<String, Integer> goalPoints = new TreeMap<>();
         TreeMap<String, Integer> totalPoints = new TreeMap<>();
 
-        for (Player p : Players) {
+        for(Player p: Players) {
             goalPoints.put(p.getName(), p.getGoalPointsCounter());
         }
-        for (Player p : Players) {
+        for(Player p: Players) {
             totalPoints.put(p.getName(), p.getTotalPointsCounter());
         }
 
+        LinkedList<String> standings = new LinkedList<>();
 
-        LinkedList<String> NamesInOrder = new LinkedList<>(totalPoints.keySet());
+        Set<String> keys = totalPoints.descendingKeySet();
+        LinkedList<String> NamesInOrder = new LinkedList<>(keys);
 
-        NamesInOrder.sort((player1, player2) -> {
-            int totalComparison = totalPoints.get(player2).compareTo(totalPoints.get(player1));
-            if (totalComparison != 0) {
-                return totalComparison;
-            } else {
-                return goalPoints.get(player2).compareTo(goalPoints.get(player1));
+        for(int i=0; i<NamesInOrder.size() - 1; i++) {
+
+            if(!standings.contains(NamesInOrder.get(i))) {
+                if (Objects.equals(totalPoints.get(NamesInOrder.get(i)), totalPoints.get(NamesInOrder.get(i + 1)))) {
+                    if (goalPoints.get(NamesInOrder.get(i)) < goalPoints.get(NamesInOrder.get(i + 1))) {
+                        standings.add(NamesInOrder.get(i + 1));
+                        standings.add(NamesInOrder.get(i));
+                    } else standings.add(NamesInOrder.get(i));
+                } else {
+                    standings.add(NamesInOrder.get(i));
+                }
             }
-        });
+        }
 
         for(Player p: Players) {
-            observerManager.declareWinner(p.getName(), NamesInOrder);
+            observerManager.declareWinner(p.getName(), standings);
         }
     }
 
@@ -352,8 +359,7 @@ public class Room implements Serializable {
         else {
             setTwentyFlag();
             if(Twenty && !LastRound)
-                if(Turn.getPointsCounter()>=1)
-                    observerManager.twenty(Turn.getName());
+                observerManager.twenty(Turn.getName());
             setLastRound();
 
 

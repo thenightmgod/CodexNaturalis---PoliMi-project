@@ -117,8 +117,10 @@ public class GameController {
     }
 
     public void chooseGoalCard(String name, int i) throws RemoteException {
-        this.Game.pickGoalCard(getPlayerByName(name), i);
-
+        boolean choice = false;
+        if(i == 1)
+            choice = true;
+        this.Game.pickGoalCard(getPlayerByName(name), choice);
     }
 
     public void placeCard(int i, int x, int y, FB face) throws RemoteException, NotBoundException {
@@ -184,8 +186,8 @@ public class GameController {
                 getGame().getObserverManager().showException("WrongIndexException", "DrawIndex", getGame().getTurn().getName());
             else {
                 if (i == 1)
-                    pickResCard(whichOne-1);
-                else pickGoldCard(whichOne-1);
+                    pickResCard(whichOne);
+                else pickGoldCard(whichOne);
             }
         }
     }
