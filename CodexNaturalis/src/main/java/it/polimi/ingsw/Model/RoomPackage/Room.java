@@ -87,9 +87,12 @@ public class Room implements Serializable {
     /**
      * Sets the flag indicating whether the game has reached the twenty points threshold.
      */
-    public void setTwentyFlag(){ //vede se il punteggio di qualcuno è >= 20 per mettere lastRound=true
+    public void setTwentyFlag() throws RemoteException { //vede se il punteggio di qualcuno è >= 20 per mettere lastRound=true
         if(Turn.getPointsCounter()>=1)
             this.Twenty = true;
+        if(Twenty && !LastRound)
+            if(Turn.getPointsCounter()>=1)
+                observerManager.twenty(Turn.getName());
     }
 
     public boolean getTwentyFlag() {
@@ -99,7 +102,7 @@ public class Room implements Serializable {
     /**
      * Sets the last round flag if the twenty points threshold is reached and it's the first player's turn.
      */
-    public void setLastRound(){
+    public void setLastRound() throws RemoteException {
         if(Twenty)
             if(Turn.equals(Players.getFirst()))
                 this.LastRound = true;
@@ -350,21 +353,11 @@ public class Room implements Serializable {
             declareWinner();
         }
         else {
-            if(Twenty && !LastRound)
-                if(Turn.getPointsCounter()>=1)
-                    observerManager.twenty(Turn.getName());
             setLastRound();
             setTwentyFlag();
-/*            if(Twenty && !LastRound)
-                if(Turn.getPointsCounter()>=1)
-                    observerManager.twenty(Turn.getName());
-            setLastRound();*/
 
             int index = Players.indexOf(Turn);
             Turn = Players.getLast().equals(Turn) ? Players.getFirst() : Players.get(index + 1);
-
-            if(LastRound)
-                observerManager.lastRound(Turn.getName());
 
             switch(mex) {
                 case "StartCard" -> {
@@ -386,6 +379,8 @@ public class Room implements Serializable {
                     else observerManager.updateTurn(Turn, "GoalCard");
                 }
                 case "NormalTurn" -> {
+                    if(LastRound)
+                        observerManager.lastRound(Turn.getName());
                     observerManager.updateTurn(Turn, "NormalTurn");
                 }
             }

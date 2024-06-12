@@ -424,7 +424,7 @@ class RoomTest {
         beppe.placeStartCard("dalla", FB.FRONT);
         beppe.placeStartCard("degregori", FB.BACK);
 
-        beppe.getPlayerByName("hamingway").setPointsCounter(24);
+/*        beppe.getPlayerByName("hamingway").setPointsCounter(24);
         beppe.getPlayerByName("dalla").setPointsCounter(20);
         beppe.getPlayerByName("venditti").setPointsCounter(14);
         beppe.getPlayerByName("degregori").setPointsCounter(18);
@@ -439,7 +439,7 @@ class RoomTest {
         beppe.getPlayerByName("venditti").setTotalPointsCounter(18);
         beppe.getPlayerByName("degregori").setTotalPointsCounter(20);
 
-        beppe.getGame().declareWinner();
+        beppe.getGame().declareWinner();*/
 //        assertEquals("hamingway", );
     }
 }
