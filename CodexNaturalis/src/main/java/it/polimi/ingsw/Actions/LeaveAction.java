@@ -11,9 +11,8 @@ import java.util.Map;
 
 public class LeaveAction extends Actions{
     String name;
-    public LeaveAction(String name, VirtualView view, MainController manager, RMIServer server){
+    public LeaveAction( VirtualView view, MainController manager, RMIServer server){
         super(view, manager, server);
-        this.name = name;
     }
 
     @Override
@@ -22,12 +21,11 @@ public class LeaveAction extends Actions{
         for(Map.Entry<Integer, GameController> entry : getManager().getControllersPerGame().entrySet()){
             if(entry.getValue().getPlayers().stream().map(Player::getName).toList().contains(getView().getName())){
                 k = entry.getKey();
+                break;
             }
         }
         if(k != -1){
-            GameController controller = getManager().getControllersPerGame().get(k);
-            getManager().getControllersPerGame().remove(controller);
-            getManager().getControllers().remove(controller);
+            getManager().getViewPerGame().get(k).remove(getView());
         }
     }
 }

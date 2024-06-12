@@ -63,6 +63,12 @@ public class TUI implements GameView {
     }
 
     @Override
+    public void leaveGameMessage(){
+        System.out.println("Someone left the game, you'll have to start a new one");
+        //gestire il post leave come cazzo crei la partita di nuovo
+    }
+
+    @Override
     public void updateGoals(LinkedList<GoalCard> goals, String name) throws RemoteException {
         System.out.println("Choose your personal GoalCard");
         cards.printGoalCard(goals.getFirst());

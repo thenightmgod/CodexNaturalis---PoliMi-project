@@ -40,74 +40,103 @@ public class ObserverManager {
 
     // tutti i metodi della virtual view
 
-    public void updatePoints(int points, String name) throws RemoteException {
-        for(String s : observers.keySet()) {
-            observers.get(s).updatePoints(points, name);
-        }
-    }
-
-    public void updateTurn(Player turn, String mex) throws RemoteException {
-        for(String s : observers.keySet()) {
-            if(!observers.get(s).getName().equals(turn.getName())){ //printo is not your turn a tutti quelli che non sono in turno
-                observers.get(s).notYourTurn(turn);
+    public void updatePoints(int points, String name) {
+        try {
+            for (String s : observers.keySet()) {
+                observers.get(s).updatePoints(points, name);
             }
-        }
-        for(String s : observers.keySet()) {
-            if(observers.get(s).getName().equals(turn.getName())){  //inizio a chiamare azioni sul player che ha il turno
-                observers.get(s).updateTurn(turn, mex);
+        } catch (RemoteException ignored) {}
+    }
+
+    public void updateTurn(Player turn, String mex) {
+        try {
+            for (String s : observers.keySet()) {
+                if (!observers.get(s).getName().equals(turn.getName())) { //printo is not your turn a tutti quelli che non sono in turno
+                    observers.get(s).notYourTurn(turn);
+                }
             }
-        }
+            for (String s : observers.keySet()) {
+                if (observers.get(s).getName().equals(turn.getName())) {  //inizio a chiamare azioni sul player che ha il turno
+                    observers.get(s).updateTurn(turn, mex);
+                }
+            }
+        } catch (RemoteException ignored) {}
     }
 
-    public void declareWinner(String name, LinkedList<String> standings) throws RemoteException{
-        observers.get(name).declareWinner(standings);
+    public void declareWinner(String name, LinkedList<String> standings) {
+        try {
+            observers.get(name).declareWinner(standings);
+        } catch (RemoteException ignored) {}
     }
 
-    public void showStartCard(String name, StartCard card) throws RemoteException{
-        observers.get(name).showStartCard(card);
+    public void showStartCard(String name, StartCard card) {
+        try {
+            observers.get(name).showStartCard(card);
+        } catch (RemoteException ignored) {}
     }
 
-    public void showException(String exception, String details, String name) throws RemoteException, NotBoundException {
-        observers.get(name).showException(exception, details);
+    public void showException(String exception, String details, String name) throws NotBoundException {
+        try {
+            observers.get(name).showException(exception, details);
+        } catch (RemoteException ignored) {}
     }
 
-    public void showGoals(String name, LinkedList<GoalCard> goals) throws RemoteException {
-        observers.get(name).updateGoals(goals);
+    public void showGoals(String name, LinkedList<GoalCard> goals) {
+        try {
+            observers.get(name).updateGoals(goals);
+        } catch (RemoteException ignored) {}
     }
 
-    public void showCommonGoals(String name, LinkedList<GoalCard> goals) throws RemoteException {
-        observers.get(name).updateCommonGoals(goals);
+    public void showCommonGoals(String name, LinkedList<GoalCard> goals) {
+        try {
+            observers.get(name).updateCommonGoals(goals);
+        } catch (RemoteException ignored) {}
     }
-    public void showNewHand(String name, LinkedList<PlayableCard> hand) throws RemoteException {
-        observers.get(name).showHand(hand);
-        //anche per starter card, eventuali sbatti con l'id farli qua
-    }
-
-    public void updateField(String name, PlayingField field) throws RemoteException {
-        for(String s : observers.keySet())
-            observers.get(s).updateField(name, field);
+    public void showNewHand(String name, LinkedList<PlayableCard> hand) {
+        try {
+            observers.get(name).showHand(hand);
+        } catch (RemoteException ignored) {}
     }
 
-    public void showFreePositions(String name, LinkedList<Position> freePosition) throws RemoteException {
-        observers.get(name).showFreePositions(name, freePosition);
+    public void updateField(String name, PlayingField field) {
+        try {
+            for (String s : observers.keySet())
+                observers.get(s).updateField(name, field);
+        } catch (RemoteException ignored) {}
     }
 
-    public void updateGoldDeck(String name, boolean start, LinkedList<GoldCard> deck) throws RemoteException{
-        observers.get(name).updateGoldDeck(name, start, deck);
+    public void showFreePositions(String name, LinkedList<Position> freePosition) {
+        try {
+            observers.get(name).showFreePositions(name, freePosition);
+        } catch (RemoteException ignored) {}
     }
 
-    public void updateResourceDeck(String name, boolean start, LinkedList<ResourceCard> deck) throws RemoteException{
-        observers.get(name).updateResourceDeck(name, start, deck);
+    public void updateGoldDeck(String name, boolean start, LinkedList<GoldCard> deck) {
+        try {
+            observers.get(name).updateGoldDeck(name, start, deck);
+        } catch (RemoteException ignored) {}
     }
 
-    public void twenty(String name) throws RemoteException {
-        for(String s : observers.keySet())
-            observers.get(s).twenty(name);
+    public void updateResourceDeck(String name, boolean start, LinkedList<ResourceCard> deck) {
+        try {
+            observers.get(name).updateResourceDeck(name, start, deck);
+        } catch (RemoteException ignored) {}
     }
 
-    public void lastRound(String name) throws RemoteException {
-        observers.get(name).lastRound();
+    public void twenty(String name) {
+        try {
+            for (String s : observers.keySet())
+                observers.get(s).twenty(name);
+        } catch (RemoteException ignored) {}
     }
+
+    public void lastRound(String name) {
+        try {
+            observers.get(name).lastRound();
+        } catch (RemoteException ignored) {}
+    }
+
+
 
 
     //eventualmente implementarli

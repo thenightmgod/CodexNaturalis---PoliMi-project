@@ -16,7 +16,7 @@ public interface CommonClient {
 
     void createGame(String Name, int numPlayers) throws RemoteException;
 
-    void leaveGame(String name, CommonClient client) throws RemoteException;
+   // void leaveGame(String name, CommonClient client) throws RemoteException;
 
     void placeCard(CommonClient client, int whichInHand, int x, int y, FB face) throws RemoteException;
 
