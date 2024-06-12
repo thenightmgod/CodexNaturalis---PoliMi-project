@@ -67,8 +67,8 @@ public class RMIServer implements VirtualServer{
     }
 
     @Override
-    public void leaveGame(String name, VirtualView client) throws RemoteException {
-        Actions lAction = new LeaveAction(name, client, controller, this);
+    public void leaveGame(VirtualView client) throws RemoteException {
+        Actions lAction = new LeaveAction(client, controller, this);
         actions.add(lAction);
     }
 

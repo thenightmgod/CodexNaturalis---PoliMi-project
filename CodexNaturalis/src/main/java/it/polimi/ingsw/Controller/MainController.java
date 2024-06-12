@@ -8,10 +8,7 @@ import it.polimi.ingsw.Network.VirtualView;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 //questo controlla game multipli
@@ -21,40 +18,39 @@ public class MainController {
 
     HashMap<Integer, GameController> controllersPerGame;
 
-    HashMap<Integer, LinkedList<VirtualView>> viewPerGame;
+    final HashMap<Integer, LinkedList<VirtualView>> viewPerGame;
 
-    public MainController(){
+    public MainController() {
         this.controllers = new LinkedList<>();
         this.controllersPerGame = new HashMap<>();
         this.viewPerGame = new HashMap<>();
+        this.isAlive();
     }
 
-    public LinkedList<GameController> getControllers(){
+    public LinkedList<GameController> getControllers() {
         return this.controllers;
     }
 
-    public HashMap<Integer, GameController> getControllersPerGame(){
+    public HashMap<Integer, GameController> getControllersPerGame() {
         return controllersPerGame;
     }
 
-    //numPlayers arriva da
-    public void createGame(String Name, int numPlayers, VirtualView client) throws RemoteException{
-        //controllo sui numeri lo fa la tui
-        if(controllers.isEmpty()) {
+    public void createGame(String Name, int numPlayers, VirtualView client) throws RemoteException {
+
+        if (controllers.isEmpty()) {
             GameController Garfield = new GameController(0, numPlayers);
             controllers.add(Garfield);
             controllersPerGame.put(0, Garfield);
             LinkedList<VirtualView> Grian = new LinkedList<>();
             Grian.add(client);
             viewPerGame.put(0, Grian);
-        }
-        else {
+        } else {
             GameController Garfield = new GameController(controllers.getLast().getRoomId() + 1, numPlayers);
             controllers.add(Garfield);
             controllersPerGame.put(controllers.getLast().getRoomId() + 1, Garfield);
             LinkedList<VirtualView> Grian = new LinkedList<>();
             Grian.add(client);
-            viewPerGame.put(controllers.getLast().getRoomId() + 1, Grian);
+            viewPerGame.put(controllers.getLast().getRoomId(), Grian);
         }
         controllers.getLast().addPlayer(Name, PlayerColor.RED, client);
         //fare sbatti per aggiunta client
@@ -97,7 +93,7 @@ public class MainController {
         }
     }
 
-    public GameController leaveGame(String Name, int RoomId) throws RemoteException{
+    public GameController leaveGame(String Name, int RoomId) throws RemoteException {
         controllers.get(RoomId).removePlayer(Name);
         return controllers.get(RoomId);
     }
@@ -107,21 +103,89 @@ public class MainController {
     public LinkedList<VirtualView> getOtherPlayers(String name) throws RemoteException {
         int k = -1;
         LinkedList<VirtualView> otherPlayers = new LinkedList<>();
-        for(Map.Entry<Integer, LinkedList<VirtualView>> entry: viewPerGame.entrySet()){
-            for(VirtualView v: entry.getValue()){
-                if(v.getName().equals(name)){
+        for (Map.Entry<Integer, LinkedList<VirtualView>> entry : viewPerGame.entrySet()) {
+            for (VirtualView v : entry.getValue()) {
+                if (v.getName().equals(name)) {
                     k = entry.getKey();
                 }
             }
         }
-        if(k != -1){
-            for(int i=0; i<viewPerGame.get(k).size(); i++) {
+        if (k != -1) {
+            for (int i = 0; i < viewPerGame.get(k).size(); i++) {
                 VirtualView view = viewPerGame.get(k).get(i);
-                if(!name.equals(view.getName()))
+                if (!name.equals(view.getName()))
                     otherPlayers.add(view);
             }
         }
         return otherPlayers;
     }
+
+    public HashMap<Integer, LinkedList<VirtualView>> getViewPerGame() {
+        return viewPerGame;
+    }
+
+    public void isAlive() {
+
+        new Thread(() -> {
+
+            final VirtualView[] problematicView = {null};
+            Timer timer = new Timer("Timer");
+            TimerTask task = new TimerTask(){
+
+                public void run() {
+                    synchronized (viewPerGame) {
+                        try {
+                            for (int roomId : viewPerGame.keySet()) {
+                                for (VirtualView v : viewPerGame.get(roomId)) {
+                                    v.isAlive();
+                                }
+                            }
+                        } catch (RemoteException e) {
+                            outerLoop:
+                            for (Map.Entry<Integer, LinkedList<VirtualView>> entry : viewPerGame.entrySet()) {
+                                for (VirtualView v : entry.getValue()) {
+                                    try {
+                                        v.isAlive();
+                                    } catch (RemoteException re) {
+                                        problematicView[0] = v;
+                                        break outerLoop;
+                                    }
+                                }
+                            }
+
+                            if (problematicView[0] != null) {
+                                int roomIdToClose = -1;
+                                for (Map.Entry<Integer, LinkedList<VirtualView>> entry : viewPerGame.entrySet()) {
+                                    if (entry.getValue().contains(problematicView[0])) {
+                                        roomIdToClose = entry.getKey();
+                                        break;
+                                    }
+                                }
+
+                                if (roomIdToClose != -1) {
+                                    for (VirtualView v : viewPerGame.get(roomIdToClose)) {
+                                        try {
+                                            v.leaveGameMessage();
+                                            v.leaveGame();
+                                        } catch (RemoteException ignored) {}
+                                    }
+                                    getControllersPerGame().remove(roomIdToClose);
+                                    getControllers().remove(roomIdToClose);
+                                    getViewPerGame().remove(roomIdToClose);
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            long delay = 5000L;
+            long period = 10000L;
+
+            timer.scheduleAtFixedRate(task, delay, period);
+
+        }).start();
+    }
+
 
 }

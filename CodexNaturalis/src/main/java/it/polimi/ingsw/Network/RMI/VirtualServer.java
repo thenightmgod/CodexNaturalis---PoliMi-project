@@ -18,7 +18,7 @@ public interface VirtualServer extends Remote {
 
     void createGame(String Name, int numPlayers, VirtualView client) throws RemoteException;
 
-    void leaveGame(String name, VirtualView client) throws RemoteException;
+    void leaveGame(VirtualView client) throws RemoteException;
 
     void placeCard(VirtualView client, int whichInHand, int x, int y, FB face) throws RemoteException;
 
