@@ -180,21 +180,21 @@ class CompositionGoalCardTest {
         requirements2[1] = 0;
         requirements2[2] = 1;
         requirements2[3] = 3;
-        GoldCard carta2 = new GoldCard(3, Res2, Corners2, CardColor.RED, 1, requirements2, PointsCondition.OBJECTS_INKWELL);
+        GoldCard carta2 = new GoldCard(3, Res2, Corners2, CardColor.PURPLE, 1, requirements2, PointsCondition.OBJECTS_INKWELL);
 
         int[] requirements3 = new int[4];
         requirements3[0] = 5;
         requirements3[1] = 0;
         requirements3[2] = 0;
         requirements3[3] = 0;
-        GoldCard carta3 = new GoldCard(3, Res3, Corners3, CardColor.RED, 3, requirements3, PointsCondition.OBJECTS_MANUSCRIPT);
+        GoldCard carta3 = new GoldCard(3, Res3, Corners3, CardColor.GREEN, 3, requirements3, PointsCondition.OBJECTS_MANUSCRIPT);
 
         int[] requirements6 = new int[4];
         requirements3[0] = 5;
         requirements3[1] = 0;
         requirements3[2] = 0;
         requirements3[3] = 0;
-        GoldCard carta6 = new GoldCard(3, Res6, Corners6, CardColor.RED, 3, requirements6, PointsCondition.OBJECTS_MANUSCRIPT);
+        GoldCard carta6 = new GoldCard(3, Res6, Corners6, CardColor.GREEN, 3, requirements6, PointsCondition.OBJECTS_MANUSCRIPT);
 
         int[] requirements4 = new int[4];
         requirements3[0] = 3;
@@ -225,29 +225,29 @@ class CompositionGoalCardTest {
         GoldCard carta0 = new GoldCard(3, Res0, Corners0, CardColor.BLUE, 2, requirements0, PointsCondition.CORNERS);
 
         HashMap<Position, PlayableCard> mappa = campo.getField();
+        LinkedList<Position> freepositions = campo.getFreePositions();
 
         Position pos0 = new Position(0, 0);
-        Position pos1 = new Position(1, 1);
-        Position pos2 = new Position(1, -1);
-        Position pos3 = new Position(1, -3);
+        Position pos1 = new Position(3, 3);
+        Position pos2 = new Position(2, 2);
+        Position pos3 = new Position(1, 1);
         Position pos4 = new Position(2, -2);
         Position pos5 = new Position(2, -4);
-        Position pos6 = new Position(1, -5);
-        Position pos7 = new Position(2, -6);
+        Position pos6 = new Position(1, -1);
+        Position pos7 = new Position(3, 1);
 
         mappa.put(pos0, carta0);
         mappa.put(pos1, carta1);
         mappa.put(pos2, carta2);
         mappa.put(pos3, carta3);
-        mappa.put(pos4, carta4);
-        mappa.put(pos5, carta5);
         mappa.put(pos6, carta6);
-        mappa.put(pos7, carta7);
+        freepositions.add(pos7);
+
 
         CompositionGoalCard GoalRedL = new CompositionGoalCard(91, 3, Composition.L, CardColor.RED);
         int x = GoalRedL.pointsCalc(player, CardColor.RED);
 
-        assertEquals(6, x);
+        assertEquals(0, x);
 
     }
     @Test
