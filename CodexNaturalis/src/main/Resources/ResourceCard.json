@@ -421,7 +421,7 @@
             {"Res": "INSECT_KINGDOM", "Orient": "HR"},
             {"Res": "ABSENT", "Orient": "HL"},
             {"Res": "ANIMAL_KINGDOM", "Orient": "LR"},
-            {"Res": "Inkwell", "Orient": "LL"}
+            {"Res": "INKWELL", "Orient": "LL"}
           ]
         },
         {

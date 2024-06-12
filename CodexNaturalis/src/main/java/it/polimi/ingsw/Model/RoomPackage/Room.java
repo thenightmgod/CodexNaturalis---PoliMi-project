@@ -107,7 +107,7 @@ public class Room implements Serializable {
 
     public void setLL(){
         if(LastRound)
-            if(Turn.equals(Players.getFirst()))
+            if(Turn.equals(Players.getLast()))
                 this.LL = true;
     }
 
@@ -350,13 +350,15 @@ public class Room implements Serializable {
             declareWinner();
         }
         else {
-            setTwentyFlag();
             if(Twenty && !LastRound)
                 if(Turn.getPointsCounter()>=1)
                     observerManager.twenty(Turn.getName());
             setLastRound();
-
-
+            setTwentyFlag();
+/*            if(Twenty && !LastRound)
+                if(Turn.getPointsCounter()>=1)
+                    observerManager.twenty(Turn.getName());
+            setLastRound();*/
 
             int index = Players.indexOf(Turn);
             Turn = Players.getLast().equals(Turn) ? Players.getFirst() : Players.get(index + 1);
