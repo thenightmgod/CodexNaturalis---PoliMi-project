@@ -4,6 +4,7 @@ import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
+import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
 
@@ -13,6 +14,7 @@ public class ClientModel {
 
     //potrebbe esserci anche la chat ma vedremo
     private String Name;
+    private LinkedList<Player> Players;
     private LinkedList<PlayableCard> Hand;
     private PlayingField Field;
     private int PointsCounter;

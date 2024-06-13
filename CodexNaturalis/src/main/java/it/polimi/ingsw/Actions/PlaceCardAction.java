@@ -29,7 +29,6 @@ public class PlaceCardAction extends Actions{
 
     @Override
     public void executor() throws RemoteException, NotBoundException {
-        System.out.println("place card inizio");
         int k = -1;
         for(Map.Entry<Integer, GameController> entry : getManager().getControllersPerGame().entrySet()){
             if(entry.getValue().getPlayers().stream().map(Player::getName).toList().contains(getView().getName())){
@@ -38,10 +37,7 @@ public class PlaceCardAction extends Actions{
         }
         if(k != -1){
             GameController controller = getManager().getControllersPerGame().get(k);
-            //cambiare dinamica di place card con l'int della mano
             controller.placeCard(whichInHand, x, y, face);
         }
-        System.out.println("place card fine");
-
     }
 }

@@ -59,7 +59,7 @@ public class TUI implements GameView {
 
     @Override
     public void updatePoints(int points, String name){
-        //TODO
+        client.getClient().setPointsCounter(points);
     }
 
     @Override
@@ -141,7 +141,7 @@ public class TUI implements GameView {
 //                System.out.println("These are the new drawable cards");
                 client.getClient().setDrawableResourceCards(resourceCards);
             } else {
-                System.out.println(name + "has drawn a card");
+                System.out.println(name + " has drawn a card");
 //                System.out.println("These are the new drawable cards");
                 client.getClient().setDrawableResourceCards(resourceCards);
             }
@@ -359,6 +359,9 @@ public class TUI implements GameView {
     }
 
     private void isYourTurn() throws RemoteException {
+        System.out.println();
+        cards.plotPoints(client.getClient());
+        System.out.println();
         placeCard();
     }
 

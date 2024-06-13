@@ -31,6 +31,5 @@ public class ChooseGoalCardAction extends Actions{
             GameController controller = getManager().getControllersPerGame().get(k);
             controller.chooseGoalCard(getView().getName(), i);
         }
-        System.out.println("FRANCO");
     }
 }
