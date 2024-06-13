@@ -59,7 +59,7 @@ public class TUI implements GameView {
             } catch (IOException e) {
                 System.out.println("sbatti");
             }
-        } while (serverIp.isEmpty() && !isValidFormat(serverIp));
+        } while (!serverIp.isEmpty() && !isValidFormat(serverIp));
     }
 
     public static boolean isValidFormat(String input) {
