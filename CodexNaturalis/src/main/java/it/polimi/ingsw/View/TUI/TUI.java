@@ -683,9 +683,7 @@ public class TUI implements GameView {
                 } catch (NumberFormatException e){
                     System.out.println("Please enter a number!");
                 }
-
             }while (!goon) ;
-
         }
 
 

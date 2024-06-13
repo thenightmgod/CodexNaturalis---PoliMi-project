@@ -36,7 +36,7 @@ public class SocketClient implements CommonClient {
     public SocketClient(String name) {
         this.name = name;
         String ip = "127.0.0.1";
-        this.initializeClient(this, ip, 4444);
+        this.initializeClient(this, ip, 49666);
     }
 
     public String getName() {

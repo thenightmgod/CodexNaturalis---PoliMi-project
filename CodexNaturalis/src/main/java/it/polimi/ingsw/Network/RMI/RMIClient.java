@@ -51,7 +51,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
         VirtualServer stub = (VirtualServer) registry.lookup(serverName);
         server = (VirtualServer) UnicastRemoteObject.exportObject(stub, 4446);*/
 
-        registry = LocateRegistry.getRegistry("localhost", 4446);
+        registry = LocateRegistry.getRegistry("localhost", 49666);
         this.server = (VirtualServer) registry.lookup(serverName);
 
     }
