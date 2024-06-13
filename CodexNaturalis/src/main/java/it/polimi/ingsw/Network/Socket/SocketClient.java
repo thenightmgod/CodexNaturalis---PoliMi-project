@@ -214,8 +214,8 @@ public class SocketClient implements CommonClient {
     }
 
     @Override
-    public void setStartCardFace(boolean face) {
-        SetStartCardFaceMessage msg = new SetStartCardFaceMessage(face);
+    public void setStartCardFace(boolean face, String name) {
+        SetStartCardFaceMessage msg = new SetStartCardFaceMessage(face, name);
         String gson = msg.MessageToJson();
         server.setStartCardFace(gson);
     }

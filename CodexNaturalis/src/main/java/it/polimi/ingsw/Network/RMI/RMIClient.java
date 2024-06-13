@@ -70,7 +70,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
 
 
     @Override
-    public void setStartCardFace(boolean face) throws RemoteException {
+    public void setStartCardFace(boolean face, String name) throws RemoteException {
         server.setStartCardFace(face, this);
     }
 

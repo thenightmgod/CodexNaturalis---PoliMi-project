@@ -20,7 +20,7 @@ public interface CommonClient {
 
     void placeCard(int whichInHand, int x, int y, FB face) throws RemoteException;
 
-    void setStartCardFace(boolean face) throws RemoteException; //il player setta la variabile face della sua start card
+    void setStartCardFace(boolean face, String name) throws RemoteException; //il player setta la variabile face della sua start card
 
     void chooseGoalCard(int i, String name) throws RemoteException;
 
