@@ -12,10 +12,10 @@ import java.util.Scanner;
 public class MainServer {
     public static void main(String[] args) throws RemoteException {
         String input;
-        do{
+//        do{
             System.out.println("Insert remote ip (leave empty for localhost)");
             input = new Scanner(System.in).nextLine();
-        } while(!input.equals(""));
+ //       } while(!input.equals("") || );
 
         if (input.equals("")) {
             System.setProperty("java.rmi.server.hostname", "127.0.0.1");

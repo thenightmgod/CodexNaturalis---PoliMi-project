@@ -33,25 +33,21 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
 
     //               FUNZIONI PER CREARE ED INIZIALIZZARE IL CLIENT RMI
 
-    public RMIClient(String name) throws RemoteException, NotBoundException {
+    public RMIClient(String name, String serverIp) throws RemoteException, NotBoundException {
         this.model = new ClientModel(name);
         this.name = name;
         //andrà runnato this.runClient();
-        initializeClient(name);
+        initializeClient(serverIp);
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void initializeClient(String name) throws RemoteException, NotBoundException {
+    public void initializeClient(String serverIp) throws RemoteException, NotBoundException {
         final String serverName = "CodexServer";
-        /*
-        registry = LocateRegistry.getRegistry("localhost", 4446);
-        VirtualServer stub = (VirtualServer) registry.lookup(serverName);
-        server = (VirtualServer) UnicastRemoteObject.exportObject(stub, 4446);*/
 
-        registry = LocateRegistry.getRegistry("localhost", 4446);
+        registry = LocateRegistry.getRegistry(serverIp, 4446);
         this.server = (VirtualServer) registry.lookup(serverName);
 
     }
