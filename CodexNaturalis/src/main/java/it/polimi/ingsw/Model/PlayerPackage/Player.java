@@ -276,6 +276,7 @@ public class Player implements Serializable {
                 this.PointsCounter += ((GoldCard) c).PointsCalc(this, p);
             } else {
                 this.PointsCounter +=  c.getPoints();
+
             }
         }
         for (Orientation Orien : Orientation.values()) {

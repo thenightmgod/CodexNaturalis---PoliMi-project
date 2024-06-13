@@ -165,8 +165,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
 
     @Override
     public void updatePoints(int points, String name) {
-        //model.setPointsCounter(points);
-
+       // model.setPointsCounter(points);
         this.view.updatePoints(points, name);
     }
 

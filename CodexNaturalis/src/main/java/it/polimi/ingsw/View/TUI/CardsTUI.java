@@ -20,6 +20,7 @@ import it.polimi.ingsw.Model.RoomPackage.Room;
 import it.polimi.ingsw.Network.VirtualView;
 
 import java.util.List;
+import java.util.Map;
 
 import static it.polimi.ingsw.Model.CornerPackage.Resources.*;
 
@@ -1543,7 +1544,7 @@ public class CardsTUI {
         beppe.addPlayer("MARCO DEVI MORIRE", PlayerColor.GREEN, v3);
         */
 
-        tui.plotPoints(beppe);
+   //     tui.plotPoints(beppe);
 
         Position position1 = new Position(1,1);
         Position position2 = new Position(2,2);
@@ -1578,22 +1579,23 @@ public class CardsTUI {
         mappa.put(position7, g2);
         mappa.put(position8, g3);
 
-        tui.plotPoints(beppe);
+ //       tui.plotPoints(beppe);
 
     }
 
     //-------------------------------PUNTIIIIII--------------------------------------------------------------------------
 
-    public void plotPoints(GameController controller){
+    public void plotPoints(ClientModel model){
         System.out.printf("%-20s %-10s%n", "Player", "Points");
         System.out.println("---------------------------------");
 
-        int carlos = controller.getPlayers().size();
+        System.out.printf("%-20s %-10d%n", model.getName(), model.getPointsCounter());
+
+/*        int carlos = controller.getPlayers().size();
         int zero = 0;
         for(int i  = zero ; i < carlos; i++){
-
             System.out.printf("%-20s %-10d%n", controller.getPlayers().get(i).getName(), controller.getPlayers().get(i).getPointsCounter());
-        }
+        }*/
     }
 
     public void plotPlayerResources(ClientModel model) {
@@ -1630,7 +1632,7 @@ public class CardsTUI {
 
     public void plotHandSeria(ClientModel model){
         LinkedList<PlayableCard> toPrint= model.getHand();
-        System.out.println("");
+        System.out.println();
         System.out.println("CARD 1               CARD 2               CARD 3");
         for(PlayableCard card : toPrint){
             if (card.getId() >= 1 && card.getId() <= 40) {
@@ -1776,19 +1778,19 @@ public class CardsTUI {
         System.out.print("      ");
         printGoldCardJackie(Gold.get(0));
         System.out.print(ANSI_RESET);
-        System.out.println("");
+        System.out.println();
 
         printFrontResourceCardFirstLine(Res.get(0));
         System.out.print("      ");
         printFrontGoldCardFirstLine(Gold.get(0));
         System.out.print(ANSI_RESET);
-        System.out.println("");
+        System.out.println();
 
         printFrontResourceCardSecondLine(Res.get(0));
         System.out.print("      ");
         printFrontGoldCardSecondLine(Gold.get(0));
         System.out.print(ANSI_RESET);
-        System.out.println("");
+        System.out.println();
 
         printFrontResourceCardThirdLine(Res.get(0));
         System.out.print("      ");
@@ -1873,7 +1875,6 @@ public class CardsTUI {
         for(GoalCard c: common){
             printGoalCard(c);
         }
-
     }
 
 }
