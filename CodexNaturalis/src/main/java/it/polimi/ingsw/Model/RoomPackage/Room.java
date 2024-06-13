@@ -15,6 +15,8 @@ import it.polimi.ingsw.Model.PlayerPackage.Position;
 import it.polimi.ingsw.Network.CommonClient;
 import it.polimi.ingsw.Network.VirtualView;
 
+import javax.sound.sampled.AudioSystem;
+import java.io.File;
 import java.io.Serializable;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -317,7 +319,6 @@ public class Room implements Serializable {
     }
 
     public void declareWinner() throws RemoteException {
-
         TreeMap<String, Integer> goalPoints = new TreeMap<>();
         TreeMap<String, Integer> totalPoints = new TreeMap<>();
 

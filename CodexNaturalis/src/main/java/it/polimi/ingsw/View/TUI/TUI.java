@@ -39,10 +39,59 @@ public class TUI implements GameView {
 
     int ServerPort= 4444;
 
+    String serverIp;
+
     public TUI(){}
 
     public void startTui() throws RemoteException {
+        askServerIp();
+        getNickname();
+        this.client = chooseClient(name, serverIp);
         joinGame();
+    }
+
+    public void askServerIp(){
+        do {
+            try {
+                System.out.println("Insert the server ip");
+                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                serverIp = reader.readLine();
+            } catch (IOException e) {
+                System.out.println("sbatti");
+            }
+        } while (serverIp.isEmpty() && !isValidFormat(serverIp));
+    }
+
+    public static boolean isValidFormat(String input) {
+        // Dividi la stringa in base al punto
+        String[] parts = input.split("\\.");
+
+        // Verifica se ci sono esattamente 4 parti
+        if (parts.length != 4) {
+            return false;
+        }
+
+        // Controlla se ogni parte è un numero valido
+        for (String part : parts) {
+            if (!isNumeric(part)) {
+                return false;
+            }
+            // Puoi anche aggiungere un controllo per numeri validi nel range 0-255 se serve
+            int num = Integer.parseInt(part);
+            if (num < 0 || num > 255) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+    private static boolean isNumeric(String str) {
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
     @Override
@@ -285,7 +334,7 @@ public class TUI implements GameView {
         if(connectionType){
 
         } else{
-            client = new RMIClient(name);
+            client = new RMIClient(name, serverIp);
             client.setView(this);
         }
 
@@ -300,8 +349,6 @@ public class TUI implements GameView {
         boolean goon = false;
         do {
             try {
-                getNickname();
-                this.client = chooseClient(name);
                 this.client.joinGame(name);
                 goon = true;
 
@@ -312,7 +359,7 @@ public class TUI implements GameView {
 
     }
 
-    public CommonClient chooseClient(String name){
+    public CommonClient chooseClient(String name, String serverIp){
         Scanner scan = new Scanner(System.in);
         String connection;
 
@@ -324,7 +371,7 @@ public class TUI implements GameView {
 
             if(connection.equals("0")){
                 try{
-                    client = new RMIClient(name);
+                    client = new RMIClient(name, serverIp);
                     client.setView(this);
                     connectionType = false;
                 } catch (RemoteException e) {
