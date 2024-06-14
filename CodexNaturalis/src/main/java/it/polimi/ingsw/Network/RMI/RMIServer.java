@@ -27,13 +27,13 @@ public class RMIServer implements VirtualServer {
     //del numero della room?
     int port;
     ExecutorService executorService;
-    HashMap<Integer, MultipleFlow> actionsPerGame;
+    final ConcurrentHashMap<Integer, MultipleFlow> actionsPerGame;
     PriorityBlockingQueue<Actions> joins = new PriorityBlockingQueue<>();
 
     public RMIServer(MainController controller) throws RemoteException {
         this.controller = controller;
         port = 4446;
-        actionsPerGame = new HashMap<>();
+        actionsPerGame = new ConcurrentHashMap<>();
         executeGame();
         executeStart();
     }
@@ -53,30 +53,32 @@ public class RMIServer implements VirtualServer {
 
     @Override
     public void joinGame(String Name, VirtualView client) throws RemoteException {
+        synchronized (actionsPerGame) {
+            int roomId = controller.getControllers().size() - 1;
+            if (roomId < 0) {
+                actionsPerGame.put(0, new MultipleFlow());
+                Actions jGame = new JoinAction(client, controller, Name, this, 1, 0);
+                joins.add(jGame);
+            } else {
+                Actions jGame = new JoinAction(client, controller, Name, this, 1, roomId);
+                joins.add(jGame);
 
-        int roomId = controller.getControllers().size() - 1;
-        if(roomId < 0){
-            actionsPerGame.put(0, new MultipleFlow());
-            Actions jGame = new JoinAction(client, controller, Name, this, 1, 0);
-            joins.add(jGame);
-        } else {
-            Actions jGame = new JoinAction(client, controller, Name, this, 1, roomId);
-            joins.add(jGame);
-
+            }
         }
-
     }
 
     @Override
     public void createGame(String Name, int numPlayers, VirtualView client) throws RemoteException {
-        int roomId = controller.getControllers().size();
-        if(roomId > 0){
-            actionsPerGame.put(roomId, new MultipleFlow());
-            Actions cGame = new CreateAction(numPlayers, client, controller, Name, this, 0, roomId);
-            joins.add(cGame);
-        } else {
-            Actions cGame = new CreateAction(numPlayers, client, controller, Name, this, 0, 0);
-            joins.add(cGame);
+        synchronized (actionsPerGame) {
+            int roomId = controller.getControllers().size();
+            if (roomId > 0) {
+                actionsPerGame.put(roomId, new MultipleFlow());
+                Actions cGame = new CreateAction(numPlayers, client, controller, Name, this, 0, roomId);
+                joins.add(cGame);
+            } else {
+                Actions cGame = new CreateAction(numPlayers, client, controller, Name, this, 0, 0);
+                joins.add(cGame);
+            }
         }
 
     }
@@ -126,35 +128,35 @@ public class RMIServer implements VirtualServer {
     public void executeGame() {
         new Thread(() -> {
             while (true) {
-                for (Integer room : actionsPerGame.keySet()) {
-                    Actions now = actionsPerGame.get(room).getActionsQueue().poll();
-                    if (now != null) {
-                        actionsPerGame.get(room).getExecutorService().submit(() -> {
-                            try {
-                                now.executor();
-                            } catch (RemoteException | NotBoundException e) {
-                                System.out.println("there has been a problem in the execution of actions");
-                            }
-                        });
+                synchronized (actionsPerGame) {
+                    for (Integer room : actionsPerGame.keySet()) {
+                        Actions now = actionsPerGame.get(room).getActionsQueue().poll();
+                        if (now != null) {
+                            actionsPerGame.get(room).getExecutorService().submit(() -> {
+                                try {
+                                    now.executor();
+                                } catch (RemoteException | NotBoundException e) {
+                                    System.out.println("there has been a problem in the execution of actions");
+                                }
+                            });
+                        }
                     }
                 }
             }
         }).start();
     }
 
+
     public void executeStart() {
         new Thread(() -> {
             while (true) {
-                for (Integer room : actionsPerGame.keySet()) {
-                    Actions now = joins.poll();
-                    if (now != null) {
-                        try {
-                            now.executor();
-                        } catch (RemoteException | NotBoundException e) {
-                            System.out.println("there has been a problem in the execution of actions in join");
-                        }
+                Actions now = joins.poll();
+                if (now != null) {
+                    try {
+                        now.executor();
+                    } catch (RemoteException | NotBoundException e) {
+                        System.out.println("there has been a problem in the execution of actions in join");
                     }
-
                 }
             }
         }).start();
