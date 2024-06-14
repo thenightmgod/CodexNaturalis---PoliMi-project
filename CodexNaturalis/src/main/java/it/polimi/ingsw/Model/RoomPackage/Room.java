@@ -177,9 +177,13 @@ public class Room implements Serializable {
             }
             else {
                 Turn.placeCard(c, p);
+                HashMap<String, Integer> points = new HashMap<>();
+                for(Player lazzaro: Players){
+                    points.put(lazzaro.getName(), lazzaro.getPointsCounter());
+                }
                 observerManager.showNewHand(Turn.getName(), Turn.getHand());
                 observerManager.updateField(Turn.getName(), Turn.getPlayerField());
-                observerManager.updatePoints(Turn.getPointsCounter(), Turn.getName());
+                observerManager.updatePoints(points, Turn.getName());
                 observerManager.showFreePositions(Turn.getName(), Turn.getPlayerField().getFreePositions());
                 observerManager.showException("Nothing", "PlaceCardWell", Turn.getName());
             }

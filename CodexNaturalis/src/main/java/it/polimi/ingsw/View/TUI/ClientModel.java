@@ -8,96 +8,94 @@ import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
 public class ClientModel {
 
-    //potrebbe esserci anche la chat ma vedremo
-    private String Name;
-    private LinkedList<Player> Players;
-    private LinkedList<PlayableCard> Hand;
-    private PlayingField Field;
-    private int PointsCounter;
-    private LinkedList<GoalCard> CommonGoals;
-    private LinkedList<Position> FreePosition;
+    private String name;
+    private LinkedList<PlayableCard> hand;
+    private PlayingField field;
+    private HashMap<String, Integer> points;
+    private LinkedList<GoalCard> commonGoals;
+    private LinkedList<Position> freePosition;
 
-    //vedere bene come gestirle
-    private LinkedList<GoldCard> DrawableGoldCards;
-    private LinkedList<ResourceCard> DrawableResourceCards;
+    private LinkedList<GoldCard> drawableGoldCards;
+    private LinkedList<ResourceCard> drawableResourceCards;
 
     public ClientModel(String name){
-        Name = name;
-        Hand = new LinkedList<>();
-        Field = new PlayingField();
-        PointsCounter = 0;
-        CommonGoals = new LinkedList<>();
-        FreePosition = new LinkedList<>();
-        DrawableGoldCards = new LinkedList<>();
-        DrawableResourceCards = new LinkedList<>();
+        this.name = name;
+        this.hand = new LinkedList<>();
+        this.field = new PlayingField();
+        this.points = new HashMap<>();
+        this.commonGoals = new LinkedList<>();
+        this.freePosition = new LinkedList<>();
+        this.drawableGoldCards = new LinkedList<>();
+        this.drawableResourceCards = new LinkedList<>();
     }
 
     public LinkedList<GoldCard> getDrawableGoldCards(){
-        return DrawableGoldCards;
+        return drawableGoldCards;
     }
 
     public void setDrawableGoldCards(LinkedList<GoldCard> drawableGoldCards){
-        DrawableGoldCards = drawableGoldCards;
+        this.drawableGoldCards = drawableGoldCards;
     }
 
     public LinkedList<ResourceCard> getDrawableResourceCards(){
-        return DrawableResourceCards;
+        return drawableResourceCards;
     }
 
     public void setDrawableResourceCards(LinkedList<ResourceCard> drawableResourceCards){
-        DrawableResourceCards = drawableResourceCards;
+        this.drawableResourceCards = drawableResourceCards;
     }
 
     public String getName(){
-        return Name;
+        return name;
     }
 
     public void setName(String Name){
-        this.Name = Name;
+        this.name = Name;
     }
 
-    public void setFreePositions(LinkedList<Position> FreePosition){
-        this.FreePosition = FreePosition;
+    public void setFreePositions(LinkedList<Position> freePosition){
+        this.freePosition = freePosition;
     }
 
     public LinkedList<Position> getFreePositions(){
-        return FreePosition;
+        return freePosition;
     }
 
     public LinkedList<PlayableCard> getHand(){
-        return Hand;
+        return hand;
     }
 
     public void setHand(LinkedList<PlayableCard> Hand){
-        this.Hand = Hand;
+        this.hand = Hand;
     }
 
     public PlayingField getField(){
-        return Field;
+        return field;
     }
 
     public void setField(PlayingField Field){
-        this.Field = Field;
+        this.field = Field;
     }
 
-    public int getPointsCounter(){
-        return PointsCounter;
+    public HashMap<String, Integer> getPointsCounter(){
+        return points;
     }
 
-    public void setPointsCounter(int Points){
-        PointsCounter = Points;
+    public void setPointsCounter(HashMap<String, Integer> points){
+        this.points = points;
     }
 
     public LinkedList<GoalCard> getCommonGoals(){
-        return CommonGoals;
+        return commonGoals;
     }
 
     public void setCommonGoals(LinkedList<GoalCard> commonGoals){
-        this.CommonGoals = commonGoals;
+        this.commonGoals = commonGoals;
     }
 
 }
