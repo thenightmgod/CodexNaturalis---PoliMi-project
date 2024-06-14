@@ -1,5 +1,7 @@
 package it.polimi.ingsw.Main;
 
+import it.polimi.ingsw.View.GUI.GUI;
+import it.polimi.ingsw.View.GUI.GUIApplication;
 import it.polimi.ingsw.View.GameView;
 import it.polimi.ingsw.View.TUI.TUI;
 
@@ -76,7 +78,7 @@ public class MainClient {
                     goon = true;
                 }
                 else if(input == 2){
-                    //startare gui
+                    GUIApplication.main(args);
                     goon = true;
                 }
                 else{

@@ -40,17 +40,14 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
         //andrà runnato this.runClient();
         initializeClient(serverIp);
     }
-
     public void setName(String name) {
         this.name = name;
     }
 
     public void initializeClient(String serverIp) throws RemoteException, NotBoundException {
         final String serverName = "CodexServer";
-
-        registry = LocateRegistry.getRegistry(serverIp, 4446);
+        registry = LocateRegistry.getRegistry(serverIp, 49666);
         this.server = (VirtualServer) registry.lookup(serverName);
-
     }
 
     public String getName(){

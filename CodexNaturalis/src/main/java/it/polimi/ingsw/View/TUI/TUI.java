@@ -237,7 +237,6 @@ public class TUI implements GameView {
         } catch (RemoteException e){
             System.out.println("there's been a problem in the join game");
         }
-
     }
 
 

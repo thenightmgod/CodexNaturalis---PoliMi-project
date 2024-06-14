@@ -32,7 +32,7 @@ public class RMIServer implements VirtualServer {
 
     public RMIServer(MainController controller) throws RemoteException {
         this.controller = controller;
-        port = 4446;
+        port =  49666;
         actionsPerGame = new ConcurrentHashMap<>();
         executeGame();
         executeStart();
