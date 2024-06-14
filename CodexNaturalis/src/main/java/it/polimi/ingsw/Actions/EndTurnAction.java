@@ -12,24 +12,20 @@ import java.util.Map;
 public class EndTurnAction extends Actions{
 
     String mex;
+    int roomId;
 
-    public EndTurnAction(VirtualView view, MainController manager, RMIServer server, String mex){
-        super(view, manager, server);
+    public EndTurnAction(VirtualView view, MainController manager, RMIServer server, String mex, int priority, int roomId){
+        super(view, manager, server, priority);
         this.mex = mex;
+        this.roomId = roomId;
     }
 
     @Override
     public void executor() throws RemoteException {
-        int k = -1;
-        for(Map.Entry<Integer, GameController> entry : getManager().getControllersPerGame().entrySet()){
-            if(entry.getValue().getPlayers().stream().map(Player::getName).toList().contains(getView().getName())){
-                k = entry.getKey();
-            }
-        }
-        if(k != -1){
-            GameController controller = getManager().getControllersPerGame().get(k);
-            controller.changeTurns(mex);
-        }
+
+        GameController controller = getManager().getControllers().get(roomId);
+        controller.changeTurns(mex);
+
     }
 
 

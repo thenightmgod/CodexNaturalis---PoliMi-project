@@ -21,6 +21,7 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Objects;
 
 public class RMIClient extends UnicastRemoteObject implements VirtualView, CommonClient {
 
@@ -241,6 +242,23 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     @Override
     public void leaveGameMessage() throws RemoteException {
         this.view.leaveGameMessage();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        VirtualView that = (VirtualView) obj;
+        try {
+            return Objects.equals(getName(), that.getName());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 

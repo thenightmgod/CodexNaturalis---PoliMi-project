@@ -13,18 +13,19 @@ import java.util.Map;
 public class CreateAction extends Actions{
 
     int i;
-
+    int roomId;
     String name;
 
-    public CreateAction(int i, VirtualView view, MainController manager, String name, RMIServer server){
-        super(view, manager, server);
+    public CreateAction(int i, VirtualView view, MainController manager, String name, RMIServer server, int priority, int roomId){
+        super(view, manager, server, priority);
         this.i = i;
         this.name = name;
+        this.roomId = roomId;
     }
 
     @Override
     public void executor() throws RemoteException {
-        getManager().createGame(name, i, getView());
+        getManager().createGame(name, i, getView(), roomId);
     }
 }
 

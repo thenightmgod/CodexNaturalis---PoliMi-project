@@ -12,25 +12,23 @@ import java.rmi.RemoteException;
 import java.util.Map;
 
 public class DrawCardAction extends Actions {
+
     int i;
     int whichOne;
+    int roomId;
 
-    public DrawCardAction(int i, int whichOne, VirtualView view, MainController manager, RMIServer server){
-        super(view, manager, server);
+    public DrawCardAction(int i, int whichOne, VirtualView view, MainController manager, RMIServer server, int priority, int roomId){
+        super(view, manager, server, priority);
         this.i = i;
         this.whichOne = whichOne;
+        this.roomId = roomId;
     }
 
     @Override
     public void executor() throws RemoteException, NotBoundException {
-        int k = -1;
-        for(Map.Entry<Integer, GameController> entry : getManager().getControllersPerGame().entrySet()){
-            if(entry.getValue().getPlayers().stream().map(Player::getName).toList().contains(getView().getName())){
-                k = entry.getKey();
-            }
-        }
-        if(k != -1){
-            GameController controller = getManager().getControllersPerGame().get(k);
-            controller.drawCard(i, whichOne);}
+
+        GameController controller = getManager().getControllers().get(roomId);
+        controller.drawCard(i, whichOne);
     }
+
 }

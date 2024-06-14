@@ -11,26 +11,23 @@ import java.rmi.RemoteException;
 import java.util.Map;
 
 public class SetStartCardFaceAction extends Actions {
-    boolean face;
 
-    public SetStartCardFaceAction(boolean face, VirtualView view, MainController manager, RMIServer server){
-        super(view, manager, server);
+    boolean face;
+    int roomId;
+
+    public SetStartCardFaceAction(boolean face, VirtualView view, MainController manager, RMIServer server, int priority, int roomId){
+        super(view, manager, server, priority);
         this.face = face;
+        this.roomId = roomId;
     }
 
     @Override
     public void executor() throws RemoteException {
-        int k = -1;
-        for(Map.Entry<Integer, GameController> entry : getManager().getControllersPerGame().entrySet()){
-            if(entry.getValue().getPlayers().stream().map(Player::getName).toList().contains(getView().getName())){
-                k = entry.getKey();
-            }
-        }
-        if(k != -1){
-            GameController controller = getManager().getControllersPerGame().get(k);
+
+            GameController controller = getManager().getControllers().get(roomId);
             FB f = FB.FRONT;
             if(!face) f = FB.BACK;
             controller.placeStartCard(getView().getName(), f);
-        }
     }
+
 }

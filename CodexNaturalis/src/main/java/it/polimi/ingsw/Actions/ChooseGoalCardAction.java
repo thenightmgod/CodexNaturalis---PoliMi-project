@@ -12,24 +12,19 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ChooseGoalCardAction extends Actions{
-    int i;
 
-    public ChooseGoalCardAction(int i, VirtualView view, MainController manager, RMIServer server){
-        super(view, manager, server);
+    int i;
+    int roomId;
+
+    public ChooseGoalCardAction(int i, VirtualView view, MainController manager, RMIServer server, int priority, int roomId){
+        super(view, manager, server, priority);
         this.i = i;
+        this.roomId = roomId;
     }
 
     @Override
     public void executor() throws RemoteException {
-        int k = -1;
-        for(Map.Entry<Integer, GameController> entry : getManager().getControllersPerGame().entrySet()){
-            if(entry.getValue().getPlayers().stream().map(Player::getName).toList().contains(getView().getName())){
-                k = entry.getKey();
-            }
-        }
-        if(k != -1){
-            GameController controller = getManager().getControllersPerGame().get(k);
-            controller.chooseGoalCard(getView().getName(), i);
-        }
+        GameController controller = getManager().getControllers().get(roomId);
+        controller.chooseGoalCard(getView().getName(), i);
     }
 }
