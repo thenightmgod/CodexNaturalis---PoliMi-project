@@ -27,7 +27,7 @@ public interface VirtualView extends Remote {
 
     void showException(String exception, String details) throws RemoteException, NotBoundException;
 
-    void updatePoints(int points, String name) throws RemoteException;
+    void updatePoints(HashMap<String, Integer> points, String name) throws RemoteException;
     // int points, String name
 
     void updateGoals(LinkedList<GoalCard> goals, String name) throws RemoteException;  //mostro due carte goal da scegliere

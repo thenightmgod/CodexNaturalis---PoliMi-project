@@ -1589,7 +1589,7 @@ public class CardsTUI {
         System.out.printf("%-20s %-10s%n", "Player", "Points");
         System.out.println("---------------------------------");
 
-        System.out.printf("%-20s %-10d%n", model.getName(), model.getPointsCounter());
+        model.getPointsCounter().forEach((k, v) -> System.out.printf("%-20s %-10d%n", k, v));
 
 /*        int carlos = controller.getPlayers().size();
         int zero = 0;
@@ -1598,18 +1598,7 @@ public class CardsTUI {
         }*/
     }
 
-    public void plotPlayerResources(ClientModel model) {
-        System.out.printf("%-20s %-10s %-10s %-10s %-10s %-10s %-10s %-10s%n",
-                "Player", "Plant", "Animal", "Fungi", "Insect", "Quill", "Inkwell", "Manuscript");
-        System.out.println("-------------------------------------------------------------------------------");
 
-
- /*       int[] resources = player.getResourceCounter();
-        int[] objects =
-        System.out.printf("%-20s %-10d %-10d %-10d %-10d %-10d %-10d %-10d%n",
-                    player.getName(), resources[0], resources[1], resources[2], resources[3],
-                    objects[0], objects[1], objects[2]);*/
-    }
 
     //-----------------------------------------HAND--------------------------------------------------------------------
 

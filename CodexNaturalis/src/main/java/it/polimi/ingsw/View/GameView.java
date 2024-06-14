@@ -18,7 +18,7 @@ import java.util.LinkedList;
 
 public interface GameView {
 
-     void updatePoints(int points, String name);
+     void updatePoints(HashMap<String, Integer> points, String name);
 
      void updateGoals(LinkedList<GoalCard> goals, String name) throws RemoteException;
 

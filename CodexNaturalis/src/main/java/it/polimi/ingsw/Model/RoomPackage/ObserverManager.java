@@ -40,7 +40,7 @@ public class ObserverManager {
 
     // tutti i metodi della virtual view
 
-    public void updatePoints(int points, String name) {
+    public void updatePoints(HashMap<String, Integer> points, String name) {
         try {
             for (String s : observers.keySet()) {
                 observers.get(s).updatePoints(points, name);
