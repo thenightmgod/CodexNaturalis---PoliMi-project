@@ -46,13 +46,12 @@ public class SocketClientHandler extends Thread implements VirtualView {
     public void run(){
         try {
             this.input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            this.proxy = new ClientProxy(new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream())));
+            this.proxy = new ClientProxy(new PrintWriter(clientSocket.getOutputStream(), true));
 
             String receivedmessage;
             while (true) {
                 try {
-                    while (input.readLine() != null) {
-                        receivedmessage = input.readLine();
+                    while ((receivedmessage = input.readLine()) != null) {
                         Gson gson = new Gson();
                         Message message = gson.fromJson(receivedmessage, Message.class);
                         //gestire le eccezioni di handleCommand in questo metodo

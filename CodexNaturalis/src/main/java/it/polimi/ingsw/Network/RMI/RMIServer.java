@@ -32,7 +32,7 @@ public class RMIServer implements VirtualServer{
 
     public RMIServer(MainController controller) throws RemoteException{
         this.controller = controller;
-        port = 4446;
+        port = 4445;
         actions = new ArrayBlockingQueue<>(100);
         execute();
     }

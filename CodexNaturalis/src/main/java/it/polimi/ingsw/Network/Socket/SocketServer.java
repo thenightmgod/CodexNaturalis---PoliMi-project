@@ -22,7 +22,7 @@ public class SocketServer {
     public static SocketServer createServer(MainController mc){
         SocketServer server = null;
         try{
-            ServerSocket listenSocket = new ServerSocket(4444);
+            ServerSocket listenSocket = new ServerSocket(4445);
             server = new SocketServer(mc,listenSocket);
             System.out.println("Server Socket ready");
             return server;
