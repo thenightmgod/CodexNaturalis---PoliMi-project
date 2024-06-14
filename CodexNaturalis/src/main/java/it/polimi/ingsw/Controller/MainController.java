@@ -4,8 +4,10 @@ import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import it.polimi.ingsw.Model.RoomPackage.ObserverManager;
+import it.polimi.ingsw.Model.RoomPackage.Room;
 import it.polimi.ingsw.Network.VirtualView;
 
+import java.io.EOFException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.*;
@@ -16,47 +18,33 @@ public class MainController {
 
     LinkedList<GameController> controllers;
 
-    HashMap<Integer, GameController> controllersPerGame;
 
     final HashMap<Integer, LinkedList<VirtualView>> viewPerGame;
 
     public MainController() {
         this.controllers = new LinkedList<>();
-        this.controllersPerGame = new HashMap<>();
         this.viewPerGame = new HashMap<>();
         this.isAlive();
+
     }
 
     public LinkedList<GameController> getControllers() {
         return this.controllers;
     }
 
-    public HashMap<Integer, GameController> getControllersPerGame() {
-        return controllersPerGame;
-    }
+    public void createGame(String Name, int numPlayers, VirtualView client, int roomId) throws RemoteException {
 
-    public void createGame(String Name, int numPlayers, VirtualView client) throws RemoteException {
+        GameController Garfield = new GameController(roomId, numPlayers);
+        controllers.add(Garfield);
+        LinkedList<VirtualView> Grian = new LinkedList<>();
+        Grian.add(client);
+        viewPerGame.put(roomId, Grian);
 
-        if (controllers.isEmpty()) {
-            GameController Garfield = new GameController(0, numPlayers);
-            controllers.add(Garfield);
-            controllersPerGame.put(0, Garfield);
-            LinkedList<VirtualView> Grian = new LinkedList<>();
-            Grian.add(client);
-            viewPerGame.put(0, Grian);
-        } else {
-            GameController Garfield = new GameController(controllers.getLast().getRoomId() + 1, numPlayers);
-            controllers.add(Garfield);
-            controllersPerGame.put(controllers.getLast().getRoomId() + 1, Garfield);
-            LinkedList<VirtualView> Grian = new LinkedList<>();
-            Grian.add(client);
-            viewPerGame.put(controllers.getLast().getRoomId(), Grian);
-        }
         controllers.getLast().addPlayer(Name, PlayerColor.RED, client);
-        //fare sbatti per aggiunta client
+
     }
 
-    public void joinGame(String Name, VirtualView client) throws RemoteException, NotBoundException {
+    public void joinGame(String Name, VirtualView client, int roomId) throws RemoteException, NotBoundException {
 
         if (this.controllers.isEmpty()) {
             client.showException("RoomNotExistsException", "Nothing");
@@ -71,21 +59,21 @@ public class MainController {
                     switch (this.controllers.getLast().getHowManyPlayers()) {
                         case 1 -> {
                             this.controllers.getLast().addPlayer(Name, PlayerColor.YELLOW, client);
-                            LinkedList<VirtualView> Grian = this.viewPerGame.get(this.controllers.getLast().getRoomId());
+                            LinkedList<VirtualView> Grian = this.viewPerGame.get(roomId);
                             Grian.add(client);
-                            this.viewPerGame.put(this.controllers.getLast().getRoomId(), Grian);
+                            this.viewPerGame.put(roomId, Grian);
                         }
                         case 2 -> {
                             this.controllers.getLast().addPlayer(Name, PlayerColor.BLUE, client);
-                            LinkedList<VirtualView> Grian = this.viewPerGame.get(this.controllers.getLast().getRoomId());
+                            LinkedList<VirtualView> Grian = this.viewPerGame.get(roomId);
                             Grian.add(client);
-                            this.viewPerGame.put(this.controllers.getLast().getRoomId(), Grian);
+                            this.viewPerGame.put(roomId, Grian);
                         }
                         case 3 -> {
                             this.controllers.getLast().addPlayer(Name, PlayerColor.GREEN, client);
-                            LinkedList<VirtualView> Grian = this.viewPerGame.get(this.controllers.getLast().getRoomId());
+                            LinkedList<VirtualView> Grian = this.viewPerGame.get(roomId);
                             Grian.add(client);
-                            this.viewPerGame.put(this.controllers.getLast().getRoomId(), Grian);
+                            this.viewPerGame.put(roomId, Grian);
                         }
                     }
                 }
@@ -154,6 +142,7 @@ public class MainController {
                             }
 
                             if (problematicView[0] != null) {
+
                                 int roomIdToClose = -1;
                                 for (Map.Entry<Integer, LinkedList<VirtualView>> entry : viewPerGame.entrySet()) {
                                     if (entry.getValue().contains(problematicView[0])) {
@@ -165,13 +154,12 @@ public class MainController {
                                 if (roomIdToClose != -1) {
                                     for (VirtualView v : viewPerGame.get(roomIdToClose)) {
                                         try {
-                                            v.leaveGameMessage();
                                             v.leaveGame();
-                                        } catch (RemoteException ignored) {}
+                                        } catch (RemoteException ignored) {
+
+                                        }
                                     }
-                                    getControllersPerGame().remove(roomIdToClose);
-                                    getControllers().remove(roomIdToClose);
-                                    getViewPerGame().remove(roomIdToClose);
+
                                 }
                             }
                         }
@@ -187,5 +175,15 @@ public class MainController {
         }).start();
     }
 
+    public int getYourRoomId(String name) throws RemoteException {
+        for (int roomId : viewPerGame.keySet()) {
+            for (VirtualView v : viewPerGame.get(roomId)) {
+                if (v.getName().equals(name)) {
+                    return roomId;
+                }
+            }
+        }
+        return -1;
+    }
 
 }

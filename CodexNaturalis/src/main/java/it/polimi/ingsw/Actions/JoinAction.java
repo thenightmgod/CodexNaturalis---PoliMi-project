@@ -12,13 +12,23 @@ import java.rmi.RemoteException;
 import java.util.Map;
 
 public class JoinAction extends Actions {
+
     String name;
-    public JoinAction(VirtualView view, MainController manager, String name, RMIServer server){
-        super( view, manager, server);
+    int roomId;
+
+    public JoinAction(VirtualView view, MainController manager, String name, RMIServer server, int priority, int roomId){
+        super( view, manager, server, priority);
+        this.roomId = roomId;
         this.name = name;
     }
 
-    public void executor() throws RemoteException, NotBoundException {
-        getManager().joinGame(name, getView());
+    public void executor() {
+        new Thread(() -> {
+            try {
+                getManager().joinGame(name, getView(), roomId);
+            } catch (RemoteException | NotBoundException e) {
+                System.out.println("There has been a problem in the execution of join game action");
+            }
+        }).start();
     }
 }

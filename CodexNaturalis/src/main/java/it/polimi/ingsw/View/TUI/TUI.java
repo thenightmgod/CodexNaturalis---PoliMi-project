@@ -28,71 +28,23 @@ import java.util.stream.Collectors;
 public class TUI implements GameView {
 
     boolean connectionType;
-
     CardsTUI cards = new CardsTUI();
-
     Player Turn;
-
     String name = "Carlos O'Connell";
-
     CommonClient client;
-
     int ServerPort= 4444;
-
     String serverIp;
+    InputHandler inputHandler;
 
     public TUI(){}
 
     public void startTui() throws RemoteException {
-        askServerIp();
-        getNickname();
-        this.client = chooseClient(name, serverIp);
+        inputHandler = new InputHandler(this);
+        inputHandler.handleUserInput("askServerIp");
+        inputHandler.handleUserInput("chooseClient");
         joinGame();
     }
 
-    public void askServerIp(){
-        do {
-            try {
-                System.out.println("Insert the server ip");
-                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-                serverIp = reader.readLine();
-            } catch (IOException e) {
-                System.out.println("sbatti");
-            }
-        } while (!serverIp.isEmpty() && !isValidFormat(serverIp));
-    }
-
-    public static boolean isValidFormat(String input) {
-        // Dividi la stringa in base al punto
-        String[] parts = input.split("\\.");
-
-        // Verifica se ci sono esattamente 4 parti
-        if (parts.length != 4) {
-            return false;
-        }
-
-        // Controlla se ogni parte è un numero valido
-        for (String part : parts) {
-            if (!isNumeric(part)) {
-                return false;
-            }
-            // Puoi anche aggiungere un controllo per numeri validi nel range 0-255 se serve
-            int num = Integer.parseInt(part);
-            if (num < 0 || num > 255) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-    private static boolean isNumeric(String str) {
-        try {
-            Integer.parseInt(str);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
 
     @Override
     public void twenty(String name){
@@ -114,7 +66,7 @@ public class TUI implements GameView {
     @Override
     public void leaveGameMessage(){
         System.out.println("Someone left the game, you'll have to start a new one");
-        //gestire il post leave come cazzo crei la partita di nuovo
+        System.exit(0);
     }
 
     @Override
@@ -129,28 +81,6 @@ public class TUI implements GameView {
         cards.plotGoals(client.getClient());
     }
 
-    public void chooseGoalCard() throws RemoteException {
-        boolean goon = false;
-        int i;
-        do {
-            try {
-                System.out.println("write '1' for the card on the top or '2' for the card on the bottom?");
-                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-                i = Integer.parseInt(reader.readLine());
-                if (i == 1 || i == 2) {
-                    client.chooseGoalCard(i, this.client);
-                    goon = true;
-                } else {
-                    System.out.println("You put a number which isn't ");
-                }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (NumberFormatException e){
-                System.out.println("Please enter a number!");
-            }
-        } while (!goon);
-        endTurn("GoalCard");
-    }
 
     @Override
     public void updateHands(LinkedList<PlayableCard> hand, String name) {
@@ -223,31 +153,20 @@ public class TUI implements GameView {
     }
 
     public void setStartCardFace() throws RemoteException {
-        String f;
-        boolean face;
-        boolean goon = false;
-        do {
-            try {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-                System.out.println("Do you want to place your Start Card Front or Back?\n1 --> Front\n0 --> Back");
-                f = reader.readLine();
-                if(f.equals("1") || f.equals("0")){
-                    if(f.equals("1"))
-                        face = true;
-                    else face = false;
-                    client.setStartCardFace(face, client);
-                    goon = true;
-                } else {
-                    System.out.println("You must choose between 1(front) or 0(back)");
-                }
-            } catch(IOException e){
-                System.out.println("There was an error while reading the front or back");
-            }
-        } while(!goon);
+        inputHandler.handleUserInput("setStartCardFace");
+    }
 
-        //da controllare sta situa
-        endTurn("StartCard");
+    public void chooseGoalCard() throws RemoteException {
+        inputHandler.handleUserInput("chooseGoalCard");
+    }
 
+    public void placeCard() throws RemoteException {
+        inputHandler.handleUserInput("placeCard");
+    }
+
+    public void drawCard() throws RemoteException {
+        cards.plotDrawables(client.getClient());
+        inputHandler.handleUserInput("drawCard");
     }
 
 
@@ -304,41 +223,8 @@ public class TUI implements GameView {
         }
     }
 
-    public void createGame() throws RemoteException, NotBoundException {
-
-        System.out.println("CREATING A NEW GAME...");
-        int input = 0;
-
-        boolean goon = false;
-
-        do {
-            try {
-                System.out.println("Enter the number of players");
-
-                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-                input = Integer.parseInt(reader.readLine());
-
-                if (input < 2 || input > 4)
-                    System.out.println("The number of players must be between 2 and 4!");
-                else {
-                    goon = true;
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Please enter a number!");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        } while(!goon);
-
-        //try{
-        if(connectionType){
-
-        } else{
-            client = new RMIClient(name, serverIp);
-            client.setView(this);
-        }
-
-        client.createGame(name, input);// è tutto nullo perchè così è inizializzata la view
+    public void createGame() throws RemoteException {
+        inputHandler.handleUserInput("createGame");
     }
 
     public void startingGame(){
@@ -346,64 +232,14 @@ public class TUI implements GameView {
     }
 
     public void joinGame() throws RemoteException {
-        boolean goon = false;
-        do {
-            try {
-                this.client.joinGame(name);
-                goon = true;
-
-            } catch (RemoteException e){
-                System.out.println("there's been a problem in the join game");
-            }
-        } while(!goon);
-
-    }
-
-    public CommonClient chooseClient(String name, String serverIp){
-        Scanner scan = new Scanner(System.in);
-        String connection;
-
-        System.out.println("Choose the kind of connection you want to play with");
-
-        do{
-            System.out.println("0 --> RMI\n1 --> Socket");
-            connection = scan.next();
-
-            if(connection.equals("0")){
-                try{
-                    client = new RMIClient(name, serverIp);
-                    client.setView(this);
-                    connectionType = false;
-                } catch (RemoteException e) {
-                    System.out.println("an exception occurred while starting the client");
-                } catch (NotBoundException e){
-                    System.out.print("NotBoundException occurred while initializing the client");
-                }
-            }else {
-                /*client = new SocketClient(name);
-                client.setView(this);
-                connectionType = true;*/
-            }
-
-        } while(!connection.equals("0") && !connection.equals("1"));
-
-        return client;
-    }
-
-    public void getNickname(){
-        String nickname = "Carlos";
-
         try {
-            System.out.println("Write your nickname");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            nickname = reader.readLine();
-
-        } catch (IOException e) {
-            System.out.println("There has been an error with the nickname");
+            this.client.joinGame(name);
+        } catch (RemoteException e){
+            System.out.println("there's been a problem in the join game");
         }
 
-        name = nickname;
     }
+
 
     private void isYourTurn() throws RemoteException {
         System.out.println();
@@ -461,83 +297,4 @@ public class TUI implements GameView {
         //far finire tutto
     }
 
-    //            FUNZIONI PER GIOCARE
-
-    private int getIndex() {
-
-        int input = 77;
-
-        boolean goon = false;
-
-        try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            input = Integer.parseInt(reader.readLine());
-
-        } catch (NumberFormatException e) {
-            System.out.println("Please enter a number!");
-        } catch (IOException e) {
-            System.out.println("getindex sbatti!");
-            throw new RuntimeException();
-        }
-
-
-        return input;
-    }
-
-
-    private void placeCard() throws RemoteException {
-        boolean goon = false;
-        int i, x, y;
-        boolean face = false;
-        FB f = FB.FRONT;
-        int fac;
-        do {
-            try {
-                System.out.println("Which card do you want to place?");
-                i = getIndex();
-                System.out.println("In what position do you want to place it?\n Send the X first");
-                x = getIndex();
-                System.out.println("And now the Y");
-                y = getIndex();
-                System.out.println("Do you want to place it Front or Back?\n1 --> Front\n0 --> Back");
-                fac = getIndex();
-                if (fac == 1 || fac == 0) {
-                    if (fac == 0)
-                        f = FB.BACK;
-                    client.placeCard(client, i, x, y, f);
-                    goon = true;
-                }
-                else{
-                    System.out.println("You must choose between 1(front) or 0(back)");
-                }
-            } catch (IOException e){
-                System.out.println("I/O exception in place card");
-            } catch (NumberFormatException e){
-                System.out.println("Please enter a number");
-            }
-        } while (!goon) ;
-
-    }
-
-    public void drawCard() throws RemoteException {
-            boolean goon = false;
-            int whichDeck, whichCard;
-            do {
-                try {
-                    cards.plotDrawables(client.getClient());
-                    System.out.println("From which deck do you want to draw?\n1 --> ResourceDeck\n2 --> GoldDeck");
-                    whichDeck = getIndex();
-                    System.out.println("Which card do you want to pick?");
-                    whichCard = getIndex();
-                    client.drawCard(whichDeck, whichCard, client);
-                        goon = true;
-                } catch (IOException e) {
-                    System.out.println("There has been a i/o problem, try again!");
-                } catch (NumberFormatException e){
-                    System.out.println("Please enter a number!");
-                }
-
-            }while (!goon) ;
-
-        }
 }

@@ -18,26 +18,22 @@ public class PlaceCardAction extends Actions{
     int x;
     int y;
     FB face;
+    int roomId;
 
-    public PlaceCardAction(MainController manager, VirtualView view, int whichInHand, int x, int y, FB face, RMIServer server){
-        super(view, manager, server);
+    public PlaceCardAction(MainController manager, VirtualView view, int whichInHand, int x, int y, FB face, RMIServer server, int priority, int roomId){
+        super(view, manager, server, priority);
         this.whichInHand = whichInHand;
         this.x = x;
         this.y = y;
         this.face = face;
+        this.roomId = roomId;
     }
 
     @Override
     public void executor() throws RemoteException, NotBoundException {
-        int k = -1;
-        for(Map.Entry<Integer, GameController> entry : getManager().getControllersPerGame().entrySet()){
-            if(entry.getValue().getPlayers().stream().map(Player::getName).toList().contains(getView().getName())){
-                k = entry.getKey();
-            }
-        }
-        if(k != -1){
-            GameController controller = getManager().getControllersPerGame().get(k);
-            controller.placeCard(whichInHand, x, y, face);
-        }
+
+        GameController controller = getManager().getControllers().get(roomId);
+        controller.placeCard(whichInHand, x, y, face);
+
     }
 }
