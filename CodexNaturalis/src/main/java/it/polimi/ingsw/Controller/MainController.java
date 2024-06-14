@@ -113,53 +113,27 @@ public class MainController {
     }
 
     public void isAlive() {
-
         new Thread(() -> {
-
-            final VirtualView[] problematicView = {null};
             Timer timer = new Timer("Timer");
-            TimerTask task = new TimerTask(){
-
+            TimerTask task = new TimerTask() {
                 public void run() {
                     synchronized (viewPerGame) {
-                        try {
-                            for (int roomId : viewPerGame.keySet()) {
-                                for (VirtualView v : viewPerGame.get(roomId)) {
-                                    v.isAlive();
-                                }
-                            }
-                        } catch (RemoteException e) {
-                            outerLoop:
-                            for (Map.Entry<Integer, LinkedList<VirtualView>> entry : viewPerGame.entrySet()) {
-                                for (VirtualView v : entry.getValue()) {
-                                    try {
-                                        v.isAlive();
-                                    } catch (RemoteException re) {
-                                        problematicView[0] = v;
-                                        break outerLoop;
-                                    }
-                                }
-                            }
-
-                            if (problematicView[0] != null) {
-
-                                int roomIdToClose = -1;
-                                for (Map.Entry<Integer, LinkedList<VirtualView>> entry : viewPerGame.entrySet()) {
-                                    if (entry.getValue().contains(problematicView[0])) {
-                                        roomIdToClose = entry.getKey();
-                                        break;
-                                    }
-                                }
-
-                                if (roomIdToClose != -1) {
-                                    for (VirtualView v : viewPerGame.get(roomIdToClose)) {
+                        for (Map.Entry<Integer, LinkedList<VirtualView>> entry : viewPerGame.entrySet()) {
+                            LinkedList<VirtualView> views = entry.getValue();
+                            Iterator<VirtualView> iterator = views.iterator();
+                            while (iterator.hasNext()) {
+                                VirtualView view = iterator.next();
+                                try {
+                                    view.isAlive();
+                                } catch (RemoteException e) {
+                                    iterator.remove();
+                                    for (VirtualView otherView : views) {
                                         try {
-                                            v.leaveGame();
-                                        } catch (RemoteException ignored) {
-
+                                            otherView.leaveGame();
+                                        } catch (RemoteException leaveGameException) {
+                                            System.out.println("Error while trying to remove client: ");
                                         }
                                     }
-
                                 }
                             }
                         }
@@ -169,9 +143,7 @@ public class MainController {
 
             long delay = 5000L;
             long period = 10000L;
-
             timer.scheduleAtFixedRate(task, delay, period);
-
         }).start();
     }
 

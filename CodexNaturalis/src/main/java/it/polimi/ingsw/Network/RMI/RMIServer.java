@@ -80,7 +80,6 @@ public class RMIServer implements VirtualServer {
                 joins.add(cGame);
             }
         }
-
     }
 
     @Override
