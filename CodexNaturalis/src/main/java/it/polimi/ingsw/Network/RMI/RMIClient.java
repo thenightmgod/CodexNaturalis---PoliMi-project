@@ -19,9 +19,9 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Objects;
-
 public class RMIClient extends UnicastRemoteObject implements VirtualView, CommonClient {
 
     private String name;
