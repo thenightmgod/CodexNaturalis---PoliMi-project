@@ -25,3 +25,28 @@
     -fx-fit-height: 100%;
     -fx-margin: 10px;
 }
+.progress-bar {
+    -fx-accent: linear-gradient(to right, #4facfe, #00f2fe);
+    -fx-background-color: transparent;
+    -fx-border-color: #4facfe;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-padding: 5px;
+}
+
+.progress-bar .track {
+    -fx-background-color: transparent;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+
+.progress-bar .bar {
+    -fx-background-color: linear-gradient(to right, #4facfe, #00f2fe);
+    -fx-background-radius: 10px;
+}
+
+.progress-label {
+    -fx-text-fill: black;
+    -fx-font-size: 18px; /* Dimensione del font */
+    -fx-font-family: "Arial"; /* Famiglia del font */
+}
