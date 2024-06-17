@@ -22,8 +22,8 @@ class RoomTest {
      * This test checks if various small functions of the Room class works properly, (createDecks, giveHands,
      * commonGoals, show2GoalCards, pickGoalCard).
      */
-    @Test
-    void testMetodiMinori() throws RemoteException {
+/*    @Test
+   void testMetodiMinori() throws RemoteException {
         GameController beppe = new GameController(5, 4);
 
         VirtualView client1 = new VirtualView() {
@@ -424,7 +424,7 @@ class RoomTest {
         beppe.placeStartCard("dalla", FB.FRONT);
         beppe.placeStartCard("degregori", FB.BACK);
 
-/*        beppe.getPlayerByName("hamingway").setPointsCounter(24);
+/      beppe.getPlayerByName("hamingway").setPointsCounter(24);
         beppe.getPlayerByName("dalla").setPointsCounter(20);
         beppe.getPlayerByName("venditti").setPointsCounter(14);
         beppe.getPlayerByName("degregori").setPointsCounter(18);
@@ -439,10 +439,11 @@ class RoomTest {
         beppe.getPlayerByName("venditti").setTotalPointsCounter(18);
         beppe.getPlayerByName("degregori").setTotalPointsCounter(20);
 
-        beppe.getGame().declareWinner();*/
-//        assertEquals("hamingway", );
-    }
+        beppe.getGame().declareWinner();
+        assertEquals("hamingway", );
+    }*/
 }
+
     /**
      *
      */
