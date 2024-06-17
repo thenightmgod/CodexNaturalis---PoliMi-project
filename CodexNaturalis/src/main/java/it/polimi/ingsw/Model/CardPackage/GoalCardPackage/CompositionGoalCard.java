@@ -27,8 +27,8 @@ public class CompositionGoalCard extends GoalCard {
 
     /**
      * Constructs a new CompositionGoalCard, with its id, points and Composition.
-     * @param id
-     * @param points
+     * @param id The specific id of the CompositionGoalCard
+     * @param points The specific points of the CompositionGoalCard
      * @param c The specific composition between the three possible
      * @param color the specific color of the CompositionGoalCard
      */
@@ -38,6 +38,10 @@ public class CompositionGoalCard extends GoalCard {
         this.color=color;
     }
 
+    /**
+     * Get the specific Color
+     * @return The specific Color
+     */
     public CardColor getColor(){
         return color;
     }
@@ -60,7 +64,7 @@ public class CompositionGoalCard extends GoalCard {
      *          we need to calculate
      * @return the total Goalpoints of the Player
      */
-    //non posso realizzarla fino a quando non so come funziona precisamente player e il suo campo da gioco
+
     public int pointsCalc(Player p, CardColor c){
         return switch (comp){
             case L -> pointsL(p);

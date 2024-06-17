@@ -20,8 +20,6 @@ import java.util.LinkedList;
  */
 public class GoldCard extends ResourceCard implements Serializable {
     private final int[] requirements;
-    //requirements è un array da 4 posizioni, in posizione 0 PLANT, posizione 1 ANIMAL, posizione 2 FUNGI, pos.3 INSECT
-    //se per posizionare la carta mi servono 3 funghi e una farfalla, avrò un 3 in pos.2 e un 1 in posizione 3
     private final PointsCondition PointsC;
 
 
@@ -113,8 +111,6 @@ public class GoldCard extends ResourceCard implements Serializable {
      * @param player the player who places the card and whose points we calculate
      * @return the total points the player makes after placing the card
      */
-    //IO CONSIDERO CHE QUESTO POINTSCALC VIENE CHIAMATO QUANDO LA CARTA IN QUESTIONE
-    //E' GIA' STATA POSIZIONATA E PERCIO' CONTO COME PUNTI ANCHE GLI OGGETTI CONTENUTI IN LEI
     public int PointsCalc(Player player, Position pos) {
         int PointsTot=0;
         switch(PointsC){
@@ -127,6 +123,15 @@ public class GoldCard extends ResourceCard implements Serializable {
         return PointsTot;
     }
 
+    /**
+     * For each covered corner in the playing field, if the field contains the position derived from the corner,
+     * the total points are increased by 2.
+     *
+     * @param player The player whose points are being calculated.
+     * @param pos The position on the playing field being checked.
+     * @param PointsTot The initial total points.
+     * @return The updated total points.
+     */
     int PointsCorner(Player player, Position pos, int PointsTot){
         PlayingField field = player.getPlayerField();
         for(Orientation Orien : Orientation.values()) {
@@ -136,7 +141,17 @@ public class GoldCard extends ResourceCard implements Serializable {
         return PointsTot;
     }
 
-
+    /**
+     * * Returns a string representation of the GoldCard object.
+     *  * This representation includes the following information:
+     *  * - The ID of the GoldCard.
+     *  * - The color of the GoldCard.
+     *  * - The number of points associated with the GoldCard.
+     *  * - The array of resources at the back of the GoldCard.
+     *  * - The resources present at each corner of the GoldCard, along with their orientations.
+     *  *
+     *  * @return A string containing the ID, color, points, back resources, and corner resources of the GoldCard.
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -155,17 +170,7 @@ public class GoldCard extends ResourceCard implements Serializable {
         return sb.toString();
     }
 
-    /**
-     * * Returns a string representation of the GoldCard object.
-     *  * This representation includes the following information:
-     *  * - The ID of the GoldCard.
-     *  * - The color of the GoldCard.
-     *  * - The number of points associated with the GoldCard.
-     *  * - The array of resources at the back of the GoldCard.
-     *  * - The resources present at each corner of the GoldCard, along with their orientations.
-     *  *
-     *  * @return A string containing the ID, color, points, back resources, and corner resources of the GoldCard.
-     */
+
 
 
 }

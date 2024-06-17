@@ -37,6 +37,11 @@ public class StartCard extends PlayableCard implements Serializable {
         this.BackCorners.add(new Corner(BackCorners.get(3).getRes(), BackCorners.get(3).getOrientation()));
     }
 
+    /**
+     * Returns the specified corner based on the provided orientation.
+     * @param Orient the orientation
+     * @return the corner based on the orientation
+     */
     public Corner getBackCorner(Orientation Orient){
         return switch(Orient){
             case HR -> this.BackCorners.get(0);
