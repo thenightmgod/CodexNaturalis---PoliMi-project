@@ -53,7 +53,20 @@ public class InputHandler extends Thread{
                 askServerIp();
             case "setName" ->
                 setName();
+            case "anotherGame" ->
+                anotherGame();
         }
+    }
+
+    private void anotherGame() throws RemoteException {
+        String carlos;
+        do {
+            System.out.println("Do you want to play another game?\n1 --> yes\n2 --> no");
+            carlos = scanner.next();
+        } while (!carlos.equals("1") && !carlos.equals("2"));
+        if (carlos.equals("1"))
+            this.tui.joinGame();
+        else System.exit(0);
     }
 
     private void setName() throws RemoteException {
