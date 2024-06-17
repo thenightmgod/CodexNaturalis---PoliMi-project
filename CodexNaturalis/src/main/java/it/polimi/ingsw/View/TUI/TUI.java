@@ -59,7 +59,7 @@ public class TUI implements GameView {
     }
 
     @Override
-    public void updatePoints(int points, String name){
+    public void updatePoints(HashMap<String, Integer> points, String name){
         client.getClient().setPointsCounter(points);
     }
 
@@ -216,11 +216,15 @@ public class TUI implements GameView {
             }
             case "NameAlreadyTakenException" -> {
                 System.out.println("Name already taken! Please try again!");
-                joinGame();
+                setName();
             }
             case "Exception" ->
                     System.out.println("There has been an error");
         }
+    }
+
+    public void setName() throws RemoteException {
+        inputHandler.handleUserInput("setName");
     }
 
     public void createGame() throws RemoteException {

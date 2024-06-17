@@ -66,14 +66,6 @@ public class Room implements Serializable {
         //i giocatori vanno creati passando nome e colore da controller arrivano già in ordine
     }
 
-    public LinkedList<Player> getPlayers(){
-        return Players;
-    }
-
-    public void setTurn(Player player){
-        this.Turn = player;
-    }
-
     public Player getTurn(){
         return Turn;
     }
@@ -96,11 +88,6 @@ public class Room implements Serializable {
             if(Turn.getPointsCounter()>=1)
                 observerManager.twenty(Turn.getName());
     }
-
-    public boolean getTwentyFlag() {
-        return this.Twenty;
-    }
-
     /**
      * Sets the last round flag if the twenty points threshold is reached and it's the first player's turn.
      */
@@ -122,7 +109,6 @@ public class Room implements Serializable {
         for(Player p: Players){
             p.addGoalCard(CommonGoals.get(0), "common");
             p.addGoalCard(CommonGoals.get(1), "common");
-            observerManager.showCommonGoals(p.getName(), CommonGoals);
         }
     }
 
@@ -134,33 +120,11 @@ public class Room implements Serializable {
         return RoomId;
     }
 
-    /**
-     * Retrieves the last round flag.
-     * @return {@code true} if it's the last round, {@code false} otherwise.
-     */
-    public boolean getLastRound() {
-        return LastRound;
-    }
-
-    /**
-     * Retrieves the first round flag.
-     * @return {@code true} if it's the first round, {@code false} otherwise.
-     */
-    public boolean getFirstRound() {
-        return FirstRound;
-    }
 
     public ObserverManager getObserverManager(){
         return observerManager;
     }
 
-    /**
-     * Retrieves the list of players.
-     * @return The list of players in the room.
-     */
-    public LinkedList<Player> getTurns(){  //controller gestisce i turni e passa alla room il turno corrente
-        return this.Players;
-    }
 
     /**
      * Places a card on the playing field for the specified player at the given position.
@@ -177,9 +141,13 @@ public class Room implements Serializable {
             }
             else {
                 Turn.placeCard(c, p);
+                HashMap<String, Integer> points = new HashMap<>();
+                for(Player lazzaro: Players){
+                    points.put(lazzaro.getName(), lazzaro.getPointsCounter());
+                }
                 observerManager.showNewHand(Turn.getName(), Turn.getHand());
                 observerManager.updateField(Turn.getName(), Turn.getPlayerField());
-                observerManager.updatePoints(Turn.getPointsCounter(), Turn.getName());
+                observerManager.updatePoints(points, Turn.getName());
                 observerManager.showFreePositions(Turn.getName(), Turn.getPlayerField().getFreePositions());
                 observerManager.showException("Nothing", "PlaceCardWell", Turn.getName());
             }
