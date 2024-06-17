@@ -9,25 +9,34 @@ import it.polimi.ingsw.Model.PlayerPackage.Player;
  */
 
 public abstract class GoalCard extends Card {
+
     private final int points;
 
     /**
-     * Constructs a new GoalCard object with the id and points
-     *
-     *  @param id
-     * @param p
+     * Constructor of the GoalCard
+     * @param id the id of the GoalCard
+     * @param p the points of the GoalCard
      */
-
-
     public GoalCard(int id, int p) {
         super(id);
         this.points=p;
     }
 
+    /**
+     * Calculate the points of the GoalCard
+     * @param player the player to calculate the points
+     * @param c the color of the card
+     * @return the points of the GoalCard
+     */
     public int pointsCalc(Player player, CardColor c){
         return 0;
     }
 
+    /**
+     * Calculate the points of the GoalCard
+     * @param p the player to calculate the points
+     * @return the points of the GoalCard
+     */
     public int pointsCalc(Player p){
         return 0;
     }

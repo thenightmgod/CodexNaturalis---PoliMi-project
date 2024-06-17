@@ -81,12 +81,8 @@ public class ResourceCard extends PlayableCard implements Serializable {
         sb.append("BackRes: ").append(getBackRes()).append("\n");
         sb.append("Corners:").append("\n");
 
-        // Iterates over each Orientation value
         for (Orientation orientation : Orientation.values()) {
-            // Gets the corner for the current orientation
             Corner corner = getCorner(orientation);
-
-            // Adds the corner information to the output string
             sb.append(orientation).append(": ").append(corner.getRes()).append("\n");
         }
         return sb.toString();

@@ -1,14 +1,22 @@
 package it.polimi.ingsw.Model.CardPackage.GoalCardPackage;
 
-import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.CardColor;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.CornerPackage.Objects;
 
+/**
+ * Represents an ObjectsGoalCard in the game.
+ * An ObjectsGoalCard is a type of GoalCard that has a specific set of objects.
+ */
 public class ObjectsGoalCard extends GoalCard {
     private final int[] obj = new int[3];
     // QUILL, INKWELL, MANUSCRIPT
 
-
+    /**
+     * Constructs an ObjectsGoalCard with the specified id, points, and objects.
+     * @param id The id of the card.
+     * @param points The points of the card.
+     * @param Obj The objects of the card.
+     */
     public ObjectsGoalCard(int id, int points, int[] Obj) {
         super(id, points);
         for (int i = 0; i < 3; i++) {
@@ -16,10 +24,19 @@ public class ObjectsGoalCard extends GoalCard {
         }
     }
 
+    /**
+     * Returns the objects of the card.
+     * @return The objects of the card.
+     */
     public int[] getObj() {
         return obj;
     }
 
+    /**
+     * Calculates the points for the specified player based on the objects of the card.
+     * @param player The player to calculate the points for.
+     * @return The calculated points.
+     */
     public int pointsCalc(Player player) {
         int points = 0;
         switch(getPoints()){

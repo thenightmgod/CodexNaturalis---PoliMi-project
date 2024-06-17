@@ -15,7 +15,6 @@ import it.polimi.ingsw.Model.CornerPackage.CardResDeserializer;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 
 import java.io.*;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
@@ -41,12 +40,10 @@ public class Deck implements Serializable {
                 .registerTypeAdapter(CardRes.class, new CardResDeserializer())
                 .create();
         try {
-            // Get the file as a resource
             InputStream inputStream = getClass().getResourceAsStream(json);
             if (inputStream == null) {
                 throw new FileNotFoundException("Resource not found: " + json);
             }
-            // Create a JsonReader from the InputStream
             JsonReader reader = new JsonReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
             LinkedList<Objects> list = gson.fromJson(reader, LinkedList.class);
 
@@ -145,6 +142,5 @@ public class Deck implements Serializable {
         cards.remove(c);
         return c;
     }
-    //si pesca attraverso il controller così da non dover gestire differenze tra Resource e Gold deck
 }
 

@@ -292,7 +292,7 @@ public class GameController {
     }
 
     /**
-     * Returns a player by their name.
+     * Returns a player by his name.
      *
      * @param name the name of the player
      * @return the player with the specified name, or null if not found
