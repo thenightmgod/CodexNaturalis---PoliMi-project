@@ -41,6 +41,7 @@ public class GameController extends GUIController {
     protected Stage stage;
     protected CommonClient client;
     protected Parent root;
+    boolean StartCardOk;
 
     @FXML
     private Stage popupStage;
@@ -242,14 +243,10 @@ public class GameController extends GUIController {
     public void waitYourTurn() {
         if (leftGoalCardImageView != null) {
             disablePopUpScene();
-        }
-        }else if() {
-
-
-        }  {
-        else
-        disableCardInteractions();
-        chooseSideLabel.setText("It's not your turn");
+        } else {
+                disableCardInteractions();
+                chooseSideLabel.setText("It's not your turn");
+            }
     }
 
     public void showGameLayout() {
@@ -458,6 +455,7 @@ public class GameController extends GUIController {
                 }
             }
         }
+        StartCardOk=true;
         this.gui.endTurn("StartCard");
     }
 

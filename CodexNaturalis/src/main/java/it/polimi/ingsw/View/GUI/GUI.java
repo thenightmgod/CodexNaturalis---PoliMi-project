@@ -18,6 +18,7 @@ import javafx.application.Platform;
 import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 public class GUI implements GameView {
@@ -66,8 +67,7 @@ public class GUI implements GameView {
 
 
     @Override
-    public void updatePoints(int points, String name) {
-
+    public void updatePoints(HashMap<String, Integer> points, String name) {
     }
 
     @Override
