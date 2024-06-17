@@ -24,7 +24,9 @@ public class GUIApplication extends Application {
 
         try {
             //----------STARTA IL LOGIN CONTROLLER-----------------------
-            File fxmlFile = new File("/Users/caterinagerini/Desktop/CodexNaturalis/CodexNaturalis/src/main/Resources/view/login.fxml");
+            String userDir = System.getProperty("user.dir");
+
+            File fxmlFile = new File(userDir, "/src/main/resources/view/login.fxml");
             URL fxmlUrl = fxmlFile.toURI().toURL();
             FXMLLoader loader= new FXMLLoader();
             loader.setLocation(fxmlUrl);
