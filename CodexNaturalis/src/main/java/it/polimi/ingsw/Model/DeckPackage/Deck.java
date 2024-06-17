@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Model.DeckPackage;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.Model.CardPackage.Card;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.CompositionGoalCard;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.ObjectsGoalCard;
@@ -13,8 +14,9 @@ import it.polimi.ingsw.Model.CornerPackage.CardRes;
 import it.polimi.ingsw.Model.CornerPackage.CardResDeserializer;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 
-import java.io.FileReader;
-import java.io.Serializable;
+import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 
@@ -33,13 +35,20 @@ public class Deck implements Serializable {
      */
 
     public Deck(String type) {
-        String json = "src/main/Resources/"+type+"Card.json";
+        String json = "/"+type+"Card.json";
         cards = new LinkedList<>();
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(CardRes.class, new CardResDeserializer())
                 .create();
         try {
-            LinkedList<Objects> list = gson.fromJson(new FileReader(json), LinkedList.class);
+            // Get the file as a resource
+            InputStream inputStream = getClass().getResourceAsStream(json);
+            if (inputStream == null) {
+                throw new FileNotFoundException("Resource not found: " + json);
+            }
+            // Create a JsonReader from the InputStream
+            JsonReader reader = new JsonReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+            LinkedList<Objects> list = gson.fromJson(reader, LinkedList.class);
 
             for (Object card : list){
                 switch(type){
@@ -61,12 +70,12 @@ public class Deck implements Serializable {
                     case "ResourceGoal":
                         cards.add((gson.fromJson(card.toString(), ResourceGoalCard.class)));
                         break;
-
                 }
             }
 
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        catch (Exception ignored) {}
     }
     /**
      * Retrieves the list of cards in the deck.
