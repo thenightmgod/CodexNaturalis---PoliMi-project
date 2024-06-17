@@ -37,30 +37,34 @@ public class InputHandler extends Thread{
 
     public void handleUserInput(String whatToDo) throws RemoteException {
         switch(whatToDo){
-            case "createGame":
+            case "createGame" ->
                 createGame();
-                break;
-            case "placeCard":
+            case "placeCard" ->
                 placeCard();
-                break;
-            case "chooseGoalCard":
+            case "chooseGoalCard" ->
                 chooseGoalCard();
-                break;
-            case "setStartCardFace":
+            case "setStartCardFace" ->
                 setStartCardFace();
-                break;
-            case "drawCard":
+            case "drawCard" ->
                 drawCard();
-                break;
-            case "chooseClient":
+            case "chooseClient"->
                 chooseClient();
-                break;
-            case "askServerIp":
+            case "askServerIp" ->
                 askServerIp();
-                break;
-            default:
-                break;
+            case "setName" ->
+                setName();
         }
+    }
+
+    private void setName() throws RemoteException {
+        getNickname();
+        if (!(connectionType)) {
+            ((RMIClient) this.tui.client ).setName(this.tui.name);
+        }
+        else{
+            //fare socket
+        }
+        this.tui.joinGame();
     }
 
     private void createGame(){
