@@ -8,6 +8,7 @@ import it.polimi.ingsw.View.TUI.ClientModel;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.LinkedList;
+import it.polimi.ingsw.Network.RMI.VirtualServer;
 
 public interface CommonClient {
 
@@ -33,4 +34,6 @@ public interface CommonClient {
     ClientModel getClient();
 
     void endTurn(String name, String mex) throws RemoteException;
+
+     VirtualServer getServer();
 }

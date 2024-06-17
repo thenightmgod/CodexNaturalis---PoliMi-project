@@ -1,7 +1,9 @@
 package it.polimi.ingsw.View.GUI.GUIController;
 
+import com.sun.scenario.effect.impl.sw.java.JSWBlend_BLUEPeer;
 import it.polimi.ingsw.Network.CommonClient;
 import it.polimi.ingsw.Network.RMI.RMIClient;
+import it.polimi.ingsw.Network.RMI.VirtualServer;
 import it.polimi.ingsw.View.GUI.GUI;
 import it.polimi.ingsw.View.GUI.GUIController.GUIController;
 import javafx.animation.KeyFrame;
@@ -9,7 +11,7 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -20,6 +22,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.shape.Rectangle;
@@ -32,48 +35,45 @@ import java.net.URL;
 import java.rmi.AccessException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class LoginController extends GUIController {
 
-    protected CommonClient client;
+    protected  CommonClient client;
     protected Parent root;
-    protected Stage stage;
-    protected ProtocolController pc;
-    protected GUI gui;
+    protected  Stage stage;
+   // protected ProtocolController pc;
+    protected  GUI gui;
     boolean serverIpEntered=false;
     protected String serverIp;
     protected String username;
     protected int number;
     protected ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-
     @FXML
-    private Rectangle myRectangle;
-
+    private ProgressBar myProgressBar;
     @FXML
     private Label myLabel2;
-
     @FXML
     private AnchorPane scenePane;
-
     @FXML
     private TextField myText;
     @FXML
     private Label myLabel;
-
     @FXML
     private ImageView myImage;
-
     @FXML
     private Button myButton;
-
     @FXML
     private Button myButton1;
     @FXML
     private Button myButton2;
     @FXML
     private Button myButton3;
+    @FXML
+    private Button myNicknameButton;
 
     @FXML
     private void initialize() {
@@ -85,7 +85,10 @@ public class LoginController extends GUIController {
         myButton3.setVisible(false);
         myButton3.setDisable(true);
         myLabel2.setVisible(false);
-        myRectangle.setVisible(false);
+        myProgressBar.setDisable(true);
+        myProgressBar.setVisible(false);
+        myNicknameButton.setVisible(false);
+        myNicknameButton.setDisable(true);
     }
 
     @FXML
@@ -110,7 +113,7 @@ public class LoginController extends GUIController {
                 showAlert("Error", "Username cannot be empty.");
                 return;
             }
-            this.gui.setName(username);
+            gui.setName(username);
             myText.setVisible(false);
             myButton.setVisible(false);
             animateLabelText(myLabel,"Choose your protocol");
@@ -118,24 +121,38 @@ public class LoginController extends GUIController {
             myButton1.setDisable(false);
             myButton2.setVisible(true);
             myButton2.setDisable(false);
-            //stage = (Stage) scenePane.getScene().getWindow();
-            //stage.close();
-
-            //carico il file Protocol
-           /* File fxmlFile = new File("/Users/caterinagerini/Desktop/CodexNaturalis/CodexNaturalis/src/main/Resources/view/Protocol.fxml");
-            URL fxmlUrl = fxmlFile.toURI().toURL();
-            FXMLLoader loader = new FXMLLoader(fxmlUrl);
-            Parent root = loader.load();
-            pc = loader.getController();
-            pc.setRoot(root);
-            pc.setScene(gui, stage);
-
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.setTitle("MyCodexProtocol");
-            pc.start(stage, username, serverIp);*/
         }
     }
+    public void insertNicknameAgain() {
+        myLabel.setVisible(true);
+        myNicknameButton.setDisable(false);
+        myNicknameButton.setVisible(true);
+        myText.clear();
+        myText.setVisible(true);
+        myText.setDisable(false);
+        animateLabelText(myLabel,"Please insert your nickname");
+    }
+
+    @FXML
+    public void submitNickname(ActionEvent event) throws NotBoundException, RemoteException {
+        username= myText.getText();
+        myText.clear();
+        if (username == null || username.isEmpty()) {
+            showAlert("Error", "Username cannot be empty.");
+            return;
+        }
+        gui.setName(username);
+        client=new RMIClient(username,serverIp);
+        gui.setClient(client);
+        joinGame();
+        myNicknameButton.setVisible(false);
+        myNicknameButton.setDisable(true);
+        myText.setVisible(false);
+        myText.setDisable(true);
+        myLabel.setVisible(false);
+        //if(VirtualServer server = client.getServer())
+    }
+
 
     @FXML
     public void startRMI(ActionEvent event)  {
@@ -167,16 +184,14 @@ public class LoginController extends GUIController {
         Platform.runLater(() -> {
             switch(exception) {
                 case "NameAlreadyTakenException" -> {
-                    //da gestire diversamente
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Name Already Taken");
                     alert.setHeaderText("Oops, this name is already taken!");
                     alert.setContentText("Please choose another name.");
                     alert.showAndWait();
+                    insertNicknameAgain();
                 }
                 case "RoomNotExistsException" -> {
-                    // Gestione eccezione RoomNotExistsException
-                    // Esempio:
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Information");
                     alert.setHeaderText("Welcome, you're the first!");
@@ -185,7 +200,6 @@ public class LoginController extends GUIController {
                     createGame();
                     }
                 default -> {
-                    // Gestione di altre eccezioni se necessario
                 }
             }
         });
@@ -219,7 +233,7 @@ public class LoginController extends GUIController {
                     goon=true;
                 }
             } catch (NumberFormatException e) {
-                // Gestisci il caso in cui il testo non possa essere convertito in intero
+                // Gestisco il caso in cui il testo non possa essere convertito in intero
                 System.out.println("Impossibile convertire il testo in numero intero: " + numofPlayers);
             }
         } while(!goon);
@@ -232,6 +246,8 @@ public class LoginController extends GUIController {
     }
 
     public void showWaitingScene() {
+        myNicknameButton.setVisible(false);
+        myNicknameButton.setDisable(true);
         myLabel.setVisible(false);
         myLabel.setDisable(true);
 
@@ -240,13 +256,33 @@ public class LoginController extends GUIController {
 
         myButton3.setVisible(false);
         myButton3.setDisable(true);
-        myRectangle.setVisible(true);
         myLabel2.setVisible(true);
+        myProgressBar.setVisible(true);
+        myProgressBar.setDisable(false);
+        updateProgressBarRandomly(myProgressBar);
+
         animateLabelText(myLabel2, "Waiting for other participants...");
 
-        String newImagePath = "/Users/caterinagerini/Desktop/CodexNaturalis/CodexNaturalis/src/main/Resources/view/pic6069793.jpg";
+
+        String newImagePath = "/Users/caterinagerini/Desktop/CodexNaturalis/CodexNaturalis/src/main/Resources/view/MyCodexNaturalisPhotos/pic6069793.jpg";
         Image newImage = loadImage(newImagePath);
         myImage.setImage(newImage);
+    }
+
+    public void showGameScene() throws IOException {
+        File fxmlFile = new File("/Users/caterinagerini/Desktop/CodexNaturalis/CodexNaturalis/src/main/Resources/view/game.fxml");
+        URL fxmlUrl = fxmlFile.toURI().toURL();
+        FXMLLoader loader= new FXMLLoader();
+        loader.setLocation(fxmlUrl);
+        Parent root= loader.load();
+
+        Scene scene = new Scene(root, 1250,650);
+        GameController gameController=loader.getController();
+        gameController.setClient(client);
+        gameController.setRoot(root);
+        gameController.setScene(gui,stage);
+        gui.setGameController(gameController);
+        stage.setScene(scene);
     }
     private Image loadImage(String imagePath) {
         try {
@@ -266,7 +302,7 @@ public class LoginController extends GUIController {
         System.out.println("Stai startando un socketserver");
 
     }
-    public static boolean isValidFormat(String input) {
+    public boolean isValidFormat(String input) {
 
         String[] parts = input.split("\\.");
 
@@ -285,7 +321,7 @@ public class LoginController extends GUIController {
         }
         return true;
     }
-    private static boolean isNumeric(String str) {
+    private boolean isNumeric(String str) {
         try {
             Integer.parseInt(str);
             return true;
@@ -364,6 +400,21 @@ public class LoginController extends GUIController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+    private void updateProgressBarRandomly(ProgressBar bar) {
+        Timeline timeline = new Timeline();
+        Random random = new Random();
+
+        for (int i = 0; i <= 100; i++) {
+            double progress = i / 100.0;
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(50 * i), event -> {
+                bar.setProgress(progress);
+            });
+            timeline.getKeyFrames().add(keyFrame);
+        }
+
+        timeline.setCycleCount(Timeline.INDEFINITE); // Ripeti indefinitamente
+        timeline.play();
     }
 }
 

@@ -2,7 +2,6 @@ package it.polimi.ingsw.View.GUI;
 
 
 import it.polimi.ingsw.View.GUI.GUIController.LoginController;
-import it.polimi.ingsw.View.GUI.GUIController.ProtocolController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,7 +17,7 @@ import java.net.URL;
  */
 
 public class GUIApplication extends Application {
-    private static String[] args;
+    private String[] args;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -49,7 +48,6 @@ public class GUIApplication extends Application {
     }
 
     public static void main(String[] args) {
-        GUIApplication.args=args;
         launch(args);
     }
 
