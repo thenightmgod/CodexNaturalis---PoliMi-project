@@ -19,7 +19,6 @@ import static it.polimi.ingsw.Model.CornerPackage.Resources.INSECT_KINGDOM;
  * Represents a player in the game. Each player has a name, a color, and keeps track of their points, resources, objects, hand, player goal, and playing field.
  */
 public class Player implements Serializable {
-    //bisogna fare override della equals
     private final String Name;
     private final PlayerColor Color;
     private int PointsCounter;
@@ -76,7 +75,6 @@ public class Player implements Serializable {
         return this.PlayerField;
     }
 
-
     /**
      * Retrieves the name of the player.
      *
@@ -85,7 +83,6 @@ public class Player implements Serializable {
     public String getName() {
         return Name;
     }
-
 
     /**
      * Retrieves the color assigned to the player.
@@ -103,10 +100,6 @@ public class Player implements Serializable {
      */
     public int getPointsCounter() {
         return PointsCounter;
-    }
-
-    public void addPoints(int points){
-        this.PointsCounter += points;
     }
 
     /**
@@ -143,6 +136,7 @@ public class Player implements Serializable {
         else
             return ResourceCounter[3];
     }
+
     /**
      * Retrieves the counter for a specific type of object.
      *

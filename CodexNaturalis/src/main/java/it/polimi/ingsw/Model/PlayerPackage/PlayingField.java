@@ -68,7 +68,6 @@ public class PlayingField implements Serializable {
         return FreePositions;
     }
 
-
     /**
      * Retrieves the position adjacent to a given position in a specified orientation.
      * @param p The starting position.
@@ -85,7 +84,6 @@ public class PlayingField implements Serializable {
         };
     }
 
-
     /**
      * Retrieves the map containing the positions and corresponding cards on the playing field.
      * @return The map of positions and cards.
@@ -93,6 +91,7 @@ public class PlayingField implements Serializable {
     public HashMap<Position, PlayableCard> getField() {
         return Field;
     }
+
     /**
      * Retrieves the opposite orientation of a given orientation.
      * @param Orient The starting orientation.

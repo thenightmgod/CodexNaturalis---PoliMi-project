@@ -10,7 +10,7 @@ import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
 import it.polimi.ingsw.Network.CommonClient;
-import it.polimi.ingsw.View.GUI.GUIController.GameController;
+import it.polimi.ingsw.View.GUI.GUIController.GuiGameController;
 import it.polimi.ingsw.View.GUI.GUIController.LoginController;
 import it.polimi.ingsw.View.GameView;
 import javafx.application.Platform;
@@ -25,7 +25,7 @@ public class GUI implements GameView {
     private String name;
     private Player Turn;
     private CommonClient client;
-    private GameController gameController;
+    private GuiGameController guiGameController;
 
     private LoginController loginController;
     private String[] args;
@@ -41,8 +41,8 @@ public class GUI implements GameView {
     public String[] getArgs(){
         return args;
     };
-    public GameController getGameController() {
-        return gameController;
+    public GuiGameController getGameController() {
+        return guiGameController;
     }
 
     public LoginController getLoginController() {
@@ -52,8 +52,8 @@ public class GUI implements GameView {
     public void setLoginController(LoginController loginController) {
         this.loginController = loginController;
     }
-    public void setGameController(GameController gc) {
-        this.gameController = gc;
+    public void setGameController(GuiGameController gc) {
+        this.guiGameController = gc;
     }
     public void setName(String name) {
         this.name=name;
@@ -77,20 +77,20 @@ public class GUI implements GameView {
 
     @Override
     public void updateGoals(LinkedList<GoalCard> goals, String name) throws RemoteException {
-        Platform.runLater(() -> gameController.choosePersonalGoal(goals));
+        Platform.runLater(() -> guiGameController.choosePersonalGoal(goals));
     }
 
     @Override
     public void updateCommonGoals(LinkedList<GoalCard> goals, String name) throws RemoteException {
         client.getClient().setCommonGoals(goals);
-        Platform.runLater(() -> gameController.updateCommonGoals(goals));
+        Platform.runLater(() -> guiGameController.updateCommonGoals(goals));
     }
 
 
     @Override
     public void updateHands(LinkedList<PlayableCard> hand, String name) {
         client.getClient().setHand(hand);
-        Platform.runLater(() -> gameController.setHand(hand));
+        Platform.runLater(() -> guiGameController.setHand(hand));
     }
 
     @Override
@@ -125,7 +125,7 @@ public class GUI implements GameView {
     @Override
     public void showStartCard(StartCard card) throws RemoteException {
         Platform.runLater(() -> {
-            gameController.updateStartCard(card);
+            guiGameController.updateStartCard(card);
         });
     }
 
@@ -136,12 +136,12 @@ public class GUI implements GameView {
             switch (mex) {
                 case "StartCard" -> {
                     Platform.runLater(() -> {
-                        gameController.chooseStartCardFace();
+                        guiGameController.chooseStartCardFace();
                     });
                 }
                 case "GoalCard" -> {
                     Platform.runLater(() -> {
-                        gameController.enablePopUpScene();
+                        guiGameController.showGoalCardsscene();
                     });
                     ;
                 }
@@ -157,7 +157,7 @@ public class GUI implements GameView {
     public void updateGoldDeck(LinkedList<GoldCard> deck, boolean start, String name) {
         Platform.runLater(() -> {
             if(start) {
-                gameController.updateGoldDeck(deck);
+                guiGameController.updateGoldDeck(deck);
                 client.getClient().setDrawableGoldCards(deck);
             }
         } );
@@ -167,7 +167,7 @@ public class GUI implements GameView {
     public void updateResourceDeck(LinkedList<ResourceCard> deck, boolean start, String name) {
         Platform.runLater(() -> {
             if(start) {
-                gameController.updateResourceDeck(deck);
+                guiGameController.updateResourceDeck(deck);
                 client.getClient().setDrawableResourceCards(deck);
             }
 
@@ -203,7 +203,7 @@ public class GUI implements GameView {
     public void printNotYourTurn(Player turn) {
         this.Turn = turn;
         Platform.runLater(() -> {
-            gameController.waitYourTurn();
+            guiGameController.waitYourTurn();
         });
     }
 

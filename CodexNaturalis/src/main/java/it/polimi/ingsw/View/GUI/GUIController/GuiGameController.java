@@ -5,39 +5,29 @@ import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.StartCard;
-import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import it.polimi.ingsw.Network.CommonClient;
 import it.polimi.ingsw.View.GUI.GUI;
-import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.animation.PauseTransition;
 import javafx.util.Duration;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.LinkedList;
 
-public class GameController extends GUIController {
+public class GuiGameController extends GUIController {
     protected String username;
     protected GUI gui;
     protected Stage stage;
@@ -45,11 +35,10 @@ public class GameController extends GUIController {
     protected Parent root;
     boolean StartCardOk=false;
     boolean popUpShown=false;
-    boolean popUpShowing=false;
-    private Stage currentPopupStage;
-
+    boolean isFrontImageLoaded=true;
+    boolean choosingPersonalGoal=false;
     @FXML
-    private Stage popupStage;
+    private Pane paneStartCard;
     @FXML
     public BorderPane mainBorderPane;
     @FXML
@@ -63,7 +52,6 @@ public class GameController extends GUIController {
 
     @FXML
     private ImageView leftGoalCardImageView;
-
     @FXML
     private ImageView rightGoalCardImageView;
 
@@ -78,10 +66,7 @@ public class GameController extends GUIController {
     @FXML
     private HBox commonGoalsBox;
     @FXML
-    private Label nextLabel;
-    @FXML
     private ImageView leftStartCardImage;
-
     @FXML
     private ImageView rightStartCardImage;
 
@@ -96,6 +81,8 @@ public class GameController extends GUIController {
 
 
     public void initialize() {
+        titleLabel = new Label();
+        titleLabel.setVisible(false);
         String newImagePath = "/view/MyCodexNaturalisPhotos/pic8211904.jpg";
         Image newImage = loadImage(newImagePath);
         if (newImage != null) {
@@ -108,13 +95,17 @@ public class GameController extends GUIController {
     }
 
 
+    //mi carica i goal personali
     public void choosePersonalGoal(LinkedList<GoalCard> goals) {
+        choosingPersonalGoal=true;
         leftGoalCardImageView = new ImageView();
         leftGoalCardImageView.setFitWidth(200);
         leftGoalCardImageView.setFitHeight(160);
+
         rightGoalCardImageView= new ImageView();
         rightGoalCardImageView.setFitHeight(160);
         rightGoalCardImageView.setFitWidth(200);
+
         if (goals.size() >= 2) {
             GoalCard goal1 = goals.get(0);
             GoalCard goal2 = goals.get(1);
@@ -122,6 +113,20 @@ public class GameController extends GUIController {
             setImageForGoalCard(leftGoalCardImageView, goal1);
             setImageForGoalCard(rightGoalCardImageView, goal2);
         }
+        showPersonalGoal();
+    }
+
+    public void showPersonalGoal() {
+        welcomeLabel.setVisible(false);
+        backgroundImage.setVisible(false);
+        neutralBackgroundPane.setVisible(false);
+        titleLabel=new Label();
+        titleLabel.setText("");
+        titleLabel.setVisible(true);
+        leftGoalCardImageView.setVisible(true);
+        rightGoalCardImageView.setVisible(true);
+        disableCardInteractions(leftGoalCardImageView);
+        disableCardInteractions(rightGoalCardImageView);
     }
 
     private void setImageForGoalCard(ImageView imageView, GoalCard goal) {
@@ -139,25 +144,6 @@ public class GameController extends GUIController {
             e.printStackTrace();
         }
     }
-
-    private ImageView createGoalCardImageView(GoalCard goal) {
-        try {
-            int cardId = goal.getId();
-            Image cardImage = loadCardFrontImage(cardId);
-
-            ImageView imageView = new ImageView(cardImage);
-            imageView.setFitWidth(160);
-            imageView.setFitHeight(123);
-            imageView.setPreserveRatio(true);
-
-            return imageView;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            // Gestione dell'errore nel caricamento dell'immagine
-            return new ImageView(); // Oppure gestione alternativa
-        }
-    }
-
     private void setCardInteraction(ImageView imageView, GoalCard goal) {
         imageView.setOnMouseEntered(event -> {
             imageView.setOpacity(0.7);
@@ -201,7 +187,6 @@ public class GameController extends GUIController {
         }
     }
 
-
     public void setScene(GUI gui, Stage stage) {
         username = client.getName();
         stage.setTitle(username + "_CodexNaturalis");
@@ -209,12 +194,14 @@ public class GameController extends GUIController {
         this.gui = gui;
         this.stage = stage;
         Platform.runLater(() -> {
-            welcomeLabel.setText("Benvenuto nella nuova partita, " + username + "!");
+            welcomeLabel.setText("Welcome to the game, " + username + "!");
             PauseTransition pause = new PauseTransition(Duration.seconds(3));
             pause.setOnFinished(event -> showNeutralBackground());
             pause.play();
         });
     }
+
+    //----------METODI STARTCARD--------------
 
     public void updateStartCard(StartCard card) {
         try {
@@ -227,7 +214,8 @@ public class GameController extends GUIController {
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Errore durante il caricamento delle immagini della carta", e);
-        }setStartCardFace();
+        }
+        setStartCardFace();
     }
 
     public void setStartCardFace() {
@@ -235,6 +223,7 @@ public class GameController extends GUIController {
             chooseSideLabel.setVisible(true);
             leftStartCardImage.setVisible(true);
             rightStartCardImage.setVisible(true);
+            neutralBackgroundPane.setDisable(false);
         });
     }
 
@@ -243,30 +232,76 @@ public class GameController extends GUIController {
         chooseSideLabel.setText("Choose the side");
     }
 
+    @FXML
+    private void onCardMouseEntered(MouseEvent event) {
+        if (event.getSource() instanceof ImageView) {
+            ImageView card = (ImageView) event.getSource();
+            if (!card.isDisabled()) {
+                card.setOpacity(0.5); // Opacità ridotta per evidenziare
+            }
+        }
+    }
+
+    @FXML
+    private void onCardMouseExited(MouseEvent event) {
+        if (event.getSource() instanceof ImageView) {
+            ImageView card = (ImageView) event.getSource();
+            card.setOpacity(1.0); // Ripristina l'opacità originale
+        }
+    }
+
+    @FXML
+    private void onCardMouseClicked(MouseEvent event) throws RemoteException {
+        if (event.getSource() instanceof ImageView) {
+            ImageView card = (ImageView) event.getSource();
+            if (!card.isDisabled()) {
+                if (card == leftStartCardImage) {
+                    boolean face = true;
+                    client.setStartCardFace(face, client);
+                } else if (card == rightStartCardImage) {
+                    boolean face = false;
+                    client.setStartCardFace(face, client);
+                }
+            }
+        }
+        this.gui.endTurn("StartCard");
+    }
+
+    private void enableCardInteractions() {
+        leftStartCardImage.setDisable(false);
+        rightStartCardImage.setDisable(false);
+    }
+
+    private void disableCardInteractions() {
+        leftStartCardImage.setDisable(true);
+        rightStartCardImage.setDisable(true);
+    }
+
+
     public void waitYourTurn() {
         //se ho già assegnato le carte goal
-        if (leftGoalCardImageView != null) {
+        if (choosingPersonalGoal) {
+            //se ho già mostrato la showGoalsCardsscene
             if (popUpShown) {
-                titleLabel = new Label("Well done, goal card chosen!");
+                titleLabel.setText("Well done, goal card chosen!");
+                disableCardInteractions(leftGoalCardImageView);
+                disableCardInteractions(rightGoalCardImageView);
             } else {
-                titleLabel = new Label("Wait for your turn to choose the personal goal card!");
+                titleLabel.setText("Wait for your turn to choose the personal goal card!");
+                titleLabel.setStyle("-fx-font-size: 18px; -fx-text-fill: gold; -fx-font-weight: bold;");
             }
-            titleLabel.setStyle("-fx-font-size: 18px; -fx-text-fill: gold; -fx-font-weight: bold;");
-            disablePopUpScene();
         } else {
-            disableCardInteractions();
             if (!StartCardOk) {
-                chooseSideLabel.setText("It's not your turn");
+                chooseSideLabel.setText("wait, it's not your turn");
+                disableCardInteractions();
             } else {
                 chooseSideLabel.setText("Well done, start card chosen!");
+                disableCardInteractions();
             }
         }
     }
 
     public void showGameLayout() {
-        welcomeLabel.setVisible(false);
-        backgroundImage.setVisible(false);
-        neutralBackgroundPane.setVisible(false);
         Color grayColor = Color.rgb(204, 204, 204); // #CCCCCC
 
         BackgroundFill backgroundFill = new BackgroundFill(grayColor, null, null);
@@ -323,7 +358,6 @@ public class GameController extends GUIController {
 
 
     }
-
     public void setHand(LinkedList<PlayableCard> hand) {
         Platform.runLater(() -> {
 
@@ -357,7 +391,6 @@ public class GameController extends GUIController {
                 }
             }
         });
-        showGameLayout();
     }
 
     private Image loadCardFrontImage(int cardId) throws FileNotFoundException {
@@ -369,29 +402,6 @@ public class GameController extends GUIController {
         String cardPath = "/view/CODEX_cards_gold_back/" + String.format("%03d", cardId) + ".png";
         return loadImage(cardPath);
     }
-
-
-   /* private void loadCardImages() {
-        String directoryPath = "/Users/caterinagerini/Desktop/CodexNaturalis/CodexNaturalis/src/main/Resources/view/CODEX_cards_gold_back";
-        File directory = new File(directoryPath);
-        if (directory.exists() && directory.isDirectory()) {
-            File[] files = directory.listFiles((dir, name) -> name.toLowerCase().endsWith(".png"));
-            if (files != null) {
-                for (File file : files) {
-                    try {
-                        FileInputStream inputStream = new FileInputStream(file);
-                        Image image = new Image(inputStream);
-                        ImageView imageView = new ImageView(image);
-                        imageView.setFitWidth(100);
-                        imageView.setPreserveRatio(true);
-                        cardGroup2.getChildren().add(imageView);
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-    }*/
 
     private void setCardInteraction(ImageView imageView, int cardId) {
         imageView.setOnMouseEntered(event -> {
@@ -405,10 +415,18 @@ public class GameController extends GUIController {
         });
 
         imageView.setOnMouseClicked(event -> {
-            // Esegui flip della carta
             try {
-                Image flippedImage = loadCardBackImage(cardId);
-                imageView.setImage(flippedImage);
+                if (isFrontImageLoaded) {
+                    // Se l'immagine front è caricata, carica l'immagine back
+                    Image flippedImage = loadCardBackImage(cardId);
+                    imageView.setImage(flippedImage);
+                    isFrontImageLoaded = false; // Aggiorna lo stato dell'immagine
+                } else {
+                    // Se l'immagine back è caricata, carica l'immagine front
+                    Image frontImage = loadCardFrontImage(cardId);
+                    imageView.setImage(frontImage);
+                    isFrontImageLoaded = true; // Aggiorna lo stato dell'immagine
+                }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
                 // Gestione dell'errore nel caricamento dell'immagine
@@ -431,128 +449,7 @@ public class GameController extends GUIController {
     @FXML
     public void moveRight(ActionEvent event) {
     }
-
-    @FXML
-    private void onCardMouseEntered(MouseEvent event) {
-        if (event.getSource() instanceof ImageView) {
-            ImageView card = (ImageView) event.getSource();
-            if (!card.isDisabled()) {
-                card.setOpacity(0.5); // Opacità ridotta per evidenziare
-            }
-        }
-    }
-
-    @FXML
-    private void onCardMouseExited(MouseEvent event) {
-        if (event.getSource() instanceof ImageView) {
-            ImageView card = (ImageView) event.getSource();
-            card.setOpacity(1.0); // Ripristina l'opacità originale
-        }
-    }
-
-    @FXML
-    private void onCardMouseClicked(MouseEvent event) throws RemoteException {
-        if (event.getSource() instanceof ImageView) {
-            ImageView card = (ImageView) event.getSource();
-            if (!card.isDisabled()) {
-                if (card == leftStartCardImage) {
-                    boolean face = true;
-                    client.setStartCardFace(face, client);
-                } else if (card == rightStartCardImage) {
-                    boolean face = false;
-                    client.setStartCardFace(face, client);
-                }
-            }
-        }
-        StartCardOk=true;
-        this.gui.endTurn("StartCard");
-    }
-
-    private void enableCardInteractions() {
-        leftStartCardImage.setDisable(false);
-        rightStartCardImage.setDisable(false);
-    }
-
-    private void disableCardInteractions() {
-        leftStartCardImage.setDisable(true);
-        rightStartCardImage.setDisable(true);
-    }
-
-    public void enablePopUpScene() {
-        Platform.runLater(() -> {
-            popUpShowing=true;
-            Stage popupStage = new Stage();
-            popupStage.initModality(Modality.APPLICATION_MODAL);
-            popupStage.initOwner(stage);
-            popupStage.setTitle(username+"_choosePopUp");
-
-            VBox vbox = new VBox(10);
-            vbox.setAlignment(Pos.CENTER);
-
-            titleLabel = new Label("Choose your personal goal card!");
-            titleLabel.setStyle("-fx-font-size: 18px; -fx-text-fill: gold; -fx-font-weight: bold;");
-
-            HBox cardsBox = new HBox(20);
-            cardsBox.setAlignment(Pos.CENTER);
-
-            // Aggiungi le ImageView delle carte goal
-            cardsBox.getChildren().addAll(leftGoalCardImageView, rightGoalCardImageView);
-
-            vbox.getChildren().addAll(titleLabel, cardsBox);
-
-            // Abilita le interazioni con le carte
-            enableCardInteractions(leftGoalCardImageView);
-            enableCardInteractions(rightGoalCardImageView);
-
-            // Creazione della scena e visualizzazione della finestra
-            Scene popupScene = new Scene(vbox, 600, 400);
-            popupScene.getStylesheets().add(getClass().getResource("/view/styles2.css").toExternalForm()); // Add your CSS path
-            popupStage.setScene(popupScene);// Memorizza il riferimento al nuovo popup
-            popupStage.showAndWait();
-            // Mostra la finestra e aspetta che venga chiusa
-        });
-    }
-
-    public void disablePopUpScene() {
-        popUpShown=true;
-        if (commonGoalsBox.getChildren().size() > 2) {
-            return;
-        }
-        Platform.runLater(() -> {
-            if (popupStage != null) {
-                popupStage.close();
-            } do {
-                Stage popupStage = new Stage();
-                popupStage.initModality(Modality.APPLICATION_MODAL);
-                popupStage.initOwner(stage);
-                popupStage.setTitle(username+"waitPopUp");
-
-                VBox vbox = new VBox(10);
-                vbox.setAlignment(Pos.CENTER);
-
-                Label titleLabel = new Label("Wait for your turn to choose the personal goal card!");
-                titleLabel.setStyle("-fx-font-size: 18px; -fx-text-fill: gold; -fx-font-weight: bold;");
-
-                HBox cardsBox = new HBox(20);
-                cardsBox.setAlignment(Pos.CENTER);
-
-                cardsBox.getChildren().addAll(leftGoalCardImageView, rightGoalCardImageView);
-
-                vbox.getChildren().addAll(titleLabel, cardsBox);
-
-                disableCardInteractions(leftGoalCardImageView);
-                disableCardInteractions(rightGoalCardImageView);
-
-
-                Scene popupScene = new Scene(vbox, 600, 400);
-                popupScene.getStylesheets().add(getClass().getResource("/view/styles2.css").toExternalForm()); // Add your CSS path
-                popupStage.setScene(popupScene);
-                currentPopupStage = popupStage;
-                popupStage.showAndWait();
-
-            }while (!popUpShowing);
-        });
-    }
+//-------goal card
 
     private void enableCardInteractions(ImageView imageView) {
         imageView.setOnMouseEntered(event -> {
@@ -584,17 +481,37 @@ public class GameController extends GUIController {
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }
-            closePopupStage();
         });
     }
-    private void closePopupStage() {
-        if (popupStage != null) {
-            popupStage.close();
-        }
-    }
-
     private void disableCardInteractions(ImageView imageView) {
         imageView.setOnMouseClicked(null); // Rimuove l'azione onClick
         imageView.setOpacity(0.5); // Opacità ridotta per indicare che le interazioni sono disabilitate
+    }
+
+    public void showGoalCardsscene() {
+        popUpShown = true;
+        System.out.println("showGoalCardsscene called");
+        titleLabel.setText("Choose your personal Goal card");
+        stage.setTitle(username + "_chooseGoalCard");
+        enableCardInteractions(leftGoalCardImageView);
+        enableCardInteractions(rightGoalCardImageView);
+    }
+
+    private ImageView createGoalCardImageView(GoalCard goal) {
+        try {
+            int cardId = goal.getId();
+            Image cardImage = loadCardFrontImage(cardId);
+
+            ImageView imageView = new ImageView(cardImage);
+            imageView.setFitWidth(160);
+            imageView.setFitHeight(123);
+            imageView.setPreserveRatio(true);
+
+            return imageView;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            // Gestione dell'errore nel caricamento dell'immagine
+            return new ImageView(); // Oppure gestione alternativa
+        }
     }
 }
