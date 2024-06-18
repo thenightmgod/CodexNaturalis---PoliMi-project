@@ -133,6 +133,7 @@ public interface VirtualView extends Remote {
      * @throws RemoteException If a remote access error occurs.
      */
 
+
     String getName() throws RemoteException;
 
     /**
