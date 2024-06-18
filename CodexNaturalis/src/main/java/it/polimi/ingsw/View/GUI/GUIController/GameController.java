@@ -16,6 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -32,6 +33,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.LinkedList;
 
@@ -41,7 +43,10 @@ public class GameController extends GUIController {
     protected Stage stage;
     protected CommonClient client;
     protected Parent root;
-    boolean StartCardOk;
+    boolean StartCardOk=false;
+    boolean popUpShown=false;
+    boolean popUpShowing=false;
+    private Stage currentPopupStage;
 
     @FXML
     private Stage popupStage;
@@ -82,6 +87,8 @@ public class GameController extends GUIController {
 
     @FXML
     private Label chooseSideLabel;
+    @FXML
+    private Label titleLabel;
 
     public void setRoot(Parent root) {
         this.root = root;
@@ -89,15 +96,17 @@ public class GameController extends GUIController {
 
 
     public void initialize() {
-        String newImagePath = "/Users/caterinagerini/Desktop/CodexNaturalis/CodexNaturalis/src/main/Resources/view/MyCodexNaturalisPhotos/pic8211904.jpg";
+        String newImagePath = "/view/MyCodexNaturalisPhotos/pic8211904.jpg";
         Image newImage = loadImage(newImagePath);
         if (newImage != null) {
             backgroundImage.setImage(newImage);
             backgroundImage.setEffect(new GaussianBlur(10));
+
         } else {
             System.out.println("Failed to load image from path: " + newImagePath);
         }
     }
+
 
     public void choosePersonalGoal(LinkedList<GoalCard> goals) {
         leftGoalCardImageView = new ImageView();
@@ -106,14 +115,14 @@ public class GameController extends GUIController {
         rightGoalCardImageView= new ImageView();
         rightGoalCardImageView.setFitHeight(160);
         rightGoalCardImageView.setFitWidth(200);
-            if (goals.size() >= 2) {
-                GoalCard goal1 = goals.get(0);
-                GoalCard goal2 = goals.get(1);
+        if (goals.size() >= 2) {
+            GoalCard goal1 = goals.get(0);
+            GoalCard goal2 = goals.get(1);
 
-                setImageForGoalCard(leftGoalCardImageView, goal1);
-                setImageForGoalCard(rightGoalCardImageView, goal2);
-            }
+            setImageForGoalCard(leftGoalCardImageView, goal1);
+            setImageForGoalCard(rightGoalCardImageView, goal2);
         }
+    }
 
     private void setImageForGoalCard(ImageView imageView, GoalCard goal) {
         try {
@@ -131,7 +140,7 @@ public class GameController extends GUIController {
         }
     }
 
-        private ImageView createGoalCardImageView(GoalCard goal) {
+    private ImageView createGoalCardImageView(GoalCard goal) {
         try {
             int cardId = goal.getId();
             Image cardImage = loadCardFrontImage(cardId);
@@ -180,14 +189,18 @@ public class GameController extends GUIController {
 
     private Image loadImage(String imagePath) {
         try {
-            File file = new File(imagePath);
-            String localUrl = file.toURI().toURL().toString();
-            return new Image(localUrl);
-        } catch (MalformedURLException e) {
+            URL resourceUrl = getClass().getResource(imagePath);
+            if (resourceUrl == null) {
+                System.out.println("Resource not found: " + imagePath);
+                return null;
+            }
+            return new Image(resourceUrl.toString());
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
+
 
     public void setScene(GUI gui, Stage stage) {
         username = client.getName();
@@ -206,25 +219,15 @@ public class GameController extends GUIController {
     public void updateStartCard(StartCard card) {
         try {
             int cardId = card.getId(); // Ottieni l'ID della carta
-            File cardFileLeft = new File("/Users/caterinagerini/Desktop/CodexNaturalis/CodexNaturalis/src/main/Resources/view/CODEX_cards_gold_front/" + String.format("%03d", cardId) + ".png");
-            if (!cardFileLeft.exists()) {
-                throw new FileNotFoundException("File non trovato: " + cardFileLeft.getPath());
-            }
-            Image leftCardImage = new Image(cardFileLeft.toURI().toURL().toString());
-
-            File cardFileRight = new File("/Users/caterinagerini/Desktop/CodexNaturalis/CodexNaturalis/src/main/Resources/view/CODEX_cards_gold_back/" + String.format("%03d", cardId) + ".png");
-            if (!cardFileRight.exists()) {
-                throw new FileNotFoundException("File non trovato: " + cardFileRight.getPath());
-            }
-            Image rightCardImage = new Image(cardFileRight.toURI().toURL().toString());
+            Image leftCardImage = loadCardFrontImage(cardId);
+            Image rightCardImage = loadCardBackImage(cardId);
 
             leftStartCardImage.setImage(leftCardImage);
             rightStartCardImage.setImage(rightCardImage);
-        } catch (FileNotFoundException | MalformedURLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Errore durante il caricamento delle immagini della carta", e);
-        }
-        setStartCardFace();
+        }setStartCardFace();
     }
 
     public void setStartCardFace() {
@@ -241,18 +244,36 @@ public class GameController extends GUIController {
     }
 
     public void waitYourTurn() {
+        //se ho già assegnato le carte goal
         if (leftGoalCardImageView != null) {
+            if (popUpShown) {
+                titleLabel = new Label("Well done, goal card chosen!");
+            } else {
+                titleLabel = new Label("Wait for your turn to choose the personal goal card!");
+            }
+            titleLabel.setStyle("-fx-font-size: 18px; -fx-text-fill: gold; -fx-font-weight: bold;");
             disablePopUpScene();
         } else {
-                disableCardInteractions();
+            disableCardInteractions();
+            if (!StartCardOk) {
                 chooseSideLabel.setText("It's not your turn");
+            } else {
+                chooseSideLabel.setText("Well done, start card chosen!");
             }
+        }
     }
 
     public void showGameLayout() {
         welcomeLabel.setVisible(false);
         backgroundImage.setVisible(false);
         neutralBackgroundPane.setVisible(false);
+        Color grayColor = Color.rgb(204, 204, 204); // #CCCCCC
+
+        BackgroundFill backgroundFill = new BackgroundFill(grayColor, null, null);
+
+        Background background = new Background(backgroundFill);
+
+        mainBorderPane.setBackground(background);
 
         mainBorderPane.setVisible(true);
     }
@@ -280,19 +301,15 @@ public class GameController extends GUIController {
 
         for (GoalCard goal : goals) {
             int cardId = goal.getId();
-            try {
-                File cardFile = new File("/Users/caterinagerini/Desktop/CodexNaturalis/CodexNaturalis/src/main/Resources/view/CODEX_cards_gold_front/" + String.format("%03d", cardId) + ".png");
-                Image cardImage = new Image(cardFile.toURI().toURL().toString());
-                ImageView cardImageView = new ImageView(cardImage);
-                cardImageView.setFitWidth(160); // Imposta la larghezza desiderata
-                cardImageView.setFitHeight(123); // Imposta l'altezza desiderata
-                cardImageView.setPreserveRatio(true); // Mantiene il rapporto d'aspetto
+            String imagePath = String.format("/view/CODEX_cards_gold_front/%03d.png", cardId);
+            Image cardImage = new Image(getClass().getResource(imagePath).toExternalForm());
+            ImageView cardImageView = new ImageView(cardImage);
+            cardImageView.setFitWidth(160); // Imposta la larghezza desiderata
+            cardImageView.setFitHeight(123); // Imposta l'altezza desiderata
+            cardImageView.setPreserveRatio(true); // Mantiene il rapporto d'aspetto
 
 
-                commonGoalsBox.getChildren().add(cardImageView);
-            } catch (MalformedURLException e) {
-                e.printStackTrace(); // Stampa l'errore in caso di URL malformato
-            }
+            commonGoalsBox.getChildren().add(cardImageView);
         }
     }
 
@@ -344,16 +361,17 @@ public class GameController extends GUIController {
     }
 
     private Image loadCardFrontImage(int cardId) throws FileNotFoundException {
-        String imagePath = "/Users/caterinagerini/Desktop/CodexNaturalis/CodexNaturalis/src/main/Resources/view/CODEX_cards_gold_front/" + String.format("%03d", cardId) + ".png";
-        File file = new File(imagePath);
-        if (!file.exists()) {
-            throw new FileNotFoundException("File not found: " + file.getPath());
-        }
-        return new Image(file.toURI().toString());
+        String cardPath = "/view/CODEX_cards_gold_front/" + String.format("%03d", cardId) + ".png";
+        return loadImage(cardPath);
+    }
+
+    private Image loadCardBackImage(int cardId) throws FileNotFoundException {
+        String cardPath = "/view/CODEX_cards_gold_back/" + String.format("%03d", cardId) + ".png";
+        return loadImage(cardPath);
     }
 
 
-    private void loadCardImages() {
+   /* private void loadCardImages() {
         String directoryPath = "/Users/caterinagerini/Desktop/CodexNaturalis/CodexNaturalis/src/main/Resources/view/CODEX_cards_gold_back";
         File directory = new File(directoryPath);
         if (directory.exists() && directory.isDirectory()) {
@@ -373,16 +391,7 @@ public class GameController extends GUIController {
                 }
             }
         }
-    }
-
-    private Image loadCardBackImage(int cardId) throws FileNotFoundException {
-        String imagePath = "/Users/caterinagerini/Desktop/CodexNaturalis/CodexNaturalis/src/main/Resources/view/CODEX_cards_gold_back/" + String.format("%03d", cardId) + ".png";
-        File file = new File(imagePath);
-        if (!file.exists()) {
-            throw new FileNotFoundException("File not found: " + file.getPath());
-        }
-        return new Image(file.toURI().toString());
-    }
+    }*/
 
     private void setCardInteraction(ImageView imageView, int cardId) {
         imageView.setOnMouseEntered(event -> {
@@ -470,58 +479,17 @@ public class GameController extends GUIController {
     }
 
     public void enablePopUpScene() {
-            Platform.runLater(() -> {
-                if (popupStage != null) {
-                    popupStage.close();
-                }
-                Stage popupStage = new Stage();
-                popupStage.initModality(Modality.APPLICATION_MODAL);
-                popupStage.initOwner(stage);
-                popupStage.setTitle(username+"_choosePopUp");
-
-                VBox vbox = new VBox(10);
-                vbox.setAlignment(Pos.CENTER);
-
-                Label titleLabel = new Label("Choose your personal goal card!");
-                titleLabel.setStyle("-fx-font-size: 18px; -fx-text-fill: gold; -fx-font-weight: bold;");
-
-                HBox cardsBox = new HBox(20);
-                cardsBox.setAlignment(Pos.CENTER);
-
-                // Aggiungi le ImageView delle carte goal
-                cardsBox.getChildren().addAll(leftGoalCardImageView, rightGoalCardImageView);
-
-                vbox.getChildren().addAll(titleLabel, cardsBox);
-
-                // Abilita le interazioni con le carte
-                enableCardInteractions(leftGoalCardImageView);
-                enableCardInteractions(rightGoalCardImageView);
-
-                // Creazione della scena e visualizzazione della finestra
-                Scene popupScene = new Scene(vbox, 600, 400);
-                popupScene.getStylesheets().add("/Users/caterinagerini/Desktop/CodexNaturalis/CodexNaturalis/src/main/Resources/view/styles2.css"); // Aggiungi eventuali stili CSS
-                popupStage.setScene(popupScene);
-                popupStage.showAndWait(); // Mostra la finestra e aspetta che venga chiusa
-            });
-        }
-
-    public void disablePopUpScene() {
-        if (commonGoalsBox.getChildren().size() > 2) {
-            return;
-        }
         Platform.runLater(() -> {
-            if (popupStage != null) {
-                popupStage.close();
-            }
+            popUpShowing=true;
             Stage popupStage = new Stage();
             popupStage.initModality(Modality.APPLICATION_MODAL);
             popupStage.initOwner(stage);
-            popupStage.setTitle(username+"waitPopUp");
+            popupStage.setTitle(username+"_choosePopUp");
 
             VBox vbox = new VBox(10);
             vbox.setAlignment(Pos.CENTER);
 
-            Label titleLabel = new Label("Wait for your turn to choose the personal goal card!");
+            titleLabel = new Label("Choose your personal goal card!");
             titleLabel.setStyle("-fx-font-size: 18px; -fx-text-fill: gold; -fx-font-weight: bold;");
 
             HBox cardsBox = new HBox(20);
@@ -532,15 +500,57 @@ public class GameController extends GUIController {
 
             vbox.getChildren().addAll(titleLabel, cardsBox);
 
-            // Disabilita le interazioni con le carte
-            disableCardInteractions(leftGoalCardImageView);
-            disableCardInteractions(rightGoalCardImageView);
+            // Abilita le interazioni con le carte
+            enableCardInteractions(leftGoalCardImageView);
+            enableCardInteractions(rightGoalCardImageView);
 
-
+            // Creazione della scena e visualizzazione della finestra
             Scene popupScene = new Scene(vbox, 600, 400);
-            popupScene.getStylesheets().add("/Users/caterinagerini/Desktop/CodexNaturalis/CodexNaturalis/src/main/Resources/view/styles2.css"); // Aggiungi eventuali stili CSS
-            popupStage.setScene(popupScene);
+            popupScene.getStylesheets().add(getClass().getResource("/view/styles2.css").toExternalForm()); // Add your CSS path
+            popupStage.setScene(popupScene);// Memorizza il riferimento al nuovo popup
             popupStage.showAndWait();
+            // Mostra la finestra e aspetta che venga chiusa
+        });
+    }
+
+    public void disablePopUpScene() {
+        popUpShown=true;
+        if (commonGoalsBox.getChildren().size() > 2) {
+            return;
+        }
+        Platform.runLater(() -> {
+            if (popupStage != null) {
+                popupStage.close();
+            } do {
+                Stage popupStage = new Stage();
+                popupStage.initModality(Modality.APPLICATION_MODAL);
+                popupStage.initOwner(stage);
+                popupStage.setTitle(username+"waitPopUp");
+
+                VBox vbox = new VBox(10);
+                vbox.setAlignment(Pos.CENTER);
+
+                Label titleLabel = new Label("Wait for your turn to choose the personal goal card!");
+                titleLabel.setStyle("-fx-font-size: 18px; -fx-text-fill: gold; -fx-font-weight: bold;");
+
+                HBox cardsBox = new HBox(20);
+                cardsBox.setAlignment(Pos.CENTER);
+
+                cardsBox.getChildren().addAll(leftGoalCardImageView, rightGoalCardImageView);
+
+                vbox.getChildren().addAll(titleLabel, cardsBox);
+
+                disableCardInteractions(leftGoalCardImageView);
+                disableCardInteractions(rightGoalCardImageView);
+
+
+                Scene popupScene = new Scene(vbox, 600, 400);
+                popupScene.getStylesheets().add(getClass().getResource("/view/styles2.css").toExternalForm()); // Add your CSS path
+                popupStage.setScene(popupScene);
+                currentPopupStage = popupStage;
+                popupStage.showAndWait();
+
+            }while (!popUpShowing);
         });
     }
 

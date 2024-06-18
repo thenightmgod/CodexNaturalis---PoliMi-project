@@ -8,8 +8,11 @@ import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.StartCard;
+import it.polimi.ingsw.Model.DeckPackage.GoldDeck;
+import it.polimi.ingsw.Model.DeckPackage.ResourceDeck;
 import it.polimi.ingsw.Model.PlayerPackage.*;
 import it.polimi.ingsw.Model.RoomPackage.ObserverManager;
+import it.polimi.ingsw.Model.RoomPackage.Room;
 import it.polimi.ingsw.Network.VirtualView;
 import org.junit.jupiter.api.Test;
 
@@ -19,12 +22,11 @@ import java.util.HashMap;
 import java.util.LinkedList;
 class RoomTest {
     /**
-     * This test checks if various small functions of the Room class works properly, (createDecks, giveHands,
-     * commonGoals, show2GoalCards, pickGoalCard).
+     * This test checks if various small functions of the Room class works properly, (createDecks, placeCard,
+     * changeTurns, show2GoalCards, pickGoalCard).
      */
-/*    @Test
-   void testMetodiMinori() throws RemoteException {
-        GameController beppe = new GameController(5, 4);
+    @Test
+    void testMetodiMinori() throws RemoteException, NotBoundException {
 
         VirtualView client1 = new VirtualView() {
             @Override
@@ -43,7 +45,7 @@ class RoomTest {
             }
 
             @Override
-            public void updatePoints(int points, String name) throws RemoteException {
+            public void updatePoints(HashMap<String, Integer> points, String name) throws RemoteException {
 
             }
 
@@ -109,6 +111,21 @@ class RoomTest {
 
             @Override
             public void lastRound() throws RemoteException {
+
+            }
+
+            @Override
+            public void isAlive() throws RemoteException {
+
+            }
+
+            @Override
+            public void leaveGame() throws RemoteException {
+
+            }
+
+            @Override
+            public void leaveGameMessage() throws RemoteException {
 
             }
 
@@ -139,7 +156,7 @@ class RoomTest {
             }
 
             @Override
-            public void updatePoints(int points, String name) throws RemoteException {
+            public void updatePoints(HashMap<String, Integer> points, String name) throws RemoteException {
 
             }
 
@@ -205,6 +222,21 @@ class RoomTest {
 
             @Override
             public void lastRound() throws RemoteException {
+
+            }
+
+            @Override
+            public void isAlive() throws RemoteException {
+
+            }
+
+            @Override
+            public void leaveGame() throws RemoteException {
+
+            }
+
+            @Override
+            public void leaveGameMessage() throws RemoteException {
 
             }
 
@@ -235,7 +267,7 @@ class RoomTest {
             }
 
             @Override
-            public void updatePoints(int points, String name) throws RemoteException {
+            public void updatePoints(HashMap<String, Integer> points, String name) throws RemoteException {
 
             }
 
@@ -301,6 +333,21 @@ class RoomTest {
 
             @Override
             public void lastRound() throws RemoteException {
+
+            }
+
+            @Override
+            public void isAlive() throws RemoteException {
+
+            }
+
+            @Override
+            public void leaveGame() throws RemoteException {
+
+            }
+
+            @Override
+            public void leaveGameMessage() throws RemoteException {
 
             }
 
@@ -331,7 +378,7 @@ class RoomTest {
             }
 
             @Override
-            public void updatePoints(int points, String name) throws RemoteException {
+            public void updatePoints(HashMap<String, Integer> points, String name) throws RemoteException {
 
             }
 
@@ -401,6 +448,21 @@ class RoomTest {
             }
 
             @Override
+            public void isAlive() throws RemoteException {
+
+            }
+
+            @Override
+            public void leaveGame() throws RemoteException {
+
+            }
+
+            @Override
+            public void leaveGameMessage() throws RemoteException {
+
+            }
+
+            @Override
             public void update() throws RemoteException {
 
             }
@@ -411,39 +473,44 @@ class RoomTest {
             }
         };
 
+        Player p1 = new Player("lollo", PlayerColor.RED);
+        Player p2 = new Player("nina", PlayerColor.GREEN);
+        Player p3 = new Player("hamin", PlayerColor.BLUE);
+        Player p4 = new Player("pie", PlayerColor.YELLOW);
+        LinkedList<Player> players = new LinkedList<>();
+        players.add(p1);
+        players.add(p2);
+        players.add(p3);
+        players.add(p4);
+        LinkedList<VirtualView> views = new LinkedList<>();
+        views.add(client1);
+        views.add(client2);
+        views.add(client3);
+        views.add(client4);
+        Room r1 = new Room (1, players, views);
+        ResourceDeck rd = new ResourceDeck();
 
-        beppe.addPlayer("hamingway", PlayerColor.YELLOW, client1);
-        beppe.addPlayer("venditti", PlayerColor.BLUE, client2);
-        beppe.addPlayer("dalla", PlayerColor.RED, client3);
-        beppe.addPlayer("degregori", PlayerColor.GREEN, client4);
+        PlayingField pf = r1.getTurn().getPlayerField();
+        LinkedList<Position> free = pf.getFreePositions();
+        Position o = new Position(3,4);
+        free.add(o);
 
-        beppe.startGame();
-
-        beppe.placeStartCard("hamingway", FB.FRONT);
-        beppe.placeStartCard("venditti", FB.BACK);
-        beppe.placeStartCard("dalla", FB.FRONT);
-        beppe.placeStartCard("degregori", FB.BACK);
-
-/      beppe.getPlayerByName("hamingway").setPointsCounter(24);
-        beppe.getPlayerByName("dalla").setPointsCounter(20);
-        beppe.getPlayerByName("venditti").setPointsCounter(14);
-        beppe.getPlayerByName("degregori").setPointsCounter(18);
-
-        beppe.getPlayerByName("hamingway").setGoalPointsCounter(2);
-        beppe.getPlayerByName("dalla").setGoalPointsCounter(6);
-        beppe.getPlayerByName("venditti").setGoalPointsCounter(4);
-        beppe.getPlayerByName("degregori").setGoalPointsCounter(2);
-
-        beppe.getPlayerByName("hamingway").setTotalPointsCounter(26);
-        beppe.getPlayerByName("dalla").setTotalPointsCounter(26);
-        beppe.getPlayerByName("venditti").setTotalPointsCounter(18);
-        beppe.getPlayerByName("degregori").setTotalPointsCounter(20);
-
-        beppe.getGame().declareWinner();
-        assertEquals("hamingway", );
-    }*/
+        ResourceCard rc = (ResourceCard) rd.getCardById(5);
+        r1.createDecks();
+        r1.giveStartCards();
+        r1.giveInitialCards(p1);
+        r1.placeStartCard(p1, FB.FRONT);
+        r1.placeCard(rc , FB.FRONT, 3, 4);
+        r1.show2GoalCards(p1);
+        r1.pickGoalCard(p1, 1);
+        r1.changeTurns("StartCard");
+        r1.changeTurns("GoalCard");
+        r1.changeTurns("NormalTurn");
+        r1.declareWinner();
+    }
 }
 
-    /**
-     *
-     */
+
+/**
+ *
+ */
