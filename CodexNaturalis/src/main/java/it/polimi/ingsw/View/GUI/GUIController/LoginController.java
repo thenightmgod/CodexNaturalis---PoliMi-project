@@ -1,6 +1,5 @@
 package it.polimi.ingsw.View.GUI.GUIController;
 
-import com.sun.scenario.effect.impl.sw.java.JSWBlend_BLUEPeer;
 import it.polimi.ingsw.Network.CommonClient;
 import it.polimi.ingsw.Network.RMI.RMIClient;
 import it.polimi.ingsw.Network.RMI.VirtualServer;
