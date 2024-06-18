@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Model.RoomPackage;
 
-import it.polimi.ingsw.Exceptions.*;
+
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;

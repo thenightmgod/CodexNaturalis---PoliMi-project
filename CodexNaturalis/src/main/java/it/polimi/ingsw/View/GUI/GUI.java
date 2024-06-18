@@ -136,7 +136,7 @@ public class GUI implements GameView {
                 }
                 case "GoalCard" -> {
                     Platform.runLater(() -> {
-                        gameController.enablePopUpScene();
+                        gameController.showGoalCardsscene();
                     });
                     ;
                 }
