@@ -35,8 +35,6 @@ public class CardsTUI {
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BRIGHT_YELLOW = "\u001B[93m";
     public static final String ANSI_YELLOW = "\u001B[33m";
-    //public static final String ANSI_BG_PURPLE = "\u001B[45m";
-    // public static final String ANSI_BG_GREEN = "\u001B[42m";
     public static final String GREEN_SQUARE = "🟩";
     public static final String PURPLE_SQUARE = "\uD83D\uDFEA";
     public static final String RED_SQUARE = "\uD83D\uDFE5";
@@ -397,8 +395,14 @@ public class CardsTUI {
     }
 
     public void printBackResourceCardSecondLine(ResourceCard card) {
-        System.out.print("|      ");
         CardColor c = card.getColor();
+        switch (c) {
+            case GREEN -> System.out.print(ANSI_GREEN);
+            case RED -> System.out.print(ANSI_RED);
+            case PURPLE -> System.out.print(ANSI_PURPLE);
+            case BLUE -> System.out.print(ANSI_BLUE);
+        }
+        System.out.print("|      ");
         switch (c) {
             case GREEN -> System.out.print((Resources.PLANT_KINGDOM.getShortName()));
             case RED -> System.out.print((FUNGI_KINGDOM.getShortName()));
@@ -406,6 +410,7 @@ public class CardsTUI {
             case BLUE -> System.out.print((ANIMAL_KINGDOM.getShortName()));
         }
         System.out.print("      |");
+
     }
 
     public void printBackResourceCardThirdLine(ResourceCard card) {
@@ -1125,499 +1130,16 @@ public class CardsTUI {
         System.out.print("               ");
     }
 
-    public static void main(String[] args) throws RemoteException {
-        CardsTUI tui = new CardsTUI();
-        GameController beppe = new GameController(5, 4);
-
-        Player p = new Player("frank", PlayerColor.YELLOW);
-        Player p2 = new Player("CARLOS O'CONNELL", PlayerColor.BLUE);
-        Player p3 = new Player("MARCO DEVI MORIRE", PlayerColor.GREEN);
-/*
-        VirtualView v1 = new VirtualView() {
-            @Override
-            public void updateTurn(Player p, String mex) throws RemoteException {
-
-            }
-
-            @Override
-            public void showException(String exception, String details) throws RemoteException, NotBoundException {
-
-            }
-
-            @Override
-            public void updatePoints(int points, String name) throws RemoteException {
-
-            }
-
-            @Override
-            public void updateGoals(LinkedList<GoalCard> goals) throws RemoteException {
-
-            }
-
-            @Override
-            public void updateCommonGoals(LinkedList<GoalCard> goals) throws RemoteException {
-
-            }
-
-            @Override
-            public void showHand(LinkedList<PlayableCard> hand) throws RemoteException {
-
-            }
-
-            @Override
-            public void updateField(String name, PlayingField field) throws RemoteException {
-
-            }
-
-            @Override
-            public void showFreePositions(String name, LinkedList<Position> freePosition) throws RemoteException {
-
-            }
-
-            @Override
-            public void updateResourceDeck(String name, boolean start, LinkedList<ResourceCard> deck) throws RemoteException {
-
-            }
-
-            @Override
-            public void updateGoldDeck(String name, boolean start, LinkedList<GoldCard> deck) throws RemoteException {
-
-            }
-
-            @Override
-            public void declareWinner(LinkedList<String> standings) throws RemoteException {
-
-            }
-
-            @Override
-            public void declareWinner(HashMap<String, Integer> classifica) throws RemoteException {
-
-            }
-
-            @Override
-            public String getName() throws RemoteException {
-                return "";
-            }
-
-            @Override
-            public void showStartCard(StartCard card) throws RemoteException {
-
-            }
-
-            @Override
-            public void startingGame(Player p) throws RemoteException {
-
-            }
-
-            @Override
-            public void twenty(String name) throws RemoteException {
-
-            }
-
-            @Override
-            public void lastRound() throws RemoteException {
-
-            }
-
-            @Override
-            public void update() throws RemoteException {
-
-            }
-
-            @Override
-            public void showOtherField(String player) throws RemoteException {
-
-            }
-
-            public void notYourTurn(Player turn) throws RemoteException {
-
-            }
-        };
-        VirtualView v2 = new VirtualView() {
-            @Override
-            public void updateTurn(Player p, String mex) throws RemoteException {
-
-            }
-
-            @Override
-            public void notYourTurn(Player turn) throws RemoteException {
-
-            }
-
-            @Override
-            public void showException(String exception, String details) throws RemoteException, NotBoundException {
-
-            }
-
-            @Override
-            public void updatePoints(int points, String name) throws RemoteException {
-
-            }
-
-            @Override
-            public void updateGoals(LinkedList<GoalCard> goals) throws RemoteException {
-
-            }
-
-            @Override
-            public void updateCommonGoals(LinkedList<GoalCard> goals) throws RemoteException {
-
-            }
-
-            @Override
-            public void showHand(LinkedList<PlayableCard> hand) throws RemoteException {
-
-            }
-
-            @Override
-            public void updateField(String name, PlayingField field) throws RemoteException {
-
-            }
-
-            @Override
-            public void showFreePositions(String name, LinkedList<Position> freePosition) throws RemoteException {
-
-            }
-
-            @Override
-            public void updateResourceDeck(String name, boolean start, LinkedList<ResourceCard> deck) throws RemoteException {
-
-            }
-
-            @Override
-            public void updateGoldDeck(String name, boolean start, LinkedList<GoldCard> deck) throws RemoteException {
-
-            }
-
-            @Override
-            public void declareWinner(LinkedList<String> standings) throws RemoteException {
-
-            }
-
-            @Override
-            public void declareWinner(HashMap<String, Integer> classifica) throws RemoteException {
-
-            }
-
-            @Override
-            public String getName() throws RemoteException {
-                return "";
-            }
-
-            @Override
-            public void showStartCard(StartCard card) throws RemoteException {
-
-            }
-
-            @Override
-            public void startingGame(Player p) throws RemoteException {
-
-            }
-
-            @Override
-            public void twenty(String name) throws RemoteException {
-
-            }
-
-            @Override
-            public void lastRound() throws RemoteException {
-
-            }
-
-            @Override
-            public void update() throws RemoteException {
-
-            }
-
-            @Override
-            public void showOtherField(String player) throws RemoteException {
-
-            }
-        };
-        VirtualView v3 = new VirtualView() {
-            @Override
-            public void updateTurn(Player p, String mex) throws RemoteException {
-
-            }
-
-            @Override
-            public void notYourTurn(Player turn) throws RemoteException {
-
-            }
-
-            @Override
-            public void showException(String exception, String details) throws RemoteException, NotBoundException {
-
-            }
-
-            @Override
-            public void updatePoints(int points, String name) throws RemoteException {
-
-            }
-
-            @Override
-            public void updateGoals(LinkedList<GoalCard> goals) throws RemoteException {
-
-            }
-
-            @Override
-            public void updateCommonGoals(LinkedList<GoalCard> goals) throws RemoteException {
-
-            }
-
-            @Override
-            public void showHand(LinkedList<PlayableCard> hand) throws RemoteException {
-
-            }
-
-            @Override
-            public void updateField(String name, PlayingField field) throws RemoteException {
-
-            }
-
-            @Override
-            public void showFreePositions(String name, LinkedList<Position> freePosition) throws RemoteException {
-
-            }
-
-            @Override
-            public void updateResourceDeck(String name, boolean start, LinkedList<ResourceCard> deck) throws RemoteException {
-
-            }
-
-            @Override
-            public void updateGoldDeck(String name, boolean start, LinkedList<GoldCard> deck) throws RemoteException {
-
-            }
-
-            @Override
-            public void declareWinner(LinkedList<String> standings) throws RemoteException {
-
-            }
-
-            @Override
-            public void declareWinner(HashMap<String, Integer> classifica) throws RemoteException {
-
-            }
-
-            @Override
-            public String getName() throws RemoteException {
-                return "";
-            }
-
-            @Override
-            public void showStartCard(StartCard card) throws RemoteException {
-
-            }
-
-            @Override
-            public void startingGame(Player p) throws RemoteException {
-
-            }
-
-            @Override
-            public void twenty(String name) throws RemoteException {
-
-            }
-
-            @Override
-            public void lastRound() throws RemoteException {
-
-            }
-
-            @Override
-            public void update() throws RemoteException {
-
-            }
-
-            @Override
-            public void showOtherField(String player) throws RemoteException {
-
-            }
-        };
-        VirtualView v4 = new VirtualView() {
-            @Override
-            public void updateTurn(Player p, String mex) throws RemoteException {
-
-            }
-
-            @Override
-            public void notYourTurn(Player turn) throws RemoteException {
-
-            }
-
-            @Override
-            public void showException(String exception, String details) throws RemoteException, NotBoundException {
-
-            }
-
-            @Override
-            public void updatePoints(int points, String name) throws RemoteException {
-
-            }
-
-            @Override
-            public void updateGoals(LinkedList<GoalCard> goals) throws RemoteException {
-
-            }
-
-            @Override
-            public void updateCommonGoals(LinkedList<GoalCard> goals) throws RemoteException {
-
-            }
-
-            @Override
-            public void showHand(LinkedList<PlayableCard> hand) throws RemoteException {
-
-            }
-
-            @Override
-            public void updateField(String name, PlayingField field) throws RemoteException {
-
-            }
-
-            @Override
-            public void showFreePositions(String name, LinkedList<Position> freePosition) throws RemoteException {
-
-            }
-
-            @Override
-            public void updateResourceDeck(String name, boolean start, LinkedList<ResourceCard> deck) throws RemoteException {
-
-            }
-
-            @Override
-            public void updateGoldDeck(String name, boolean start, LinkedList<GoldCard> deck) throws RemoteException {
-
-            }
-
-            @Override
-            public void declareWinner(LinkedList<String> standings) throws RemoteException {
-
-            }
-
-            @Override
-            public void declareWinner(HashMap<String, Integer> classifica) throws RemoteException {
-
-            }
-
-            @Override
-            public String getName() throws RemoteException {
-                return "";
-            }
-
-            @Override
-            public void showStartCard(StartCard card) throws RemoteException {
-
-            }
-
-            @Override
-            public void startingGame(Player p) throws RemoteException {
-
-            }
-
-            @Override
-            public void twenty(String name) throws RemoteException {
-
-            }
-
-            @Override
-            public void lastRound() throws RemoteException {
-
-            }
-
-            @Override
-            public void update() throws RemoteException {
-
-            }
-
-            @Override
-            public void showOtherField(String player) throws RemoteException {
-
-            }
-        };
-
-
-
-        beppe.addPlayer("frank", PlayerColor.YELLOW, v1);
-        beppe.addPlayer("CARLOS O'CONNELL", PlayerColor.BLUE,v2);
-        beppe.addPlayer("MARCO DEVI MORIRE", PlayerColor.GREEN, v3);
-        */
-
-   //     tui.plotPoints(beppe);
-
-        Position position1 = new Position(1,1);
-        Position position2 = new Position(2,2);
-        Position position3 = new Position(3,3);
-        Position position4 = new Position(0,0);
-        Position position5 = new Position(0,2);
-        Position position6 = new Position(-1,1);
-        Position position7 = new Position(-2,2);
-        Position position8 = new Position(-3,3);
-
-        ResourceDeck rd = new ResourceDeck();
-        StartDeck sd = new StartDeck();
-        GoldDeck gd = new GoldDeck();
-
-        ResourceCard r1 = (ResourceCard) rd.getCardById(1);
-        ResourceCard r2 = (ResourceCard) rd.getCardById(2);
-        ResourceCard r3 = (ResourceCard) rd.getCardById(3);
-        StartCard s1 = (StartCard) sd.getCardById(85);
-        ResourceCard r4 = (ResourceCard)rd.getCardById(6);
-
-        GoldCard g1 = (GoldCard) gd.getCardById(41);
-        GoldCard g2 = (GoldCard) gd.getCardById(43);
-        GoldCard g3 = (GoldCard) gd.getCardById(45);
-
-        HashMap<Position, PlayableCard> mappa = p.getPlayerField().getField();
-        mappa.put(position1, r1);
-        mappa.put(position2, r2);
-        mappa.put(position3, r3);
-        mappa.put(position5, r4);
-        mappa.put(position4, s1);
-        mappa.put(position6, g1);
-        mappa.put(position7, g2);
-        mappa.put(position8, g3);
-
- //       tui.plotPoints(beppe);
-
-    }
-
-    //-------------------------------PUNTIIIIII--------------------------------------------------------------------------
+    //-----------------------------------------------PUNTI--------------------------------------------------------------
 
     public void plotPoints(ClientModel model){
         System.out.printf("%-20s %-10s%n", "Player", "Points");
         System.out.println("---------------------------------");
 
         model.getPointsCounter().forEach((k, v) -> System.out.printf("%-20s %-10d%n", k, v));
-
-/*        int carlos = controller.getPlayers().size();
-        int zero = 0;
-        for(int i  = zero ; i < carlos; i++){
-            System.out.printf("%-20s %-10d%n", controller.getPlayers().get(i).getName(), controller.getPlayers().get(i).getPointsCounter());
-        }*/
     }
 
-
-
-    //-----------------------------------------HAND--------------------------------------------------------------------
-
-    public void plotHand(ClientModel model){
-        LinkedList<PlayableCard> toPrint = model.getHand();
-        for(PlayableCard p : toPrint){
-            if (p.getId() >= 1 && p.getId() <= 40) {
-                printFrontResourceCard((ResourceCard) p);
-                printBackResourceCard((ResourceCard) p);
-            } else if (p.getId() >= 41 && p.getId() <= 80) {
-                printFrontGoldCard((GoldCard) p);
-                printBackGoldCard((GoldCard) p);
-            } else {
-                printFrontStartCard((StartCard) p);
-                printBackStartCard((StartCard) p);
-            }
-
-        }
-    }
+    //-----------------------------------------------HAND---------------------------------------------------------------
 
     public void plotHandSeria(ClientModel model){
         LinkedList<PlayableCard> toPrint= model.getHand();
@@ -1754,7 +1276,7 @@ public class CardsTUI {
         System.out.print(ANSI_RESET);
     }
 
-    //---------------------------------------GOLDDECK--------------------------------------------------------------
+    //-------------------------------------------------DECK-------------------------------------------------------------
 
     public void plotDrawables(ClientModel model){
         LinkedList<GoldCard> Gold = model.getDrawableGoldCards();
@@ -1865,5 +1387,4 @@ public class CardsTUI {
             printGoalCard(c);
         }
     }
-
 }
