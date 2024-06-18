@@ -6,9 +6,15 @@ module it.polimi.ingsw {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.graphics;
+    exports it.polimi.ingsw.View;
+    exports it.polimi.ingsw.Model.PlayerPackage;
     exports it.polimi.ingsw.View.GUI;
     exports it.polimi.ingsw.Network.RMI;
     exports it.polimi.ingsw.Network;
+    exports it.polimi.ingsw.Controller;
+    exports it.polimi.ingsw.View.TUI;
+    exports it.polimi.ingsw.Model.CardPackage.PlayableCardPackage;
+    exports it.polimi.ingsw.Model.CardPackage.GoalCardPackage;
     exports it.polimi.ingsw.View.GUI.GUIController;
     opens it.polimi.ingsw.Controller to javafx.fxml, javafx.graphics;
     opens it.polimi.ingsw.View.GUI.GUIController to javafx.fxml;

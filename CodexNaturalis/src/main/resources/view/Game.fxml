@@ -17,7 +17,7 @@
     <ImageView fx:id="backgroundImage" fitHeight="650.0" fitWidth="1250.0" preserveRatio="false" />
     <Label fx:id="welcomeLabel" layoutX="325.0" layoutY="300.0" styleClass="welcome-label" text="Benvenuto nella nuova partita, " />
 
-    <AnchorPane fx:id="neutralBackgroundPane" style="-fx-background-image: url('/CodexNaturalis/src/main/resources/view/MyCodexNaturalisPhotos/pic8211904.jpg'); -fx-background-size: cover;" visible="false">
+    <AnchorPane fx:id="neutralBackgroundPane" style="-fx-background-image: url('@MyCodexNaturalisPhotos/pic6518929.jpg'); -fx-background-size: cover;" visible="false">
         <Pane layoutX="150.0" layoutY="100.0" prefHeight="300.0" prefWidth="600.0" style="-fx-background-color: rgba(0, 0, 0, 0.6); -fx-background-radius: 10px; -fx-border-color: gold; -fx-border-width: 2px;">
             <Label fx:id="chooseSideLabel" layoutX="200.0" layoutY="20.0" style="-fx-font-size: 24px; -fx-text-fill: black; -fx-stroke: gold; -fx-stroke-width: 1.5;" visible="false" />
             <HBox alignment="CENTER" layoutX="100.0" layoutY="100.0" spacing="50.0">

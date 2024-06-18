@@ -1,35 +1,33 @@
 package it.polimi.ingsw.Network.RMI;
 
 import it.polimi.ingsw.Actions.*;
-import it.polimi.ingsw.Controller.GameController;
 import it.polimi.ingsw.Controller.MainController;
-import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
-import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Network.VirtualView;
-
-import java.util.LinkedList;
-import java.util.Map.Entry;
-
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.HashMap;
 import java.util.concurrent.*;
 
+/**
+ * The RMIServer class implements the VirtualServer interface and handles the server-side logic of the game.
+ */
 public class RMIServer implements VirtualServer {
 
     final MainController controller;
-
-    //come perbacco aggiungo un client alla mappa clients se non riesco a tenere conto
-    //del numero della room?
     int port;
     ExecutorService executorService;
     final ConcurrentHashMap<Integer, MultipleFlow> actionsPerGame;
     PriorityBlockingQueue<Actions> joins = new PriorityBlockingQueue<>();
 
+    /**
+     * Constructor for the RMIServer class.
+     *
+     * @param controller The main controller of the game.
+     * @throws RemoteException If a remote access error occurs.
+     */
     public RMIServer(MainController controller) throws RemoteException {
         this.controller = controller;
         port =  49666;
@@ -38,6 +36,11 @@ public class RMIServer implements VirtualServer {
         executeStart();
     }
 
+    /**
+     * Starts the server and binds it to a registry.
+     *
+     * @throws RemoteException If a remote access error occurs.
+     */
     public void startServer() throws RemoteException { //in realtà le eccezioni dovremmo gestirle decentemente
 
         final String serverName = "CodexServer";
@@ -50,7 +53,13 @@ public class RMIServer implements VirtualServer {
         System.out.println("Server buond.");
     }
 
-
+    /**
+     * Allows a player to join a game.
+     *
+     * @param Name The name of the player.
+     * @param client The client that represents the player.
+     * @throws RemoteException If a remote access error occurs.
+     */
     @Override
     public void joinGame(String Name, VirtualView client) throws RemoteException {
         synchronized (actionsPerGame) {
@@ -67,6 +76,14 @@ public class RMIServer implements VirtualServer {
         }
     }
 
+    /**
+     * Allows a player to create a game.
+     *
+     * @param Name The name of the player.
+     * @param numPlayers The number of players in the game.
+     * @param client The client that represents the player.
+     * @throws RemoteException If a remote access error occurs.
+     */
     @Override
     public void createGame(String Name, int numPlayers, VirtualView client) throws RemoteException {
         synchronized (actionsPerGame) {
@@ -82,6 +99,12 @@ public class RMIServer implements VirtualServer {
         }
     }
 
+    /**
+     * Allows a player to leave a game.
+     *
+     * @param client The client that represents the player.
+     * @throws RemoteException If a remote access error occurs.
+     */
     @Override
     public void leaveGame(VirtualView client) throws RemoteException {
         int roomId = controller.getYourRoomId(client.getName());
@@ -89,6 +112,16 @@ public class RMIServer implements VirtualServer {
         actionsPerGame.get(roomId).getActionsQueue().add(lAction);
     }
 
+    /**
+     * Allows a player to place a card.
+     *
+     * @param client The client that represents the player.
+     * @param whichInHand The index of the card in hand.
+     * @param x The x-coordinate of the placement.
+     * @param y The y-coordinate of the placement.
+     * @param face The face of the card.
+     * @throws RemoteException If a remote access error occurs.
+     */
     @Override
     public void placeCard(VirtualView client, int whichInHand, int x, int y, FB face) throws RemoteException {
         int roomId = controller.getYourRoomId(client.getName());
@@ -96,6 +129,13 @@ public class RMIServer implements VirtualServer {
         actionsPerGame.get(roomId).getActionsQueue().add(pAction);
     }
 
+    /**
+     * Allows a player to set the face of the start card.
+     *
+     * @param face The face of the start card.
+     * @param client The client that represents the player.
+     * @throws RemoteException If a remote access error occurs.
+     */
     @Override
     public void setStartCardFace(boolean face, VirtualView client) throws RemoteException { //ordine initialize game tutto gestito nella view
         int roomId = controller.getYourRoomId(client.getName());
@@ -103,6 +143,13 @@ public class RMIServer implements VirtualServer {
         actionsPerGame.get(roomId).getActionsQueue().add(ssAction);
     }
 
+    /**
+     * Allows a player to choose a goal card.
+     *
+     * @param i The index of the goal card.
+     * @param client The client that represents the player.
+     * @throws RemoteException If a remote access error occurs.
+     */
     @Override
     public void chooseGoalCard(int i, VirtualView client) throws RemoteException {
         int roomId = controller.getYourRoomId(client.getName());
@@ -110,6 +157,14 @@ public class RMIServer implements VirtualServer {
         actionsPerGame.get(roomId).getActionsQueue().add(cgAction);
     }
 
+    /**
+     * Allows a player to draw a card.
+     *
+     * @param i The index of the deck.
+     * @param whichOne The index of the card in the deck.
+     * @param client The client that represents the player.
+     * @throws RemoteException If a remote access error occurs.
+     */
     @Override
     public void drawCard(int i, int whichOne, VirtualView client) throws RemoteException {
         int roomId = controller.getYourRoomId(client.getName());
@@ -117,6 +172,13 @@ public class RMIServer implements VirtualServer {
         actionsPerGame.get(roomId).getActionsQueue().add(dAction);
     }
 
+    /**
+     * Allows a player to end their turn.
+     *
+     * @param client The client that represents the player.
+     * @param mex The message to be displayed when the turn ends.
+     * @throws RemoteException If a remote access error occurs.
+     */
     @Override
     public void endTurn(VirtualView client, String mex) throws RemoteException {
         int roomId = controller.getYourRoomId(client.getName());
@@ -124,6 +186,9 @@ public class RMIServer implements VirtualServer {
         actionsPerGame.get(roomId).getActionsQueue().add(eAction);
     }
 
+    /**
+     * Executes the game logic.
+     */
     public void executeGame() {
         new Thread(() -> {
             while (true) {
@@ -145,7 +210,9 @@ public class RMIServer implements VirtualServer {
         }).start();
     }
 
-
+    /**
+     * Executes the start of the game.
+     */
     public void executeStart() {
         new Thread(() -> {
             while (true) {

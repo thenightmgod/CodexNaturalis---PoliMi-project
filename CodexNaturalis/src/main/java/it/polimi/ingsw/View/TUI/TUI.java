@@ -1,29 +1,20 @@
 package it.polimi.ingsw.View.TUI;
 
-import it.polimi.ingsw.Controller.GameController;
-import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.StartCard;
-import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
 import it.polimi.ingsw.Network.CommonClient;
-import it.polimi.ingsw.Network.RMI.RMIClient;
 //import it.polimi.ingsw.Network.Socket.SocketClient;
 import it.polimi.ingsw.View.GameView;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.*;
-import java.util.concurrent.*;
-import java.util.stream.Collectors;
+
 
 public class TUI implements GameView {
 
