@@ -75,7 +75,6 @@ public class Player implements Serializable {
         return this.PlayerField;
     }
 
-
     /**
      * Retrieves the name of the player.
      *
@@ -84,7 +83,6 @@ public class Player implements Serializable {
     public String getName() {
         return Name;
     }
-
 
     /**
      * Retrieves the color assigned to the player.
@@ -102,10 +100,6 @@ public class Player implements Serializable {
      */
     public int getPointsCounter() {
         return PointsCounter;
-    }
-
-    public void addPoints(int points){
-        this.PointsCounter += points;
     }
 
     /**
@@ -142,6 +136,7 @@ public class Player implements Serializable {
         else
             return ResourceCounter[3];
     }
+
     /**
      * Retrieves the counter for a specific type of object.
      *
