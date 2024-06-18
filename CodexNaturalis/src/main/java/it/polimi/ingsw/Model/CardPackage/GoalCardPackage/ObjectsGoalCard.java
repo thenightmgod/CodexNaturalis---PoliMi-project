@@ -41,10 +41,9 @@ public class ObjectsGoalCard extends GoalCard {
         int points = 0;
         switch(getPoints()){
             case 3 ->{
-                for(int i: player.getObjects()){
-                    if(obj[i] < points)
-                        points = obj[i];
-                }
+                int objj[] = player.getObjects();
+                int min = Math.min(objj[0], Math.min(objj[1], objj[2]));
+                points = min;
                 return points * 3;
             }
             case 2 ->{
