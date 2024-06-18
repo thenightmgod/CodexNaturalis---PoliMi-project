@@ -48,6 +48,7 @@ public class LoginController extends GUIController {
     // protected ProtocolController pc;
     protected  GUI gui;
     boolean serverIpEntered=false;
+    boolean connectionType;
     protected String serverIp;
     protected String username;
     protected int number;
@@ -142,8 +143,10 @@ public class LoginController extends GUIController {
             return;
         }
         gui.setName(username);
-        client=new RMIClient(username,serverIp);
-        gui.setClient(client);
+        if(!(connectionType)) {
+            ((RMIClient) this.client ).setName(this.gui.getName());
+        }
+        //else socket
         joinGame();
         myNicknameButton.setVisible(false);
         myNicknameButton.setDisable(true);
@@ -158,6 +161,7 @@ public class LoginController extends GUIController {
     public void startRMI(ActionEvent event)  {
         try {
             client= new RMIClient(username, serverIp);
+            connectionType = false;
             gui.setClient(client);
             client.setView(gui);
             joinGame();
