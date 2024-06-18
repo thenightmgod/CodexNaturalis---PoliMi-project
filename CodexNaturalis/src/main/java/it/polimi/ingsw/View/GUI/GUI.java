@@ -58,6 +58,11 @@ public class GUI implements GameView {
     public void setName(String name) {
         this.name=name;
     }
+
+    public String getName() {
+        return name;
+    }
+
     public void setClient(CommonClient client) {
         this.client=client;
     }

@@ -258,7 +258,7 @@ class PlayerTest {
         assertEquals(1, player1.getResourceCounter(Resources.INSECT_KINGDOM));
     }
     /**
-     * This test
+     * This test checks if the player's points are updated correctly.
      */
     @Test
     void pointsCalcTest() {
