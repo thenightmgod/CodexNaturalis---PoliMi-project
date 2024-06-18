@@ -1,20 +1,13 @@
 package it.polimi.ingsw.Model.PlayerPackage;
 
 import java.io.Serializable;
-import java.lang.reflect.Field;
-import java.rmi.RemoteException;
 import java.util.*;
-
-import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.*;
 import it.polimi.ingsw.Model.CornerPackage.*;
 import it.polimi.ingsw.Model.CornerPackage.Resources;
 import it.polimi.ingsw.Model.CornerPackage.Objects;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
-import it.polimi.ingsw.Model.RoomPackage.ObserverManager;
-
 import static it.polimi.ingsw.Model.CornerPackage.CornerState.EMPTY;
-
 import static it.polimi.ingsw.Model.CornerPackage.Objects.*;
 import static it.polimi.ingsw.Model.CornerPackage.Resources.ANIMAL_KINGDOM;
 import static it.polimi.ingsw.Model.CornerPackage.Resources.PLANT_KINGDOM;

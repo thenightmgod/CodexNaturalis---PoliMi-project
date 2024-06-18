@@ -1,25 +1,39 @@
 package it.polimi.ingsw.Actions;
 
-import it.polimi.ingsw.Controller.GameController;
 import it.polimi.ingsw.Controller.MainController;
-import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Network.RMI.RMIServer;
 import it.polimi.ingsw.Network.VirtualView;
 
-import java.io.EOFException;
 import java.rmi.RemoteException;
-import java.util.Map;
 
+/**
+ * Represents an action where a player leaves a game.
+ * This action is a subclass of the Actions class.
+ */
 public class LeaveAction extends Actions {
 
-    String name;
     int roomId;
 
+    /**
+     * Constructs a new LeaveAction with the specified view, manager, server, priority, and room ID.
+     *
+     * @param view The VirtualView associated with this action.
+     * @param manager The MainController managing this action.
+     * @param server The RMIServer where this action is executed.
+     * @param priority The priority of this action.
+     * @param roomId The ID of the room from which the player is leaving.
+     */
     public LeaveAction(VirtualView view, MainController manager, RMIServer server, int priority, int roomId) {
         super(view, manager, server, priority);
         this.roomId = roomId;
     }
 
+    /**
+     * Executes this action.
+     * The player leaves the game and a leave game message is sent.
+     *
+     * @throws RemoteException If a remote access error occurs.
+     */
     @Override
     public void executor() throws RemoteException {
         try {
@@ -27,11 +41,7 @@ public class LeaveAction extends Actions {
             VirtualView client = getView();
             if(client != null)
                 client.leaveGameMessage();
-        } catch (RemoteException ignored) {
-        }/*if (e.getCause() instanceof EOFException) {
-                System.out.println("Client disconnected unexpectedly.");
-            } else {
-                e.printStackTrace();
-            }*/
+            } catch (RemoteException ignored) {}
         }
+
     }
