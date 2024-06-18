@@ -11,7 +11,6 @@ public class Position implements Serializable {
     private int y;
     private final FB face;
 
-
     /**
      * Constructs a position with the specified face, x-coordinate, and y-coordinate.
      * @param situa The face of the position.
@@ -47,7 +46,6 @@ public class Position implements Serializable {
      */
     public void setY(int y) { this.y=y; }
 
-
     /**
      * Retrieves the x-coordinate of the position.
      * @return The x-coordinate of the position.
@@ -72,13 +70,11 @@ public class Position implements Serializable {
         return face;
     }
 
-
     /**
      * Indicates whether some other object is "equal to" this one.
      * @param obj The reference object with which to compare.
      * @return {@code true} if this object is the same as the obj argument; {@code false} otherwise.
      */
-
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
