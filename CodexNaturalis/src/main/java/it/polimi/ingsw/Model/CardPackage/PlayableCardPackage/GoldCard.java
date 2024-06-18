@@ -68,7 +68,6 @@ public class GoldCard extends ResourceCard implements Serializable {
         return PointsC;
     }
 
-
     /**
      *
      *Determines whether the player has the necessary resources, as described in the requirements, to place the GoldCard in the playing field.
@@ -100,7 +99,6 @@ public class GoldCard extends ResourceCard implements Serializable {
             }
         return ok;
     }
-
 
     /**
      * Calculates the points that the player makes if he meets the resource requirements and places the card.
@@ -169,9 +167,4 @@ public class GoldCard extends ResourceCard implements Serializable {
 
         return sb.toString();
     }
-
-
-
-
 }
-
