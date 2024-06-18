@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Model.PlayerPackage;
 
-import it.polimi.ingsw.Exceptions.RequirementsNotSatisfied;
+
 import it.polimi.ingsw.Model.CardPackage.Card;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.CardColor;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
@@ -169,7 +169,7 @@ class PlayerTest {
      * on the player, such as the card itself and a player. Then checks if the card is correctly placed.
      */
     @Test
-    void placecardTest() throws RequirementsNotSatisfied {
+    void placecardTest() {
         Player player1 = new Player("Lazzarone", PlayerColor.RED);
 
         boolean primoRes[] = new boolean[4];  //inizio con la startcard con una backres (fungo)
@@ -261,7 +261,7 @@ class PlayerTest {
      * This test
      */
     @Test
-    void pointsCalcTest() throws RequirementsNotSatisfied {
+    void pointsCalcTest() {
         GoldDeck gd = new GoldDeck();
         ResourceDeck rd = new ResourceDeck();
         Player p = new Player("ninaaaaa", PlayerColor.RED);

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.View.GUI.GUIController;
 
+import com.sun.scenario.effect.impl.sw.java.JSWBlend_BLUEPeer;
 import it.polimi.ingsw.Network.CommonClient;
 import it.polimi.ingsw.Network.RMI.RMIClient;
 import it.polimi.ingsw.Network.RMI.VirtualServer;
@@ -44,7 +45,7 @@ public class LoginController extends GUIController {
     protected  CommonClient client;
     protected Parent root;
     protected  Stage stage;
-   // protected ProtocolController pc;
+    // protected ProtocolController pc;
     protected  GUI gui;
     boolean serverIpEntered=false;
     protected String serverIp;
@@ -165,9 +166,9 @@ public class LoginController extends GUIController {
             myButton2.setVisible(false);
             myButton2.setDisable(true);
         }catch (RemoteException e) {
-        System.out.println("an exception occurred while starting the client");
+            System.out.println("an exception occurred while starting the client");
         } catch (NotBoundException e){
-        System.out.print("NotBoundException occurred while initializing the client");
+            System.out.print("NotBoundException occurred while initializing the client");
         }
     }
 
@@ -197,7 +198,7 @@ public class LoginController extends GUIController {
                     alert.setContentText("No game started, please start a new one.");
                     alert.showAndWait();
                     createGame();
-                    }
+                }
                 default -> {
                 }
             }
@@ -263,15 +264,17 @@ public class LoginController extends GUIController {
         animateLabelText(myLabel2, "Waiting for other participants...");
 
 
-        String newImagePath = "/Users/caterinagerini/Desktop/CodexNaturalis/CodexNaturalis/src/main/Resources/view/MyCodexNaturalisPhotos/pic6069793.jpg";
+        String newImagePath = "/view/MyCodexNaturalisPhotos/pic6069793.jpg";
         Image newImage = loadImage(newImagePath);
         myImage.setImage(newImage);
     }
 
     public void showGameScene() throws IOException {
-        File fxmlFile = new File("/Users/caterinagerini/Desktop/CodexNaturalis/CodexNaturalis/src/main/Resources/view/game.fxml");
-        URL fxmlUrl = fxmlFile.toURI().toURL();
-        FXMLLoader loader= new FXMLLoader();
+        URL fxmlUrl = getClass().getResource("/view/Game.fxml");
+        if (fxmlUrl == null) {
+            throw new RuntimeException("FXML file not found");
+        }
+        FXMLLoader loader = new FXMLLoader(fxmlUrl);
         loader.setLocation(fxmlUrl);
         Parent root= loader.load();
 
@@ -285,10 +288,13 @@ public class LoginController extends GUIController {
     }
     private Image loadImage(String imagePath) {
         try {
-            File file = new File(imagePath);
-            String localUrl = file.toURI().toURL().toString();
-            return new Image(localUrl);
-        } catch (MalformedURLException e) {
+            URL resourceUrl = getClass().getResource(imagePath);
+            if (resourceUrl == null) {
+                System.out.println("Resource not found: " + imagePath);
+                return null;
+            }
+            return new Image(resourceUrl.toString());
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -331,16 +337,16 @@ public class LoginController extends GUIController {
 
     private void animateLabelText(Label label, String text) {
 
-            final int length = text.length();
-            Timeline timeline = new Timeline();
+        final int length = text.length();
+        Timeline timeline = new Timeline();
 
-            for (int i = 0; i <= length; i++) {
-                final String partialText = text.substring(0, i);
-                KeyFrame keyFrame = new KeyFrame(Duration.millis(50 * i), event -> label.setText(partialText));
-                timeline.getKeyFrames().add(keyFrame);
-            }
+        for (int i = 0; i <= length; i++) {
+            final String partialText = text.substring(0, i);
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(50 * i), event -> label.setText(partialText));
+            timeline.getKeyFrames().add(keyFrame);
+        }
 
-            timeline.play();
+        timeline.play();
 
 
     }
@@ -355,7 +361,7 @@ public class LoginController extends GUIController {
 
     public void showLoginScene() {
         try {
-            File fxmlFile = new File("/Users/caterinagerini/Desktop/CodexNaturalis/CodexNaturalis/src/main/Resources/view/login.fxml");
+            File fxmlFile = new File("/view/login.fxml");
             URL fxmlUrl = fxmlFile.toURI().toURL();
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(fxmlUrl);
@@ -416,4 +422,3 @@ public class LoginController extends GUIController {
         timeline.play();
     }
 }
-
