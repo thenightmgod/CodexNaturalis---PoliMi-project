@@ -10,16 +10,14 @@ import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
 import it.polimi.ingsw.Network.CommonClient;
-import it.polimi.ingsw.View.GUI.GUIController.GUIController;
-import it.polimi.ingsw.View.GUI.GUIController.GameController;
-import it.polimi.ingsw.View.GUI.GUIController.GoalCardController;
-import it.polimi.ingsw.View.GUI.GUIController.LoginController;
+import it.polimi.ingsw.View.GUI.GUIController.*;
 import it.polimi.ingsw.View.GameView;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.rmi.NotBoundException;
@@ -49,15 +47,19 @@ public class GUI implements GameView {
     }
     public void switchToScene(String sceneName) throws IOException {
         GUIController controller = guicontrollers.get(sceneName);
+        System.out.println("duce");
         if (controller == null) {
             controller = loadController(sceneName);
+            System.out.println("benito");
             guicontrollers.put(sceneName, controller);
         }
+        System.out.println("mussolini");
         primaryStage.setScene(controller.getScene());
         primaryStage.show();
     }
 
     private GUIController loadController(String sceneName) throws IOException {
+        System.out.println("ian curtis");
         URL fxmlUrl = getClass().getResource("/view/" + sceneName + ".fxml");
         FXMLLoader loader = new FXMLLoader(fxmlUrl);
         Parent root = loader.load();
@@ -118,29 +120,28 @@ public class GUI implements GameView {
 
     @Override
     public void showException(String name, String exception) throws RemoteException, NotBoundException {
-        switch(name) {
+        switch (name) {
             case "NameAlreadyTakenException" -> {
                 Platform.runLater(() -> {
-
+                    guicontrollers.get("login").showException("NameAlreadyTakenException");
                 });
-            //    if(loginController != null) {
-             //       Platform.runLater(() -> loginController.showException("NameAlreadyTakenException"));
-                }
             }
-            //case "RoomNotExistsException" -> {
-              //  if(loginController != null) {
-                //    loginController.showException("RoomNotExistsException");
-                }
-
-       // }
-
-
-
+            case "RoomNotExistsException" -> {
+                Platform.runLater(() -> {
+                    guicontrollers.get("login").showException("RoomNotExistsException");
+                });
+            }
+        }
+    }
 
     @Override
     public void showStartCard(StartCard card) throws RemoteException {
         Platform.runLater(() -> {
-        //    gameController.updateStartCard(card);
+            try {
+                ((StartCardController) guicontrollers.get("startCard")).showStartCard(card);
+            } catch (FileNotFoundException e) {
+                System.out.println("Show start card scene non correttamente inizializzata");
+            }
         });
     }
 
@@ -151,7 +152,7 @@ public class GUI implements GameView {
             switch (mex) {
                 case "StartCard" -> {
                     Platform.runLater(() -> {
-                     //   gameController.chooseStartCardFace();
+                        ((StartCardController) guicontrollers.get("startCard")).chooseStartCard();
                     });
                 }
                 case "GoalCard" ->{}
@@ -160,6 +161,9 @@ public class GUI implements GameView {
             }
         }else {
             switch(mex) {
+                case "StartCard" -> {
+                    Platform.runLater(() -> ((StartCardController) guicontrollers.get("startCard")).waitYourTurn());
+                }
                 case "GoalCard" -> {
                    // Platform.runLater(() -> goalCardController.showWaitingScene());
                 }

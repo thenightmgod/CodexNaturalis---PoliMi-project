@@ -13,9 +13,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="650.0" prefWidth="1250.0" stylesheets="@styles2.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.GUI.GUIController.GameController">
+<AnchorPane prefHeight="650.0" prefWidth="1250.0" stylesheets="@styles2.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.GUI.GUIController.StartCardController">
     <ImageView fx:id="backgroundImage" fitHeight="650.0" fitWidth="1250.0" preserveRatio="false" />
-    <Label fx:id="welcomeLabel" layoutX="325.0" layoutY="300.0" styleClass="welcome-label" text="Benvenuto nella nuova partita, " />
+    <Label fx:id="welcomeLabel" layoutX="325.0" layoutY="300.0" styleClass="welcome-label" text="Welcome to the new game, " />
 
     <AnchorPane fx:id="neutralBackgroundPane" style="-fx-background-image: url('/view/MyCodexNaturalisPhotos/pic8211904.jpg'); -fx-background-size: cover;" visible="false">
         <Pane layoutX="150.0" layoutY="100.0" prefHeight="300.0" prefWidth="600.0" style="-fx-background-color: rgba(0, 0, 0, 0.6); -fx-background-radius: 10px; -fx-border-color: gold; -fx-border-width: 2px;">
@@ -24,115 +24,6 @@
                 <ImageView fx:id="leftStartCardImage" disable="true" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#onCardMouseClicked" onMouseEntered="#onCardMouseEntered" onMouseExited="#onCardMouseExited" visible="false" />
                 <ImageView fx:id="rightStartCardImage" disable="true" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#onCardMouseClicked" onMouseEntered="#onCardMouseEntered" onMouseExited="#onCardMouseExited" visible="false" />
             </HBox>
-
-            <HBox fx:id="goalCardsHBox" alignment="CENTER" layoutX="100.0" layoutY="100.0" spacing="50.0" visible="false">
-                <ImageView fx:id="leftGoalCardImageView" fitHeight="150.0" fitWidth="200.0" />
-                <ImageView fx:id="rightGoalCardImageView" fitHeight="150.0" fitWidth="200.0" />
-            </HBox>
         </Pane>
     </AnchorPane>
-
-
-
-
-    <!-- Main BorderPane, inizialmente nascosto -->
-    <BorderPane fx:id="mainBorderPane" style="-fx-background-color: rgba(255, 255, 255, 0.8);" visible="false">
-        <AnchorPane.topAnchor>0.0</AnchorPane.topAnchor>
-        <AnchorPane.bottomAnchor>0.0</AnchorPane.bottomAnchor>
-        <AnchorPane.leftAnchor>0.0</AnchorPane.leftAnchor>
-        <AnchorPane.rightAnchor>0.0</AnchorPane.rightAnchor>
-
-        <!-- Parte sinistra: Campo da gioco con frecce per muoversi -->
-        <left>
-            <VBox spacing="10" styleClass="vbox-padding">
-                <HBox alignment="center" styleClass="hbox-padding">
-                    <Button onAction="#moveUp" text="⬆" />
-                </HBox>
-                <HBox spacing="10" styleClass="hbox-padding" HBox.hgrow="ALWAYS">
-                    <Button onAction="#moveLeft" text="⬅">
-                        <HBox.margin>
-                            <Insets top="150.0" />
-                        </HBox.margin>
-                    </Button>
-                    <Pane fx:id="gameField" prefWidth="600.0" style="-fx-border-color: black; -fx-pref-width: 600; -fx-pref-height: 400;">
-                        <!-- Le carte verranno aggiunte dinamicamente in questo Pane -->
-                    </Pane>
-                    <Button onAction="#moveRight" text="➡">
-                        <HBox.margin>
-                            <Insets bottom="150.0" top="150.0" />
-                        </HBox.margin>
-                    </Button>
-                </HBox>
-                <HBox alignment="center" styleClass="hbox-padding">
-                    <Button onAction="#moveDown" text="⬇" />
-                </HBox>
-            </VBox>
-        </left>
-
-        <!-- Parte sotto: Tre gruppi di carte -->
-        <bottom>
-            <HBox alignment="center" prefHeight="117.0" prefWidth="568.0" spacing="20.0" styleClass="hbox-padding" BorderPane.alignment="BOTTOM_LEFT">
-                <ScrollPane fx:id="cardGroup1ScrollPane" prefHeight="97.0" prefWidth="160.0">
-                    <content>
-                        <VBox fx:id="cardGroup1" spacing="10" styleClass="vbox-padding">
-                            <Text text="RESOURCECards" textOrigin="CENTER" />
-                            <!-- Le carte del gruppo 1 verranno aggiunte dinamicamente -->
-                        </VBox>
-                    </content>
-                </ScrollPane>
-                <ScrollPane fx:id="cardGroup2ScrollPane" prefHeight="97.0" prefWidth="160.0">
-                    <content>
-                        <VBox fx:id="cardGroup2" spacing="10" styleClass="vbox-padding">
-                            <Text text="GOLDCards" />
-                            <!-- Le carte del gruppo 2 verranno aggiunte dinamicamente -->
-                        </VBox>
-                    </content>
-                </ScrollPane>
-                <BorderPane.margin>
-                    <Insets right="650.0" />
-                </BorderPane.margin>
-            </HBox>
-        </bottom>
-
-        <!-- Parte destra: Altra sezione -->
-        <right>
-            <VBox alignment="center" prefHeight="516.0" prefWidth="201.0" spacing="20" styleClass="vbox-padding">
-
-                <!-- Contenuto dell'altra sezione -->
-                <Text text="SEGNAPUNTI" />
-                <!-- Aggiungere qui il contenuto specifico dell'altra sezione -->
-            </VBox>
-        </right>
-        <top>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="TURN" wrappingWidth="115.21630859375" BorderPane.alignment="TOP_LEFT" />
-        </top>
-        <center>
-            <VBox prefHeight="467.0" prefWidth="338.0" spacing="20.0" BorderPane.alignment="CENTER">
-                <children>
-                    <HBox prefHeight="342.0" prefWidth="355.0">
-                        <children>
-                            <ScrollPane prefHeight="200.0" prefWidth="176.0">
-                                <content>
-                                    <VBox fx:id="resourceDeck" prefHeight="341.0" prefWidth="160.0" />
-                                </content>
-                            </ScrollPane>
-                            <ScrollPane prefHeight="200.0" prefWidth="176.0">
-                                <content>
-                                    <VBox prefHeight="341.0" prefWidth="160.0" />
-                                </content>
-                            </ScrollPane>
-                        </children>
-                    </HBox>
-                    <VBox>
-                        <Text lineSpacing="15.0" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: gold;" text="Common Goals">
-                            <font>
-                                <Font name="Apple SD Gothic Neo Regular" size="15.0" />
-                            </font>
-                        </Text>
-                        <HBox fx:id="commonGoalsBox" alignment="CENTER" prefHeight="123.0" prefWidth="338.0" spacing="10" />
-                    </VBox>
-                </children>
-            </VBox>
-        </center>
-    </BorderPane>
 </AnchorPane>
