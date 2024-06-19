@@ -127,6 +127,4 @@ public class StartCardController extends GUIController{
         leftStartCardImage.setDisable(true);
         rightStartCardImage.setDisable(true);
     }
-
-
 }

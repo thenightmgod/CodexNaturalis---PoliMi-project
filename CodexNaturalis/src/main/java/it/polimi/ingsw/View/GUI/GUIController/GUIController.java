@@ -53,8 +53,7 @@ public abstract class GUIController {
     public Scene getScene() {
         return new Scene(root);
     }
-
-
+    
     public void showException(String exception) {
     }
     //eventuali pulizie

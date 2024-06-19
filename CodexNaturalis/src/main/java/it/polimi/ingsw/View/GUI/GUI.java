@@ -33,6 +33,7 @@ public class GUI implements GameView {
     private Player Turn;
     private CommonClient client;
     private String[] args;
+    private LinkedList<GoalCard> goals;
 
     //-------METODI DEI CONTROLLER---------------------------
     public void start(String[] args, Stage stage) throws IOException {
@@ -47,19 +48,15 @@ public class GUI implements GameView {
     }
     public void switchToScene(String sceneName) throws IOException {
         GUIController controller = guicontrollers.get(sceneName);
-        System.out.println("duce");
         if (controller == null) {
             controller = loadController(sceneName);
-            System.out.println("benito");
             guicontrollers.put(sceneName, controller);
         }
-        System.out.println("mussolini");
         primaryStage.setScene(controller.getScene());
         primaryStage.show();
     }
 
     private GUIController loadController(String sceneName) throws IOException {
-        System.out.println("ian curtis");
         URL fxmlUrl = getClass().getResource("/view/" +sceneName + ".fxml");
         FXMLLoader loader = new FXMLLoader(fxmlUrl);
         Parent root = loader.load();
@@ -88,9 +85,13 @@ public class GUI implements GameView {
 
     @Override
     public void updateGoals(LinkedList<GoalCard> goals, String name) throws RemoteException {
-        Platform.runLater(() -> {
-                //gameController.changeSceneGoals(goals);
-
+        Platform.runLater(()-> {
+            try {
+                switchToScene("goalCard");
+                this.goals=goals;
+            } catch (IOException e) {
+                System.out.println("StartCardScene non correttamente inizializzata");
+            }
         });
     }
 
@@ -157,7 +158,9 @@ public class GUI implements GameView {
                         ((StartCardController) guicontrollers.get("startCard")).chooseStartCard();
                     });
                 }
-                case "GoalCard" ->{}
+                case "GoalCard" ->{
+
+                }
                    // Platform.runLater(() ->
                    //     goalCardController.showGoalCardscene());
             }
