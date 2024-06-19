@@ -11,6 +11,7 @@ import it.polimi.ingsw.View.GUI.GUI;
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
@@ -32,6 +33,7 @@ import javafx.util.Duration;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.RemoteException;
@@ -43,11 +45,12 @@ public class GameController extends GUIController {
     protected Stage stage;
     protected CommonClient client;
     protected Parent root;
-    boolean StartCardOk=false;
-    boolean popUpShown=false;
-    boolean popUpShowing=false;
-    boolean choosingPersonalGoal=false;
-    boolean isFrontImageLoaded=true;
+    private GoalCardController goalCardController;
+    boolean StartCardOk = false;
+    boolean popUpShown = false;
+    boolean popUpShowing = false;
+    boolean choosingPersonalGoal = false;
+    boolean isFrontImageLoaded = true;
 
 
     @FXML
@@ -74,7 +77,10 @@ public class GameController extends GUIController {
     @FXML
     private HBox commonGoalsBox;
     @FXML
-    private Label nextLabel;
+    private HBox startCardsHBox;
+
+    @FXML
+    private HBox goalCardsHBox;
     @FXML
     private ImageView leftStartCardImage;
 
@@ -97,8 +103,12 @@ public class GameController extends GUIController {
 
 
     public void initialize() {
-        titleLabel= new Label();
+        goalCardController = null;
+        titleLabel = new Label();
         titleLabel.setVisible(false);
+        startCardsHBox.setVisible(true);
+        goalCardsHBox.setVisible(false);
+
         String newImagePath = "/view/MyCodexNaturalisPhotos/pic8211904.jpg";
         Image newImage = loadImage(newImagePath);
         if (newImage != null) {
@@ -111,130 +121,40 @@ public class GameController extends GUIController {
     }
 
 
-    public void choosePersonalGoal(LinkedList<GoalCard> goals) {
+    public void choosePersonalGoal(LinkedList<GoalCard> goals) throws IOException {
 
-        Platform.runLater(() -> {
-            choosingPersonalGoal=true;
+        stage.close();
 
-            leftStartCardImage = new ImageView();
-            leftStartCardImage.setFitWidth(200);
-            leftStartCardImage.setFitHeight(160);
-
-            rightStartCardImage= new ImageView();
-            rightStartCardImage.setFitHeight(160);
-            rightStartCardImage.setFitWidth(200);
-
-            if (goals.size() >= 2) {
-                GoalCard goal1 = goals.get(0);
-                GoalCard goal2 = goals.get(1);
-
-                setImageForGoalCard(leftStartCardImage, goal1);
-                setImageForGoalCard(rightStartCardImage, goal2);
-            }
-            showPersonalGoal();
-        });
-    }
-    public void showPersonalGoal() {
-        Platform.runLater(() -> {
-
-            chooseSideLabel.setVisible(true);
-            //titleLabel.setVisible(true);
-
-            leftStartCardImage.setVisible(true);
-            rightStartCardImage.setVisible(true);
-
-            disableCardInteractions(leftStartCardImage);
-            disableCardInteractions(rightStartCardImage);
-
-            stage.show();
-        });
-    }
-
-    private void setImageForGoalCard(ImageView imageView, GoalCard goal) {
-        try {
-            int cardId = goal.getId();
-            Image cardImage = loadCardFrontImage(cardId);
-
-            imageView.setImage(cardImage);
-            imageView.setFitWidth(200);  // Imposta la larghezza desiderata
-            imageView.setFitHeight(160); // Imposta l'altezza desiderata
-            imageView.setPreserveRatio(true); // Mantieni il rapporto d'aspetto
-
-            setCardInteraction(imageView, goal);
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        URL fxmlUrl = getClass().getResource("/view/goalcardchoose.fxml");
+        if (fxmlUrl == null) {
+            throw new RuntimeException("FXML file not found");
         }
-    }
+        FXMLLoader loader = new FXMLLoader(fxmlUrl);
+        loader.setLocation(fxmlUrl);
+        Parent root = loader.load();
 
-    private ImageView createGoalCardImageView(GoalCard goal) {
-        try {
-            int cardId = goal.getId();
-            Image cardImage = loadCardFrontImage(cardId);
+        Scene scene = new Scene(root, 1250, 650);
 
-            ImageView imageView = new ImageView(cardImage);
-            imageView.setFitWidth(160);
-            imageView.setFitHeight(123);
-            imageView.setPreserveRatio(true);
+        goalCardController = loader.getController();
+        goalCardController.setClient(client);
+        goalCardController.setRoot(root);
+        goalCardController.setScene(gui, stage);
+        gui.setGoalCardController(goalCardController);
+        goalCardController.runGoal(goals);
 
-            return imageView;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            // Gestione dell'errore nel caricamento dell'immagine
-            return new ImageView(); // Oppure gestione alternativa
-        }
-    }
+        stage.setScene(scene);
 
-    private void setCardInteraction(ImageView imageView, GoalCard goal) {
-        imageView.setOnMouseEntered(event -> {
-            imageView.setOpacity(0.7);
-        });
-
-        imageView.setOnMouseExited(event -> {
-            imageView.setOpacity(1.0);
-        });
-
-        imageView.setOnMouseClicked(event -> {
-            boolean isLeftCard = imageView == leftGoalCardImageView;
-
-            Stage stage = (Stage) imageView.getScene().getWindow();
-            stage.close();
-            try {
-                // Invia l'indice corretto a seconda se è l'immagine sinistra (1) o destra (2)
-                if (isLeftCard) {
-                    client.chooseGoalCard(1, client);
-                    System.out.println("settata carta goal sinistra");
-                } else {
-                    client.chooseGoalCard(2, client);
-                    System.out.println("settata carta goal destra");
-                }
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-        });
-    }
-
-    private Image loadImage(String imagePath) {
-        try {
-            URL resourceUrl = getClass().getResource(imagePath);
-            if (resourceUrl == null) {
-                System.out.println("Resource not found: " + imagePath);
-                return null;
-            }
-            return new Image(resourceUrl.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
 
     public void setScene(GUI gui, Stage stage) {
+
         username = client.getName();
         stage.setTitle(username + "_CodexNaturalis");
         gui.setGameController(this);
         this.gui = gui;
         this.stage = stage;
+
         Platform.runLater(() -> {
             welcomeLabel.setText("Benvenuto nella nuova partita, " + username + "!");
             PauseTransition pause = new PauseTransition(Duration.seconds(3));
@@ -254,7 +174,8 @@ public class GameController extends GUIController {
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Errore durante il caricamento delle immagini della carta", e);
-        }setStartCardFace();
+        }
+        setStartCardFace();
     }
 
     public void setStartCardFace() {
@@ -271,41 +192,13 @@ public class GameController extends GUIController {
     }
 
     public void waitYourTurn() {
-        //se ho già assegnato le carte goal
-        if (choosingPersonalGoal) {
-            //se ho già mostrato la showGoalsCardsscene
-            if (popUpShown) {
-                chooseSideLabel.setText("Well done, goal card chosen!");
-                disableCardInteractions(leftStartCardImage);
-                disableCardInteractions(rightStartCardImage);
-            } else {
-                chooseSideLabel.setText("Wait for your turn to choose the personal goal card!");
-                chooseSideLabel.setStyle("-fx-font-size: 18px; -fx-text-fill: gold; -fx-font-weight: bold;");
-            }
+        if (!StartCardOk) {
+            chooseSideLabel.setText("wait, it's not your turn");
+            disableCardInteractions();
         } else {
-            if (!StartCardOk) {
-                chooseSideLabel.setText("wait, it's not your turn");
-                disableCardInteractions();
-            } else {
-                chooseSideLabel.setText("Well done, start card chosen!");
-                disableCardInteractions();
-            }
+            chooseSideLabel.setText("Well done, start card chosen!");
+            disableCardInteractions();
         }
-    }
-
-    public void showGameLayout() {
-        welcomeLabel.setVisible(false);
-        backgroundImage.setVisible(false);
-        neutralBackgroundPane.setVisible(false);
-        Color grayColor = Color.rgb(204, 204, 204); // #CCCCCC
-
-        BackgroundFill backgroundFill = new BackgroundFill(grayColor, null, null);
-
-        Background background = new Background(backgroundFill);
-
-        mainBorderPane.setBackground(background);
-
-        mainBorderPane.setVisible(true);
     }
 
     @FXML
@@ -315,10 +208,8 @@ public class GameController extends GUIController {
         neutralBackgroundPane.setVisible(true);
     }
 
-    public void setClient(CommonClient client) {
-        this.client = client;
-    }
 
+    //--------METODI DA SPOSTARE NELL'ALTRO CONTROLLER---------
     public void updateCommonGoals(LinkedList<GoalCard> goals) {
         if (commonGoalsBox == null) {
             System.out.println("commonGoalsBox è null");
@@ -389,15 +280,8 @@ public class GameController extends GUIController {
         });
     }
 
-    private Image loadCardFrontImage(int cardId) throws FileNotFoundException {
-        String cardPath = "/view/CODEX_cards_gold_front/" + String.format("%03d", cardId) + ".png";
-        return loadImage(cardPath);
-    }
 
-    private Image loadCardBackImage(int cardId) throws FileNotFoundException {
-        String cardPath = "/view/CODEX_cards_gold_back/" + String.format("%03d", cardId) + ".png";
-        return loadImage(cardPath);
-    }
+
 
 
    /* private void loadCardImages() {
@@ -453,17 +337,6 @@ public class GameController extends GUIController {
         });
     }
 
-    public void showGoalCardsscene() {
-        popUpShown = true;
-
-        chooseSideLabel.setText("Choose your personal Goal card");
-        stage.setTitle(username + "_chooseGoalCard");
-
-        enableCardInteractions(leftStartCardImage);
-        enableCardInteractions(rightStartCardImage);
-    }
-
-
     @FXML
     public void moveUp(ActionEvent event) {
     }
@@ -500,7 +373,7 @@ public class GameController extends GUIController {
 
     @FXML
     private void onCardMouseClicked(MouseEvent event) throws RemoteException {
-        if(!choosingPersonalGoal) {
+        if (!choosingPersonalGoal) {
             if (event.getSource() instanceof ImageView) {
                 ImageView card = (ImageView) event.getSource();
                 if (!card.isDisabled()) {
@@ -513,29 +386,8 @@ public class GameController extends GUIController {
                     }
                 }
             }
-            StartCardOk=true;
+            StartCardOk = true;
             this.gui.endTurn("StartCard");
-        }else {
-            ImageView imageView = new ImageView();
-            boolean isLeftCard = imageView == leftStartCardImage;
-
-            stage.close();
-
-            try {
-                // Invia l'indice corretto a seconda se è l'immagine sinistra (1) o destra (2)
-                if (isLeftCard) {
-                    client.chooseGoalCard(1, client); // Indice 1 per l'immagine sinistra
-                } else {
-                    client.chooseGoalCard(2, client); // Indice 2 per l'immagine destra
-                }
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }try {
-                System.out.println("goal card scelta");
-                gui.endTurn("GoalCard");
-            } catch (RemoteException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 
@@ -547,41 +399,5 @@ public class GameController extends GUIController {
     private void disableCardInteractions() {
         leftStartCardImage.setDisable(true);
         rightStartCardImage.setDisable(true);
-    }
-
-    private void enableCardInteractions(ImageView imageView) {
-        imageView.setOnMouseEntered(event -> {
-            imageView.setOpacity(0.7);
-        });
-
-        imageView.setOnMouseExited(event -> {
-            imageView.setOpacity(1.0);
-        });
-
-        imageView.setOnMouseClicked(event -> {
-            boolean isLeftCard = imageView == leftGoalCardImageView;
-
-            Stage stage = (Stage) imageView.getScene().getWindow();
-            stage.close();
-
-            try {
-                if (isLeftCard) {
-                    client.chooseGoalCard(1, client); // Indice 1 per l'immagine sinistra
-                } else {
-                    client.chooseGoalCard(2, client); // Indice 2 per l'immagine destra
-                }
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }try {
-                gui.endTurn("GoalCard");
-            } catch (RemoteException e) {
-                throw new RuntimeException(e);
-            }
-        });
-    }
-
-    private void disableCardInteractions(ImageView imageView) {
-        imageView.setOnMouseClicked(null); // Rimuove l'azione onClick
-        imageView.setOpacity(0.5); // Opacità ridotta per indicare che le interazioni sono disabilitate
     }
 }

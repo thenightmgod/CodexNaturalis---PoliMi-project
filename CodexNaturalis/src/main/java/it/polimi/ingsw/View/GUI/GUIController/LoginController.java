@@ -275,25 +275,17 @@ public class LoginController extends GUIController {
 
         Scene scene = new Scene(root, 1250,650);
         GameController guiGameController =loader.getController();
+
         guiGameController.setClient(client);
+        String name = client.getName();
         guiGameController.setRoot(root);
         guiGameController.setScene(gui,stage);
+
         gui.setGameController(guiGameController);
+
         stage.setScene(scene);
     }
-    private Image loadImage(String imagePath) {
-        try {
-            URL resourceUrl = getClass().getResource(imagePath);
-            if (resourceUrl == null) {
-                System.out.println("Resource not found: " + imagePath);
-                return null;
-            }
-            return new Image(resourceUrl.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+
 
 
     //--------STARTARE IL SOCKET!!!-----------------

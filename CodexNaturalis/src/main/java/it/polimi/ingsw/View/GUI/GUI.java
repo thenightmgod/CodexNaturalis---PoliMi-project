@@ -11,6 +11,7 @@ import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
 import it.polimi.ingsw.Network.CommonClient;
 import it.polimi.ingsw.View.GUI.GUIController.GameController;
+import it.polimi.ingsw.View.GUI.GUIController.GoalCardController;
 import it.polimi.ingsw.View.GUI.GUIController.LoginController;
 import it.polimi.ingsw.View.GameView;
 import javafx.application.Platform;
@@ -26,6 +27,7 @@ public class GUI implements GameView {
     private Player Turn;
     private CommonClient client;
     private GameController gameController;
+    private GoalCardController goalCardController;
 
     private LoginController loginController;
     private String[] args;
@@ -47,6 +49,13 @@ public class GUI implements GameView {
 
     public LoginController getLoginController() {
         return loginController;
+    }
+    public void setGoalCardController(GoalCardController goalCardController) {
+        this.goalCardController=goalCardController;
+    }
+
+    public GoalCardController getGoalCardController() {
+        return this.goalCardController;
     }
 
     public void setLoginController(LoginController loginController) {
@@ -72,7 +81,13 @@ public class GUI implements GameView {
 
     @Override
     public void updateGoals(LinkedList<GoalCard> goals, String name) throws RemoteException {
-        Platform.runLater(() -> gameController.choosePersonalGoal(goals));
+        Platform.runLater(() -> {
+            try {
+                gameController.choosePersonalGoal(goals);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     @Override
@@ -134,11 +149,14 @@ public class GUI implements GameView {
                         gameController.chooseStartCardFace();
                     });
                 }
+                case "GoalCard" ->
+                    Platform.runLater(() ->
+                        goalCardController.showGoalCardscene());
+            }
+        }else {
+            switch(mex) {
                 case "GoalCard" -> {
-                    Platform.runLater(() -> {
-                        gameController.showGoalCardsscene();
-                    });
-                    ;
+                    Platform.runLater(() -> goalCardController.showWaitingScene());
                 }
             }
         }
