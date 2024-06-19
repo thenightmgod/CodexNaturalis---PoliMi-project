@@ -50,3 +50,9 @@
     -fx-font-size: 18px; /* Dimensione del font */
     -fx-font-family: "Arial"; /* Famiglia del font */
 }
+
+.loginBackground {
+    -fx-background-image: url("MyCodexNaturalisPhotos/pic6518929.jpg");
+    -fx-background-size: cover;
+    -fx-background-repeat: stretch; /* Centra l'immagine */
+}
