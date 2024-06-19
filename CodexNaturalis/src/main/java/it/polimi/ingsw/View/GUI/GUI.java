@@ -106,7 +106,7 @@ public class GUI implements GameView {
                 if(loginController != null) {
                     Platform.runLater(() -> loginController.showException("NameAlreadyTakenException"));
                 }
-                }
+            }
             case "RoomNotExistsException" -> {
                 if(loginController != null) {
                     loginController.showException("RoomNotExistsException");
@@ -136,7 +136,7 @@ public class GUI implements GameView {
                 }
                 case "GoalCard" -> {
                     Platform.runLater(() -> {
-                        gameController.enablePopUpScene();
+                        gameController.showGoalCardsscene();
                     });
                     ;
                 }
@@ -171,12 +171,12 @@ public class GUI implements GameView {
     @Override
     public void startingGame() throws RemoteException{
         Platform.runLater( ()-> {
-                try {
-                    loginController.showGameScene();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
+            try {
+                loginController.showGameScene();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     @Override
