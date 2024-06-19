@@ -88,13 +88,13 @@ public class LoginController extends GUIController {
         if (!serverIpEntered) {
             animateLabelText(myLabel,"Insert the server ip");
             serverIp = myText.getText();
-         /*   if (serverIp == null || serverIp.isEmpty()) {
+            if (serverIp == null || serverIp.isEmpty()) {
                 showAlert("Error", "Server IP cannot be empty.");
                 return;
             }else if (!isValidFormat(serverIp)) {
                 showAlert("Error", "This is not a valid format!");
                 return;
-            }*/
+            }
             myText.clear();
             animateLabelText(myLabel,"Now insert your nickname");
             serverIpEntered = true;
@@ -135,7 +135,7 @@ public class LoginController extends GUIController {
         }
         gui.setName(username);
         if(!(connectionType)) {
-            ((RMIClient) this.client ).setName(this.gui.getName());
+            //((RMIClient) this.client ).setName(this.gui.getName());
         }
         //else socket
         joinGame();
@@ -274,7 +274,7 @@ public class LoginController extends GUIController {
         Parent root= loader.load();
 
         Scene scene = new Scene(root, 1250,650);
-        GuiGameController guiGameController =loader.getController();
+        GameController guiGameController =loader.getController();
         guiGameController.setClient(client);
         guiGameController.setRoot(root);
         guiGameController.setScene(gui,stage);
