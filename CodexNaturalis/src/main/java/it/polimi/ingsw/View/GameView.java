@@ -46,7 +46,7 @@ public interface GameView {
 
     void lastRound();
 
-    void printNotYourTurn(Player turn);
+    void printNotYourTurn(Player turn, String mex);
 
     void leaveGameMessage();
 

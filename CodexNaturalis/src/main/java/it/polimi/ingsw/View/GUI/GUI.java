@@ -46,7 +46,7 @@ public class GUI implements GameView {
     public String[] getArgs(){
         return args;
     }
-    public void switchToScene(String sceneName) throws IOException {
+    public void switchToScene(String sceneName, Object... args) throws IOException {
         GUIController controller = guicontrollers.get(sceneName);
         if (controller == null) {
             controller = loadController(sceneName);
@@ -56,11 +56,12 @@ public class GUI implements GameView {
         primaryStage.show();
     }
 
-    private GUIController loadController(String sceneName) throws IOException {
+    private GUIController loadController(String sceneName, Object... args) throws IOException {
         URL fxmlUrl = getClass().getResource("/view/" +sceneName + ".fxml");
         FXMLLoader loader = new FXMLLoader(fxmlUrl);
         Parent root = loader.load();
         GUIController controller = loader.getController();
+        controller.setArgs(args);
         controller.setGui(this);
         controller.setStage(primaryStage);
         controller.setClient(client);
@@ -87,8 +88,7 @@ public class GUI implements GameView {
     public void updateGoals(LinkedList<GoalCard> goals, String name) throws RemoteException {
         Platform.runLater(()-> {
             try {
-                switchToScene("goalCard");
-                this.goals=goals;
+                switchToScene("goalCard", goals);
             } catch (IOException e) {
                 System.out.println("StartCardScene non correttamente inizializzata");
             }
@@ -197,7 +197,7 @@ public class GUI implements GameView {
     public void startingGame() throws RemoteException{
         Platform.runLater(()-> {
             try {
-                switchToScene("startCard");
+                switchToScene("startCard", 1);
             } catch (IOException e) {
                 System.out.println("StartCardScene non correttamente inizializzata");
             }
@@ -227,7 +227,7 @@ public class GUI implements GameView {
     }
 
     @Override
-    public void printNotYourTurn(Player turn) {
+    public void printNotYourTurn(Player turn, String mex) {
         this.Turn = turn;
         Platform.runLater(() -> {
             ((StartCardController) guicontrollers.get("startCard")).waitYourTurn();
@@ -238,9 +238,11 @@ public class GUI implements GameView {
     public void leaveGameMessage() {
 
     }
+
     public CommonClient getClient() {
         return this.client;
     }
+
     public PlayerColor getPlayerColor() {
         PlayerColor color=Turn.getColor();
         return color;

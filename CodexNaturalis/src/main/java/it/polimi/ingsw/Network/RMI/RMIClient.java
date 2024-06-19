@@ -257,8 +257,8 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
      *
      * @param turn The player whose turn it is.
      */
-    public void notYourTurn(Player turn) {
-        this.view.printNotYourTurn(turn);
+    public void notYourTurn(Player turn, String mex) {
+        this.view.printNotYourTurn(turn, mex);
     }
 
     /**

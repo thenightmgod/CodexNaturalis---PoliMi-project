@@ -22,6 +22,7 @@ public abstract class GUIController {
     protected CommonClient client;
     protected Parent root;
 
+
     @FXML
     private void highlightButton(MouseEvent mouseEvent) {
         Button button = (Button) mouseEvent.getSource();
@@ -32,16 +33,21 @@ public abstract class GUIController {
         }
     }
 
+    public void setArgs(Object... args) {
+    }
+
     public CommonClient getClient(){
         return this.client;
     }
 
-   public void setGui(GUI gui) {
+    public void setGui(GUI gui) {
         this.gui=gui;
    }
-   public void setStage(Stage stage) {
+
+    public void setStage(Stage stage) {
         this.stage=stage;
    }
+
     public void setClient(CommonClient client) {
         this.client = client;
     }
@@ -80,4 +86,5 @@ public abstract class GUIController {
             return null;
         }
     }
+
 }
