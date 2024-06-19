@@ -60,7 +60,7 @@ public class GUI implements GameView {
 
     private GUIController loadController(String sceneName) throws IOException {
         System.out.println("ian curtis");
-        URL fxmlUrl = getClass().getResource("/view/" + sceneName + ".fxml");
+        URL fxmlUrl = getClass().getResource("/view/" +sceneName + ".fxml");
         FXMLLoader loader = new FXMLLoader(fxmlUrl);
         Parent root = loader.load();
         GUIController controller = loader.getController();
@@ -138,7 +138,9 @@ public class GUI implements GameView {
     public void showStartCard(StartCard card) throws RemoteException {
         Platform.runLater(() -> {
             try {
-                ((StartCardController) guicontrollers.get("startCard")).showStartCard(card);
+                if((guicontrollers).get("startCard") != null) {
+                    ((StartCardController) guicontrollers.get("startCard")).showStartCard(card);
+                }
             } catch (FileNotFoundException e) {
                 System.out.println("Show start card scene non correttamente inizializzata");
             }
@@ -160,14 +162,7 @@ public class GUI implements GameView {
                    //     goalCardController.showGoalCardscene());
             }
         }else {
-            switch(mex) {
-                case "StartCard" -> {
-                    Platform.runLater(() -> ((StartCardController) guicontrollers.get("startCard")).waitYourTurn());
-                }
-                case "GoalCard" -> {
-                   // Platform.runLater(() -> goalCardController.showWaitingScene());
-                }
-            }
+
         }
     }
 
@@ -197,18 +192,20 @@ public class GUI implements GameView {
     }
     @Override
     public void startingGame() throws RemoteException{
-        Platform.runLater( ()-> {
+        Platform.runLater(()-> {
             try {
                 switchToScene("startCard");
             } catch (IOException e) {
                 System.out.println("StartCardScene non correttamente inizializzata");
             }
+
+        });
+
             //   try {
                 //loginController.showGameScene();
         //    } //catch (IOException e) {
          //       throw new RuntimeException(e);
        //     }
-       });
     }
 
     @Override
@@ -230,7 +227,7 @@ public class GUI implements GameView {
     public void printNotYourTurn(Player turn) {
         this.Turn = turn;
         Platform.runLater(() -> {
-           // gameController.waitYourTurn();
+            ((StartCardController) guicontrollers.get("startCard")).waitYourTurn();
         });
     }
 
