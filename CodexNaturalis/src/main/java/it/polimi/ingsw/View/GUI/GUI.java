@@ -37,30 +37,33 @@ public class GUI implements GameView {
 
     //-------METODI DEI CONTROLLER---------------------------
     public void start(String[] args, Stage stage) throws IOException {
-        this.client=null;
-        this.args=args;
-        this.primaryStage=stage;
-        this.Turn=null;
+        this.client = null;
+        this.args = args;
+        this.primaryStage = stage;
+        this.Turn = null;
         switchToScene("login");
     }
-    public String[] getArgs(){
+
+    public String[] getArgs() {
         return args;
     }
-    public void switchToScene(String sceneName) throws IOException {
+
+    public void switchToScene(String sceneName, Object... args) throws IOException {
         GUIController controller = guicontrollers.get(sceneName);
         if (controller == null) {
-            controller = loadController(sceneName);
+            controller = loadController(sceneName, args);
             guicontrollers.put(sceneName, controller);
         }
         primaryStage.setScene(controller.getScene());
         primaryStage.show();
     }
 
-    private GUIController loadController(String sceneName) throws IOException {
-        URL fxmlUrl = getClass().getResource("/view/" +sceneName + ".fxml");
+    private GUIController loadController(String sceneName, Object... args) throws IOException {
+        URL fxmlUrl = getClass().getResource("/view/" + sceneName + ".fxml");
         FXMLLoader loader = new FXMLLoader(fxmlUrl);
         Parent root = loader.load();
         GUIController controller = loader.getController();
+        controller.setArgs(args);
         controller.setGui(this);
         controller.setStage(primaryStage);
         controller.setClient(client);
@@ -69,10 +72,11 @@ public class GUI implements GameView {
     }
 
     public void setClient(CommonClient client) {
-        this.client=client;
+        this.client = client;
     }
+
     public void setName(String username) {
-        this.username=username;
+        this.username = username;
     }
 
 
@@ -85,13 +89,11 @@ public class GUI implements GameView {
 
     @Override
     public void updateGoals(LinkedList<GoalCard> goals, String name) throws RemoteException {
-        Platform.runLater(()-> {
+        Platform.runLater(() -> {
             try {
-                switchToScene("goalCard");
-                //mi deve caricare i goals
-                this.goals=goals;
+                switchToScene("goalCard", goals);
             } catch (IOException e) {
-                System.out.println("StartCardScene non correttamente inizializzata");
+                System.out.println("Goal Card non correttamente inizializzata");
             }
         });
     }
@@ -140,7 +142,7 @@ public class GUI implements GameView {
     public void showStartCard(StartCard card) throws RemoteException {
         Platform.runLater(() -> {
             try {
-                if((guicontrollers).get("startCard") != null) {
+                if ((guicontrollers).get("startCard") != null) {
                     ((StartCardController) guicontrollers.get("startCard")).showStartCard(card);
                 }
             } catch (FileNotFoundException e) {
@@ -159,15 +161,17 @@ public class GUI implements GameView {
                         ((StartCardController) guicontrollers.get("startCard")).chooseStartCard();
                     });
                 }
-                case "GoalCard" ->{
-                    Platform.runLater(()-> {
-                        ((GoalCardController)guicontrollers.get("goalCard")).chooseGoalCard();
-                    });
+                case "GoalCard" -> {
+                    Platform.runLater(() -> {
+                        ((GoalCardController) guicontrollers.get("goalCard")).chooseGoalCard();
 
+                    });
                 }
+                // Platform.runLater(() ->
+                //     goalCardController.showGoalCardscene());
             }
-        }else {
-//
+        } else {
+
         }
     }
 
@@ -178,39 +182,40 @@ public class GUI implements GameView {
     @Override
     public void updateGoldDeck(LinkedList<GoldCard> deck, boolean start, String name) {
         Platform.runLater(() -> {
-            if(start) {
-             //   gameController.updateGoldDeck(deck);
+            if (start) {
+                //   gameController.updateGoldDeck(deck);
                 client.getClient().setDrawableGoldCards(deck);
             }
-        } );
+        });
     }
 
     @Override
     public void updateResourceDeck(LinkedList<ResourceCard> deck, boolean start, String name) {
         Platform.runLater(() -> {
-            if(start) {
-              //  gameController.updateResourceDeck(deck);
+            if (start) {
+                //  gameController.updateResourceDeck(deck);
                 client.getClient().setDrawableResourceCards(deck);
             }
 
-        } );
+        });
     }
+
     @Override
-    public void startingGame() throws RemoteException{
-        Platform.runLater(()-> {
+    public void startingGame() throws RemoteException {
+        Platform.runLater(() -> {
             try {
-                switchToScene("startCard");
+                switchToScene("startCard", 1);
             } catch (IOException e) {
                 System.out.println("StartCardScene non correttamente inizializzata");
             }
 
         });
 
-            //   try {
-                //loginController.showGameScene();
+        //   try {
+        //loginController.showGameScene();
         //    } //catch (IOException e) {
-         //       throw new RuntimeException(e);
-       //     }
+        //       throw new RuntimeException(e);
+        //     }
     }
 
     @Override
@@ -233,26 +238,30 @@ public class GUI implements GameView {
         this.Turn = turn;
         Platform.runLater(() -> {
             switch(mex) {
-                case"StartCard"-> {
-                  ((StartCardController) guicontrollers.get("startCard")).waitYourTurn();
+                case "StartCard"-> {
+                    ((StartCardController) guicontrollers.get("startCard")).waitYourTurn();
                 }
-                case"GoalCard"->{
-                    ((GoalCardController)guicontrollers.get("goalCard")).waitYourTurn();
+                case "GoalCard"-> {
+                    ((GoalCardController) guicontrollers.get("goalCard")).waitYourTurn();
                 }
-        }});
+            }
+        });
     }
 
     @Override
     public void leaveGameMessage() {
 
     }
+
     public CommonClient getClient() {
         return this.client;
     }
+
     public PlayerColor getPlayerColor() {
-        PlayerColor color=Turn.getColor();
+        PlayerColor color = Turn.getColor();
         return color;
     }
+
     public Player getTurn() {
         return Turn;
     }
