@@ -48,7 +48,7 @@ public class GameController extends GUIController {
     boolean popUpShowing=false;
     boolean choosingPersonalGoal=false;
     boolean isFrontImageLoaded=true;
-    private Stage currentPopupStage;
+
 
     @FXML
     private Stage popupStage;
@@ -62,12 +62,6 @@ public class GameController extends GUIController {
     public VBox cardGroup1;
     @FXML
     public VBox cardGroup2;
-
-    @FXML
-    private ImageView leftGoalCardImageView;
-
-    @FXML
-    private ImageView rightGoalCardImageView;
 
     @FXML
     private ImageView backgroundImage;
@@ -91,6 +85,11 @@ public class GameController extends GUIController {
     private Label chooseSideLabel;
     @FXML
     private Label titleLabel;
+    @FXML
+    private ImageView leftGoalCardImageView;
+
+    @FXML
+    private ImageView rightGoalCardImageView;
 
     public void setRoot(Parent root) {
         this.root = root;
@@ -98,6 +97,8 @@ public class GameController extends GUIController {
 
 
     public void initialize() {
+        titleLabel= new Label();
+        titleLabel.setVisible(false);
         String newImagePath = "/view/MyCodexNaturalisPhotos/pic8211904.jpg";
         Image newImage = loadImage(newImagePath);
         if (newImage != null) {
@@ -111,43 +112,49 @@ public class GameController extends GUIController {
 
 
     public void choosePersonalGoal(LinkedList<GoalCard> goals) {
-        choosingPersonalGoal=true;
-        leftGoalCardImageView = new ImageView();
-        leftGoalCardImageView.setFitWidth(200);
-        leftGoalCardImageView.setFitHeight(160);
 
-        rightGoalCardImageView= new ImageView();
-        rightGoalCardImageView.setFitHeight(160);
-        rightGoalCardImageView.setFitWidth(200);
+        Platform.runLater(() -> {
+            choosingPersonalGoal=true;
 
-        if (goals.size() >= 2) {
-            GoalCard goal1 = goals.get(0);
-            GoalCard goal2 = goals.get(1);
+            leftStartCardImage = new ImageView();
+            leftStartCardImage.setFitWidth(200);
+            leftStartCardImage.setFitHeight(160);
 
-            setImageForGoalCard(leftGoalCardImageView, goal1);
-            setImageForGoalCard(rightGoalCardImageView, goal2);
-        }
-        showPersonalGoal();
+            rightStartCardImage= new ImageView();
+            rightStartCardImage.setFitHeight(160);
+            rightStartCardImage.setFitWidth(200);
+
+            if (goals.size() >= 2) {
+                GoalCard goal1 = goals.get(0);
+                GoalCard goal2 = goals.get(1);
+
+                setImageForGoalCard(leftStartCardImage, goal1);
+                setImageForGoalCard(rightStartCardImage, goal2);
+            }
+            showPersonalGoal();
+        });
     }
-
     public void showPersonalGoal() {
-        welcomeLabel.setVisible(false);
-        backgroundImage.setVisible(false);
-        neutralBackgroundPane.setVisible(false);
-        titleLabel=new Label();
-        titleLabel.setText("");
-        titleLabel.setVisible(true);
-        leftGoalCardImageView.setVisible(true);
-        rightGoalCardImageView.setVisible(true);
-        disableCardInteractions(leftGoalCardImageView);
-        disableCardInteractions(rightGoalCardImageView);
-        stage.show();
+        Platform.runLater(() -> {
+
+            chooseSideLabel.setVisible(true);
+            //titleLabel.setVisible(true);
+
+            leftStartCardImage.setVisible(true);
+            rightStartCardImage.setVisible(true);
+
+            disableCardInteractions(leftStartCardImage);
+            disableCardInteractions(rightStartCardImage);
+
+            stage.show();
+        });
     }
 
     private void setImageForGoalCard(ImageView imageView, GoalCard goal) {
         try {
             int cardId = goal.getId();
             Image cardImage = loadCardFrontImage(cardId);
+
             imageView.setImage(cardImage);
             imageView.setFitWidth(200);  // Imposta la larghezza desiderata
             imageView.setFitHeight(160); // Imposta l'altezza desiderata
@@ -268,12 +275,12 @@ public class GameController extends GUIController {
         if (choosingPersonalGoal) {
             //se ho già mostrato la showGoalsCardsscene
             if (popUpShown) {
-                titleLabel.setText("Well done, goal card chosen!");
-                disableCardInteractions(leftGoalCardImageView);
-                disableCardInteractions(rightGoalCardImageView);
+                chooseSideLabel.setText("Well done, goal card chosen!");
+                disableCardInteractions(leftStartCardImage);
+                disableCardInteractions(rightStartCardImage);
             } else {
-                titleLabel.setText("Wait for your turn to choose the personal goal card!");
-                titleLabel.setStyle("-fx-font-size: 18px; -fx-text-fill: gold; -fx-font-weight: bold;");
+                chooseSideLabel.setText("Wait for your turn to choose the personal goal card!");
+                chooseSideLabel.setStyle("-fx-font-size: 18px; -fx-text-fill: gold; -fx-font-weight: bold;");
             }
         } else {
             if (!StartCardOk) {
@@ -380,7 +387,6 @@ public class GameController extends GUIController {
                 }
             }
         });
-        showGameLayout();
     }
 
     private Image loadCardFrontImage(int cardId) throws FileNotFoundException {
@@ -446,14 +452,15 @@ public class GameController extends GUIController {
             }
         });
     }
-    public void showGoalCardsscene() {
 
+    public void showGoalCardsscene() {
         popUpShown = true;
-        System.out.println("showGoalCardsscene called");
-        titleLabel.setText("Choose your personal Goal card");
+
+        chooseSideLabel.setText("Choose your personal Goal card");
         stage.setTitle(username + "_chooseGoalCard");
-        enableCardInteractions(leftGoalCardImageView);
-        enableCardInteractions(rightGoalCardImageView);
+
+        enableCardInteractions(leftStartCardImage);
+        enableCardInteractions(rightStartCardImage);
     }
 
 
@@ -493,20 +500,43 @@ public class GameController extends GUIController {
 
     @FXML
     private void onCardMouseClicked(MouseEvent event) throws RemoteException {
-        if (event.getSource() instanceof ImageView) {
-            ImageView card = (ImageView) event.getSource();
-            if (!card.isDisabled()) {
-                if (card == leftStartCardImage) {
-                    boolean face = true;
-                    client.setStartCardFace(face, client);
-                } else if (card == rightStartCardImage) {
-                    boolean face = false;
-                    client.setStartCardFace(face, client);
+        if(!choosingPersonalGoal) {
+            if (event.getSource() instanceof ImageView) {
+                ImageView card = (ImageView) event.getSource();
+                if (!card.isDisabled()) {
+                    if (card == leftStartCardImage) {
+                        boolean face = true;
+                        client.setStartCardFace(face, client);
+                    } else if (card == rightStartCardImage) {
+                        boolean face = false;
+                        client.setStartCardFace(face, client);
+                    }
                 }
             }
+            StartCardOk=true;
+            this.gui.endTurn("StartCard");
+        }else {
+            ImageView imageView = new ImageView();
+            boolean isLeftCard = imageView == leftStartCardImage;
+
+            stage.close();
+
+            try {
+                // Invia l'indice corretto a seconda se è l'immagine sinistra (1) o destra (2)
+                if (isLeftCard) {
+                    client.chooseGoalCard(1, client); // Indice 1 per l'immagine sinistra
+                } else {
+                    client.chooseGoalCard(2, client); // Indice 2 per l'immagine destra
+                }
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }try {
+                System.out.println("goal card scelta");
+                gui.endTurn("GoalCard");
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
         }
-        StartCardOk=true;
-        this.gui.endTurn("StartCard");
     }
 
     private void enableCardInteractions() {
@@ -517,82 +547,6 @@ public class GameController extends GUIController {
     private void disableCardInteractions() {
         leftStartCardImage.setDisable(true);
         rightStartCardImage.setDisable(true);
-    }
-
-    public void enablePopUpScene() {
-        Platform.runLater(() -> {
-            popUpShowing=true;
-            Stage popupStage = new Stage();
-            popupStage.initModality(Modality.APPLICATION_MODAL);
-            popupStage.initOwner(stage);
-            popupStage.setTitle(username+"_choosePopUp");
-
-            VBox vbox = new VBox(10);
-            vbox.setAlignment(Pos.CENTER);
-
-            titleLabel = new Label("Choose your personal goal card!");
-            titleLabel.setStyle("-fx-font-size: 18px; -fx-text-fill: gold; -fx-font-weight: bold;");
-
-            HBox cardsBox = new HBox(20);
-            cardsBox.setAlignment(Pos.CENTER);
-
-            // Aggiungi le ImageView delle carte goal
-            cardsBox.getChildren().addAll(leftGoalCardImageView, rightGoalCardImageView);
-
-            vbox.getChildren().addAll(titleLabel, cardsBox);
-
-            // Abilita le interazioni con le carte
-            enableCardInteractions(leftGoalCardImageView);
-            enableCardInteractions(rightGoalCardImageView);
-
-            // Creazione della scena e visualizzazione della finestra
-            Scene popupScene = new Scene(vbox, 600, 400);
-            popupScene.getStylesheets().add(getClass().getResource("/view/styles2.css").toExternalForm()); // Add your CSS path
-            popupStage.setScene(popupScene);// Memorizza il riferimento al nuovo popup
-            popupStage.showAndWait();
-            // Mostra la finestra e aspetta che venga chiusa
-        });
-    }
-
-    public void disablePopUpScene() {
-        popUpShown=true;
-        if (commonGoalsBox.getChildren().size() > 2) {
-            return;
-        }
-        Platform.runLater(() -> {
-            if (popupStage != null) {
-                popupStage.close();
-            } do {
-                Stage popupStage = new Stage();
-                popupStage.initModality(Modality.APPLICATION_MODAL);
-                popupStage.initOwner(stage);
-                popupStage.setTitle(username+"waitPopUp");
-
-                VBox vbox = new VBox(10);
-                vbox.setAlignment(Pos.CENTER);
-
-                Label titleLabel = new Label("Wait for your turn to choose the personal goal card!");
-                titleLabel.setStyle("-fx-font-size: 18px; -fx-text-fill: gold; -fx-font-weight: bold;");
-
-                HBox cardsBox = new HBox(20);
-                cardsBox.setAlignment(Pos.CENTER);
-
-                cardsBox.getChildren().addAll(leftGoalCardImageView, rightGoalCardImageView);
-
-                vbox.getChildren().addAll(titleLabel, cardsBox);
-
-                disableCardInteractions(leftGoalCardImageView);
-                disableCardInteractions(rightGoalCardImageView);
-
-
-                Scene popupScene = new Scene(vbox, 600, 400);
-                popupScene.getStylesheets().add(getClass().getResource("/view/styles2.css").toExternalForm()); // Add your CSS path
-                popupStage.setScene(popupScene);
-                currentPopupStage = popupStage;
-                popupStage.showAndWait();
-
-            }while (!popUpShowing);
-        });
     }
 
     private void enableCardInteractions(ImageView imageView) {
@@ -607,12 +561,10 @@ public class GameController extends GUIController {
         imageView.setOnMouseClicked(event -> {
             boolean isLeftCard = imageView == leftGoalCardImageView;
 
-            // Chiudi la finestra di selezione del goal personale
             Stage stage = (Stage) imageView.getScene().getWindow();
             stage.close();
 
             try {
-                // Invia l'indice corretto a seconda se è l'immagine sinistra (1) o destra (2)
                 if (isLeftCard) {
                     client.chooseGoalCard(1, client); // Indice 1 per l'immagine sinistra
                 } else {
@@ -625,13 +577,7 @@ public class GameController extends GUIController {
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }
-            closePopupStage();
         });
-    }
-    private void closePopupStage() {
-        if (popupStage != null) {
-            popupStage.close();
-        }
     }
 
     private void disableCardInteractions(ImageView imageView) {
