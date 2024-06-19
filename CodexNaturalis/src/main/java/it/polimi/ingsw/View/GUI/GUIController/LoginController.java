@@ -88,7 +88,7 @@ public class LoginController extends GUIController {
         if (!serverIpEntered) {
             animateLabelText(myLabel,"Insert the server ip");
             serverIp = myText.getText();
-            if (serverIp == null || serverIp.isEmpty()) {
+            if (serverIp == null) {
                 showAlert("Error", "Server IP cannot be empty.");
                 return;
             }else if (!isValidFormat(serverIp)) {
@@ -304,6 +304,9 @@ public class LoginController extends GUIController {
     }
     public boolean isValidFormat(String input) {
 
+        if(input.isEmpty()){
+            return true;
+        }
         String[] parts = input.split("\\.");
 
         if (parts.length != 4) {

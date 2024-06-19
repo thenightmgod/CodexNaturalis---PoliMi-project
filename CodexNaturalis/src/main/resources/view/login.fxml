@@ -21,7 +21,7 @@
    <children>
       <AnchorPane fx:id="innerPane" layoutX="8.0" layoutY="11.0" prefHeight="500.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <ImageView fx:id="myImage" fitHeight="411.0" fitWidth="492.0" pickOnBounds="true" preserveRatio="true" styleClass="image-view">
+            <ImageView fx:id="myImage" fitHeight="411.0" fitWidth="492.0" pickOnBounds="true" preserveRatio="false" styleClass="image-view">
                <image>
                   <Image url="@MyCodexNaturalisPhotos/pic6518929.jpg" />
                </image>
