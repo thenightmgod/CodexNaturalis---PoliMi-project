@@ -46,7 +46,7 @@ public class GoalCardController extends GUIController{
     protected GUI gui;
     protected Stage stage;
 
-    protected CommonClient client;
+    protected CommonClient goalClient;
     protected Parent root;
     protected LinkedList<GoalCard> goals;
     protected boolean goalcardchosen=false;
@@ -62,6 +62,10 @@ public class GoalCardController extends GUIController{
     public void setScene(GUI gui, Stage stage) {
         this.gui=gui;
         this.stage=stage;
+    }
+
+    public void setGoalClient(CommonClient client){
+        this.goalClient = client;
     }
 
     public void runGoal(LinkedList <GoalCard> goals) {
