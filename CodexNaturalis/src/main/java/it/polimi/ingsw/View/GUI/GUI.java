@@ -10,7 +10,8 @@ import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
 import it.polimi.ingsw.Network.CommonClient;
-import it.polimi.ingsw.View.GUI.GUIController.GuiGameController;
+import it.polimi.ingsw.View.GUI.GUIController.GameController;
+import it.polimi.ingsw.View.GUI.GUIController.GoalCardController;
 import it.polimi.ingsw.View.GUI.GUIController.LoginController;
 import it.polimi.ingsw.View.GameView;
 import javafx.application.Platform;
@@ -25,7 +26,8 @@ public class GUI implements GameView {
     private String name;
     private Player Turn;
     private CommonClient client;
-    private GuiGameController guiGameController;
+    private GameController gameController;
+    private GoalCardController goalCardController;
 
     private LoginController loginController;
     private String[] args;
@@ -41,28 +43,30 @@ public class GUI implements GameView {
     public String[] getArgs(){
         return args;
     };
-    public GuiGameController getGameController() {
-        return guiGameController;
+    public GameController getGameController() {
+        return gameController;
     }
 
     public LoginController getLoginController() {
         return loginController;
     }
+    public void setGoalCardController(GoalCardController goalCardController) {
+        this.goalCardController=goalCardController;
+    }
+
+    public GoalCardController getGoalCardController() {
+        return this.goalCardController;
+    }
 
     public void setLoginController(LoginController loginController) {
         this.loginController = loginController;
     }
-    public void setGameController(GuiGameController gc) {
-        this.guiGameController = gc;
+    public void setGameController(GameController gc) {
+        this.gameController = gc;
     }
     public void setName(String name) {
         this.name=name;
     }
-
-    public String getName() {
-        return name;
-    }
-
     public void setClient(CommonClient client) {
         this.client=client;
     }
@@ -77,20 +81,26 @@ public class GUI implements GameView {
 
     @Override
     public void updateGoals(LinkedList<GoalCard> goals, String name) throws RemoteException {
-        Platform.runLater(() -> guiGameController.choosePersonalGoal(goals));
+        Platform.runLater(() -> {
+            try {
+                gameController.choosePersonalGoal(goals);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     @Override
     public void updateCommonGoals(LinkedList<GoalCard> goals, String name) throws RemoteException {
         client.getClient().setCommonGoals(goals);
-        Platform.runLater(() -> guiGameController.updateCommonGoals(goals));
+        Platform.runLater(() -> gameController.updateCommonGoals(goals));
     }
 
 
     @Override
     public void updateHands(LinkedList<PlayableCard> hand, String name) {
         client.getClient().setHand(hand);
-        Platform.runLater(() -> guiGameController.setHand(hand));
+        Platform.runLater(() -> gameController.setHand(hand));
     }
 
     @Override
@@ -125,7 +135,7 @@ public class GUI implements GameView {
     @Override
     public void showStartCard(StartCard card) throws RemoteException {
         Platform.runLater(() -> {
-            guiGameController.updateStartCard(card);
+            gameController.updateStartCard(card);
         });
     }
 
@@ -136,14 +146,17 @@ public class GUI implements GameView {
             switch (mex) {
                 case "StartCard" -> {
                     Platform.runLater(() -> {
-                        guiGameController.chooseStartCardFace();
+                        gameController.chooseStartCardFace();
                     });
                 }
+                case "GoalCard" ->
+                    Platform.runLater(() ->
+                        goalCardController.showGoalCardscene());
+            }
+        }else {
+            switch(mex) {
                 case "GoalCard" -> {
-                    Platform.runLater(() -> {
-                        guiGameController.showGoalCardsscene();
-                    });
-                    ;
+                    Platform.runLater(() -> goalCardController.showWaitingScene());
                 }
             }
         }
@@ -157,7 +170,7 @@ public class GUI implements GameView {
     public void updateGoldDeck(LinkedList<GoldCard> deck, boolean start, String name) {
         Platform.runLater(() -> {
             if(start) {
-                guiGameController.updateGoldDeck(deck);
+                gameController.updateGoldDeck(deck);
                 client.getClient().setDrawableGoldCards(deck);
             }
         } );
@@ -167,7 +180,7 @@ public class GUI implements GameView {
     public void updateResourceDeck(LinkedList<ResourceCard> deck, boolean start, String name) {
         Platform.runLater(() -> {
             if(start) {
-                guiGameController.updateResourceDeck(deck);
+                gameController.updateResourceDeck(deck);
                 client.getClient().setDrawableResourceCards(deck);
             }
 
@@ -203,7 +216,7 @@ public class GUI implements GameView {
     public void printNotYourTurn(Player turn) {
         this.Turn = turn;
         Platform.runLater(() -> {
-            guiGameController.waitYourTurn();
+            gameController.waitYourTurn();
         });
     }
 

@@ -20,9 +20,14 @@
     <AnchorPane fx:id="neutralBackgroundPane" style="-fx-background-image: url('/view/MyCodexNaturalisPhotos/pic8211904.jpg'); -fx-background-size: cover;" visible="false">
         <Pane layoutX="150.0" layoutY="100.0" prefHeight="300.0" prefWidth="600.0" style="-fx-background-color: rgba(0, 0, 0, 0.6); -fx-background-radius: 10px; -fx-border-color: gold; -fx-border-width: 2px;">
             <Label fx:id="chooseSideLabel" layoutX="200.0" layoutY="20.0" style="-fx-font-size: 24px; -fx-text-fill: black; -fx-stroke: gold; -fx-stroke-width: 1.5;" visible="false" />
-            <HBox alignment="CENTER" layoutX="100.0" layoutY="100.0" spacing="50.0">
+            <HBox fx:id="startCardsHBox" alignment="CENTER" layoutX="100.0" layoutY="100.0" spacing="50.0">
                 <ImageView fx:id="leftStartCardImage" disable="true" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#onCardMouseClicked" onMouseEntered="#onCardMouseEntered" onMouseExited="#onCardMouseExited" visible="false" />
                 <ImageView fx:id="rightStartCardImage" disable="true" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#onCardMouseClicked" onMouseEntered="#onCardMouseEntered" onMouseExited="#onCardMouseExited" visible="false" />
+            </HBox>
+
+            <HBox fx:id="goalCardsHBox" alignment="CENTER" layoutX="100.0" layoutY="100.0" spacing="50.0" visible="false">
+                <ImageView fx:id="leftGoalCardImageView" fitHeight="150.0" fitWidth="200.0" />
+                <ImageView fx:id="rightGoalCardImageView" fitHeight="150.0" fitWidth="200.0" />
             </HBox>
         </Pane>
     </AnchorPane>
