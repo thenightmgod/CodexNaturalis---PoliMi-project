@@ -68,11 +68,24 @@ public class GoalCardController extends GUIController{
     private void enableCardInteractions() {
         leftGoalCard.setDisable(false);
         rightGoalCard.setDisable(false);
+
+        leftGoalCard.setOnMouseClicked(this::onCardMouseClicked);
+        rightGoalCard.setOnMouseClicked(this::onCardMouseClicked);
+
+        leftGoalCard.setOnMouseEntered(this::onCardMouseEntered);
+        leftGoalCard.setOnMouseExited(this::onCardMouseExited);
+        rightGoalCard.setOnMouseEntered(this::onCardMouseEntered);
+        rightGoalCard.setOnMouseExited(this::onCardMouseExited);
     }
 
     private void disableCardInteractions() {
-        leftGoalCard.setOnMouseClicked(null); // Rimuove l'azione onClick
+        leftGoalCard.setOnMouseClicked(null); // Remove onClick action
         rightGoalCard.setOnMouseClicked(null);
+
+        leftGoalCard.setOnMouseEntered(null); // Remove onMouseEntered action
+        leftGoalCard.setOnMouseExited(null); // Remove onMouseExited action
+        rightGoalCard.setOnMouseEntered(null); // Remove onMouseEntered action
+        rightGoalCard.setOnMouseExited(null); // Remove onMouseExited action
     }
 
     public void waitYourTurn() {
@@ -101,7 +114,7 @@ public class GoalCardController extends GUIController{
         }
     }
     @FXML
-    private void onCardMouseClicked(MouseEvent event) throws RemoteException {
+    private void onCardMouseClicked(MouseEvent event) {
         if (event.getSource() instanceof ImageView) {
             ImageView card = (ImageView) event.getSource();
             if (!card.isDisabled()) {
@@ -121,7 +134,9 @@ public class GoalCardController extends GUIController{
         }
         goalcardchosen = true;
         System.out.println("goalcardsettata");
-        this.gui.endTurn("GoalCard");
+        try {
+            this.gui.endTurn("GoalCard");
+        } catch (RemoteException ignored) {} ;
     }
 
 
