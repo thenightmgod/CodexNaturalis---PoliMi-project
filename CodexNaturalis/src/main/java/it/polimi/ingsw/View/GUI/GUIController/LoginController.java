@@ -1,11 +1,8 @@
 package it.polimi.ingsw.View.GUI.GUIController;
 
-import com.sun.scenario.effect.impl.sw.java.JSWBlend_BLUEPeer;
 import it.polimi.ingsw.Network.CommonClient;
 import it.polimi.ingsw.Network.RMI.RMIClient;
-import it.polimi.ingsw.Network.RMI.VirtualServer;
 import it.polimi.ingsw.View.GUI.GUI;
-import it.polimi.ingsw.View.GUI.GUIController.GUIController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -22,23 +19,17 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javafx.scene.shape.Rectangle;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.rmi.AccessException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class LoginController extends GUIController {
 
@@ -48,6 +39,7 @@ public class LoginController extends GUIController {
     // protected ProtocolController pc;
     protected  GUI gui;
     boolean serverIpEntered=false;
+    boolean connectionType;
     protected String serverIp;
     protected String username;
     protected int number;
@@ -142,8 +134,10 @@ public class LoginController extends GUIController {
             return;
         }
         gui.setName(username);
-        client=new RMIClient(username,serverIp);
-        gui.setClient(client);
+        if(!(connectionType)) {
+            ((RMIClient) this.client ).setName(this.gui.getName());
+        }
+        //else socket
         joinGame();
         myNicknameButton.setVisible(false);
         myNicknameButton.setDisable(true);
@@ -158,6 +152,7 @@ public class LoginController extends GUIController {
     public void startRMI(ActionEvent event)  {
         try {
             client= new RMIClient(username, serverIp);
+            connectionType = false;
             gui.setClient(client);
             client.setView(gui);
             joinGame();
@@ -279,11 +274,11 @@ public class LoginController extends GUIController {
         Parent root= loader.load();
 
         Scene scene = new Scene(root, 1250,650);
-        GameController gameController=loader.getController();
-        gameController.setClient(client);
-        gameController.setRoot(root);
-        gameController.setScene(gui,stage);
-        gui.setGameController(gameController);
+        GuiGameController guiGameController =loader.getController();
+        guiGameController.setClient(client);
+        guiGameController.setRoot(root);
+        guiGameController.setScene(gui,stage);
+        gui.setGameController(guiGameController);
         stage.setScene(scene);
     }
     private Image loadImage(String imagePath) {
