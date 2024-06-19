@@ -30,6 +30,10 @@ public abstract class GUIController {
         }
     }
 
+    public CommonClient getClient(){
+        return this.client;
+    }
+
     public void setScene(GUI gui, Stage stage) {
         this.gui=gui;
         this.stage=stage;

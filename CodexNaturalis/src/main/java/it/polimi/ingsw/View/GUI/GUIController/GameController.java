@@ -43,9 +43,8 @@ public class GameController extends GUIController {
     protected String username;
     protected GUI gui;
     protected Stage stage;
-    protected CommonClient client;
+    protected CommonClient startClient;
     protected Parent root;
-    private GoalCardController goalCardController;
     boolean StartCardOk = false;
     boolean popUpShown = false;
     boolean popUpShowing = false;
@@ -94,9 +93,11 @@ public class GameController extends GUIController {
         this.root = root;
     }
 
+    public void setStartClient(CommonClient client){
+        this.startClient = client;
+    }
 
     public void initialize() {
-        goalCardController = null;
         titleLabel = new Label();
         titleLabel.setVisible(false);
         startCardsHBox.setVisible(true);
@@ -113,7 +114,7 @@ public class GameController extends GUIController {
     }
 
 
-    public void choosePersonalGoal(LinkedList<GoalCard> goals) throws IOException {
+    public void changeSceneGoals(LinkedList<GoalCard> goals) throws IOException {
 
         URL fxmlUrl = getClass().getResource("/view/goalcardchoose.fxml");
         if (fxmlUrl == null) {
@@ -124,8 +125,8 @@ public class GameController extends GUIController {
         Parent root = loader.load();
         Scene scene = new Scene(root, 1250, 650);
 
-        goalCardController = loader.getController();
-        goalCardController.setClient(client);
+        GoalCardController goalCardController = loader.getController();
+        goalCardController.setGoalClient(client);
         goalCardController.setRoot(root);
         goalCardController.setScene(gui, stage);
         goalCardController.runGoal(goals);
@@ -140,7 +141,7 @@ public class GameController extends GUIController {
 
     public void setScene(GUI gui, Stage stage) {
 
-        username = client.getName();
+        username = startClient.getName();
         stage.setTitle(username + "_CodexNaturalis");
         gui.setGameController(this);
         this.gui = gui;
@@ -370,10 +371,10 @@ public class GameController extends GUIController {
                 if (!card.isDisabled()) {
                     if (card == leftStartCardImage) {
                         boolean face = true;
-                        client.setStartCardFace(face, client);
+                        startClient.setStartCardFace(face, client);
                     } else if (card == rightStartCardImage) {
                         boolean face = false;
-                        client.setStartCardFace(face, client);
+                        startClient.setStartCardFace(face, client);
                     }
                 }
             }

@@ -83,7 +83,7 @@ public class GUI implements GameView {
     public void updateGoals(LinkedList<GoalCard> goals, String name) throws RemoteException {
         Platform.runLater(() -> {
             try {
-                gameController.choosePersonalGoal(goals);
+                gameController.changeSceneGoals(goals);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
