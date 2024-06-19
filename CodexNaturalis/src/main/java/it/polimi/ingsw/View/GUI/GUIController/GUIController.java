@@ -4,6 +4,7 @@ import it.polimi.ingsw.Network.CommonClient;
 import it.polimi.ingsw.View.GUI.GUI;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -14,6 +15,7 @@ import java.net.URL;
 
 
 public abstract class GUIController {
+
     protected GUI gui;
     protected Stage stage;
 
@@ -34,10 +36,12 @@ public abstract class GUIController {
         return this.client;
     }
 
-    public void setScene(GUI gui, Stage stage) {
+   public void setGui(GUI gui) {
         this.gui=gui;
+   }
+   public void setStage(Stage stage) {
         this.stage=stage;
-    }
+   }
     public void setClient(CommonClient client) {
         this.client = client;
     }
@@ -45,6 +49,12 @@ public abstract class GUIController {
     public void setRoot(Parent root) {
         this.root = root;
     }
+
+    public Scene getScene() {
+        return new Scene(root);
+    }
+
+
     public void showException(String exception) {
     }
     //eventuali pulizie
