@@ -1,12 +1,14 @@
 package it.polimi.ingsw.View.GUI.GUIController;
 
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 
+import java.io.FileNotFoundException;
 import java.rmi.RemoteException;
 import java.util.LinkedList;
 
@@ -26,18 +28,37 @@ public class GoalCardController extends GUIController{
     @Override
     public void setArgs(Object... args) {
         this.goals = (LinkedList<GoalCard>) args[0];
+        loadGoalCard();
     }
     @FXML
     private void initialize() {
         goalcardchosen=false;
         myLabel.setVisible(true);
-        loadGoalCard();
     }
 
     public void loadGoalCard() {
-        //carico le goal card nella scena
+        setImageForGoalCard(leftGoalCard, goals.get(0));
+        setImageForGoalCard(rightGoalCard, goals.get(1));
+        leftGoalCard.setVisible(true);
+        rightGoalCard.setVisible(true);
     }
 
+    private void setImageForGoalCard(ImageView imageView, GoalCard goal) {
+        try {
+            int cardId = goal.getId();
+            Image cardImage = loadCardFrontImage(cardId);
+
+            imageView.setImage(cardImage);
+            imageView.setFitWidth(200);  // Imposta la larghezza desiderata
+            imageView.setFitHeight(160); // Imposta l'altezza desiderata
+            imageView.setPreserveRatio(true); // Mantieni il rapporto d'aspetto
+
+            enableCardInteractions();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void chooseGoalCard() {
         enableCardInteractions();
@@ -62,6 +83,7 @@ public class GoalCardController extends GUIController{
             myLabel.setText("Well done, goal card chosen!");
         }
     }
+
     @FXML
     private void onCardMouseEntered(MouseEvent event) {
         if (event.getSource() instanceof ImageView) {
@@ -98,6 +120,7 @@ public class GoalCardController extends GUIController{
             }
         }
         goalcardchosen = true;
+        System.out.println("goalcardsettata");
         this.gui.endTurn("GoalCard");
     }
 
