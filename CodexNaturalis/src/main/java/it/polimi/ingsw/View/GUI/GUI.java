@@ -228,7 +228,7 @@ public class GUI implements GameView {
     }
 
     @Override
-    public void printNotYourTurn(Player turn) {
+    public void printNotYourTurn(Player turn, String mex) {
         this.Turn = turn;
         Platform.runLater(() -> {
             ((StartCardController) guicontrollers.get("startCard")).waitYourTurn();
