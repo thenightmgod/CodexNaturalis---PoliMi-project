@@ -12,7 +12,7 @@ public class GoalCardController extends GUIController{
 
     protected boolean goalcardchosen;
     @FXML
-    private AnchorPane myPane;
+    private Pane myPane;
     @FXML
     private Label myLabel;
     @FXML
@@ -30,7 +30,80 @@ public class GoalCardController extends GUIController{
     private void initialize() {
         goalcardchosen=false;
         myLabel.setVisible(true);
+        loadGoalCard();
     }
+
+    public void loadGoalCard() {
+        //carico le goal card nella scena
+    }
+
+
+    public void chooseGoalCard() {
+        enableCardInteractions();
+        myLabel.setText("Now choose your personal goal card!");
+    }
+
+    private void enableCardInteractions() {
+        leftGoalCard.setDisable(false);
+        rightGoalCard.setDisable(false);
+    }
+
+    private void disableCardInteractions() {
+        leftGoalCard.setOnMouseClicked(null); // Rimuove l'azione onClick
+        rightGoalCard.setOnMouseClicked(null);
+    }
+
+    public void waitYourTurn() {
+        disableCardInteractions();
+        if (!goalcardchosen){
+            myLabel.setText("Wait for your turn to choose goal card!");
+        }else {
+            myLabel.setText("Well done, goal card chosen!");
+        }
+    }
+    @FXML
+    private void onCardMouseEntered(MouseEvent event) {
+        if (event.getSource() instanceof ImageView) {
+            ImageView card = (ImageView) event.getSource();
+            if (!card.isDisabled()) {
+                card.setOpacity(0.5); // Opacità ridotta per evidenziare
+            }
+        }
+    }
+    @FXML
+    private void onCardMouseExited(MouseEvent event) {
+        if (event.getSource() instanceof ImageView) {
+            ImageView card = (ImageView) event.getSource();
+            card.setOpacity(1.0); // Ripristina l'opacità originale
+        }
+    }
+    @FXML
+    private void onCardMouseClicked(MouseEvent event) throws RemoteException {
+        if (event.getSource() instanceof ImageView) {
+            ImageView card = (ImageView) event.getSource();
+            if (!card.isDisabled()) {
+                boolean isLeftCard = card == leftGoalCard;
+                try {
+                    if (isLeftCard) {
+                        client.chooseGoalCard(1, client);
+                        System.out.println("settata carta goal sinistra");
+                    } else {
+                        client.chooseGoalCard(2, client);
+                        System.out.println("settata carta goal destra");
+                    }
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        goalcardchosen = true;
+        this.gui.endTurn("GoalCard");
+    }
+
+
+
+
+
 
 
 
@@ -90,14 +163,6 @@ public class GoalCardController extends GUIController{
         }
     }
 
-    private void setCardInteraction(ImageView imageView, GoalCard goal) {
-        imageView.setOnMouseEntered(event -> {
-            imageView.setOpacity(0.7);
-        });
-
-        imageView.setOnMouseExited(event -> {
-            imageView.setOpacity(1.0);
-        });
 
         imageView.setOnMouseClicked(event -> {
             boolean isLeftCard = imageView == leftGoalCard;
@@ -118,36 +183,8 @@ public class GoalCardController extends GUIController{
             }
         });
     }
-    private void disableCardInteractions(ImageView imageView) {
-        imageView.setOnMouseClicked(null); // Rimuove l'azione onClick
-        imageView.setOpacity(0.5); // Opacità ridotta per indicare che le interazioni sono disabilitate
-    }
 
-    public void showGoalCardscene() {
-        goalcardchosen=true;
 
-        leftGoalCard.setVisible(true);
-        rightGoalCard.setVisible(true);
 
-        leftGoalCard.setDisable(false);
-        rightGoalCard.setDisable(false);
-        myLabel.setText("Choose you personal goal card");
-    }
-
-    public void showWaitingScene() {
-        if(goalcardchosen) {
-            myLabel.setText("Well done, goal card chosen!");
-        } else {
-            myLabel.setText("Wait your turn");
-        }
-        disableCardInteractions(leftGoalCard);
-        disableCardInteractions(rightGoalCard);
-        leftGoalCard.setVisible(true);
-        rightGoalCard.setVisible(true);
-        myLabel.setVisible(true);
-    }
-
-    public void setClient(CommonClient client) {
-        this.client = client;
-    }*/
+    */
 }
