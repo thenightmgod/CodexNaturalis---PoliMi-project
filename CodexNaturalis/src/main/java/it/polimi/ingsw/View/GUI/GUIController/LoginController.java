@@ -164,7 +164,7 @@ public class LoginController extends GUIController {
     }
 
     public void showException(String exception) {
-        Platform.runLater(() -> {
+        //forsePlatform
             switch(exception) {
                 case "NameAlreadyTakenException" -> {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -185,7 +185,6 @@ public class LoginController extends GUIController {
                 default -> {
                 }
             }
-        });
     }
 
     public void createGame() {

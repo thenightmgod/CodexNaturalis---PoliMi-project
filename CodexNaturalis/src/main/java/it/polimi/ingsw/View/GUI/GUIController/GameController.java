@@ -93,7 +93,7 @@ public class GameController extends GUIController {
         this.root = root;
     }
 
-    public void setStartClient(CommonClient client){
+    public void setStartClient(CommonClient client) {
         this.startClient = client;
     }
 
@@ -131,19 +131,19 @@ public class GameController extends GUIController {
         goalCardController.setScene(gui, stage);
         goalCardController.runGoal(goals);
 
-       // gui.setGoalCardController(goalCardController);
+        // gui.setGoalCardController(goalCardController);
         stage.setScene(scene);
 
     }
-   // public void setClient(CommonClient client) {
-        //this.client = client;
-   // }
+    // public void setClient(CommonClient client) {
+    //this.client = client;
+    // }
 
     public void setScene(GUI gui, Stage stage) {
 
         username = startClient.getName();
         stage.setTitle(username + "_CodexNaturalis");
-       // gui.setGameController(this);
+        // gui.setGameController(this);
         this.gui = gui;
         this.stage = stage;
 
@@ -178,7 +178,7 @@ public class GameController extends GUIController {
         });
     }
 
-    public void chooseStartCardFace() {
+  /*  public void chooseStartCardFace() {
         enableCardInteractions();
         chooseSideLabel.setText("Choose the side");
     }
@@ -191,7 +191,7 @@ public class GameController extends GUIController {
             chooseSideLabel.setText("Well done, start card chosen!");
             disableCardInteractions();
         }
-    }
+    }*/
 
     @FXML
     public void showNeutralBackground() {
@@ -226,55 +226,6 @@ public class GameController extends GUIController {
         }
     }
 
-    public void updateResourceDeck(LinkedList<ResourceCard> deck) {
-        //qui dovrei posizionare il deck a dx
-
-    }
-
-    public void updateGoldDeck(LinkedList<GoldCard> golddeck) {
-        //qui devo posizionare il deck a sx
-
-
-    }
-
-    public void setHand(LinkedList<PlayableCard> hand) {
-        Platform.runLater(() -> {
-
-            if (!cardGroup1.getChildren().isEmpty()) {
-                cardGroup1.getChildren().clear(); // Rimuove tutte le carte attuali
-            }
-
-            if (!cardGroup2.getChildren().isEmpty()) {
-                cardGroup2.getChildren().clear(); // Rimuove tutte le carte attuali
-            }
-            for (PlayableCard card : hand) {
-                int cardId = card.getId();
-
-                try {
-                    Image cardImage = loadCardFrontImage(cardId);
-
-                    ImageView imageView = new ImageView(cardImage);
-                    imageView.setFitWidth(100);
-                    imageView.setPreserveRatio(true);
-
-                    setCardInteraction(imageView, cardId);
-
-                    if (cardId >= 1 && cardId <= 40) {
-                        cardGroup1.getChildren().add(imageView);
-                    } else if (cardId >= 41 && cardId <= 80) {
-                        cardGroup2.getChildren().add(imageView);
-                    }
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                    // Gestione dell'errore nel caricamento dell'immagine
-                }
-            }
-        });
-    }
-
-
-
-
 
    /* private void loadCardImages() {
         String directoryPath = "/Users/caterinagerini/Desktop/CodexNaturalis/CodexNaturalis/src/main/Resources/view/CODEX_cards_gold_back";
@@ -297,104 +248,5 @@ public class GameController extends GUIController {
             }
         }
     }*/
-
-    private void setCardInteraction(ImageView imageView, int cardId) {
-        imageView.setOnMouseEntered(event -> {
-            // Aggiungi effetto di illuminazione
-            imageView.setOpacity(0.7);
-        });
-
-        imageView.setOnMouseExited(event -> {
-            // Rimuovi effetto di illuminazione
-            imageView.setOpacity(1.0);
-        });
-
-        imageView.setOnMouseClicked(event -> {
-            try {
-                if (isFrontImageLoaded) {
-                    // Se l'immagine front è caricata, carica l'immagine back
-                    Image flippedImage = loadCardBackImage(cardId);
-                    imageView.setImage(flippedImage);
-                    isFrontImageLoaded = false; // Aggiorna lo stato dell'immagine
-                } else {
-                    // Se l'immagine back è caricata, carica l'immagine front
-                    Image frontImage = loadCardFrontImage(cardId);
-                    imageView.setImage(frontImage);
-                    isFrontImageLoaded = true; // Aggiorna lo stato dell'immagine
-                }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-                // Gestione dell'errore nel caricamento dell'immagine
-            }
-        });
-    }
-
-    @FXML
-    public void moveUp(ActionEvent event) {
-    }
-
-    @FXML
-    public void moveDown(ActionEvent event) {
-    }
-
-    @FXML
-    public void moveLeft(ActionEvent event) {
-    }
-
-    @FXML
-    public void moveRight(ActionEvent event) {
-    }
-
-    @FXML
-    private void onCardMouseEntered(MouseEvent event) {
-        if (event.getSource() instanceof ImageView) {
-            ImageView card = (ImageView) event.getSource();
-            if (!card.isDisabled()) {
-                card.setOpacity(0.5); // Opacità ridotta per evidenziare
-            }
-        }
-    }
-
-    @FXML
-    private void onCardMouseExited(MouseEvent event) {
-        if (event.getSource() instanceof ImageView) {
-            ImageView card = (ImageView) event.getSource();
-            card.setOpacity(1.0); // Ripristina l'opacità originale
-        }
-    }
-
-    @FXML
-    private void onCardMouseClicked(MouseEvent event) throws RemoteException {
-        if (!choosingPersonalGoal) {
-            if (event.getSource() instanceof ImageView) {
-                ImageView card = (ImageView) event.getSource();
-                if (!card.isDisabled()) {
-                    if (card == leftStartCardImage) {
-                        boolean face = true;
-                        startClient.setStartCardFace(face, client);
-                    } else if (card == rightStartCardImage) {
-                        boolean face = false;
-                        startClient.setStartCardFace(face, client);
-                    }
-                }
-            }
-            StartCardOk = true;
-            this.gui.endTurn("StartCard");
-        }
-    }
-
-    private void enableCardInteractions() {
-        leftStartCardImage.setDisable(false);
-        rightStartCardImage.setDisable(false);
-    }
-
-    private void disableCardInteractions() {
-        leftStartCardImage.setDisable(true);
-        rightStartCardImage.setDisable(true);
-    }
-
-    public void setClient(CommonClient client) {
-        this.client = client;
-    }
 
 }
