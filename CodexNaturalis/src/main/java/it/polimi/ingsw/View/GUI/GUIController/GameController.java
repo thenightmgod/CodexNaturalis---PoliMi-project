@@ -46,6 +46,8 @@ public class GameController extends GUIController {
     boolean StartCardOk=false;
     boolean popUpShown=false;
     boolean popUpShowing=false;
+    boolean choosingPersonalGoal=false;
+    boolean isFrontImageLoaded=true;
     private Stage currentPopupStage;
 
     @FXML
@@ -109,12 +111,15 @@ public class GameController extends GUIController {
 
 
     public void choosePersonalGoal(LinkedList<GoalCard> goals) {
+        choosingPersonalGoal=true;
         leftGoalCardImageView = new ImageView();
         leftGoalCardImageView.setFitWidth(200);
         leftGoalCardImageView.setFitHeight(160);
+
         rightGoalCardImageView= new ImageView();
         rightGoalCardImageView.setFitHeight(160);
         rightGoalCardImageView.setFitWidth(200);
+
         if (goals.size() >= 2) {
             GoalCard goal1 = goals.get(0);
             GoalCard goal2 = goals.get(1);
@@ -122,6 +127,21 @@ public class GameController extends GUIController {
             setImageForGoalCard(leftGoalCardImageView, goal1);
             setImageForGoalCard(rightGoalCardImageView, goal2);
         }
+        showPersonalGoal();
+    }
+
+    public void showPersonalGoal() {
+        welcomeLabel.setVisible(false);
+        backgroundImage.setVisible(false);
+        neutralBackgroundPane.setVisible(false);
+        titleLabel=new Label();
+        titleLabel.setText("");
+        titleLabel.setVisible(true);
+        leftGoalCardImageView.setVisible(true);
+        rightGoalCardImageView.setVisible(true);
+        disableCardInteractions(leftGoalCardImageView);
+        disableCardInteractions(rightGoalCardImageView);
+        stage.show();
     }
 
     private void setImageForGoalCard(ImageView imageView, GoalCard goal) {
@@ -245,20 +265,23 @@ public class GameController extends GUIController {
 
     public void waitYourTurn() {
         //se ho già assegnato le carte goal
-        if (leftGoalCardImageView != null) {
+        if (choosingPersonalGoal) {
+            //se ho già mostrato la showGoalsCardsscene
             if (popUpShown) {
-                titleLabel = new Label("Well done, goal card chosen!");
+                titleLabel.setText("Well done, goal card chosen!");
+                disableCardInteractions(leftGoalCardImageView);
+                disableCardInteractions(rightGoalCardImageView);
             } else {
-                titleLabel = new Label("Wait for your turn to choose the personal goal card!");
+                titleLabel.setText("Wait for your turn to choose the personal goal card!");
+                titleLabel.setStyle("-fx-font-size: 18px; -fx-text-fill: gold; -fx-font-weight: bold;");
             }
-            titleLabel.setStyle("-fx-font-size: 18px; -fx-text-fill: gold; -fx-font-weight: bold;");
-            disablePopUpScene();
         } else {
-            disableCardInteractions();
             if (!StartCardOk) {
-                chooseSideLabel.setText("It's not your turn");
+                chooseSideLabel.setText("wait, it's not your turn");
+                disableCardInteractions();
             } else {
                 chooseSideLabel.setText("Well done, start card chosen!");
+                disableCardInteractions();
             }
         }
     }
@@ -405,16 +428,34 @@ public class GameController extends GUIController {
         });
 
         imageView.setOnMouseClicked(event -> {
-            // Esegui flip della carta
             try {
-                Image flippedImage = loadCardBackImage(cardId);
-                imageView.setImage(flippedImage);
+                if (isFrontImageLoaded) {
+                    // Se l'immagine front è caricata, carica l'immagine back
+                    Image flippedImage = loadCardBackImage(cardId);
+                    imageView.setImage(flippedImage);
+                    isFrontImageLoaded = false; // Aggiorna lo stato dell'immagine
+                } else {
+                    // Se l'immagine back è caricata, carica l'immagine front
+                    Image frontImage = loadCardFrontImage(cardId);
+                    imageView.setImage(frontImage);
+                    isFrontImageLoaded = true; // Aggiorna lo stato dell'immagine
+                }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
                 // Gestione dell'errore nel caricamento dell'immagine
             }
         });
     }
+    public void showGoalCardsscene() {
+
+        popUpShown = true;
+        System.out.println("showGoalCardsscene called");
+        titleLabel.setText("Choose your personal Goal card");
+        stage.setTitle(username + "_chooseGoalCard");
+        enableCardInteractions(leftGoalCardImageView);
+        enableCardInteractions(rightGoalCardImageView);
+    }
+
 
     @FXML
     public void moveUp(ActionEvent event) {
