@@ -119,6 +119,8 @@ public class GoalCardController extends GUIController{
 
 
 
+
+
     /*
 
     public void runGoal(LinkedList <GoalCard> goals) {
