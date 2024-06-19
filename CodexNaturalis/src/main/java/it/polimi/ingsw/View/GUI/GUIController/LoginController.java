@@ -33,18 +33,13 @@ import java.util.concurrent.ScheduledExecutorService;
 
 public class LoginController extends GUIController {
 
-    protected  CommonClient client;
-    protected Parent root;
-    protected  Stage stage;
-    // protected ProtocolController pc;
-    protected  GUI gui;
+
     boolean serverIpEntered=false;
     boolean connectionType;
     protected String serverIp;
     protected String username;
     protected int number;
     protected ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-
     @FXML
     private ProgressBar myProgressBar;
     @FXML
@@ -152,7 +147,7 @@ public class LoginController extends GUIController {
     @FXML
     public void startRMI(ActionEvent event)  {
         try {
-            client= new RMIClient(username, serverIp);
+            client = new RMIClient(username, serverIp);
             connectionType = false;
             gui.setClient(client);
             client.setView(gui);
@@ -266,7 +261,6 @@ public class LoginController extends GUIController {
     }
 
     public void showGameScene() throws IOException {
-
         URL fxmlUrl = getClass().getResource("/view/Game.fxml");
         if (fxmlUrl == null) {
             throw new RuntimeException("FXML file not found");
@@ -274,10 +268,12 @@ public class LoginController extends GUIController {
         FXMLLoader loader = new FXMLLoader(fxmlUrl);
         loader.setLocation(fxmlUrl);
         Parent root= loader.load();
-        Scene scene = new Scene(root, 1250,650);
-        GameController guiGameController =loader.getController();
 
-        guiGameController.setClient(client);
+        Scene scene = new Scene(root, 1250,650);
+        GameController guiGameController = loader.getController();
+
+        guiGameController.setStartClient(client);
+        String name = client.getName();
         guiGameController.setRoot(root);
         guiGameController.setScene(gui,stage);
 
@@ -378,9 +374,6 @@ public class LoginController extends GUIController {
         gui.setLoginController(this);
         this.gui=gui;
         this.stage=stage;
-    }
-    public void setClient(CommonClient client) {
-        this.client=client;
     }
 
     public void stop() throws Exception {
