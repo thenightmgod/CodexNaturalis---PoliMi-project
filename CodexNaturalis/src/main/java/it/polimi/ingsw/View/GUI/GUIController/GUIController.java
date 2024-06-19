@@ -54,7 +54,6 @@ public abstract class GUIController {
         String cardPath = "/view/CODEX_cards_gold_back/" + String.format("%03d", cardId) + ".png";
         return loadImage(cardPath);
     }
-
     protected Image loadImage(String imagePath) {
         try {
             URL resourceUrl = getClass().getResource(imagePath);
@@ -68,5 +67,4 @@ public abstract class GUIController {
             return null;
         }
     }
-
 }

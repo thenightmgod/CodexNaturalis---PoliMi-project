@@ -44,6 +44,7 @@ public class LoginController extends GUIController {
     protected String username;
     protected int number;
     protected ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+
     @FXML
     private ProgressBar myProgressBar;
     @FXML
@@ -265,6 +266,7 @@ public class LoginController extends GUIController {
     }
 
     public void showGameScene() throws IOException {
+
         URL fxmlUrl = getClass().getResource("/view/Game.fxml");
         if (fxmlUrl == null) {
             throw new RuntimeException("FXML file not found");
@@ -272,12 +274,10 @@ public class LoginController extends GUIController {
         FXMLLoader loader = new FXMLLoader(fxmlUrl);
         loader.setLocation(fxmlUrl);
         Parent root= loader.load();
-
         Scene scene = new Scene(root, 1250,650);
         GameController guiGameController =loader.getController();
 
         guiGameController.setClient(client);
-        String name = client.getName();
         guiGameController.setRoot(root);
         guiGameController.setScene(gui,stage);
 

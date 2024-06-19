@@ -51,7 +51,8 @@ public class GoalCardController extends GUIController{
     protected LinkedList<GoalCard> goals;
     protected boolean goalcardchosen=false;
 
-
+    @FXML
+    private AnchorPane myPane;
     @FXML
     private Label myLabel;
     @FXML
@@ -65,12 +66,12 @@ public class GoalCardController extends GUIController{
     }
 
     public void runGoal(LinkedList <GoalCard> goals) {
-
          Platform.runLater(() -> {
+             myPane.setVisible(true);
              this.goals=goals;
-
-            leftGoalCard = new ImageView();
-            rightGoalCard= new ImageView();
+             myLabel=new Label();
+             leftGoalCard = new ImageView();
+             rightGoalCard= new ImageView();
 
             if (goals.size() >= 2) {
                 GoalCard goal1 = goals.get(0);
@@ -79,15 +80,12 @@ public class GoalCardController extends GUIController{
                 setImageForGoalCard(leftGoalCard, goal1);
                 setImageForGoalCard(rightGoalCard, goal2);
             }
-
              myLabel.setVisible(true);
              leftGoalCard.setVisible(true);
              rightGoalCard.setVisible(true);
 
              disableCardInteractions(leftGoalCard);
              disableCardInteractions(rightGoalCard);
-
-             stage.show();
         });
 
     }
@@ -144,11 +142,13 @@ public class GoalCardController extends GUIController{
 
     public void showGoalCardscene() {
         goalcardchosen=true;
+
+        leftGoalCard.setVisible(true);
+        rightGoalCard.setVisible(true);
+
         leftGoalCard.setDisable(false);
         rightGoalCard.setDisable(false);
         myLabel.setText("Choose you personal goal card");
-
-
     }
 
     public void showWaitingScene() {
@@ -159,5 +159,12 @@ public class GoalCardController extends GUIController{
         }
         disableCardInteractions(leftGoalCard);
         disableCardInteractions(rightGoalCard);
+        leftGoalCard.setVisible(true);
+        rightGoalCard.setVisible(true);
+        myLabel.setVisible(true);
+    }
+
+    public void setClient(CommonClient client) {
+        this.client = client;
     }
 }

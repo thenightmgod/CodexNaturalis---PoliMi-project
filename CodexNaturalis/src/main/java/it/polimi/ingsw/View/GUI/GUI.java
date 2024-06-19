@@ -224,6 +224,9 @@ public class GUI implements GameView {
     public void leaveGameMessage() {
 
     }
+    public CommonClient getClient() {
+        return this.client;
+    }
     public PlayerColor getPlayerColor() {
         PlayerColor color=Turn.getColor();
         return color;

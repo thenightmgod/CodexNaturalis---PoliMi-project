@@ -80,8 +80,6 @@ public class GameController extends GUIController {
     private HBox startCardsHBox;
 
     @FXML
-    private HBox goalCardsHBox;
-    @FXML
     private ImageView leftStartCardImage;
 
     @FXML
@@ -91,11 +89,6 @@ public class GameController extends GUIController {
     private Label chooseSideLabel;
     @FXML
     private Label titleLabel;
-    @FXML
-    private ImageView leftGoalCardImageView;
-
-    @FXML
-    private ImageView rightGoalCardImageView;
 
     public void setRoot(Parent root) {
         this.root = root;
@@ -107,7 +100,6 @@ public class GameController extends GUIController {
         titleLabel = new Label();
         titleLabel.setVisible(false);
         startCardsHBox.setVisible(true);
-        goalCardsHBox.setVisible(false);
 
         String newImagePath = "/view/MyCodexNaturalisPhotos/pic8211904.jpg";
         Image newImage = loadImage(newImagePath);
@@ -123,8 +115,6 @@ public class GameController extends GUIController {
 
     public void choosePersonalGoal(LinkedList<GoalCard> goals) throws IOException {
 
-        stage.close();
-
         URL fxmlUrl = getClass().getResource("/view/goalcardchoose.fxml");
         if (fxmlUrl == null) {
             throw new RuntimeException("FXML file not found");
@@ -132,20 +122,21 @@ public class GameController extends GUIController {
         FXMLLoader loader = new FXMLLoader(fxmlUrl);
         loader.setLocation(fxmlUrl);
         Parent root = loader.load();
-
         Scene scene = new Scene(root, 1250, 650);
 
         goalCardController = loader.getController();
         goalCardController.setClient(client);
         goalCardController.setRoot(root);
         goalCardController.setScene(gui, stage);
-        gui.setGoalCardController(goalCardController);
         goalCardController.runGoal(goals);
 
+        gui.setGoalCardController(goalCardController);
         stage.setScene(scene);
 
     }
-
+   // public void setClient(CommonClient client) {
+        //this.client = client;
+   // }
 
     public void setScene(GUI gui, Stage stage) {
 
@@ -400,4 +391,9 @@ public class GameController extends GUIController {
         leftStartCardImage.setDisable(true);
         rightStartCardImage.setDisable(true);
     }
+
+    public void setClient(CommonClient client) {
+        this.client = client;
+    }
+
 }
