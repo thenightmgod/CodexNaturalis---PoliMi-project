@@ -178,7 +178,7 @@ public class InputHandler extends Thread{
         this.tui.endTurn("GoalCard");
     }
 
-    private void setCardFace() throws RemoteException {
+    private void setStartCardFace() throws RemoteException {
         String f;
         boolean face;
         boolean goon = false;

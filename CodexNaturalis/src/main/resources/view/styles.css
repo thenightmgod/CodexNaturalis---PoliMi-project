@@ -51,8 +51,8 @@
     -fx-font-family: "Arial"; /* Famiglia del font */
 }
 
-.anchor-pane {
-    -fx-background-image: url("file : MyCodexNaturalisPhotos/pic6518929.jpg");
-    -fx-background-size: cover; /* Adatta l'immagine per coprire tutta l'area disponibile */
-    -fx-background-position: center; /* Centra l'immagine */
+.loginBackground {
+    -fx-background-image: url("MyCodexNaturalisPhotos/pic6518929.jpg");
+    -fx-background-size: cover;
+    -fx-background-repeat: stretch; /* Centra l'immagine */
 }
