@@ -52,7 +52,7 @@ public class ObserverManager {
         try {
             for (String s : observers.keySet()) {
                 if (!observers.get(s).getName().equals(turn.getName())) { //printo is not your turn a tutti quelli che non sono in turno
-                    observers.get(s).notYourTurn(turn);
+                    observers.get(s).notYourTurn(turn, mex);
                 }
             }
             for (String s : observers.keySet()) {

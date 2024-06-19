@@ -33,9 +33,10 @@ public interface VirtualView extends Remote {
      * Notifies a player that it's not their turn.
      *
      * @param turn The player to be notified.
+     * @param mex The message to be displayed.
      * @throws RemoteException If a remote access error occurs.
      */
-    void notYourTurn(Player turn) throws RemoteException;
+    void notYourTurn(Player turn, String mex) throws RemoteException;
 
     /**
      * Shows an exception message.

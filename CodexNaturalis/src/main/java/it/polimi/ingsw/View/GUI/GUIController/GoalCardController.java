@@ -1,48 +1,15 @@
 package it.polimi.ingsw.View.GUI.GUIController;
 
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
-import it.polimi.ingsw.Network.CommonClient;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
-import javafx.scene.effect.GaussianBlur;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.animation.PauseTransition;
-import javafx.util.Duration;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.rmi.RemoteException;
 import java.util.LinkedList;
 
-import it.polimi.ingsw.View.GUI.GUI;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-
-import java.io.IOException;
-import java.net.URL;
-
 public class GoalCardController extends GUIController{
+
     protected boolean goalcardchosen;
     @FXML
     private AnchorPane myPane;
@@ -52,6 +19,12 @@ public class GoalCardController extends GUIController{
     private ImageView leftGoalCard;
     @FXML
     private ImageView rightGoalCard;
+    private LinkedList<GoalCard> goals;
+
+    @Override
+    public void setArgs(Object... args) {
+        this.goals = (LinkedList<GoalCard>) args[0];
+    }
 
     @FXML
     private void initialize() {

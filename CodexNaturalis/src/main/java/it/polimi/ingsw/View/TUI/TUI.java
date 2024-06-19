@@ -258,7 +258,7 @@ public class TUI implements GameView {
     }
 
     @Override
-    public void printNotYourTurn(Player player) {
+    public void printNotYourTurn(Player player, String mex) {
         this.Turn = player;
         System.out.println("It's " + Turn.getName() + "'s turn");
     }
