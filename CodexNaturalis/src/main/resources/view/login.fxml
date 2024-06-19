@@ -17,7 +17,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="scenePane" prefHeight="386.0" prefWidth="529.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.GUI.GUIController.LoginController">
+<AnchorPane fx:id="scenePane" stylesheets="@styles.css" prefHeight="386.0" prefWidth="529.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.GUI.GUIController.LoginController">
    <children>
       <AnchorPane fx:id="innerPane" layoutX="8.0" layoutY="11.0" prefHeight="500.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>

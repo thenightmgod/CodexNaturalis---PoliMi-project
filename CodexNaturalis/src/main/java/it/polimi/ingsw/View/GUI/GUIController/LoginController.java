@@ -1,8 +1,6 @@
 package it.polimi.ingsw.View.GUI.GUIController;
 
-import it.polimi.ingsw.Network.CommonClient;
 import it.polimi.ingsw.Network.RMI.RMIClient;
-import it.polimi.ingsw.View.GUI.GUI;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -19,10 +17,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.rmi.NotBoundException;
@@ -32,12 +28,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
 public class LoginController extends GUIController {
-
-    protected  CommonClient client;
-    protected Parent root;
-    protected  Stage stage;
-    // protected ProtocolController pc;
-    protected  GUI gui;
     boolean serverIpEntered=false;
     boolean connectionType;
     protected String serverIp;
@@ -87,17 +77,13 @@ public class LoginController extends GUIController {
     @FXML
     private void submit(ActionEvent event) throws IOException {
         if (!serverIpEntered) {
-            animateLabelText(myLabel,"Insert the server ip");
             serverIp = myText.getText();
-            if (serverIp == null) {
-                showAlert("Error", "Server IP cannot be empty.");
-                return;
-            }else if (!isValidFormat(serverIp)) {
+            if (!isValidFormat(serverIp)) {
                 showAlert("Error", "This is not a valid format!");
                 return;
             }
             myText.clear();
-            animateLabelText(myLabel,"Now insert your nickname");
+            animateLabelText(myLabel, "Now insert your nickname");
             serverIpEntered = true;
         } else {
             username = myText.getText();
@@ -109,13 +95,14 @@ public class LoginController extends GUIController {
             gui.setName(username);
             myText.setVisible(false);
             myButton.setVisible(false);
-            animateLabelText(myLabel,"Choose your protocol");
+            animateLabelText(myLabel, "Choose your protocol");
             myButton1.setVisible(true);
             myButton1.setDisable(false);
             myButton2.setVisible(true);
             myButton2.setDisable(false);
         }
     }
+
     public void insertNicknameAgain() {
         myLabel.setVisible(true);
         myNicknameButton.setDisable(false);
@@ -136,7 +123,7 @@ public class LoginController extends GUIController {
         }
         gui.setName(username);
         if(!(connectionType)) {
-            //((RMIClient) this.client ).setName(this.gui.getName());
+            ((RMIClient) this.client ).setName(username);
         }
         //else socket
         joinGame();
@@ -259,7 +246,6 @@ public class LoginController extends GUIController {
 
         animateLabelText(myLabel2, "Waiting for other participants...");
 
-
         String newImagePath = "/view/MyCodexNaturalisPhotos/pic6069793.jpg";
         Image newImage = loadImage(newImagePath);
         myImage.setImage(newImage);
@@ -267,7 +253,7 @@ public class LoginController extends GUIController {
 
     public void showGameScene() throws IOException {
 
-        URL fxmlUrl = getClass().getResource("/view/Game.fxml");
+        URL fxmlUrl = getClass().getResource("/view/startCard.fxml");
         if (fxmlUrl == null) {
             throw new RuntimeException("FXML file not found");
         }
@@ -281,7 +267,7 @@ public class LoginController extends GUIController {
         guiGameController.setRoot(root);
         guiGameController.setScene(gui,stage);
 
-        gui.setGameController(guiGameController);
+       // gui.setGameController(guiGameController);
 
         stage.setScene(scene);
     }
@@ -349,7 +335,7 @@ public class LoginController extends GUIController {
     }
 
 
-    public void showLoginScene() {
+   /* public void showLoginScene() {
         try {
             File fxmlFile = new File("/view/login.fxml");
             URL fxmlUrl = fxmlFile.toURI().toURL();
@@ -363,25 +349,14 @@ public class LoginController extends GUIController {
 
             Scene scene = new Scene(root);
             stage.setScene(scene);
-            stage.setTitle("MyCodexNaturalis");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
-    public void setRoot(Parent root) {
-        this.root = root;
-    }
 
-    public void setScene(GUI gui, Stage stage) {
-        gui.setLoginController(this);
-        this.gui=gui;
-        this.stage=stage;
-    }
-    public void setClient(CommonClient client) {
-        this.client=client;
-    }
+
 
     public void stop() throws Exception {
         super.stop();

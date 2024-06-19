@@ -23,26 +23,8 @@ public class GUIApplication extends Application {
     public void start(Stage stage) throws IOException {
 
         try {
-            //----------STARTA IL LOGIN CONTROLLER-----------------------
-            String userDir = System.getProperty("user.dir");
-
-            File fxmlFile = new File(userDir, "/src/main/resources/view/login.fxml");
-            URL fxmlUrl = fxmlFile.toURI().toURL();
-            FXMLLoader loader= new FXMLLoader();
-            loader.setLocation(fxmlUrl);
-            Parent root= loader.load();
-            LoginController controller=loader.getController();
-            controller.setRoot(root);
-            Scene scene=new Scene(root);
-            stage.setScene(scene);
-            scene.getStylesheets().add(getClass().getResource("/view/styles.css").toExternalForm());
-            stage.setTitle("MyCodexNaturalis");
-
             GUI gui=new GUI();
-            gui.setArgs(args);
-            gui.setLoginController(controller);
-            controller.setScene(gui,stage);
-            stage.show();
+            gui.start(args, stage);
 
         }catch (Exception e) {
             e.printStackTrace();

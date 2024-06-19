@@ -131,7 +131,7 @@ public class GameController extends GUIController {
         goalCardController.setScene(gui, stage);
         goalCardController.runGoal(goals);
 
-        gui.setGoalCardController(goalCardController);
+       // gui.setGoalCardController(goalCardController);
         stage.setScene(scene);
 
     }
@@ -143,7 +143,7 @@ public class GameController extends GUIController {
 
         username = startClient.getName();
         stage.setTitle(username + "_CodexNaturalis");
-        gui.setGameController(this);
+       // gui.setGameController(this);
         this.gui = gui;
         this.stage = stage;
 
