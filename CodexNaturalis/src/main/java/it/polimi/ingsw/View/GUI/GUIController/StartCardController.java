@@ -32,8 +32,6 @@ public class StartCardController extends GUIController{
 
     @FXML
     private void initialize() {
-        chooseSideLabel = new Label();
-        chooseSideLabel.setVisible(false);
         String newImagePath = "/view/MyCodexNaturalisPhotos/pic8211904.jpg";
         Image newImage = loadImage(newImagePath);
         if (newImage != null) {
@@ -43,7 +41,7 @@ public class StartCardController extends GUIController{
         } else {
             System.out.println("Failed to load image from path: " + newImagePath);
         }
-        welcomeLabel.setText("Benvenuto nella nuova partita, " + this.client.getName() + "!");
+        welcomeLabel.setText("Welcome to the new game!");
         PauseTransition pause = new PauseTransition(Duration.seconds(3));
         pause.setOnFinished(event -> showNeutralBackground());
         pause.play();
@@ -54,6 +52,7 @@ public class StartCardController extends GUIController{
         welcomeLabel.setVisible(false);
         backgroundImage.setVisible(false);
         neutralBackgroundPane.setVisible(true);
+        chooseSideLabel.setVisible(true);
     }
 
     public void showStartCard(StartCard card) throws FileNotFoundException {
