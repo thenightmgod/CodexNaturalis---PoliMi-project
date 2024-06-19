@@ -250,27 +250,6 @@ public class LoginController extends GUIController {
         myImage.setImage(newImage);
     }
 
-    public void showGameScene() throws IOException {
-
-        URL fxmlUrl = getClass().getResource("/view/startCard.fxml");
-        if (fxmlUrl == null) {
-            throw new RuntimeException("FXML file not found");
-        }
-        FXMLLoader loader = new FXMLLoader(fxmlUrl);
-        loader.setLocation(fxmlUrl);
-        Parent root= loader.load();
-        Scene scene = new Scene(root, 1250,650);
-        GameController guiGameController =loader.getController();
-
-        guiGameController.setClient(client);
-        guiGameController.setRoot(root);
-        guiGameController.setScene(gui,stage);
-
-       // gui.setGameController(guiGameController);
-
-        stage.setScene(scene);
-    }
-
 
 
     //--------STARTARE IL SOCKET!!!-----------------
@@ -333,30 +312,6 @@ public class LoginController extends GUIController {
         alert.showAndWait();
     }
 
-
-   /* public void showLoginScene() {
-        try {
-            File fxmlFile = new File("/view/login.fxml");
-            URL fxmlUrl = fxmlFile.toURI().toURL();
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(fxmlUrl);
-            Parent root = loader.load();
-
-            LoginController loginController = loader.getController();
-            loginController.setRoot(root);
-            loginController.setScene(gui, stage);
-
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
-
-
-
-
     public void stop() throws Exception {
         super.stop();
         if (scheduler != null && !scheduler.isShutdown()) {
@@ -382,7 +337,7 @@ public class LoginController extends GUIController {
             timeline.getKeyFrames().add(keyFrame);
         }
 
-        timeline.setCycleCount(Timeline.INDEFINITE); // Ripeti indefinitamente
+        timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }
 }
