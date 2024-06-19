@@ -1,11 +1,13 @@
 package it.polimi.ingsw.View.GUI.GUIController;
 
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 
+import java.rmi.RemoteException;
 import java.util.LinkedList;
 
 public class GoalCardController extends GUIController{
@@ -25,7 +27,6 @@ public class GoalCardController extends GUIController{
     public void setArgs(Object... args) {
         this.goals = (LinkedList<GoalCard>) args[0];
     }
-
     @FXML
     private void initialize() {
         goalcardchosen=false;
