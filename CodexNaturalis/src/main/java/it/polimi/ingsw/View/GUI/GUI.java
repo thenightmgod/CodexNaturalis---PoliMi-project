@@ -88,6 +88,7 @@ public class GUI implements GameView {
         Platform.runLater(()-> {
             try {
                 switchToScene("goalCard");
+                //mi deve caricare i goals
                 this.goals=goals;
             } catch (IOException e) {
                 System.out.println("StartCardScene non correttamente inizializzata");
@@ -159,13 +160,14 @@ public class GUI implements GameView {
                     });
                 }
                 case "GoalCard" ->{
+                    Platform.runLater(()-> {
+                        ((GoalCardController)guicontrollers.get("goalCard")).chooseGoalCard();
+                    });
 
                 }
-                   // Platform.runLater(() ->
-                   //     goalCardController.showGoalCardscene());
             }
         }else {
-
+//
         }
     }
 
@@ -230,8 +232,14 @@ public class GUI implements GameView {
     public void printNotYourTurn(Player turn) {
         this.Turn = turn;
         Platform.runLater(() -> {
-            ((StartCardController) guicontrollers.get("startCard")).waitYourTurn();
-        });
+            switch(mex) {
+                case"StartCard"-> {
+                  ((StartCardController) guicontrollers.get("startCard")).waitYourTurn();
+                }
+                case"GoalCard"->{
+                    ((GoalCardController)guicontrollers.get("goalCard")).waitYourTurn();
+                }
+        }});
     }
 
     @Override
