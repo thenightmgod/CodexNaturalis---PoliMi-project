@@ -122,7 +122,7 @@ public class TurnController extends GUIController{
             ImageView imageView = new ImageView();
             int x = prato.getX() - minX;
             int y = maxY - prato.getY();
-            Image image = loadImage("view/MyCodexNaturalisPhotos/carlos.png");
+            Image image = loadImage("/view/MyCodexNaturalisPhotos/freepos.png");
             imageView.setImage(image);
             imageView.setFitWidth(cellWidth); // Set the preferred width of the ImageView
             imageView.setFitHeight(cellHeight);
