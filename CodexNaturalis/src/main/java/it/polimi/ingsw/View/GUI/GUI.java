@@ -33,7 +33,7 @@ public class GUI implements GameView {
     private Player Turn;
     private CommonClient client;
     private String[] args;
-    private boolean first_turn=true;
+    public boolean first_turn=true;
 
 
     //-------METODI DEI CONTROLLER---------------------------
@@ -70,11 +70,11 @@ public class GUI implements GameView {
         FXMLLoader loader = new FXMLLoader(fxmlUrl);
         Parent root = loader.load();
         GUIController controller = loader.getController();
-        controller.setArgs(args);
         controller.setGui(this);
         controller.setStage(primaryStage);
         controller.setClient(client);
         controller.setRoot(root);
+        controller.setArgs(args);
         return controller;
     }
 
@@ -114,6 +114,7 @@ public class GUI implements GameView {
 
     @Override
     public void updateHands(LinkedList<PlayableCard> hand, String name) {
+
         client.getClient().setHand(hand);
         if(!first_turn) {
             Platform.runLater(() -> {
@@ -124,7 +125,14 @@ public class GUI implements GameView {
 
     @Override
     public void updateField(PlayingField field, String name) {
-
+        if (name.equals(client.getName())) {
+            client.getClient().setField(field);
+            if (!first_turn) {
+                Platform.runLater(() -> {
+                    ((TurnController) guicontrollers.get("turn")).plotField();
+                });
+            }
+        }
     }
 
     @Override

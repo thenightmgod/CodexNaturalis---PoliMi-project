@@ -4,6 +4,7 @@ import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
+import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
 import javafx.fxml.FXML;
@@ -15,7 +16,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
+import java.awt.event.ActionEvent;
 import java.io.FileNotFoundException;
+import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -32,6 +35,8 @@ public class TurnController extends GUIController{
     private Label messageLabel;
     @FXML
     private HBox label_button_box;
+    @FXML
+    private Button piazzala;
     @FXML
     private Button myPointsButton;
     @FXML
@@ -63,6 +68,7 @@ public class TurnController extends GUIController{
         loadGoalBox();
         loadMyHand();
         loadmyLabelBox();
+        plotField();
         //mancherà il loadfield
         if(myTurn) {
             placeCard();
@@ -71,9 +77,10 @@ public class TurnController extends GUIController{
         }
     }
 
-    @FXML
-    private void plotField(){
+    public void plotField(){
 
+        PlayingField field = this.gui.getClient().getClient().getField();
+        this.marione.setPrefSize(492.0, 160.0);
         this.marione.getChildren().clear();
         this.marione.getRowConstraints().clear();
         this.marione.getColumnConstraints().clear();
@@ -82,21 +89,18 @@ public class TurnController extends GUIController{
         int minX = field.getField().keySet().stream().mapToInt(Position::getX).min().orElse(400);
         int maxY = field.getField().keySet().stream().mapToInt(Position::getY).max().orElse(400);
         int minY = field.getField().keySet().stream().mapToInt(Position::getY).min().orElse(400);
-
         for(int i=0; i< maxX-minX+1; i++){
             RowConstraints rowConstraints = new RowConstraints();
             rowConstraints.setPrefHeight(30);
             rowConstraints.setPercentHeight(-1);
             this.marione.getRowConstraints().add(rowConstraints);
         }
-
         for(int j=0; j< maxY-minY+1; j++){
             ColumnConstraints columnConstraints = new ColumnConstraints();
             columnConstraints.setPrefWidth(100);
             columnConstraints.setPercentWidth(-1);
             this.marione.getColumnConstraints().add(columnConstraints);
         }
-
         for(Position p : field.getField().keySet()){
             PlayableCard card = field.getField().get(p);
             ImageView imageView = new ImageView();
@@ -338,4 +342,16 @@ public class TurnController extends GUIController{
             }
         }
     }
+
+    public void blabla(javafx.event.ActionEvent actionEvent) throws RemoteException {
+        if (myTurn) {
+            this.gui.first_turn = false;
+            if (!this.gui.getClient().getClient().getHand().isEmpty()) {
+                if (!this.gui.getClient().getClient().getField().getFreePositions().isEmpty()) {
+                    client.placeCard(client, 1, client.getClient().getField().getFreePositions().getFirst().getX(), client.getClient().getField().getFreePositions().getFirst().getY(), FB.BACK);
+                }
+            }
+        }
+    }
+
 }
