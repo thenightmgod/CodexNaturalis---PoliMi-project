@@ -4,9 +4,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@stylesturn.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.GUI.GUIController.TurnController">
    <children>
@@ -26,5 +26,13 @@
             </GridPane>
          </content>
       </ScrollPane>
+
+      <VBox layoutX="769.0" layoutY="22.0" prefHeight="464.0" prefWidth="492.0">
+         <children>
+            <HBox fx:id="resourceBox" prefHeight="160.0" prefWidth="492.0" spacing="15.0" />
+            <HBox fx:id="goldBox" prefHeight="160.0" prefWidth="492.0" spacing="15.0" />
+            <HBox fx:id="goals" prefHeight="160.0" prefWidth="492.0" spacing="15.0" />
+         </children>
+      </VBox>
    </children>
 </AnchorPane>
