@@ -5,29 +5,62 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@stylesturn.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.GUI.GUIController.TurnController">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" styleClass="woodBackground" stylesheets="@stylesturn.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.GUI.GUIController.TurnController">
    <children>
-      <HBox fx:id="myHandBox" layoutX="6.0" layoutY="515.0" prefHeight="193.0" prefWidth="750.0" spacing="15.0" />
-      <ScrollPane layoutX="12.0" layoutY="19.0" prefHeight="468.0" prefWidth="739.0">
+      <Label layoutX="20.0" layoutY="515.0" style="-fx-background-color: rgba(255,0,0,0.4);" text="YOUR HAND" textFill="WHITE">
+         <font>
+            <Font name="Weibei TC Bold" size="20.0" />
+         </font>
+      </Label>
+      <HBox fx:id="myHandBox" layoutX="20.0" layoutY="560.0" prefHeight="150.0" prefWidth="750.0" spacing="15.0" />
+      <ScrollPane layoutX="12.0" layoutY="19.0" opacity="0.51" prefHeight="468.0" prefWidth="739.0" style="-fx-border-color: red; -fx-border-width: 4px; -fx-border-style: solid; -fx-background-radius: 10px;" styleClass="custom-background" stylesheets="@styles.css">
          <content>
-            <GridPane fx:id="marione" prefHeight="461.0" prefWidth="728.0">
+            <GridPane prefHeight="461.0" prefWidth="728.0" styleClass="custom-background" stylesheets="@styles.css">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="130.646728515625" minWidth="10.0" prefWidth="101.61298370361328" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="98.38701629638672" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
             </GridPane>
          </content>
       </ScrollPane>
 
-      <VBox layoutX="769.0" layoutY="22.0" prefHeight="464.0" prefWidth="492.0" spacing="10.0">
+      <VBox layoutX="775.0" layoutY="22.0" prefHeight="464.0" prefWidth="492.0" spacing="10.0">
          <children>
+            <Label fx:id="myResource" style="-fx-background-color: rgba(255,0,0,0.4);" text="DRAWABLE RESOURCECARDS" textFill="WHITE">
+               <font>
+                  <Font name="Weibei TC Bold" size="14.0" />
+               </font>
+            </Label>
             <HBox fx:id="resourceBox" prefHeight="160.0" prefWidth="492.0" spacing="15.0" />
+            <Label fx:id="myGold" style="-fx-background-color: rgb(255,0,0,0.4);" text="DRAWABLE GOLDCARDS" textFill="#fffafa">
+               <font>
+                  <Font name="Weibei TC Bold" size="14.0" />
+               </font>
+            </Label>
             <HBox fx:id="goldBox" prefHeight="160.0" prefWidth="492.0" spacing="15.0" />
+            <Label fx:id="myGoal" prefHeight="21.0" style="-fx-background-color: rgb(255,0,0,0.4);" text="GOALCARDS" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Weibei TC Bold" size="14.0" />
+               </font>
+            </Label>
             <HBox fx:id="goalsBox" prefHeight="160.0" prefWidth="492.0" spacing="15.0">
                <padding>
                   <Insets top="5.0" />
-               </padding></HBox>
+               </padding>
+            </HBox>
          </children>
       </VBox>
 
@@ -35,8 +68,11 @@
            <children>
                <Pane prefHeight="193.0" prefWidth="515.0">
                    <children>
-                       <Button fx:id="myPointsButton" layoutX="10.0" layoutY="81.0" mnemonicParsing="false" onAction="#showPointsCounter" prefHeight="55.0" prefWidth="276.0" text="Button" />
-                       <Label fx:id="messageLabel" layoutX="10.0" layoutY="3.0" prefHeight="78.0" prefWidth="492.0" text="Your message here" />
+                       <Button fx:id="myPointsButton" layoutX="15.0" layoutY="81.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="276.0" text="Button" />
+                       <Label fx:id="messageLabel" layoutX="15.0" layoutY="8.0" style="-fx-background-color: rgba(0,255,0,0.3);" text="YOUR MESSAGE HERE" textFill="#fffbfb">
+                     <font>
+                        <Font name="Weibei TC Bold" size="20.0" />
+                     </font></Label>
                    </children>
                </Pane>
            </children>

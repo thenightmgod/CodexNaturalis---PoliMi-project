@@ -36,6 +36,12 @@ public class TurnController extends GUIController{
     @FXML
     private Label messageLabel;
     @FXML
+    private Label myResource;
+    @FXML
+    private Label myGold;
+    @FXML
+    private Label myGoal;
+    @FXML
     private HBox label_button_box;
     @FXML
     private Button myPointsButton;
@@ -147,6 +153,8 @@ public class TurnController extends GUIController{
     private void loadResourceBox() {
         resourceBox.setPrefHeight(160.0);
         resourceBox.setPrefWidth(492.0);
+        myResource.setText("DRAWABLE RESOURCECARDS");
+        myResource.setVisible(true);
         double imageViewWidth = (resourceBox.getPrefWidth()-45) / 3.0;
         try {
             for (int i =resourcedeck.size()-1 ; i >=0 ; i--) {
@@ -171,6 +179,8 @@ public class TurnController extends GUIController{
     private void loadGoldBox() {
         goldBox.setPrefHeight(160.0);
         goldBox.setPrefWidth(492.0);
+        myGold.setText("DRAWABLE GOLDCARDS");
+        myGold.setVisible(true);
         double imageViewWidth = (goldBox.getPrefWidth()-45) / 3.0;
 
         try {
@@ -196,6 +206,8 @@ public class TurnController extends GUIController{
     private void loadGoalBox() {
         goalsBox.setPrefHeight(160.0);
         goalsBox.setPrefWidth(492.0);
+        myGoal.setText("GOALCARDS");
+        myGoal.setVisible(true);
         double imageViewWidth = (goalsBox.getPrefWidth()-45) / 3.0;
         try {
             for (int i = commongoals.size()-1 ; i >=0 ; i--) {
