@@ -31,7 +31,7 @@
          <children>
             <HBox fx:id="resourceBox" prefHeight="160.0" prefWidth="492.0" spacing="15.0" />
             <HBox fx:id="goldBox" prefHeight="160.0" prefWidth="492.0" spacing="15.0" />
-            <HBox fx:id="goals" prefHeight="160.0" prefWidth="492.0" spacing="15.0" />
+            <HBox fx:id="goalsBox" prefHeight="160.0" prefWidth="492.0" spacing="15.0" />
          </children>
       </VBox>
    </children>
