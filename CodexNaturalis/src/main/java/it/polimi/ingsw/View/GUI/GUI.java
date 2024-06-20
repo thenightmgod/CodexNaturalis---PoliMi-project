@@ -33,6 +33,7 @@ public class GUI implements GameView {
     private Player Turn;
     private CommonClient client;
     private String[] args;
+    private boolean first_turn=true;
 
 
     //-------METODI DEI CONTROLLER---------------------------
@@ -108,7 +109,11 @@ public class GUI implements GameView {
     @Override
     public void updateHands(LinkedList<PlayableCard> hand, String name) {
         client.getClient().setHand(hand);
-        //Platform.runLater(() -> gameController.setHand(hand));
+        if(!first_turn) {
+            Platform.runLater(() -> {
+                ((TurnController)guicontrollers.get("turn")).updateHands(hand);
+            });
+        }
     }
 
     @Override
@@ -133,6 +138,11 @@ public class GUI implements GameView {
             case "RoomNotExistsException" -> {
                 Platform.runLater(() -> {
                     guicontrollers.get("login").showException("RoomNotExistsException");
+                });
+            }
+            case "RequirementsNotSatisfied" -> {
+                Platform.runLater( () -> {
+                    guicontrollers.get("turn").showException("RequirementsNotSatisfied");
                 });
             }
         }
@@ -165,7 +175,8 @@ public class GUI implements GameView {
                     }
                     case "NormalTurn"-> {
                         try {
-                            switchToScene("turn", client.getClient().getDrawableResourceCards(), client.getClient().getDrawableGoldCards() , client.getClient().getCommonGoals(), client.getClient().getHand(), client.getClient().getField());
+                            switchToScene("turn", client.getClient().getDrawableResourceCards(), client.getClient().getDrawableGoldCards() , client.getClient().getCommonGoals(), client.getClient().getHand(), client.getClient().getField(), true);
+                            first_turn=false;
                         } catch (IOException e) {
                             System.out.println("turnScene non correttamente inizializzata");
                         }
@@ -234,6 +245,14 @@ public class GUI implements GameView {
                 }
                 case "GoalCard"-> {
                     ((GoalCardController) guicontrollers.get("goalCard")).waitYourTurn();
+                }
+                case "NormalTurn"->{
+                    try {
+                    switchToScene("turn", client.getClient().getDrawableResourceCards(), client.getClient().getDrawableGoldCards() , client.getClient().getCommonGoals(), client.getClient().getHand(), client.getClient().getField(), false);
+                    first_turn=false;
+                } catch (IOException e) {
+                    System.out.println("turnScene non correttamente inizializzata");
+                }
                 }
             }
         });
