@@ -28,4 +28,10 @@
     -fx-background-repeat: stretch;
 }
 
+.welcomeBackground {
+    -fx-background-image: url("MyCodexNaturalisPhotos/pic8211904.jpg");
+    -fx-background-size: cover;
+    -fx-background-repeat: stretch;
+}
+
 
