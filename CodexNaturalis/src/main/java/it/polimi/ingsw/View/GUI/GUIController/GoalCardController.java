@@ -15,7 +15,6 @@ import java.util.LinkedList;
 
 public class GoalCardController extends GUIController{
 
-    protected boolean goalcardchosen;
     @FXML
     private Pane myPane;
     @FXML
@@ -24,6 +23,7 @@ public class GoalCardController extends GUIController{
     private ImageView leftGoalCard;
     @FXML
     private ImageView rightGoalCard;
+    protected boolean goalcardchosen;
     private LinkedList<GoalCard> goals;
 
     @Override
@@ -127,94 +127,4 @@ public class GoalCardController extends GUIController{
             this.gui.endTurn("GoalCard");
         } catch (RemoteException ignored) {}
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /*
-
-    public void runGoal(LinkedList <GoalCard> goals) {
-         Platform.runLater(() -> {
-             myPane.setVisible(true);
-             this.goals=goals;
-             myLabel=new Label();
-             leftGoalCard = new ImageView();
-             rightGoalCard= new ImageView();
-
-            if (goals.size() >= 2) {
-                GoalCard goal1 = goals.get(0);
-                GoalCard goal2 = goals.get(1);
-
-                setImageForGoalCard(leftGoalCard, goal1);
-                setImageForGoalCard(rightGoalCard, goal2);
-            }
-             myLabel.setVisible(true);
-             leftGoalCard.setVisible(true);
-             rightGoalCard.setVisible(true);
-
-             disableCardInteractions(leftGoalCard);
-             disableCardInteractions(rightGoalCard);
-        });
-
-    }
-
-    private void setImageForGoalCard(ImageView imageView, GoalCard goal) {
-        try {
-            int cardId = goal.getId();
-            Image cardImage = loadCardFrontImage(cardId);
-
-            imageView.setImage(cardImage);
-            imageView.setFitWidth(200);  // Imposta la larghezza desiderata
-            imageView.setFitHeight(160); // Imposta l'altezza desiderata
-            imageView.setPreserveRatio(true); // Mantieni il rapporto d'aspetto
-
-            setCardInteraction(imageView, goal);
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-        imageView.setOnMouseClicked(event -> {
-            boolean isLeftCard = imageView == leftGoalCard;
-
-            Stage stage = (Stage) imageView.getScene().getWindow();
-            stage.close();
-            try {
-                // Invia l'indice corretto a seconda se è l'immagine sinistra (1) o destra (2)
-                if (isLeftCard) {
-                    client.chooseGoalCard(1, client);
-                    System.out.println("settata carta goal sinistra");
-                } else {
-                    client.chooseGoalCard(2, client);
-                    System.out.println("settata carta goal destra");
-                }
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-        });
-    }
-
-
-
-    */
 }

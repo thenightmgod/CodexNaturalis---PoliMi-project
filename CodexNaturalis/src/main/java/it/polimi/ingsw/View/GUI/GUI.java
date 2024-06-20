@@ -34,6 +34,11 @@ public class GUI implements GameView {
     private CommonClient client;
     private String[] args;
     private LinkedList<GoalCard> goals;
+    private LinkedList<GoalCard> commongoals;
+    private LinkedList<GoldCard> golddeck;
+    private LinkedList<ResourceCard> resourcedeck;
+    private LinkedList<PlayableCard> myhand;
+
 
     //-------METODI DEI CONTROLLER---------------------------
     public void start(String[] args, Stage stage) throws IOException {
@@ -80,7 +85,7 @@ public class GUI implements GameView {
     }
 
 
-    //----------METODI DELLA GAMEVIEW---------------------------
+    //----------METODI DELLA GAMEVIEW(interfaccia comune view)-------------------------------
 
 
     @Override
@@ -101,6 +106,7 @@ public class GUI implements GameView {
     @Override
     public void updateCommonGoals(LinkedList<GoalCard> goals, String name) throws RemoteException {
         client.getClient().setCommonGoals(goals);
+        commongoals=goals;
         //Platform.runLater(() -> gameController.updateCommonGoals(goals));
     }
 
@@ -108,6 +114,7 @@ public class GUI implements GameView {
     @Override
     public void updateHands(LinkedList<PlayableCard> hand, String name) {
         client.getClient().setHand(hand);
+        myhand=hand;
         //Platform.runLater(() -> gameController.setHand(hand));
     }
 
@@ -155,23 +162,24 @@ public class GUI implements GameView {
     public void updateTurn(Player player, String mex) throws RemoteException {
         this.Turn = player;
         if (Turn.getName().equals(client.getName())) {
-            switch (mex) {
-                case "StartCard" -> {
-                    Platform.runLater(() -> {
-                        ((StartCardController) guicontrollers.get("startCard")).chooseStartCard();
-                    });
+            Platform.runLater(() -> {
+                switch (mex) {
+                    case "StartCard" -> {
+                            ((StartCardController) guicontrollers.get("startCard")).chooseStartCard();
+                    }
+                    case "GoalCard" -> {
+                            ((GoalCardController) guicontrollers.get("goalCard")).chooseGoalCard();
+                    }
+                    case "NormalTurn"-> {
+                        try {
+                            switchToScene("turn", resourcedeck, golddeck,commongoals,myhand);
+                        } catch (IOException e) {
+                            System.out.println("StartCardScene non correttamente inizializzata");
+                        }
+                    }
                 }
-                case "GoalCard" -> {
-                    Platform.runLater(() -> {
-                        ((GoalCardController) guicontrollers.get("goalCard")).chooseGoalCard();
-
-                    });
-                }
-                // Platform.runLater(() ->
-                //     goalCardController.showGoalCardscene());
-            }
-        } else {
-
+            });
+            } else {
         }
     }
 
@@ -183,7 +191,7 @@ public class GUI implements GameView {
     public void updateGoldDeck(LinkedList<GoldCard> deck, boolean start, String name) {
         Platform.runLater(() -> {
             if (start) {
-                //   gameController.updateGoldDeck(deck);
+                golddeck=deck;
                 client.getClient().setDrawableGoldCards(deck);
             }
         });
@@ -193,10 +201,10 @@ public class GUI implements GameView {
     public void updateResourceDeck(LinkedList<ResourceCard> deck, boolean start, String name) {
         Platform.runLater(() -> {
             if (start) {
-                //  gameController.updateResourceDeck(deck);
+                //setto le carte nel model
+                resourcedeck=deck;
                 client.getClient().setDrawableResourceCards(deck);
             }
-
         });
     }
 
@@ -208,14 +216,7 @@ public class GUI implements GameView {
             } catch (IOException e) {
                 System.out.println("StartCardScene non correttamente inizializzata");
             }
-
         });
-
-        //   try {
-        //loginController.showGameScene();
-        //    } //catch (IOException e) {
-        //       throw new RuntimeException(e);
-        //     }
     }
 
     @Override
