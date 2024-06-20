@@ -23,7 +23,7 @@ public class TurnController extends GUIController{
     @FXML
     private HBox goldBox;
     @FXML
-    private HBox goals;
+    private HBox goalsBox;
     private LinkedList<GoalCard> commongoals;
     private LinkedList<GoldCard> golddeck;
     private LinkedList<ResourceCard> resourcedeck = new LinkedList<>();
@@ -46,6 +46,7 @@ public class TurnController extends GUIController{
     private void loadAllArgs() {
         loadResourceBox();
         loadGoldBox();
+        loadGoalBox();
 
         System.out.println("loadAllArgs");
     }
@@ -78,7 +79,46 @@ public class TurnController extends GUIController{
         goldBox.setPrefWidth(492.0);
         double imageViewWidth = (goldBox.getPrefWidth()-45) / 3.0;
 
+        try {
+            for (int i =golddeck.size()-1 ; i >=0 ; i--) {
+                Image image;
+                if (i < 2) {
+                    image = loadCardFrontImage(golddeck.get(i).getId());
+                } else {
+                    image = loadCardBackImage(golddeck.get(i).getId());
+                }
+                ImageView imageView = new ImageView(image);
+                imageView.setFitWidth(imageViewWidth);
+                imageView.setFitHeight(goldBox.getPrefHeight());
+                imageView.setPreserveRatio(true);
+                goldBox.getChildren().add(imageView);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
+    private void loadGoalBox() {
+        goalsBox.setPrefHeight(160.0);
+        goalsBox.setPrefWidth(492.0);
+        double imageViewWidth = (goalsBox.getPrefWidth()-45) / 3.0;
+        try {
+            for (int i = commongoals.size()-1 ; i >=0 ; i--) {
+                Image image;
+                if (i < 2) {
+                    image = loadCardFrontImage(commongoals.get(i).getId());
+                } else {
+                    image = loadCardBackImage(commongoals.get(i).getId());
+                }
+                ImageView imageView = new ImageView(image);
+                imageView.setFitWidth(imageViewWidth);
+                imageView.setFitHeight(goalsBox.getPrefHeight());
+                imageView.setPreserveRatio(true);
+                goalsBox.getChildren().add(imageView);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 
