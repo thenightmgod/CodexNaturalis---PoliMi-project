@@ -137,7 +137,7 @@ public class GUI implements GameView {
 
     @Override
     public void updateFreePosition(String name, LinkedList<Position> freePositions) {
-
+        //PROB INUTILE IN TUTTO IL CODICE
     }
 
 
@@ -159,6 +159,11 @@ public class GUI implements GameView {
                     guicontrollers.get("turn").showException("RequirementsNotSatisfied");
                 });
             }
+            case "Nothing" -> {
+                Platform.runLater(() -> {
+                    ((TurnController) guicontrollers.get("turn")).drawCard();
+                });
+            }
         }
     }
 
@@ -177,27 +182,34 @@ public class GUI implements GameView {
 
     @Override
     public void updateTurn(Player player, String mex) throws RemoteException {
+        //in tutta questa non ci va il platoform run later???
         this.Turn = player;
         if (Turn.getName().equals(client.getName())) {
             Platform.runLater(() -> {
-                switch (mex) {
-                    case "StartCard" -> {
-                            ((StartCardController) guicontrollers.get("startCard")).chooseStartCard();
-                    }
-                    case "GoalCard" -> {
-                            ((GoalCardController) guicontrollers.get("goalCard")).chooseGoalCard();
-                    }
-                    case "NormalTurn"-> {
-                        try {
-                            switchToScene("turn", client.getClient().getDrawableResourceCards(), client.getClient().getDrawableGoldCards() , client.getClient().getCommonGoals(), client.getClient().getHand(), client.getClient().getField(), true);
-                            first_turn=false;
-                        } catch (IOException e) {
-                            System.out.println("turnScene non correttamente inizializzata");
+                    switch (mex) {
+                        case "StartCard" -> {
+                                ((StartCardController) guicontrollers.get("startCard")).chooseStartCard();
+                        }
+                        case "GoalCard" -> {
+                                ((GoalCardController) guicontrollers.get("goalCard")).chooseGoalCard();
+                        }
+                        case "NormalTurn"-> {
+                            try {
+                                switchToScene("turn", client.getClient().getDrawableResourceCards(), client.getClient().getDrawableGoldCards() , client.getClient().getCommonGoals(), client.getClient().getHand(), client.getClient().getField(), true);
+                                first_turn=false;
+                            } catch (IOException e) {
+                                System.out.println("turnScene non correttamente inizializzata");
+                            }
                         }
                     }
-                }
-            });
+                });
             } else {
+            //Non sono sicuro, forse il switch to scene
+                try {
+                    switchToScene("turn", client.getClient().getDrawableResourceCards(), client.getClient().getDrawableGoldCards(), client.getClient().getCommonGoals(), client.getClient().getHand(), client.getClient().getField(), true);
+                } catch (IOException e) {
+                    System.out.println("turnScene non correttamente inizializzata, non turno mio");
+                }
         }
     }
 
