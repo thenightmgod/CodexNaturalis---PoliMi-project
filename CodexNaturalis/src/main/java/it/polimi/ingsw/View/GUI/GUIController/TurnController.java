@@ -8,12 +8,16 @@ import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.*;
 
 import java.awt.event.ActionEvent;
@@ -69,7 +73,6 @@ public class TurnController extends GUIController{
         loadMyHand();
         loadmyLabelBox();
         plotField();
-        //mancherà il loadfield
         if(myTurn) {
             placeCard();
         }else {
@@ -130,6 +133,28 @@ public class TurnController extends GUIController{
             imageView.setOpacity(0.4);
             imageView.setPreserveRatio(true);
             this.marione.add(imageView, x, y);
+            /*imageView.setOnDragOver(event -> {
+                if (event.getDragboard().hasString()) {
+                    event.acceptTransferModes(TransferMode.MOVE);
+                }
+                event.consume();
+            });
+
+            imageView.setOnDragDropped(event -> {
+                Dragboard db = event.getDragboard();
+                boolean success = false;
+                if (db.hasString()) {
+                    // Place the card at the dropped position
+                    try {
+                        client.placeCard(client, Integer.parseInt(db.getString()), prato.getX(), prato.getY(), FB.BACK);
+                        success = true;
+                    } catch (RemoteException e) {
+                        System.out.println("errore nella place card");
+                    }
+                }
+                event.setDropCompleted(success);
+                event.consume();
+            });*/
         }
 
         for (Position p : field.getField().keySet()) {
@@ -159,13 +184,44 @@ public class TurnController extends GUIController{
     private void placeCard() {
         messageLabel.setText("IT'S YOUR TURN!");
         messageLabel.setVisible(true);
-        //lo farà LoRI
+
+        for(PlayableCard card : myhand) {
+            for (Node node : myHandBox.getChildren()) {
+                if (node instanceof ImageView) {
+                    ImageView imageView = (ImageView) node;
+                    if (imageView.getImage().getUrl().contains(String.valueOf(card.getId()))) {
+                        imageView.setOnDragDetected(event -> {
+                            Dragboard db = imageView.startDragAndDrop(TransferMode.ANY);
+                            ClipboardContent content = new ClipboardContent();
+                            content.putString(String.valueOf(card.getId()));
+                            db.setContent(content);
+                            db.setDragView(imageView.getImage());
+                            event.consume();
+                        });
+
+                        imageView.setOnDragDone(event -> {
+                           /* if (event.getTransferMode() != TransferMode.MOVE) {
+                                updateHands(myhand);
+                            }
+                            event.consume();*/
+                        });
+                    }
+                }
+            }
+        }
     }
+
+    public void drawCard(){
+        //MOSTRARE CAZZI VARI IN MODO CHE PUOI PESCARE
+    }
+
 
     private void waitMyTurn() {
         messageLabel.setText("Please, wait your turn to place a card");
         messageLabel.setVisible(true);
+        //mettere che posso vedere punti
     }
+
     private void loadmyLabelBox() {
         //aggiungere il bottone dei punteggi
     }
@@ -248,6 +304,7 @@ public class TurnController extends GUIController{
             e.printStackTrace();
         }
     }
+
     private void loadMyHand() {
         myHandBox.setPrefHeight(160.0);
         myHandBox.setPrefWidth(492.0);
@@ -320,6 +377,7 @@ public class TurnController extends GUIController{
             }
         });
     }
+
     private void addClickEffect(ImageView imageView) {
         ColorAdjust colorAdjust = new ColorAdjust();
         imageView.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> {
@@ -364,6 +422,7 @@ public class TurnController extends GUIController{
             }
         });
     }
+
     public void updateHands(LinkedList<PlayableCard> hand) {
         myhand=hand;
         loadMyHand();
