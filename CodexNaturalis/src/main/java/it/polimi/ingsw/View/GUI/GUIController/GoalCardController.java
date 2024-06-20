@@ -1,6 +1,7 @@
 package it.polimi.ingsw.View.GUI.GUIController;
 
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
+import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -68,32 +69,17 @@ public class GoalCardController extends GUIController{
     private void enableCardInteractions() {
         leftGoalCard.setDisable(false);
         rightGoalCard.setDisable(false);
-
-        leftGoalCard.setOnMouseClicked(this::onCardMouseClicked);
-        rightGoalCard.setOnMouseClicked(this::onCardMouseClicked);
-
-        leftGoalCard.setOnMouseEntered(this::onCardMouseEntered);
-        leftGoalCard.setOnMouseExited(this::onCardMouseExited);
-        rightGoalCard.setOnMouseEntered(this::onCardMouseEntered);
-        rightGoalCard.setOnMouseExited(this::onCardMouseExited);
     }
 
     private void disableCardInteractions() {
-        leftGoalCard.setOnMouseClicked(null); // Remove onClick action
-        rightGoalCard.setOnMouseClicked(null);
-
-        leftGoalCard.setOnMouseEntered(null); // Remove onMouseEntered action
-        leftGoalCard.setOnMouseExited(null); // Remove onMouseExited action
-        rightGoalCard.setOnMouseEntered(null); // Remove onMouseEntered action
-        rightGoalCard.setOnMouseExited(null); // Remove onMouseExited action
+        leftGoalCard.setDisable(true);
+        rightGoalCard.setDisable(true);
     }
 
     public void waitYourTurn() {
         disableCardInteractions();
         if (!goalcardchosen){
             myLabel.setText("Wait for your turn to choose goal card!");
-        }else {
-            myLabel.setText("Well done, goal card chosen!");
         }
     }
 
@@ -123,9 +109,11 @@ public class GoalCardController extends GUIController{
                     if (isLeftCard) {
                         client.chooseGoalCard(1, client);
                         System.out.println("settata carta goal sinistra");
+                        rightGoalCard.setOpacity(0.5);
                     } else {
                         client.chooseGoalCard(2, client);
                         System.out.println("settata carta goal destra");
+                        leftGoalCard.setOpacity(0.5);
                     }
                 } catch (RemoteException e) {
                     e.printStackTrace();
@@ -133,10 +121,11 @@ public class GoalCardController extends GUIController{
             }
         }
         goalcardchosen = true;
-        System.out.println("goalcardsettata");
+        disableCardInteractions();
+        myLabel.setText("Well done, goal card chosen!");
         try {
             this.gui.endTurn("GoalCard");
-        } catch (RemoteException ignored) {} ;
+        } catch (RemoteException ignored) {}
     }
 
 
