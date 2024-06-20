@@ -228,6 +228,7 @@ public class LoginController extends GUIController {
     }
 
     public void showWaitingScene() {
+        myImage= new ImageView();
         myNicknameButton.setVisible(false);
         myNicknameButton.setDisable(true);
         myLabel.setVisible(false);

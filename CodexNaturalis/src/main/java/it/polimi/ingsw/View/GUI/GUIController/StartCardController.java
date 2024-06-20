@@ -98,9 +98,11 @@ public class StartCardController extends GUIController{
                     if (card == leftStartCardImage) {
                         boolean face = true;
                         client.setStartCardFace(face, client);
+                        rightStartCardImage.setOpacity(0.5);
                     } else if (card == rightStartCardImage) {
                         boolean face = false;
                         client.setStartCardFace(face, client);
+                        leftStartCardImage.setOpacity(0.5);
                     }
                 }
             }
