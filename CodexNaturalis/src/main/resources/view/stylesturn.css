@@ -1,0 +1,25 @@
+.root {
+    -fx-background-color: lightgray;
+}
+
+.welcome-label {
+    -fx-font-size: 36px;
+    -fx-text-fill: linear-gradient(from 0% 0% to 100% 100%, #ff0, #f00);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.75), 10, 0.5, 0.0, 0.0);
+    -fx-opacity: 1;
+    -fx-transition: opacity 2s;
+}
+.vbox-padding {
+    -fx-padding: 10;
+}
+
+.hbox-padding {
+    -fx-padding: 10;
+}
+#commonGoalsBox {
+    -fx-background-color: rgba(0, 0, 0, 0.5);
+    -fx-padding: 10px;
+    -fx-spacing: 10px;
+}
+
+
