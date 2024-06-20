@@ -17,16 +17,7 @@
       <HBox fx:id="myHandBox" layoutX="6.0" layoutY="515.0" prefHeight="193.0" prefWidth="750.0" spacing="15.0" />
       <ScrollPane layoutX="12.0" layoutY="19.0" prefHeight="468.0" prefWidth="739.0">
          <content>
-            <GridPane prefHeight="461.0" prefWidth="728.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="130.646728515625" minWidth="10.0" prefWidth="101.61298370361328" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="98.38701629638672" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
+            <GridPane fx:id="marione" prefHeight="461.0" prefWidth="728.0">
             </GridPane>
          </content>
       </ScrollPane>
