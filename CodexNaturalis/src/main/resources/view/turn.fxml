@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@stylesturn.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.GUI.GUIController.TurnController">
    <children>
-      <HBox fx:id="myHandBox" layoutX="6.0" layoutY="515.0" prefHeight="193.0" prefWidth="750.0" />
+      <HBox fx:id="myHandBox" layoutX="6.0" layoutY="515.0" prefHeight="193.0" prefWidth="750.0" spacing="15.0" />
       <ScrollPane layoutX="12.0" layoutY="19.0" prefHeight="468.0" prefWidth="739.0">
          <content>
             <GridPane prefHeight="461.0" prefWidth="728.0">
@@ -27,12 +31,27 @@
          </content>
       </ScrollPane>
 
-      <VBox layoutX="769.0" layoutY="22.0" prefHeight="464.0" prefWidth="492.0">
+      <VBox layoutX="769.0" layoutY="22.0" prefHeight="464.0" prefWidth="492.0" spacing="10.0">
          <children>
             <HBox fx:id="resourceBox" prefHeight="160.0" prefWidth="492.0" spacing="15.0" />
             <HBox fx:id="goldBox" prefHeight="160.0" prefWidth="492.0" spacing="15.0" />
-            <HBox fx:id="goalsBox" prefHeight="160.0" prefWidth="492.0" spacing="15.0" />
+            <HBox fx:id="goalsBox" prefHeight="160.0" prefWidth="492.0" spacing="15.0">
+               <padding>
+                  <Insets top="5.0" />
+               </padding></HBox>
          </children>
       </VBox>
+
+       <HBox fx:id="label_button_box" layoutX="756.0" layoutY="509.0" prefHeight="193.0" prefWidth="515.0" spacing="10.0">
+           <children>
+               <Pane prefHeight="193.0" prefWidth="515.0">
+                   <children>
+                       <Button fx:id="myPointsButton" layoutX="10.0" layoutY="81.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="276.0" text="Button" />
+                       <Label fx:id="messageLabel" layoutX="10.0" layoutY="3.0" prefHeight="78.0" prefWidth="492.0" text="Your message here" />
+                   </children>
+               </Pane>
+           </children>
+       </HBox>
+
    </children>
 </AnchorPane>
