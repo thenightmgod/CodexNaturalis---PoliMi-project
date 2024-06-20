@@ -41,7 +41,7 @@ public class StartCardController extends GUIController{
         } else {
             System.out.println("Failed to load image from path: " + newImagePath);
         }
-        welcomeLabel.setText("WELCOME TO THE GAME!");
+        welcomeLabel.setText("WELCOME TO THE GAME...");
         PauseTransition pause = new PauseTransition(Duration.seconds(3));
         pause.setOnFinished(event -> showNeutralBackground());
         pause.play();
@@ -115,7 +115,7 @@ public class StartCardController extends GUIController{
             chooseSideLabel.setText("WAIT, IT'S NOT YOUR TURN");
             disableCardInteractions();
         } else {
-            chooseSideLabel.setText("START CARD CHOSEN");
+            chooseSideLabel.setText("STARTCARD CHOSEN!");
             disableCardInteractions();
         }
     }
