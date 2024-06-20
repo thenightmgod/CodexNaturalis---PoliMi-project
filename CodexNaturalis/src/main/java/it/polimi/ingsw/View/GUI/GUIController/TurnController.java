@@ -4,6 +4,7 @@ import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
+import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
 import javafx.fxml.FXML;
@@ -15,7 +16,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
+import java.awt.event.ActionEvent;
 import java.io.FileNotFoundException;
+import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -38,6 +41,8 @@ public class TurnController extends GUIController{
     private Label myGoal;
     @FXML
     private HBox label_button_box;
+    @FXML
+    private Button piazzala;
     @FXML
     private Button myPointsButton;
     @FXML
@@ -69,6 +74,7 @@ public class TurnController extends GUIController{
         loadGoalBox();
         loadMyHand();
         loadmyLabelBox();
+        plotField();
         //mancherà il loadfield
         if(myTurn) {
             placeCard();
@@ -77,50 +83,80 @@ public class TurnController extends GUIController{
         }
     }
 
-    @FXML
-    private void plotField(){
-
+    public void plotField() {
+        PlayingField field = this.gui.getClient().getClient().getField();
         this.marione.getChildren().clear();
         this.marione.getRowConstraints().clear();
         this.marione.getColumnConstraints().clear();
+        LinkedList<Position> frees = field.getFreePositions();
+
+        int fmaxX = frees.stream().mapToInt(Position::getX).max().orElse(400);
+        int fminX = frees.stream().mapToInt(Position::getX).min().orElse(400);
+        int fmaxY = frees.stream().mapToInt(Position::getY).max().orElse(400);
+        int fminY = frees.stream().mapToInt(Position::getY).min().orElse(400);
 
         int maxX = field.getField().keySet().stream().mapToInt(Position::getX).max().orElse(400);
         int minX = field.getField().keySet().stream().mapToInt(Position::getX).min().orElse(400);
         int maxY = field.getField().keySet().stream().mapToInt(Position::getY).max().orElse(400);
         int minY = field.getField().keySet().stream().mapToInt(Position::getY).min().orElse(400);
 
-        for(int i=0; i< maxX-minX+1; i++){
+        if(maxX < fmaxX) maxX = fmaxX;
+        if(minX > fminX) minX = fminX;
+        if(maxY < fmaxY) maxY = fmaxY;
+        if(minY > fminY) minY = fminY;
+
+        double cellWidth = 210;
+        double cellHeight = 140.0;
+
+        this.marione.setVgap(0);
+        this.marione.setHgap(0);
+
+        for (int i = 0; i < maxX - minX + 1; i++) {
             RowConstraints rowConstraints = new RowConstraints();
-            rowConstraints.setPrefHeight(30);
-            rowConstraints.setPercentHeight(-1);
+            rowConstraints.setMinHeight(cellHeight);
+            rowConstraints.setMaxHeight(cellHeight);
             this.marione.getRowConstraints().add(rowConstraints);
         }
-
-        for(int j=0; j< maxY-minY+1; j++){
+        for (int j = 0; j < maxY - minY + 1; j++) {
             ColumnConstraints columnConstraints = new ColumnConstraints();
-            columnConstraints.setPrefWidth(100);
-            columnConstraints.setPercentWidth(-1);
+            columnConstraints.setMinWidth(cellWidth);
+            columnConstraints.setMaxWidth(cellWidth);
             this.marione.getColumnConstraints().add(columnConstraints);
         }
 
-        for(Position p : field.getField().keySet()){
+        for (Position prato : frees){
+            ImageView imageView = new ImageView();
+            int x = prato.getX() - minX;
+            int y = maxY - prato.getY();
+            Image image = loadImage("view/MyCodexNaturalisPhotos/carlos.png");
+            imageView.setImage(image);
+            imageView.setFitWidth(cellWidth); // Set the preferred width of the ImageView
+            imageView.setFitHeight(cellHeight);
+            GridPane.setMargin(imageView, new javafx.geometry.Insets(0, 0, 111 * y, -45.94 * x));
+            imageView.setOpacity(0.4);
+            imageView.setPreserveRatio(true);
+            this.marione.add(imageView, x, y);
+        }
+
+        for (Position p : field.getField().keySet()) {
             PlayableCard card = field.getField().get(p);
             ImageView imageView = new ImageView();
             try {
-                int x = p.getX()-minX;
-                int y = maxY- p.getY();
+                int x = p.getX() - minX;
+                int y = maxY - p.getY();
                 Image image = loadCardFrontImage(card.getId());
                 imageView.setImage(image);
-                imageView.setFitWidth(100);
-                imageView.setFitHeight(30);
-                GridPane.setMargin(imageView, new javafx.geometry.Insets(0, 0, 95 * y, -37 * x));
+                imageView.setFitWidth(cellWidth); // Set the preferred width of the ImageView
+                imageView.setFitHeight(cellHeight);
+                GridPane.setMargin(imageView, new javafx.geometry.Insets(0, 0, 111 * y, -45.94 * x));
                 imageView.setPreserveRatio(true);
                 this.marione.add(imageView, x, y);
             } catch (FileNotFoundException e) {
-                System.out.println("errore nel print playing field");;
+                System.out.println("errore nel print playing field");
             }
         }
     }
+
 
     private void placeCard() {
         messageLabel.setText("IT'S YOUR TURN!");
@@ -350,4 +386,16 @@ public class TurnController extends GUIController{
             }
         }
     }
+
+    public void blabla(javafx.event.ActionEvent actionEvent) throws RemoteException {
+        if (myTurn) {
+            this.gui.first_turn = false;
+            if (!this.gui.getClient().getClient().getHand().isEmpty()) {
+                if (!this.gui.getClient().getClient().getField().getFreePositions().isEmpty()) {
+                    client.placeCard(client, 1, client.getClient().getField().getFreePositions().getFirst().getX(), client.getClient().getField().getFreePositions().getFirst().getY(), FB.BACK);
+                }
+            }
+        }
+    }
+
 }
