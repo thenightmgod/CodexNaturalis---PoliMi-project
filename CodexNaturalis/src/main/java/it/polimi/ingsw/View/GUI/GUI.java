@@ -60,6 +60,12 @@ public class GUI implements GameView {
             guicontrollers.put(sceneName, controller);
         }
         primaryStage.setScene(controller.getScene());
+        if(!sceneName.equals("login")){
+            primaryStage.setTitle(client.getName() + "'s " + sceneName);
+        }
+        else{
+            primaryStage.setTitle("Login");
+        }
         primaryStage.show();
     }
 

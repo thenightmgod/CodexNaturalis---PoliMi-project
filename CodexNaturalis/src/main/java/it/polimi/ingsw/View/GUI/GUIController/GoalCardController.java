@@ -50,8 +50,8 @@ public class GoalCardController extends GUIController{
             Image cardImage = loadCardFrontImage(cardId);
 
             imageView.setImage(cardImage);
-            imageView.setFitWidth(200);  // Imposta la larghezza desiderata
-            imageView.setFitHeight(160); // Imposta l'altezza desiderata
+            imageView.setFitWidth(250.0);  // Imposta la larghezza desiderata
+            imageView.setFitHeight(187.5); // Imposta l'altezza desiderata
             imageView.setPreserveRatio(true); // Mantieni il rapporto d'aspetto
 
             enableCardInteractions();
@@ -63,7 +63,7 @@ public class GoalCardController extends GUIController{
 
     public void chooseGoalCard() {
         enableCardInteractions();
-        myLabel.setText("Now choose your personal goal card!");
+        myLabel.setText("CHOOSE YOUR PERSONAL GOALCARD");
     }
 
     private void enableCardInteractions() {
@@ -79,7 +79,7 @@ public class GoalCardController extends GUIController{
     public void waitYourTurn() {
         disableCardInteractions();
         if (!goalcardchosen){
-            myLabel.setText("Wait for your turn to choose goal card!");
+            myLabel.setText("WAIT, IT'S NOT YOUR TURN");
         }
     }
 
@@ -122,7 +122,7 @@ public class GoalCardController extends GUIController{
         }
         goalcardchosen = true;
         disableCardInteractions();
-        myLabel.setText("Well done, goal card chosen!");
+        myLabel.setText("GOALCARD CHOSEN!");
         try {
             this.gui.endTurn("GoalCard");
         } catch (RemoteException ignored) {}
