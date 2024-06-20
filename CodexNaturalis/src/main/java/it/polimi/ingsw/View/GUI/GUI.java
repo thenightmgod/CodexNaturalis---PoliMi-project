@@ -33,11 +33,6 @@ public class GUI implements GameView {
     private Player Turn;
     private CommonClient client;
     private String[] args;
-    private LinkedList<GoalCard> goals;
-    private LinkedList<GoalCard> commongoals;
-    private LinkedList<GoldCard> golddeck;
-    private LinkedList<ResourceCard> resourcedeck;
-    private LinkedList<PlayableCard> myhand;
 
 
     //-------METODI DEI CONTROLLER---------------------------
@@ -106,7 +101,6 @@ public class GUI implements GameView {
     @Override
     public void updateCommonGoals(LinkedList<GoalCard> goals, String name) throws RemoteException {
         client.getClient().setCommonGoals(goals);
-        commongoals=goals;
         //Platform.runLater(() -> gameController.updateCommonGoals(goals));
     }
 
@@ -114,7 +108,6 @@ public class GUI implements GameView {
     @Override
     public void updateHands(LinkedList<PlayableCard> hand, String name) {
         client.getClient().setHand(hand);
-        myhand=hand;
         //Platform.runLater(() -> gameController.setHand(hand));
     }
 
@@ -172,9 +165,9 @@ public class GUI implements GameView {
                     }
                     case "NormalTurn"-> {
                         try {
-                            switchToScene("turn", resourcedeck, golddeck,commongoals,myhand);
+                            switchToScene("turn", client.getClient().getDrawableResourceCards(), client.getClient().getDrawableGoldCards() , client.getClient().getCommonGoals(), client.getClient().getHand(), client.getClient().getField());
                         } catch (IOException e) {
-                            System.out.println("StartCardScene non correttamente inizializzata");
+                            System.out.println("turnScene non correttamente inizializzata");
                         }
                     }
                 }
@@ -191,7 +184,6 @@ public class GUI implements GameView {
     public void updateGoldDeck(LinkedList<GoldCard> deck, boolean start, String name) {
         Platform.runLater(() -> {
             if (start) {
-                golddeck=deck;
                 client.getClient().setDrawableGoldCards(deck);
             }
         });
@@ -201,8 +193,6 @@ public class GUI implements GameView {
     public void updateResourceDeck(LinkedList<ResourceCard> deck, boolean start, String name) {
         Platform.runLater(() -> {
             if (start) {
-                //setto le carte nel model
-                resourcedeck=deck;
                 client.getClient().setDrawableResourceCards(deck);
             }
         });
