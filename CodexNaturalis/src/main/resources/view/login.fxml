@@ -47,7 +47,7 @@
                <AnchorPane.topAnchor>50.0</AnchorPane.topAnchor>
                <AnchorPane.leftAnchor>138.0</AnchorPane.leftAnchor>
             </Button>
-            <Button fx:id="myButton3" layoutX="230.0" layoutY="48.0" mnemonicParsing="false" onAction="#enterNumberOfPlayers" prefHeight="26.0" prefWidth="56.0" styleClass="button-submit" text="OK">
+            <Button fx:id="myButton3" layoutX="230.0" layoutY="48.0" mnemonicParsing="false" onAction="#enterNumberOfPlayers" prefHeight="26.0" prefWidth="56.0" styleClass="button-submit" text="ok">
                <AnchorPane.topAnchor>48.0</AnchorPane.topAnchor>
                <AnchorPane.leftAnchor>230.0</AnchorPane.leftAnchor>
             </Button>
@@ -77,7 +77,7 @@
                   </textFill>
              </Label>
             </StackPane>
-            <Button fx:id="myNicknameButton" layoutX="228.0" layoutY="47.0" mnemonicParsing="false" onAction="#submitNickname" prefHeight="17.0" prefWidth="56.0" styleClass="button-submit" stylesheets="@styles.css" text="OK" />
+            <Button fx:id="myNicknameButton" layoutX="228.0" layoutY="47.0" mnemonicParsing="false" onAction="#submitNickname" prefHeight="17.0" prefWidth="56.0" styleClass="button-submit" stylesheets="@styles.css" text="ok" />
          </children>
       </AnchorPane>
    </children>
