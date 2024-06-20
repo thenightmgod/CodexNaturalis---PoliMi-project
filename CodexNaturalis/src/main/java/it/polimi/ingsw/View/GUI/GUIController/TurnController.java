@@ -77,10 +77,8 @@ public class TurnController extends GUIController{
         }
     }
 
-    public void plotField(){
-
+    public void plotField() {
         PlayingField field = this.gui.getClient().getClient().getField();
-        this.marione.setPrefSize(492.0, 160.0);
         this.marione.getChildren().clear();
         this.marione.getRowConstraints().clear();
         this.marione.getColumnConstraints().clear();
@@ -89,36 +87,41 @@ public class TurnController extends GUIController{
         int minX = field.getField().keySet().stream().mapToInt(Position::getX).min().orElse(400);
         int maxY = field.getField().keySet().stream().mapToInt(Position::getY).max().orElse(400);
         int minY = field.getField().keySet().stream().mapToInt(Position::getY).min().orElse(400);
-        for(int i=0; i< maxX-minX+1; i++){
+
+        double cellWidth = 400.0; // Set the width of each cell
+        double cellHeight = 120.0; // Set the height of each cell
+
+        for (int i = 0; i < maxX - minX + 1; i++) {
             RowConstraints rowConstraints = new RowConstraints();
-            rowConstraints.setPrefHeight(30);
-            rowConstraints.setPercentHeight(-1);
+            rowConstraints.setPrefHeight(cellHeight);
             this.marione.getRowConstraints().add(rowConstraints);
         }
-        for(int j=0; j< maxY-minY+1; j++){
+        for (int j = 0; j < maxY - minY + 1; j++) {
             ColumnConstraints columnConstraints = new ColumnConstraints();
-            columnConstraints.setPrefWidth(100);
-            columnConstraints.setPercentWidth(-1);
+            columnConstraints.setPrefWidth(cellWidth);
             this.marione.getColumnConstraints().add(columnConstraints);
         }
-        for(Position p : field.getField().keySet()){
+        for (Position p : field.getField().keySet()) {
             PlayableCard card = field.getField().get(p);
             ImageView imageView = new ImageView();
             try {
-                int x = p.getX()-minX;
-                int y = maxY- p.getY();
+                int x = p.getX() - minX;
+                int y = maxY - p.getY();
                 Image image = loadCardFrontImage(card.getId());
                 imageView.setImage(image);
-                imageView.setFitWidth(100);
-                imageView.setFitHeight(30);
+                imageView.setFitWidth(cellWidth);
+                imageView.setFitHeight(cellHeight);
                 GridPane.setMargin(imageView, new javafx.geometry.Insets(0, 0, 95 * y, -37 * x));
                 imageView.setPreserveRatio(true);
                 this.marione.add(imageView, x, y);
             } catch (FileNotFoundException e) {
-                System.out.println("errore nel print playing field");;
+                System.out.println("errore nel print playing field");
             }
         }
     }
+
+    //GridPane.setMargin(imageView, new javafx.geometry.Insets(0, 0, 95 * y, -37 * x));
+
 
     private void placeCard() {
         messageLabel.setText("IT'S YOUR TURN!");
