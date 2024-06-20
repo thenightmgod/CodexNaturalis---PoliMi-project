@@ -7,6 +7,8 @@ import java.util.Objects;
  * Represents a position on the playing field.
  */
 public class Position implements Serializable {
+
+    private boolean free = false;
     private int x;
     private int y;
     private final FB face;
@@ -84,6 +86,10 @@ public class Position implements Serializable {
         }
         Position position = (Position) obj;
         return this.x == position.getX() && this.y == position.getY();
+    }
+
+    public void setFree(boolean free) {
+        this.free = free;
     }
 
     /**

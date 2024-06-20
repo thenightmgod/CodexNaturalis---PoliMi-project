@@ -82,25 +82,56 @@ public class TurnController extends GUIController{
         this.marione.getChildren().clear();
         this.marione.getRowConstraints().clear();
         this.marione.getColumnConstraints().clear();
+        LinkedList<Position> frees = field.getFreePositions();
+
+        int fmaxX = frees.stream().mapToInt(Position::getX).max().orElse(400);
+        int fminX = frees.stream().mapToInt(Position::getX).min().orElse(400);
+        int fmaxY = frees.stream().mapToInt(Position::getY).max().orElse(400);
+        int fminY = frees.stream().mapToInt(Position::getY).min().orElse(400);
 
         int maxX = field.getField().keySet().stream().mapToInt(Position::getX).max().orElse(400);
         int minX = field.getField().keySet().stream().mapToInt(Position::getX).min().orElse(400);
         int maxY = field.getField().keySet().stream().mapToInt(Position::getY).max().orElse(400);
         int minY = field.getField().keySet().stream().mapToInt(Position::getY).min().orElse(400);
 
-        double cellWidth = 400.0; // Set the width of each cell
-        double cellHeight = 120.0; // Set the height of each cell
+        if(maxX < fmaxX) maxX = fmaxX;
+        if(minX > fminX) minX = fminX;
+        if(maxY < fmaxY) maxY = fmaxY;
+        if(minY > fminY) minY = fminY;
+
+        double cellWidth = 210;
+        double cellHeight = 140.0;
+
+        this.marione.setVgap(0);
+        this.marione.setHgap(0);
 
         for (int i = 0; i < maxX - minX + 1; i++) {
             RowConstraints rowConstraints = new RowConstraints();
-            rowConstraints.setPrefHeight(cellHeight);
+            rowConstraints.setMinHeight(cellHeight);
+            rowConstraints.setMaxHeight(cellHeight);
             this.marione.getRowConstraints().add(rowConstraints);
         }
         for (int j = 0; j < maxY - minY + 1; j++) {
             ColumnConstraints columnConstraints = new ColumnConstraints();
-            columnConstraints.setPrefWidth(cellWidth);
+            columnConstraints.setMinWidth(cellWidth);
+            columnConstraints.setMaxWidth(cellWidth);
             this.marione.getColumnConstraints().add(columnConstraints);
         }
+
+        for (Position prato : frees){
+            ImageView imageView = new ImageView();
+            int x = prato.getX() - minX;
+            int y = maxY - prato.getY();
+            Image image = loadImage("view/MyCodexNaturalisPhotos/carlos.png");
+            imageView.setImage(image);
+            imageView.setFitWidth(cellWidth); // Set the preferred width of the ImageView
+            imageView.setFitHeight(cellHeight);
+            GridPane.setMargin(imageView, new javafx.geometry.Insets(0, 0, 111 * y, -45.94 * x));
+            imageView.setOpacity(0.4);
+            imageView.setPreserveRatio(true);
+            this.marione.add(imageView, x, y);
+        }
+
         for (Position p : field.getField().keySet()) {
             PlayableCard card = field.getField().get(p);
             ImageView imageView = new ImageView();
@@ -109,9 +140,9 @@ public class TurnController extends GUIController{
                 int y = maxY - p.getY();
                 Image image = loadCardFrontImage(card.getId());
                 imageView.setImage(image);
-                imageView.setFitWidth(cellWidth);
+                imageView.setFitWidth(cellWidth); // Set the preferred width of the ImageView
                 imageView.setFitHeight(cellHeight);
-                GridPane.setMargin(imageView, new javafx.geometry.Insets(0, 0, 95 * y, -37 * x));
+                GridPane.setMargin(imageView, new javafx.geometry.Insets(0, 0, 111 * y, -45.94 * x));
                 imageView.setPreserveRatio(true);
                 this.marione.add(imageView, x, y);
             } catch (FileNotFoundException e) {
@@ -119,8 +150,6 @@ public class TurnController extends GUIController{
             }
         }
     }
-
-    //GridPane.setMargin(imageView, new javafx.geometry.Insets(0, 0, 95 * y, -37 * x));
 
 
     private void placeCard() {
