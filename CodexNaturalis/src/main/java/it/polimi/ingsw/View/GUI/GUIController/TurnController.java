@@ -138,9 +138,13 @@ public class TurnController extends GUIController{
             try {
                 int x = p.getX() - minX;
                 int y = maxY - p.getY();
-                Image image = loadCardFrontImage(card.getId());
-                imageView.setImage(image);
-                imageView.setFitWidth(cellWidth); // Set the preferred width of the ImageView
+                if(p.getFace()==FB.BACK) {
+                    Image image = loadCardBackImage(card.getId());
+                    imageView.setImage(image);
+                } else {Image image = loadCardFrontImage(card.getId());
+                    imageView.setImage(image);
+                }
+                imageView.setFitWidth(cellWidth);
                 imageView.setFitHeight(cellHeight);
                 GridPane.setMargin(imageView, new javafx.geometry.Insets(0, 0, 111 * y, -45.94 * x));
                 imageView.setPreserveRatio(true);

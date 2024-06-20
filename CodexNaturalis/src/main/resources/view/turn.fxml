@@ -18,7 +18,7 @@
          </font>
       </Label>
       <HBox fx:id="myHandBox" layoutX="20.0" layoutY="560.0" prefHeight="150.0" prefWidth="750.0" spacing="15.0" />
-      <ScrollPane layoutX="12.0" layoutY="19.0" opacity="0.51" prefHeight="468.0" prefWidth="739.0" style="-fx-border-color: red; -fx-border-width: 4px; -fx-border-style: solid; -fx-background-radius: 10px;" styleClass="custom-background" stylesheets="@styles.css">
+      <ScrollPane layoutX="12.0" layoutY="19.0" prefHeight="468.0" prefWidth="739.0" style="-fx-border-color: red; -fx-border-width: 4px; -fx-border-style: solid; -fx-background-radius: 10px;" styleClass="custom-background" stylesheets="@styles.css">
          <content>
             <GridPane fx:id="marione" prefHeight="470.0" prefWidth="697.0" styleClass="custom-background" stylesheets="@styles.css">
             </GridPane>
