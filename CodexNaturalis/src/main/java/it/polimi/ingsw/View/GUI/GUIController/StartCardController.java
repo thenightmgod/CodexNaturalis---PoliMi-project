@@ -41,7 +41,7 @@ public class StartCardController extends GUIController{
         } else {
             System.out.println("Failed to load image from path: " + newImagePath);
         }
-        welcomeLabel.setText("Welcome to the new game!");
+        welcomeLabel.setText("WELCOME TO THE GAME!");
         PauseTransition pause = new PauseTransition(Duration.seconds(3));
         pause.setOnFinished(event -> showNeutralBackground());
         pause.play();
@@ -70,7 +70,7 @@ public class StartCardController extends GUIController{
 
     public void chooseStartCard() {
         enableCardInteractions();
-        chooseSideLabel.setText("Choose the side");
+        chooseSideLabel.setText("CHOOSE THE SIDE");
     }
     @FXML
     private void onCardMouseEntered(MouseEvent event) {
@@ -112,10 +112,10 @@ public class StartCardController extends GUIController{
 
     public void waitYourTurn() {
         if (!StartCardOk) {
-            chooseSideLabel.setText("wait, it's not your turn");
+            chooseSideLabel.setText("WAIT, IT'S NOT YOUR TURN");
             disableCardInteractions();
         } else {
-            chooseSideLabel.setText("Well done, start card chosen!");
+            chooseSideLabel.setText("START CARD CHOSEN");
             disableCardInteractions();
         }
     }
