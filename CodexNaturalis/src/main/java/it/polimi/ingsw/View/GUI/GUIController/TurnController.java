@@ -14,10 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
+import javafx.scene.input.*;
 import javafx.scene.layout.*;
 
 import java.awt.event.ActionEvent;
@@ -80,7 +77,7 @@ public class TurnController extends GUIController{
         loadmyLabelBox();
         plotField();
         if(myTurn) {
-            placeCard();
+            isYourTurn();
         }else {
             waitMyTurn();
         }
@@ -139,7 +136,8 @@ public class TurnController extends GUIController{
             imageView.setOpacity(0.4);
             imageView.setPreserveRatio(true);
             this.marione.add(imageView, x, y);
-            /*imageView.setOnDragOver(event -> {
+
+            imageView.setOnDragOver(event -> {
                 if (event.getDragboard().hasString()) {
                     event.acceptTransferModes(TransferMode.MOVE);
                 }
@@ -149,18 +147,19 @@ public class TurnController extends GUIController{
             imageView.setOnDragDropped(event -> {
                 Dragboard db = event.getDragboard();
                 boolean success = false;
-                if (db.hasString()) {
-                    // Place the card at the dropped position
+                if(db.hasString()) {
                     try {
-                        client.placeCard(client, Integer.parseInt(db.getString()), prato.getX(), prato.getY(), FB.BACK);
+                        int cardIndex = Integer.parseInt(db.getString());
+                        client.placeCard(client, cardIndex, prato.getX(), prato.getY(), FB.BACK);
                         success = true;
                     } catch (RemoteException e) {
-                        System.out.println("errore nella place card");
+                        System.out.println("Error in place card");
                     }
                 }
                 event.setDropCompleted(success);
                 event.consume();
-            });*/
+            });
+
         }
 
         for (Position p : field.getField().keySet()) {
@@ -186,30 +185,81 @@ public class TurnController extends GUIController{
         }
     }
 
+    @FXML
+    private void placeCard(DragEvent event){
+        System.out.println("duce");
+        Node node = event.getPickResult().getIntersectedNode();
 
-    private void placeCard() {
+        if(node instanceof ImageView && node.getParent() instanceof GridPane){
+            Integer cIndex = GridPane.getColumnIndex(node);
+            Integer rIndex = GridPane.getRowIndex(node);
+
+            int x = cIndex == 698 ? 0 : cIndex;
+            int y = rIndex == 698 ? 0 : rIndex;
+
+            Dragboard db = event.getDragboard();
+            boolean success = false;
+            if(db.hasString()) {
+                System.out.println("Dragboard contains a string");
+                try {
+                    int cardIndex = Integer.parseInt(db.getString());
+
+                    client.placeCard(client, cardIndex, x, y, FB.BACK);
+                    success = true;
+                } catch (RemoteException e) {
+                    System.out.println("errore nella place card");
+                }
+
+            } else {
+                System.out.println("Dragboard does not contain a string");
+            }
+        }
+    }
+
+    private void isYourTurn() {
         messageLabel.setText("IT'S YOUR TURN!");
         messageLabel.setVisible(true);
 
-        for(PlayableCard card : myhand) {
+        for(int cardIndex = 0; cardIndex < myhand.size(); cardIndex++) {
+            PlayableCard card = myhand.get(cardIndex);
             for (Node node : myHandBox.getChildren()) {
                 if (node instanceof ImageView) {
                     ImageView imageView = (ImageView) node;
                     if (imageView.getImage().getUrl().contains(String.valueOf(card.getId()))) {
+                        int finalCardIndex = cardIndex;
                         imageView.setOnDragDetected(event -> {
                             Dragboard db = imageView.startDragAndDrop(TransferMode.ANY);
                             ClipboardContent content = new ClipboardContent();
-                            content.putString(String.valueOf(card.getId()));
+                            content.putString(String.valueOf(finalCardIndex + 1)); // +1 because cardIndex starts from 0
                             db.setContent(content);
                             db.setDragView(imageView.getImage());
                             event.consume();
                         });
-
-                        imageView.setOnDragDone(event -> {
-                           /* if (event.getTransferMode() != TransferMode.MOVE) {
-                                updateHands(myhand);
+                        imageView.setOnDragOver(event -> {
+                            if (event.getDragboard().hasString()) {
+                                event.acceptTransferModes(TransferMode.MOVE);
                             }
-                            event.consume();*/
+                            event.consume();
+                        });
+                        imageView.setOnDragDropped(event -> {
+                            Dragboard db = event.getDragboard();
+                            boolean success = false;
+                            if (db.hasString()) {
+                                try {
+                                    int cardId = Integer.parseInt(db.getString()) - 1; // -1 because cardId starts from 1
+                                    int x = GridPane.getColumnIndex(imageView);
+                                    int y = GridPane.getRowIndex(imageView);
+                                    // Check if the position is free before placing the card
+                                    if (field.getFreePositions().contains(new Position(x, y))) {
+                                        client.placeCard(client, cardId, x, y, FB.BACK);
+                                        success = true;
+                                    }
+                                } catch (RemoteException e) {
+                                    System.out.println("Error in place card");
+                                }
+                            }
+                            event.setDropCompleted(success);
+                            event.consume();
                         });
                     }
                 }
