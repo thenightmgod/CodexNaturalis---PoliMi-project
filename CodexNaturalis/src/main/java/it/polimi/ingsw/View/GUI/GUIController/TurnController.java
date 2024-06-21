@@ -176,7 +176,6 @@ public class TurnController extends GUIController{
                 event.setDropCompleted(success);
                 event.consume();
             });
-
         }
 
         for (Position p : field.getField().keySet()) {
@@ -202,6 +201,15 @@ public class TurnController extends GUIController{
         }
     }
 
+    public void updateResourceDeck(LinkedList<ResourceCard> resourcedeck) {
+        this.resourcedeck = resourcedeck;
+        loadResourceBox();
+    }
+
+    public void updateGoldDeck(LinkedList<GoldCard> golddeck){
+        this.golddeck = golddeck;
+        loadGoldBox();
+    }
 
     private void isYourTurn() {
         messageLabel.setText("IT'S YOUR TURN!");
@@ -235,8 +243,93 @@ public class TurnController extends GUIController{
     }
 
     public void drawCard(){
-        //MOSTRARE CAZZI VARI IN MODO CHE PUOI PESCARE
+        messageLabel.setText("Now, draw a card!");
+        messageLabel.setVisible(true);
+
+        for (int i = 0; i < resourceBox.getChildren().size(); i++) {
+            ImageView imageView = (ImageView) resourceBox.getChildren().get(i);
+            addDrawEffect(imageView,1);
+        }
+        for (int i = 0; i < goldBox.getChildren().size(); i++) {
+            ImageView imageView = (ImageView) goldBox.getChildren().get(i);
+            addDrawEffect(imageView, 2);
+        }
+   /* for (int i = 0; i < resourceBox.getChildren().size(); i++) {
+        ImageView imageView = (ImageView) resourceBox.getChildren().get(i);
+        Timeline timeline = new Timeline(
+                    new KeyFrame(Duration.seconds(2), new KeyValue(imageView.opacityProperty(), 8.0))
+            );
+            timeline.setCycleCount(1);
+            timeline.play();
     }
+    for (int i = 0; i < resourceBox.getChildren().size(); i++) {
+        ImageView imageView = (ImageView) resourceBox.getChildren().get(i);
+            Timeline timeline = new Timeline(
+                    new KeyFrame(Duration.seconds(2), new KeyValue(imageView.opacityProperty(), 8.0))
+            );
+            timeline.setCycleCount(1);
+            timeline.play();
+    }*/
+
+    }
+
+    private void addDrawEffect(ImageView image, int i) {
+        image.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            int indexCard= getIndexInHBox(image, i);
+            try {
+                client.drawCard(indexCard,i, this.client);
+            } catch (RemoteException e) {
+                System.out.println("Errore nel draw card");
+            }
+            removeDrawEffect();
+            messageLabel.setText("");
+        });
+    }
+
+    public void waitYourTurn(){}
+
+    private int getIndexInHBox(ImageView image, int i) {
+        if (i==1) {
+            int index = resourceBox.getChildren().indexOf(image);
+            int numChildren = resourceBox.getChildren().size();
+
+            if (index >= 0) {
+                if (index == numChildren - 1) {
+                    return 1;
+                } else if (index == numChildren - 2) {
+                    return 2;
+                } else if (index == numChildren - 3) {
+                    return 3;
+                }
+            }
+        } else {
+            int index = goldBox.getChildren().indexOf(image);
+            int numChildren = goldBox.getChildren().size();
+
+            if (index >= 0) {
+                if (index == numChildren - 1) {
+                    return 1;
+                } else if (index == numChildren - 2) {
+                    return 2;
+                } else if (index == numChildren - 3) {
+                    return 3;
+                }
+            }
+        }
+        return 0;
+    }
+
+    private void removeDrawEffect() {
+        for (int i = 0; i < resourceBox.getChildren().size(); i++) {
+            ImageView imageView = (ImageView) resourceBox.getChildren().get(i);
+            imageView.setOnMouseClicked(null);
+        }
+        for (int i = 0; i < goldBox.getChildren().size(); i++) {
+            ImageView imageView = (ImageView) goldBox.getChildren().get(i);
+            imageView.setOnMouseClicked(null);
+        }
+    }
+
 
 
     private void waitMyTurn() {
@@ -251,6 +344,7 @@ public class TurnController extends GUIController{
 
     private void loadResourceBox() {
 
+        resourceBox.getChildren().clear();
         resourceBox.setPrefHeight(160.0);
         resourceBox.setPrefWidth(492.0);
         myResource.setText("DRAWABLE RESOURCECARDS");
@@ -278,6 +372,8 @@ public class TurnController extends GUIController{
     }
 
     private void loadGoldBox() {
+
+        goldBox.getChildren().clear();
         goldBox.setPrefHeight(160.0);
         goldBox.setPrefWidth(492.0);
         myGold.setText("DRAWABLE GOLDCARDS");

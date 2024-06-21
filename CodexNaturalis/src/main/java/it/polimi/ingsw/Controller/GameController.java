@@ -224,6 +224,7 @@ public class GameController {
         cards.add((ResourceCard) deck.getCards().get(1));
         cards.add((ResourceCard) deck.getCards().get(2));
         for(Player p: players) {
+            System.out.println("lazzaro");
             this.game.getObserverManager().updateResourceDeck(p.getName(), false, cards);
         }
         changeTurns("NormalTurn");
