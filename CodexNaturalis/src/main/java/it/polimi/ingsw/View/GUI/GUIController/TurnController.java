@@ -18,10 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
+import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -66,6 +63,7 @@ public class TurnController extends GUIController{
 
     private ScoreBoard scoreBoard;
     private PlayingField field;
+    private int Points;
     boolean myTurn;
     boolean isFrontImageLoaded=true;
     boolean revealed;
@@ -90,6 +88,7 @@ public class TurnController extends GUIController{
         loadmyLabelBox();
         plotField();
         if(myTurn) {
+            isYourTurn();
             placeCard();
             points.put("Player1", 21);
             points.put("Player2", 21);
@@ -153,7 +152,8 @@ public class TurnController extends GUIController{
             imageView.setOpacity(0.4);
             imageView.setPreserveRatio(true);
             this.marione.add(imageView, x, y);
-            /*imageView.setOnDragOver(event -> {
+
+            imageView.setOnDragOver(event -> {
                 if (event.getDragboard().hasString()) {
                     event.acceptTransferModes(TransferMode.MOVE);
                 }
@@ -163,18 +163,20 @@ public class TurnController extends GUIController{
             imageView.setOnDragDropped(event -> {
                 Dragboard db = event.getDragboard();
                 boolean success = false;
-                if (db.hasString()) {
-                    // Place the card at the dropped position
+                if(db.hasString()) {
                     try {
-                        client.placeCard(client, Integer.parseInt(db.getString()), prato.getX(), prato.getY(), FB.BACK);
+                        int cardIndex = Integer.parseInt(db.getString());
+                        this.gui.setFirst_turn(false);
+                        client.placeCard(client, cardIndex, prato.getX(), prato.getY(), FB.BACK);
                         success = true;
                     } catch (RemoteException e) {
-                        System.out.println("errore nella place card");
+                        System.out.println("Error in place card");
                     }
                 }
                 event.setDropCompleted(success);
                 event.consume();
-            });*/
+            });
+
         }
 
         for (Position p : field.getField().keySet()) {
@@ -201,29 +203,50 @@ public class TurnController extends GUIController{
     }
 
 
-    private void placeCard() {
+    private void isYourTurn() {
         messageLabel.setText("IT'S YOUR TURN!");
         messageLabel.setVisible(true);
 
-        for(PlayableCard card : myhand) {
+        for(int cardIndex = 0; cardIndex < myhand.size(); cardIndex++) {
+            PlayableCard card = myhand.get(cardIndex);
             for (Node node : myHandBox.getChildren()) {
                 if (node instanceof ImageView) {
                     ImageView imageView = (ImageView) node;
                     if (imageView.getImage().getUrl().contains(String.valueOf(card.getId()))) {
+                        int finalCardIndex = cardIndex;
                         imageView.setOnDragDetected(event -> {
                             Dragboard db = imageView.startDragAndDrop(TransferMode.ANY);
                             ClipboardContent content = new ClipboardContent();
-                            content.putString(String.valueOf(card.getId()));
+                            content.putString(String.valueOf(finalCardIndex + 1)); // +1 because cardIndex starts from 0
                             db.setContent(content);
                             db.setDragView(imageView.getImage());
                             event.consume();
                         });
-
-                        imageView.setOnDragDone(event -> {
-                           /* if (event.getTransferMode() != TransferMode.MOVE) {
-                                updateHands(myhand);
+                        imageView.setOnDragOver(event -> {
+                            if (event.getDragboard().hasString()) {
+                                event.acceptTransferModes(TransferMode.MOVE);
                             }
-                            event.consume();*/
+                            event.consume();
+                        });
+                        imageView.setOnDragDropped(event -> {
+                            Dragboard db = event.getDragboard();
+                            boolean success = false;
+                            if (db.hasString()) {
+                                try {
+                                    int cardId = Integer.parseInt(db.getString()) - 1; // -1 because cardId starts from 1
+                                    int x = GridPane.getColumnIndex(imageView);
+                                    int y = GridPane.getRowIndex(imageView);
+                                    // Check if the position is free before placing the card
+                                    if (field.getFreePositions().contains(new Position(x, y))) {
+                                        client.placeCard(client, cardId, x, y, FB.BACK);
+                                        success = true;
+                                    }
+                                } catch (RemoteException e) {
+                                    System.out.println("Error in place card");
+                                }
+                            }
+                            event.setDropCompleted(success);
+                            event.consume();
                         });
                     }
                 }
@@ -247,11 +270,13 @@ public class TurnController extends GUIController{
     }
 
     private void loadResourceBox() {
+
         resourceBox.setPrefHeight(160.0);
         resourceBox.setPrefWidth(492.0);
         myResource.setText("DRAWABLE RESOURCECARDS");
         myResource.setVisible(true);
         double imageViewWidth = (resourceBox.getPrefWidth()-45) / 3.0;
+
         try {
             for (int i =resourcedeck.size()-1 ; i >=0 ; i--) {
                 Image image;
@@ -332,23 +357,25 @@ public class TurnController extends GUIController{
     }
 
     private void loadMyHand() {
+
+        myHandBox.getChildren().clear();
         myHandBox.setPrefHeight(160.0);
         myHandBox.setPrefWidth(492.0);
         double imageViewWidth = (myHandBox.getPrefWidth()-45) / 3.0;
         try {
-            for (int i =myhand.size()-1 ; i >=0 ; i--) {
+            for (PlayableCard card : myhand) {
                 Image image;
-                image = loadCardFrontImage(myhand.get(i).getId());
+                image = loadCardFrontImage(card.getId());
                 ImageView imageView = new ImageView(image);
                 imageView.setFitWidth(imageViewWidth);
                 imageView.setFitHeight(myHandBox.getPrefHeight());
                 imageView.setPreserveRatio(true);
                 //addClickEffect(imageView);
-                setmyHandinteraction(imageView, myhand.get(i).getId());
+                setmyHandinteraction(imageView, card.getId());
                 myHandBox.getChildren().add(imageView);
             }
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("errore nel caricare la mano");
         }
     }
 
