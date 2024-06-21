@@ -9,6 +9,9 @@ import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
 import it.polimi.ingsw.View.GUI.GUIController.ScoreBoard.ScoreBoard;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -22,6 +25,7 @@ import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -68,6 +72,7 @@ public class TurnController extends GUIController{
     boolean isFrontImageLoaded=true;
     boolean revealed;
     boolean updatedPoints=false;
+    LinkedList<Boolean> omar = new LinkedList<>();
 
 
     @Override
@@ -82,6 +87,9 @@ public class TurnController extends GUIController{
     }
 
     private void loadAllArgs() {
+//        for(int i=0; i<2; i++){
+//            this.omar.add(i, true);
+        //        }
         loadResourceBox();
         loadGoldBox();
         loadGoalBox();
@@ -156,6 +164,8 @@ public class TurnController extends GUIController{
                 event.consume();
             });
 
+
+
             imageView.setOnDragDropped(event -> {
                 Dragboard db = event.getDragboard();
                 boolean success = false;
@@ -163,7 +173,12 @@ public class TurnController extends GUIController{
                     try {
                         int cardIndex = Integer.parseInt(db.getString());
                         this.gui.setFirst_turn(false);
-                        client.placeCard(client, cardIndex, prato.getX(), prato.getY(), FB.BACK);
+                        FB face = FB.FRONT;
+                        if(!omar.get(cardIndex - 1)){
+                            face = FB.BACK;
+                        }
+                        client.placeCard(client, cardIndex, prato.getX() , prato.getY(), face);
+                        omar.clear();
                         success = true;
                     } catch (RemoteException e) {
                         System.out.println("Error in place card");
@@ -172,7 +187,6 @@ public class TurnController extends GUIController{
                 event.setDropCompleted(success);
                 event.consume();
             });
-
         }
 
         for (Position p : field.getField().keySet()) {
@@ -198,8 +212,17 @@ public class TurnController extends GUIController{
         }
     }
 
+    public void updateResourceDeck(LinkedList<ResourceCard> resourcedeck) {
+        this.resourcedeck = resourcedeck;
+        loadResourceBox();
+    }
 
-    private void isYourTurn() {
+    public void updateGoldDeck(LinkedList<GoldCard> golddeck){
+        this.golddeck = golddeck;
+        loadGoldBox();
+    }
+
+    public void isYourTurn() {
         messageLabel.setText("IT'S YOUR TURN!");
         messageLabel.setVisible(true);
 
@@ -224,26 +247,6 @@ public class TurnController extends GUIController{
                             }
                             event.consume();
                         });
-                        imageView.setOnDragDropped(event -> {
-                            Dragboard db = event.getDragboard();
-                            boolean success = false;
-                            if (db.hasString()) {
-                                try {
-                                    int cardId = Integer.parseInt(db.getString()) - 1; // -1 because cardId starts from 1
-                                    int x = GridPane.getColumnIndex(imageView);
-                                    int y = GridPane.getRowIndex(imageView);
-                                    // Check if the position is free before placing the card
-                                    if (field.getFreePositions().contains(new Position(x, y))) {
-                                        client.placeCard(client, cardId, x, y, FB.BACK);
-                                        success = true;
-                                    }
-                                } catch (RemoteException e) {
-                                    System.out.println("Error in place card");
-                                }
-                            }
-                            event.setDropCompleted(success);
-                            event.consume();
-                        });
                     }
                 }
             }
@@ -251,8 +254,77 @@ public class TurnController extends GUIController{
     }
 
     public void drawCard(){
-        //MOSTRARE CAZZI VARI IN MODO CHE PUOI PESCARE
+        messageLabel.setText("Now, draw a card!");
+        messageLabel.setVisible(true);
+
+        for (int i = 0; i < resourceBox.getChildren().size(); i++) {
+            ImageView imageView = (ImageView) resourceBox.getChildren().get(i);
+            int indexCard= getIndexInHBox(imageView, 1);
+            addDrawEffect(imageView,1, indexCard);
+        }
+        for (int i = 0; i < goldBox.getChildren().size(); i++) {
+            ImageView imageView = (ImageView) goldBox.getChildren().get(i);
+            int indexCard= getIndexInHBox(imageView, 2);
+            addDrawEffect(imageView, 2, indexCard);
+        }
     }
+
+    private void addDrawEffect(ImageView image, int deck, int index) {
+        image.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            try {
+                client.drawCard(deck, index, this.client);
+            } catch (RemoteException e) {
+                System.out.println("Errore nel draw card");
+            }
+            removeDrawEffect();
+            messageLabel.setText("Well done.");
+        });
+    }
+
+    public void waitYourTurn(){}
+
+    private int getIndexInHBox(ImageView image, int deck) {
+        if (deck==1) {
+            int index = resourceBox.getChildren().indexOf(image);
+            int numChildren = resourceBox.getChildren().size();
+
+            if (index >= 0) {
+                if (index == numChildren - 1) {
+                    return 1; //ultima2 immagine a dx
+                } else if (index == numChildren - 2) {
+                    return 2; //immagine in mezzo
+                } else if (index == numChildren - 3) {
+                    return 3; //immagine a sx
+                }
+            }
+        } else {
+            int index = goldBox.getChildren().indexOf(image);
+            int numChildren = goldBox.getChildren().size();
+
+            if (index >= 0) {
+                if (index == numChildren - 1) { //ultima immagine a dx
+                    return 1;
+                } else if (index == numChildren - 2) {
+                    return 2; //seconda immagine centrale
+                } else if (index == numChildren - 3) {
+                    return 3; //prima immagine da sx
+                }
+            }
+        }
+        return 0;
+    }
+
+    private void removeDrawEffect() {
+        for (int i = 0; i < resourceBox.getChildren().size(); i++) {
+            ImageView imageView = (ImageView) resourceBox.getChildren().get(i);
+            imageView.setOnMouseClicked(null);
+        }
+        for (int i = 0; i < goldBox.getChildren().size(); i++) {
+            ImageView imageView = (ImageView) goldBox.getChildren().get(i);
+            imageView.setOnMouseClicked(null);
+        }
+    }
+
 
 
     private void waitMyTurn() {
@@ -267,6 +339,7 @@ public class TurnController extends GUIController{
 
     private void loadResourceBox() {
 
+        resourceBox.getChildren().clear();
         resourceBox.setPrefHeight(160.0);
         resourceBox.setPrefWidth(492.0);
         myResource.setText("DRAWABLE RESOURCECARDS");
@@ -294,6 +367,8 @@ public class TurnController extends GUIController{
     }
 
     private void loadGoldBox() {
+
+        goldBox.getChildren().clear();
         goldBox.setPrefHeight(160.0);
         goldBox.setPrefWidth(492.0);
         myGold.setText("DRAWABLE GOLDCARDS");
@@ -353,6 +428,8 @@ public class TurnController extends GUIController{
     }
 
     private void loadMyHand() {
+        for(int i = 0; i < 3; i++)
+            this.omar.add(i, true);
 
         myHandBox.getChildren().clear();
         myHandBox.setPrefHeight(160.0);
@@ -460,10 +537,20 @@ public class TurnController extends GUIController{
             try {
                 if (isFrontImageLoaded) {
                     Image flippedImage = loadCardBackImage(cardId);
+                    for(int i=0; i<myhand.size(); i++){
+                        if(myhand.get(i).getId()==cardId){
+                            omar.add(i, false);
+                        }
+                    }
                     imageView.setImage(flippedImage);
                     isFrontImageLoaded = false;
                 } else {
                     Image frontImage = loadCardFrontImage(cardId);
+                    for(int i=0; i<myhand.size(); i++) {
+                        if (myhand.get(i).getId() == cardId) {
+                            omar.add(i, true);
+                        }
+                    }
                     imageView.setImage(frontImage);
                     isFrontImageLoaded = true;
                 }
