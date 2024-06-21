@@ -95,6 +95,7 @@ public class ObserverManager {
     public void showNewHand(String name, LinkedList<PlayableCard> hand) {
         try {
             observers.get(name).showHand(hand);
+            System.out.println(hand.size());
         } catch (RemoteException ignored) {}
     }
 

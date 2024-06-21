@@ -60,7 +60,6 @@ public class TurnController extends GUIController{
     private LinkedList<ResourceCard> resourcedeck = new LinkedList<>();
     private LinkedList<PlayableCard> myhand;
     private LinkedHashMap<String,Integer> points = new LinkedHashMap<>();
-
     private ScoreBoard scoreBoard;
     private PlayingField field;
     private int Points;
@@ -268,13 +267,13 @@ public class TurnController extends GUIController{
     }
 
     private void addDrawEffect(ImageView image, int deck, int index) {
-        image.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+        image.setOnMouseClicked(event -> {
+            removeDrawEffect();
             try {
                 client.drawCard(deck, index, this.client);
             } catch (RemoteException e) {
                 System.out.println("Errore nel draw card");
             }
-            removeDrawEffect();
             messageLabel.setText("Well done, now wait your turn.");
         });
     }

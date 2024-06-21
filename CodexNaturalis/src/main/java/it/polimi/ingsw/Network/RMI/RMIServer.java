@@ -170,6 +170,7 @@ public class RMIServer implements VirtualServer {
         int roomId = controller.getYourRoomId(client.getName());
         Actions dAction = new DrawCardAction(i, whichOne, client, controller, this, 0, roomId);
         actionsPerGame.get(roomId).getActionsQueue().add(dAction);
+        System.err.println("Draw Card Action: Deck-" + i + " Card-" + whichOne + " Player-" + client.getName());
     }
 
     /**
