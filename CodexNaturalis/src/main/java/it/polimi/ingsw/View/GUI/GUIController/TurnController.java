@@ -67,6 +67,7 @@ public class TurnController extends GUIController{
     boolean myTurn;
     boolean isFrontImageLoaded=true;
     boolean revealed;
+    boolean updatedPoints=false;
 
 
     @Override
@@ -89,11 +90,6 @@ public class TurnController extends GUIController{
         plotField();
         if(myTurn) {
             isYourTurn();
-            placeCard();
-            points.put("Player1", 21);
-            points.put("Player2", 21);
-            points.put("Player3", 56);
-            scoreBoard = new ScoreBoard(points);
         }else {
             waitMyTurn();
         }
@@ -481,39 +477,48 @@ public class TurnController extends GUIController{
         loadMyHand();
     }
     public void updatePoints(HashMap<String, Integer> points) {
-        this.points=(LinkedHashMap<String, Integer>) points;
-        this.scoreBoard=new ScoreBoard(this.points);
+        if (points != null) {
+            this.points = new LinkedHashMap<>(points);
+            this.scoreBoard = new ScoreBoard(this.points);
+            this.updatedPoints = true;
+        } else {
+            throw new IllegalArgumentException("Points map cannot be null");
+        }
     }
 
     @FXML
     public void showPointsCounter(ActionEvent event) {
-        Stage newStage = new Stage();
-        newStage.setTitle("Scoreboard");
+        if (updatedPoints) {
+            Stage newStage = new Stage();
+            newStage.setTitle("Scoreboard");
 
-        AnchorPane scoreboardPane = new AnchorPane();
-        Image image = loadImage("/view/MyCodexNaturalisPhotos/plateau.png");
-        ImageView scoreboardImage = new ImageView(image);
-        scoreboardImage.setFitWidth(334);
-        scoreboardImage.setFitHeight(679);
-        scoreboardImage.setPreserveRatio(true);
+            AnchorPane scoreboardPane = new AnchorPane();
+            Image image = loadImage("/view/MyCodexNaturalisPhotos/plateau.png");
+            ImageView scoreboardImage = new ImageView(image);
+            scoreboardImage.setFitWidth(334);
+            scoreboardImage.setFitHeight(679);
+            scoreboardImage.setPreserveRatio(true);
 
-        scoreboardPane.getChildren().add(scoreboardImage);
-        //da aggiungere anche il box con la legenda colori
+            scoreboardPane.getChildren().add(scoreboardImage);
 
-        AnchorPane.setTopAnchor(scoreboardImage, 15.0);
-        AnchorPane.setLeftAnchor(scoreboardImage, 84.0);
+            AnchorPane.setTopAnchor(scoreboardImage, 15.0);
+            AnchorPane.setLeftAnchor(scoreboardImage, 84.0);
 
-        scoreBoard.updatePlaceholders();
-        for (ImageView placeholder : scoreBoard.getPlaceholders().values()) {
-            scoreboardPane.getChildren().add(placeholder);
+
+            scoreBoard.updatePlaceholders();
+            for (ImageView placeholder : scoreBoard.getPlaceholders().values()) {
+                scoreboardPane.getChildren().add(placeholder);
+            }
+
+            Scene scoreboardScene = new Scene(scoreboardPane, 735, 700);
+            newStage.setScene(scoreboardScene);
+            newStage.initModality(Modality.WINDOW_MODAL);
+            newStage.initOwner(stage);
+            newStage.setResizable(false);
+            newStage.show();
+        }else {
+            return;
         }
-
-        Scene scoreboardScene = new Scene(scoreboardPane, 735, 700);
-        newStage.setScene(scoreboardScene);
-        newStage.initModality(Modality.WINDOW_MODAL);
-        newStage.initOwner(stage);
-        newStage.setResizable(false);
-        newStage.show();
     }
 
 
