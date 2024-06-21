@@ -16,6 +16,12 @@
 .hbox-padding {
     -fx-padding: 10;
 }
+
+.woodBackground {
+    -fx-background-image: url("MyCodexNaturalisPhotos/wood.jpg");
+    -fx-background-size: cover;
+    -fx-background-repeat: stretch;
+}
 #commonGoalsBox {
     -fx-background-color: rgba(0, 0, 0, 0.5);
     -fx-padding: 10px;

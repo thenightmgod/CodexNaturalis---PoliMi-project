@@ -69,10 +69,43 @@ public abstract class GUIController {
         String cardPath = "/view/CODEX_cards_gold_front/" + String.format("%03d", cardId) + ".png";
         return loadImage(cardPath);
     }
+
     protected Image loadCardBackImage(int cardId) throws FileNotFoundException {
-        String cardPath = "/view/CODEX_cards_gold_back/" + String.format("%03d", cardId) + ".png";
+        int path = 0;
+        if (cardId >= 1 && cardId <= 10)
+            path = 1;
+        else if (cardId >= 11 && cardId <= 20)
+            path = 11;
+        else if( cardId >= 21 && cardId <= 30)
+            path = 21;
+        else if( cardId >= 31 && cardId <= 40)
+            path = 31;
+        else if( cardId >= 41 && cardId <= 50)
+            path = 41;
+        else if( cardId >= 51 && cardId <= 60)
+            path = 51;
+        else if( cardId >= 61 && cardId <= 70)
+            path = 66;
+        else if( cardId >= 71 && cardId <= 80)
+            path = 73;
+        else if( cardId == 81)
+            path = 81;
+        else if( cardId == 82)
+            path = 82;
+        else if( cardId == 83)
+            path = 83;
+        else if( cardId == 84)
+            path = 84;
+        else if( cardId == 85)
+            path = 85;
+        else if( cardId == 86)
+            path = 86;
+        else if( cardId >= 87)
+            path = 87;
+        String cardPath = "/view/CODEX_cards_gold_back/" + String.format("%03d", path) + ".png";
         return loadImage(cardPath);
     }
+
     protected Image loadImage(String imagePath) {
         try {
             URL resourceUrl = getClass().getResource(imagePath);

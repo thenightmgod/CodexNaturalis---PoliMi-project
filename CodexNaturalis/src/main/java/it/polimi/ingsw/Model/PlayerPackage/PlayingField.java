@@ -12,7 +12,7 @@ import static it.polimi.ingsw.Model.CornerPackage.CornerState.ABSENT;
  */
 public class PlayingField implements Serializable {
 
-    private HashMap<Position, PlayableCard> Field;
+    private LinkedHashMap<Position, PlayableCard> Field;
     private LinkedList<Position> FreePositions;
 
 
@@ -21,7 +21,7 @@ public class PlayingField implements Serializable {
      */
 
     public PlayingField(){
-        Field = new HashMap<>();
+        Field = new LinkedHashMap<>();
         FreePositions = new LinkedList<>();
     }
 

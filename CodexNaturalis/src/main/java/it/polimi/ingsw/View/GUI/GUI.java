@@ -33,7 +33,7 @@ public class GUI implements GameView {
     private Player Turn;
     private CommonClient client;
     private String[] args;
-    private boolean first_turn=true;
+    public boolean first_turn=true;
 
 
     //-------METODI DEI CONTROLLER---------------------------
@@ -70,11 +70,11 @@ public class GUI implements GameView {
         FXMLLoader loader = new FXMLLoader(fxmlUrl);
         Parent root = loader.load();
         GUIController controller = loader.getController();
-        controller.setArgs(args);
         controller.setGui(this);
         controller.setStage(primaryStage);
         controller.setClient(client);
         controller.setRoot(root);
+        controller.setArgs(args);
         return controller;
     }
 
@@ -118,6 +118,7 @@ public class GUI implements GameView {
 
     @Override
     public void updateHands(LinkedList<PlayableCard> hand, String name) {
+
         client.getClient().setHand(hand);
         if(!first_turn) {
             Platform.runLater(() -> {
@@ -128,12 +129,19 @@ public class GUI implements GameView {
 
     @Override
     public void updateField(PlayingField field, String name) {
-
+        if (name.equals(client.getName())) {
+            client.getClient().setField(field);
+            if (!first_turn) {
+                Platform.runLater(() -> {
+                    ((TurnController) guicontrollers.get("turn")).plotField();
+                });
+            }
+        }
     }
 
     @Override
     public void updateFreePosition(String name, LinkedList<Position> freePositions) {
-
+        //PROB INUTILE IN TUTTO IL CODICE
     }
 
 
@@ -155,6 +163,11 @@ public class GUI implements GameView {
                     guicontrollers.get("turn").showException("RequirementsNotSatisfied");
                 });
             }
+            case "Nothing" -> {
+                Platform.runLater(() -> {
+                    ((TurnController) guicontrollers.get("turn")).drawCard();
+                });
+            }
         }
     }
 
@@ -173,27 +186,34 @@ public class GUI implements GameView {
 
     @Override
     public void updateTurn(Player player, String mex) throws RemoteException {
+        //in tutta questa non ci va il platoform run later???
         this.Turn = player;
         if (Turn.getName().equals(client.getName())) {
             Platform.runLater(() -> {
-                switch (mex) {
-                    case "StartCard" -> {
-                            ((StartCardController) guicontrollers.get("startCard")).chooseStartCard();
-                    }
-                    case "GoalCard" -> {
-                            ((GoalCardController) guicontrollers.get("goalCard")).chooseGoalCard();
-                    }
-                    case "NormalTurn"-> {
-                        try {
-                            switchToScene("turn", client.getClient().getDrawableResourceCards(), client.getClient().getDrawableGoldCards() , client.getClient().getCommonGoals(), client.getClient().getHand(), client.getClient().getField(), true);
-                            first_turn=false;
-                        } catch (IOException e) {
-                            System.out.println("turnScene non correttamente inizializzata");
+                    switch (mex) {
+                        case "StartCard" -> {
+                                ((StartCardController) guicontrollers.get("startCard")).chooseStartCard();
+                        }
+                        case "GoalCard" -> {
+                                ((GoalCardController) guicontrollers.get("goalCard")).chooseGoalCard();
+                        }
+                        case "NormalTurn"-> {
+                            try {
+                                switchToScene("turn", client.getClient().getDrawableResourceCards(), client.getClient().getDrawableGoldCards() , client.getClient().getCommonGoals(), client.getClient().getHand(), client.getClient().getField(), true);
+                                first_turn=false;
+                            } catch (IOException e) {
+                                System.out.println("turnScene non correttamente inizializzata");
+                            }
                         }
                     }
-                }
-            });
+                });
             } else {
+            //Non sono sicuro, forse il switch to scene
+                try {
+                    switchToScene("turn", client.getClient().getDrawableResourceCards(), client.getClient().getDrawableGoldCards(), client.getClient().getCommonGoals(), client.getClient().getHand(), client.getClient().getField(), true);
+                } catch (IOException e) {
+                    System.out.println("turnScene non correttamente inizializzata, non turno mio");
+                }
         }
     }
 

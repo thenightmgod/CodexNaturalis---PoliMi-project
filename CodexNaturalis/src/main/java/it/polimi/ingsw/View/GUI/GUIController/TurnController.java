@@ -4,25 +4,34 @@ import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
+import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
 import it.polimi.ingsw.View.GUI.GUIController.ScoreBoard.ScoreBoard;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.awt.event.ActionEvent;
 import java.io.FileNotFoundException;
 import java.util.*;
+import java.rmi.RemoteException;
+import java.util.HashMap;
+import java.util.LinkedList;
 
 public class TurnController extends GUIController{
     @FXML
@@ -36,7 +45,15 @@ public class TurnController extends GUIController{
     @FXML
     private Label messageLabel;
     @FXML
+    private Label myResource;
+    @FXML
+    private Label myGold;
+    @FXML
+    private Label myGoal;
+    @FXML
     private HBox label_button_box;
+    @FXML
+    private Button piazzala;
     @FXML
     private Button myPointsButton;
     @FXML
@@ -74,7 +91,7 @@ public class TurnController extends GUIController{
         loadGoalBox();
         loadMyHand();
         loadmyLabelBox();
-        //plotField();
+        plotField();
         if(myTurn) {
             placeCard();
             points.put("Player1", 0);
@@ -85,61 +102,148 @@ public class TurnController extends GUIController{
         }
     }
 
-
-    private void plotField(){
-
+    public void plotField() {
+        PlayingField field = this.gui.getClient().getClient().getField();
         this.marione.getChildren().clear();
         this.marione.getRowConstraints().clear();
         this.marione.getColumnConstraints().clear();
+        LinkedList<Position> frees = field.getFreePositions();
+
+        int fmaxX = frees.stream().mapToInt(Position::getX).max().orElse(400);
+        int fminX = frees.stream().mapToInt(Position::getX).min().orElse(400);
+        int fmaxY = frees.stream().mapToInt(Position::getY).max().orElse(400);
+        int fminY = frees.stream().mapToInt(Position::getY).min().orElse(400);
 
         int maxX = field.getField().keySet().stream().mapToInt(Position::getX).max().orElse(400);
         int minX = field.getField().keySet().stream().mapToInt(Position::getX).min().orElse(400);
         int maxY = field.getField().keySet().stream().mapToInt(Position::getY).max().orElse(400);
         int minY = field.getField().keySet().stream().mapToInt(Position::getY).min().orElse(400);
 
-        for(int i=0; i< maxX-minX+1; i++){
+        if(maxX < fmaxX) maxX = fmaxX;
+        if(minX > fminX) minX = fminX;
+        if(maxY < fmaxY) maxY = fmaxY;
+        if(minY > fminY) minY = fminY;
+
+        double cellWidth = 210;
+        double cellHeight = 140.0;
+
+        this.marione.setVgap(0);
+        this.marione.setHgap(0);
+
+        for (int i = 0; i < maxX - minX + 1; i++) {
             RowConstraints rowConstraints = new RowConstraints();
-            rowConstraints.setPrefHeight(30);
-            rowConstraints.setPercentHeight(-1);
+            rowConstraints.setMinHeight(cellHeight);
+            rowConstraints.setMaxHeight(cellHeight);
             this.marione.getRowConstraints().add(rowConstraints);
         }
-
-        for(int j=0; j< maxY-minY+1; j++){
+        for (int j = 0; j < maxY - minY + 1; j++) {
             ColumnConstraints columnConstraints = new ColumnConstraints();
-            columnConstraints.setPrefWidth(100);
-            columnConstraints.setPercentWidth(-1);
+            columnConstraints.setMinWidth(cellWidth);
+            columnConstraints.setMaxWidth(cellWidth);
             this.marione.getColumnConstraints().add(columnConstraints);
         }
 
-        for(Position p : field.getField().keySet()){
+        for (Position prato : frees){
+            ImageView imageView = new ImageView();
+            int x = prato.getX() - minX;
+            int y = maxY - prato.getY();
+            Image image = loadImage("/view/MyCodexNaturalisPhotos/freepos.png");
+            imageView.setImage(image);
+            imageView.setFitWidth(cellWidth); // Set the preferred width of the ImageView
+            imageView.setFitHeight(cellHeight);
+            GridPane.setMargin(imageView, new javafx.geometry.Insets(0, 0, 111 * y, -45.94 * x));
+            imageView.setOpacity(0.4);
+            imageView.setPreserveRatio(true);
+            this.marione.add(imageView, x, y);
+            /*imageView.setOnDragOver(event -> {
+                if (event.getDragboard().hasString()) {
+                    event.acceptTransferModes(TransferMode.MOVE);
+                }
+                event.consume();
+            });
+
+            imageView.setOnDragDropped(event -> {
+                Dragboard db = event.getDragboard();
+                boolean success = false;
+                if (db.hasString()) {
+                    // Place the card at the dropped position
+                    try {
+                        client.placeCard(client, Integer.parseInt(db.getString()), prato.getX(), prato.getY(), FB.BACK);
+                        success = true;
+                    } catch (RemoteException e) {
+                        System.out.println("errore nella place card");
+                    }
+                }
+                event.setDropCompleted(success);
+                event.consume();
+            });*/
+        }
+
+        for (Position p : field.getField().keySet()) {
             PlayableCard card = field.getField().get(p);
             ImageView imageView = new ImageView();
             try {
-                int x = p.getX()-minX;
-                int y = maxY- p.getY();
-                Image image = loadCardFrontImage(card.getId());
-                imageView.setImage(image);
-                imageView.setFitWidth(100);
-                imageView.setFitHeight(30);
-                GridPane.setMargin(imageView, new javafx.geometry.Insets(0, 0, 95 * y, -37 * x));
+                int x = p.getX() - minX;
+                int y = maxY - p.getY();
+                if(p.getFace()==FB.BACK) {
+                    Image image = loadCardBackImage(card.getId());
+                    imageView.setImage(image);
+                } else {Image image = loadCardFrontImage(card.getId());
+                    imageView.setImage(image);
+                }
+                imageView.setFitWidth(cellWidth);
+                imageView.setFitHeight(cellHeight);
+                GridPane.setMargin(imageView, new javafx.geometry.Insets(0, 0, 111 * y, -45.94 * x));
                 imageView.setPreserveRatio(true);
                 this.marione.add(imageView, x, y);
             } catch (FileNotFoundException e) {
-                System.out.println("errore nel print playing field");;
+                System.out.println("errore nel print playing field");
             }
         }
     }
 
+
     private void placeCard() {
-        messageLabel.setText("It's your turn! Let's place a card.");
+        messageLabel.setText("IT'S YOUR TURN!");
         messageLabel.setVisible(true);
-        //lo farà LoRI
+
+        for(PlayableCard card : myhand) {
+            for (Node node : myHandBox.getChildren()) {
+                if (node instanceof ImageView) {
+                    ImageView imageView = (ImageView) node;
+                    if (imageView.getImage().getUrl().contains(String.valueOf(card.getId()))) {
+                        imageView.setOnDragDetected(event -> {
+                            Dragboard db = imageView.startDragAndDrop(TransferMode.ANY);
+                            ClipboardContent content = new ClipboardContent();
+                            content.putString(String.valueOf(card.getId()));
+                            db.setContent(content);
+                            db.setDragView(imageView.getImage());
+                            event.consume();
+                        });
+
+                        imageView.setOnDragDone(event -> {
+                           /* if (event.getTransferMode() != TransferMode.MOVE) {
+                                updateHands(myhand);
+                            }
+                            event.consume();*/
+                        });
+                    }
+                }
+            }
+        }
     }
+
+    public void drawCard(){
+        //MOSTRARE CAZZI VARI IN MODO CHE PUOI PESCARE
+    }
+
 
     private void waitMyTurn() {
         messageLabel.setText("Please, wait your turn to place a card");
         messageLabel.setVisible(true);
+        //mettere che posso vedere punti
     }
+
     private void loadmyLabelBox() {
         //aggiungere il bottone dei punteggi
     }
@@ -147,6 +251,8 @@ public class TurnController extends GUIController{
     private void loadResourceBox() {
         resourceBox.setPrefHeight(160.0);
         resourceBox.setPrefWidth(492.0);
+        myResource.setText("DRAWABLE RESOURCECARDS");
+        myResource.setVisible(true);
         double imageViewWidth = (resourceBox.getPrefWidth()-45) / 3.0;
         try {
             for (int i =resourcedeck.size()-1 ; i >=0 ; i--) {
@@ -171,6 +277,8 @@ public class TurnController extends GUIController{
     private void loadGoldBox() {
         goldBox.setPrefHeight(160.0);
         goldBox.setPrefWidth(492.0);
+        myGold.setText("DRAWABLE GOLDCARDS");
+        myGold.setVisible(true);
         double imageViewWidth = (goldBox.getPrefWidth()-45) / 3.0;
 
         try {
@@ -196,6 +304,8 @@ public class TurnController extends GUIController{
     private void loadGoalBox() {
         goalsBox.setPrefHeight(160.0);
         goalsBox.setPrefWidth(492.0);
+        myGoal.setText("GOALCARDS");
+        myGoal.setVisible(true);
         double imageViewWidth = (goalsBox.getPrefWidth()-45) / 3.0;
         try {
             for (int i = commongoals.size()-1 ; i >=0 ; i--) {
@@ -222,6 +332,7 @@ public class TurnController extends GUIController{
             e.printStackTrace();
         }
     }
+
     private void loadMyHand() {
         myHandBox.setPrefHeight(160.0);
         myHandBox.setPrefWidth(492.0);
@@ -294,6 +405,7 @@ public class TurnController extends GUIController{
             }
         });
     }
+
     private void addClickEffect(ImageView imageView) {
         ColorAdjust colorAdjust = new ColorAdjust();
         imageView.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> {
@@ -338,6 +450,7 @@ public class TurnController extends GUIController{
             }
         });
     }
+
     public void updateHands(LinkedList<PlayableCard> hand) {
         myhand=hand;
         loadMyHand();
@@ -386,4 +499,16 @@ public class TurnController extends GUIController{
             }
         }
     }
+
+    public void blabla(javafx.event.ActionEvent actionEvent) throws RemoteException {
+        if (myTurn) {
+            this.gui.first_turn = false;
+            if (!this.gui.getClient().getClient().getHand().isEmpty()) {
+                if (!this.gui.getClient().getClient().getField().getFreePositions().isEmpty()) {
+                    client.placeCard(client, 1, client.getClient().getField().getFreePositions().getFirst().getX(), client.getClient().getField().getFreePositions().getFirst().getY(), FB.BACK);
+                }
+            }
+        }
+    }
+
 }
