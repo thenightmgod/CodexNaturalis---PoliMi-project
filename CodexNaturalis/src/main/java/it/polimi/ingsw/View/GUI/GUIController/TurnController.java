@@ -341,6 +341,7 @@ public class TurnController extends GUIController{
     }
 
     private void loadMyHand() {
+
         myHandBox.getChildren().clear();
         myHandBox.setPrefHeight(160.0);
         myHandBox.setPrefWidth(492.0);
