@@ -27,5 +27,8 @@
     -fx-padding: 10px;
     -fx-spacing: 10px;
 }
+.winnerBackground {
+    -fx-background-image: url("MyCodexNaturalisPhotos/berlusca.jpg");
+}
 
 

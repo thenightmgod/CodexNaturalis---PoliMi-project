@@ -59,11 +59,17 @@ public class GUI implements GameView {
             guicontrollers.put(sceneName, controller);
         }
         primaryStage.setScene(controller.getScene());
-        if(!sceneName.equals("login")){
-            primaryStage.setTitle(client.getName() + "'s " + sceneName);
-        }
-        else{
-            primaryStage.setTitle("Login");
+
+        switch(sceneName) {
+            case "declareWinner" -> {
+                primaryStage.setTitle("FINAL RESULTS");
+            }
+            case "login" -> {
+                primaryStage.setTitle("Login");
+            }
+            default -> {
+                primaryStage.setTitle(client.getName() + "'s " + sceneName);
+            }
         }
         primaryStage.show();
     }
@@ -255,7 +261,13 @@ public class GUI implements GameView {
 
     @Override
     public void declareWinner(LinkedList<String> standings) {
-
+        Platform.runLater( () -> {
+            try {
+                switchToScene("declareWinner", standings);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     @Override
