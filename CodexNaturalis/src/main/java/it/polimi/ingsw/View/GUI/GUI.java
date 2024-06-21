@@ -92,6 +92,10 @@ public class GUI implements GameView {
 
     @Override
     public void updatePoints(HashMap<String, Integer> points, String name) {
+        client.getClient().setPointsCounter(points);
+        Platform.runLater(()-> {
+            ((TurnController)guicontrollers.get("turn")).updatePoints(points);
+        });
     }
 
     @Override
