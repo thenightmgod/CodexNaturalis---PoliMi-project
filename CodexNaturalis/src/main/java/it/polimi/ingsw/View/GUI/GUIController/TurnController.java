@@ -165,6 +165,7 @@ public class TurnController extends GUIController{
             });
 
 
+
             imageView.setOnDragDropped(event -> {
                 Dragboard db = event.getDragboard();
                 boolean success = false;
