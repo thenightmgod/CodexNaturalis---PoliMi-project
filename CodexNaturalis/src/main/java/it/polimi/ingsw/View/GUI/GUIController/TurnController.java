@@ -26,7 +26,6 @@ import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.awt.event.ActionEvent;
 import java.io.FileNotFoundException;
 import java.util.*;
 import java.rmi.RemoteException;
@@ -65,10 +64,8 @@ public class TurnController extends GUIController{
     private LinkedList<PlayableCard> myhand;
     private LinkedHashMap<String,Integer> points = new LinkedHashMap<>();
 
-    private HashMap<PlayerColor, ImageView> placeholders = new HashMap<>();
     private ScoreBoard scoreBoard;
     private PlayingField field;
-    private int Points;
     boolean myTurn;
     boolean isFrontImageLoaded=true;
     boolean revealed;
@@ -94,8 +91,9 @@ public class TurnController extends GUIController{
         plotField();
         if(myTurn) {
             placeCard();
-            points.put("Player1", 0);
-            points.put("Player2", 1);
+            points.put("Player1", 21);
+            points.put("Player2", 21);
+            points.put("Player3", 56);
             scoreBoard = new ScoreBoard(points);
         }else {
             waitMyTurn();
@@ -461,27 +459,29 @@ public class TurnController extends GUIController{
     }
 
     @FXML
-    private void showPointsCounter(ActionEvent event) {
-
+    public void showPointsCounter(ActionEvent event) {
         Stage newStage = new Stage();
         newStage.setTitle("Scoreboard");
 
         AnchorPane scoreboardPane = new AnchorPane();
         Image image = loadImage("/view/MyCodexNaturalisPhotos/plateau.png");
         ImageView scoreboardImage = new ImageView(image);
-        scoreboardImage.setFitWidth(400);
-        scoreboardImage.setFitHeight(600);
+        scoreboardImage.setFitWidth(334);
+        scoreboardImage.setFitHeight(679);
         scoreboardImage.setPreserveRatio(true);
 
         scoreboardPane.getChildren().add(scoreboardImage);
+        //da aggiungere anche il box con la legenda colori
 
-        // Update and add the placeholders to the scoreboardPane
+        AnchorPane.setTopAnchor(scoreboardImage, 15.0);
+        AnchorPane.setLeftAnchor(scoreboardImage, 84.0);
+
         scoreBoard.updatePlaceholders();
         for (ImageView placeholder : scoreBoard.getPlaceholders().values()) {
             scoreboardPane.getChildren().add(placeholder);
         }
 
-        Scene scoreboardScene = new Scene(scoreboardPane, 700, 700);
+        Scene scoreboardScene = new Scene(scoreboardPane, 735, 700);
         newStage.setScene(scoreboardScene);
         newStage.initModality(Modality.WINDOW_MODAL);
         newStage.initOwner(stage);
