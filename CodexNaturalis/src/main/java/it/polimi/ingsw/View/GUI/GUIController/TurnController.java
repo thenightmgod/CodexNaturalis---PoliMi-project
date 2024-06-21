@@ -68,6 +68,7 @@ public class TurnController extends GUIController{
     boolean isFrontImageLoaded=true;
     boolean revealed;
     boolean updatedPoints=false;
+    LinkedList<Boolean> omar = new LinkedList<>();
 
 
     @Override
@@ -82,6 +83,9 @@ public class TurnController extends GUIController{
     }
 
     private void loadAllArgs() {
+        for(int i=0; i<2; i++){
+            this.omar.add(i, true);
+        }
         loadResourceBox();
         loadGoldBox();
         loadGoalBox();
@@ -168,7 +172,11 @@ public class TurnController extends GUIController{
                     try {
                         int cardIndex = Integer.parseInt(db.getString());
                         this.gui.setFirst_turn(false);
-                        client.placeCard(client, cardIndex, prato.getX() , prato.getY(), FB.BACK);
+                        FB face = FB.FRONT;
+                        if(!omar.get(cardIndex - 1)){
+                            face = FB.BACK;
+                        }
+                        client.placeCard(client, cardIndex, prato.getX() , prato.getY(), face);
                         success = true;
                     } catch (RemoteException e) {
                         System.out.println("Error in place card");
@@ -212,7 +220,7 @@ public class TurnController extends GUIController{
         loadGoldBox();
     }
 
-    private void isYourTurn() {
+    public void isYourTurn() {
         messageLabel.setText("IT'S YOUR TURN!");
         messageLabel.setVisible(true);
 
@@ -541,10 +549,20 @@ public class TurnController extends GUIController{
             try {
                 if (isFrontImageLoaded) {
                     Image flippedImage = loadCardBackImage(cardId);
+                    for(int i=0; i<myhand.size(); i++){
+                        if(myhand.get(i).getId()==cardId){
+                            omar.add(i, false);
+                        }
+                    }
                     imageView.setImage(flippedImage);
                     isFrontImageLoaded = false;
                 } else {
                     Image frontImage = loadCardFrontImage(cardId);
+                    for(int i=0; i<myhand.size(); i++) {
+                        if (myhand.get(i).getId() == cardId) {
+                            omar.add(i, true);
+                        }
+                    }
                     imageView.setImage(frontImage);
                     isFrontImageLoaded = true;
                 }

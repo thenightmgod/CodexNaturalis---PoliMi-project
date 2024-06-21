@@ -211,6 +211,7 @@ public class GUI implements GameView {
                                 if(first_turn) {
                                     switchToScene("turn", client.getClient().getDrawableResourceCards(), client.getClient().getDrawableGoldCards() , client.getClient().getCommonGoals(), client.getClient().getHand(), client.getClient().getField(), true);
                                 }
+                                else ((TurnController) guicontrollers.get("turn")).isYourTurn();
                                 first_turn=false;
                             } catch (IOException e) {
                                 System.out.println("turnScene non correttamente inizializzata");
