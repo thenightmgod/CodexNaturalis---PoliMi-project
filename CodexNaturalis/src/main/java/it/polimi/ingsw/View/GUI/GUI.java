@@ -218,13 +218,6 @@ public class GUI implements GameView {
                         }
                     }
                 });
-            } else {
-            //Non sono sicuro, forse il switch to scene
-                try {
-                    switchToScene("turn", client.getClient().getDrawableResourceCards(), client.getClient().getDrawableGoldCards(), client.getClient().getCommonGoals(), client.getClient().getHand(), client.getClient().getField(), true);
-                } catch (IOException e) {
-                    System.out.println("turnScene non correttamente inizializzata, non turno mio");
-                }
         }
     }
 
