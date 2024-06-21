@@ -83,9 +83,9 @@ public class TurnController extends GUIController{
     }
 
     private void loadAllArgs() {
-        for(int i=0; i<2; i++){
-            this.omar.add(i, true);
-        }
+//        for(int i=0; i<2; i++){
+//            this.omar.add(i, true);
+        //        }
         loadResourceBox();
         loadGoldBox();
         loadGoalBox();
@@ -177,6 +177,7 @@ public class TurnController extends GUIController{
                             face = FB.BACK;
                         }
                         client.placeCard(client, cardIndex, prato.getX() , prato.getY(), face);
+                        omar.clear();
                         success = true;
                     } catch (RemoteException e) {
                         System.out.println("Error in place card");
@@ -442,6 +443,8 @@ public class TurnController extends GUIController{
     }
 
     private void loadMyHand() {
+        for(int i = 0; i < 3; i++)
+            this.omar.add(i, true);
 
         myHandBox.getChildren().clear();
         myHandBox.setPrefHeight(160.0);
