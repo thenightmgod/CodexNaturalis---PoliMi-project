@@ -127,7 +127,6 @@ public class GUI implements GameView {
 
     @Override
     public void updateHands(LinkedList<PlayableCard> hand, String name) {
-
         client.getClient().setHand(hand);
         if(!first_turn) {
             Platform.runLater(() -> {

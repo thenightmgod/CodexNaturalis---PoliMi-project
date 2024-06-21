@@ -9,6 +9,9 @@ import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
 import it.polimi.ingsw.View.GUI.GUIController.ScoreBoard.ScoreBoard;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -22,6 +25,7 @@ import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -94,10 +98,6 @@ public class TurnController extends GUIController{
         plotField();
         if(myTurn) {
             isYourTurn();
-            points.put("Player1", 21);
-            points.put("Player2", 21);
-            points.put("Player3", 56);
-            scoreBoard = new ScoreBoard(points);
         }else {
             waitMyTurn();
         }
@@ -163,6 +163,7 @@ public class TurnController extends GUIController{
                 }
                 event.consume();
             });
+
 
 
             imageView.setOnDragDropped(event -> {
@@ -258,58 +259,42 @@ public class TurnController extends GUIController{
 
         for (int i = 0; i < resourceBox.getChildren().size(); i++) {
             ImageView imageView = (ImageView) resourceBox.getChildren().get(i);
-            addDrawEffect(imageView,1);
+            int indexCard= getIndexInHBox(imageView, 1);
+            addDrawEffect(imageView,1, indexCard);
         }
         for (int i = 0; i < goldBox.getChildren().size(); i++) {
             ImageView imageView = (ImageView) goldBox.getChildren().get(i);
-            addDrawEffect(imageView, 2);
+            int indexCard= getIndexInHBox(imageView, 2);
+            addDrawEffect(imageView, 2, indexCard);
         }
-   /* for (int i = 0; i < resourceBox.getChildren().size(); i++) {
-        ImageView imageView = (ImageView) resourceBox.getChildren().get(i);
-        Timeline timeline = new Timeline(
-                    new KeyFrame(Duration.seconds(2), new KeyValue(imageView.opacityProperty(), 8.0))
-            );
-            timeline.setCycleCount(1);
-            timeline.play();
-    }
-    for (int i = 0; i < resourceBox.getChildren().size(); i++) {
-        ImageView imageView = (ImageView) resourceBox.getChildren().get(i);
-            Timeline timeline = new Timeline(
-                    new KeyFrame(Duration.seconds(2), new KeyValue(imageView.opacityProperty(), 8.0))
-            );
-            timeline.setCycleCount(1);
-            timeline.play();
-    }*/
-
     }
 
-    private void addDrawEffect(ImageView image, int i) {
+    private void addDrawEffect(ImageView image, int deck, int index) {
         image.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            int indexCard= getIndexInHBox(image, i);
             try {
-                client.drawCard(indexCard,i, this.client);
+                client.drawCard(deck, index, this.client);
             } catch (RemoteException e) {
                 System.out.println("Errore nel draw card");
             }
             removeDrawEffect();
-            messageLabel.setText("");
+            messageLabel.setText("Well done.");
         });
     }
 
     public void waitYourTurn(){}
 
-    private int getIndexInHBox(ImageView image, int i) {
-        if (i==1) {
+    private int getIndexInHBox(ImageView image, int deck) {
+        if (deck==1) {
             int index = resourceBox.getChildren().indexOf(image);
             int numChildren = resourceBox.getChildren().size();
 
             if (index >= 0) {
                 if (index == numChildren - 1) {
-                    return 1;
+                    return 1; //ultima2 immagine a dx
                 } else if (index == numChildren - 2) {
-                    return 2;
+                    return 2; //immagine in mezzo
                 } else if (index == numChildren - 3) {
-                    return 3;
+                    return 3; //immagine a sx
                 }
             }
         } else {
@@ -317,12 +302,12 @@ public class TurnController extends GUIController{
             int numChildren = goldBox.getChildren().size();
 
             if (index >= 0) {
-                if (index == numChildren - 1) {
+                if (index == numChildren - 1) { //ultima immagine a dx
                     return 1;
                 } else if (index == numChildren - 2) {
-                    return 2;
+                    return 2; //seconda immagine centrale
                 } else if (index == numChildren - 3) {
-                    return 3;
+                    return 3; //prima immagine da sx
                 }
             }
         }
