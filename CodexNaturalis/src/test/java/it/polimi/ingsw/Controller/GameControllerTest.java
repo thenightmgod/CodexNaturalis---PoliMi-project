@@ -37,7 +37,7 @@ class GameControllerTest {
             }
 
             @Override
-            public void notYourTurn(Player turn) throws RemoteException {
+            public void notYourTurn(Player turn, String mex) throws RemoteException {
 
             }
 
@@ -102,7 +102,7 @@ class GameControllerTest {
             }
 
             @Override
-            public void startingGame(Player p) throws RemoteException {
+            public void startingGame(Player p, LinkedList<Player> players) throws RemoteException {
 
             }
 
@@ -148,7 +148,7 @@ class GameControllerTest {
             }
 
             @Override
-            public void notYourTurn(Player turn) throws RemoteException {
+            public void notYourTurn(Player turn, String mex) throws RemoteException {
 
             }
 
@@ -213,7 +213,7 @@ class GameControllerTest {
             }
 
             @Override
-            public void startingGame(Player p) throws RemoteException {
+            public void startingGame(Player p, LinkedList<Player> players) throws RemoteException {
 
             }
 
@@ -259,7 +259,7 @@ class GameControllerTest {
             }
 
             @Override
-            public void notYourTurn(Player turn) throws RemoteException {
+            public void notYourTurn(Player turn, String mex) throws RemoteException {
 
             }
 
@@ -324,7 +324,7 @@ class GameControllerTest {
             }
 
             @Override
-            public void startingGame(Player p) throws RemoteException {
+            public void startingGame(Player p, LinkedList<Player> players) throws RemoteException {
 
             }
 
@@ -370,7 +370,7 @@ class GameControllerTest {
             }
 
             @Override
-            public void notYourTurn(Player turn) throws RemoteException {
+            public void notYourTurn(Player turn, String mex) throws RemoteException {
 
             }
 
@@ -435,7 +435,7 @@ class GameControllerTest {
             }
 
             @Override
-            public void startingGame(Player p) throws RemoteException {
+            public void startingGame(Player p, LinkedList<Player> players) throws RemoteException {
 
             }
 

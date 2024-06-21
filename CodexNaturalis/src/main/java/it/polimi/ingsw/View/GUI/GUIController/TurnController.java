@@ -494,6 +494,22 @@ public class TurnController extends GUIController{
             newStage.setTitle("Scoreboard");
 
             AnchorPane scoreboardPane = new AnchorPane();
+            VBox vbox = new VBox();
+            scoreboardPane.getChildren().add(vbox);
+            vbox.setPrefWidth(500);
+            vbox.setPrefHeight(300);
+            AnchorPane.setTopAnchor(vbox, 300.0);
+            AnchorPane.setLeftAnchor(vbox, 450.0);
+            PlayerColor[] playerColors = PlayerColor.values();
+            LinkedList<String> playersName = new LinkedList<>();
+            for(String key : points.keySet()){
+                playersName.add(key);
+            }
+            for(int i=0; i< points.size(); i++){
+                PlayerColor color = playerColors[i];
+                HBox hbox1 = createHbox("/view/MyCodexNaturalisPhotos/CODEX_pion_" + color.name().toLowerCase() + ".png", playersName.get(i));
+                vbox.getChildren().add(hbox1);
+            }
             Image image = loadImage("/view/MyCodexNaturalisPhotos/plateau.png");
             ImageView scoreboardImage = new ImageView(image);
             scoreboardImage.setFitWidth(334);
@@ -520,6 +536,19 @@ public class TurnController extends GUIController{
         }else {
             return;
         }
+    }
+
+    private HBox createHbox(String imagePath, String labelText){
+        ImageView image = new ImageView(loadImage(imagePath));
+        image.setFitWidth(50);  // Set appropriate width
+        image.setFitHeight(50); // Set appropriate height
+        image.setPreserveRatio(true);
+
+        Label label = new Label(labelText);
+        label.setStyle("-fx-text-fill: black; -fx-tick-label-font: 50px Weibei TC Bold;");
+        HBox hbox = new HBox(10); // Spaziatura tra ImageView e Label
+        hbox.getChildren().addAll(image, label);
+        return hbox;
     }
 
 

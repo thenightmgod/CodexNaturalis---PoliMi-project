@@ -149,9 +149,10 @@ public interface VirtualView extends Remote {
      * Notifies this client that the game is starting.
      *
      * @param p The player who is starting the game.
+     * @param otherPlayers The other players in the same room.
      * @throws RemoteException If a remote access error occurs.
      */
-    void startingGame(Player p) throws RemoteException;
+    void startingGame(Player p, LinkedList<Player> otherPlayers) throws RemoteException;
 
     /**
      * Notifies this client that the game is in the last round.

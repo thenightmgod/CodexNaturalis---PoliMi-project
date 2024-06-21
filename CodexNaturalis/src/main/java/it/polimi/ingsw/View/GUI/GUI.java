@@ -249,7 +249,7 @@ public class GUI implements GameView {
     }
 
     @Override
-    public void startingGame() throws RemoteException {
+    public void startingGame(LinkedList<Player> players) throws RemoteException {
         Platform.runLater(() -> {
             try {
                 switchToScene("startCard", 1);
