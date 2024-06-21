@@ -88,7 +88,7 @@ public class Room implements Serializable {
      * Sets the flag indicating whether the game has reached the twenty points threshold.
      */
     public void setTwentyFlag() {
-        if(turn.getPointsCounter()>=1)
+        if(turn.getPointsCounter()>=20)
             this.twenty = true;
         if(twenty && !lastRound)
             if(turn.getPointsCounter()>=1)
