@@ -305,9 +305,9 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
      * @param p The player who is starting the game.
      */
     @Override
-    public void startingGame(Player p) {
+    public void startingGame(Player p, LinkedList<Player> otherPlayers) {
         try {
-            this.view.startingGame();
+            this.view.startingGame(otherPlayers);
         } catch (RemoteException ignored) {}
     }
 
