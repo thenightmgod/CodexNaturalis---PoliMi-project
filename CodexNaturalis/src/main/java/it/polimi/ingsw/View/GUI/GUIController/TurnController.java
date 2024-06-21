@@ -9,9 +9,6 @@ import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
 import it.polimi.ingsw.View.GUI.GUIController.ScoreBoard.ScoreBoard;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -25,7 +22,6 @@ import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -71,7 +67,6 @@ public class TurnController extends GUIController{
     boolean myTurn;
     boolean isFrontImageLoaded=true;
     boolean revealed;
-    boolean updatedPoints=false;
 
 
     @Override
@@ -94,6 +89,10 @@ public class TurnController extends GUIController{
         plotField();
         if(myTurn) {
             isYourTurn();
+            points.put("Player1", 21);
+            points.put("Player2", 21);
+            points.put("Player3", 56);
+            scoreBoard = new ScoreBoard(points);
         }else {
             waitMyTurn();
         }
@@ -160,6 +159,8 @@ public class TurnController extends GUIController{
                 event.consume();
             });
 
+            int finalMinX = minX;
+            int finalMaxY = maxY;
             imageView.setOnDragDropped(event -> {
                 Dragboard db = event.getDragboard();
                 boolean success = false;
@@ -167,7 +168,7 @@ public class TurnController extends GUIController{
                     try {
                         int cardIndex = Integer.parseInt(db.getString());
                         this.gui.setFirst_turn(false);
-                        client.placeCard(client, cardIndex, prato.getX(), prato.getY(), FB.BACK);
+                        client.placeCard(client, cardIndex, prato.getX() /*+ finalMinX*/, /*finalMaxY - */prato.getY(), FB.BACK);
                         success = true;
                     } catch (RemoteException e) {
                         System.out.println("Error in place card");
@@ -255,88 +256,9 @@ public class TurnController extends GUIController{
     }
 
     public void drawCard(){
-        messageLabel.setText("Now, draw a card!");
-        messageLabel.setVisible(true);
-
-       /* for (int i = 0; i < resourceBox.getChildren().size(); i++) {
-            ImageView imageView = (ImageView) resourceBox.getChildren().get(i);
-            Timeline timeline = new Timeline(
-                        new KeyFrame(Duration.seconds(2), new KeyValue(imageView.opacityProperty(), 8.0))
-                );
-                timeline.setCycleCount(1);
-                timeline.play();
-        }
-        for (int i = 0; i < resourceBox.getChildren().size(); i++) {
-            ImageView imageView = (ImageView) resourceBox.getChildren().get(i);
-                Timeline timeline = new Timeline(
-                        new KeyFrame(Duration.seconds(2), new KeyValue(imageView.opacityProperty(), 8.0))
-                );
-                timeline.setCycleCount(1);
-                timeline.play();
-        }*/
-        for (int i = 0; i < resourceBox.getChildren().size(); i++) {
-            ImageView imageView = (ImageView) resourceBox.getChildren().get(i);
-            addDrawEffect(imageView,1);
-        }
-        for (int i = 0; i < goldBox.getChildren().size(); i++) {
-            ImageView imageView = (ImageView) goldBox.getChildren().get(i);
-            addDrawEffect(imageView, 2);
-        }
-    }
-    private void addDrawEffect(ImageView image, int i) {
-        image.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            int indexCard= getIndexInHBox(image, i);
-            try {
-                client.drawCard(indexCard,i, this.client);
-            } catch (RemoteException e) {
-                System.out.println("Errore nel draw card");
-            }
-            removeDrawEffect();
-            messageLabel.setText("");
-        });
+        //MOSTRARE CAZZI VARI IN MODO CHE PUOI PESCARE
     }
 
-    private int getIndexInHBox(ImageView image, int i) {
-        if (i==1) {
-            int index = resourceBox.getChildren().indexOf(image);
-            int numChildren = resourceBox.getChildren().size();
-
-            if (index >= 0) {
-                if (index == numChildren - 1) {
-                    return 1;
-                } else if (index == numChildren - 2) {
-                    return 2;
-                } else if (index == numChildren - 3) {
-                    return 3;
-                }
-            }
-        } else {
-            int index = goldBox.getChildren().indexOf(image);
-            int numChildren = goldBox.getChildren().size();
-
-            if (index >= 0) {
-                if (index == numChildren - 1) {
-                    return 1;
-                } else if (index == numChildren - 2) {
-                    return 2;
-                } else if (index == numChildren - 3) {
-                    return 3;
-                }
-            }
-        }
-        return 0;
-    }
-
-    private void removeDrawEffect() {
-        for (int i = 0; i < resourceBox.getChildren().size(); i++) {
-            ImageView imageView = (ImageView) resourceBox.getChildren().get(i);
-            imageView.setOnMouseClicked(null);
-        }
-        for (int i = 0; i < goldBox.getChildren().size(); i++) {
-            ImageView imageView = (ImageView) goldBox.getChildren().get(i);
-            imageView.setOnMouseClicked(null);
-        }
-    }
 
     private void waitMyTurn() {
         messageLabel.setText("Please, wait your turn to place a card");
@@ -560,48 +482,39 @@ public class TurnController extends GUIController{
         loadMyHand();
     }
     public void updatePoints(HashMap<String, Integer> points) {
-        if (points != null) {
-            this.points = new LinkedHashMap<>(points);
-            this.scoreBoard = new ScoreBoard(this.points);
-            this.updatedPoints = true;
-        } else {
-            throw new IllegalArgumentException("Points map cannot be null");
-        }
+        this.points=(LinkedHashMap<String, Integer>) points;
+        this.scoreBoard=new ScoreBoard(this.points);
     }
 
     @FXML
     public void showPointsCounter(ActionEvent event) {
-        if (updatedPoints) {
-            Stage newStage = new Stage();
-            newStage.setTitle("Scoreboard");
+        Stage newStage = new Stage();
+        newStage.setTitle("Scoreboard");
 
-            AnchorPane scoreboardPane = new AnchorPane();
-            Image image = loadImage("/view/MyCodexNaturalisPhotos/plateau.png");
-            ImageView scoreboardImage = new ImageView(image);
-            scoreboardImage.setFitWidth(334);
-            scoreboardImage.setFitHeight(679);
-            scoreboardImage.setPreserveRatio(true);
+        AnchorPane scoreboardPane = new AnchorPane();
+        Image image = loadImage("/view/MyCodexNaturalisPhotos/plateau.png");
+        ImageView scoreboardImage = new ImageView(image);
+        scoreboardImage.setFitWidth(334);
+        scoreboardImage.setFitHeight(679);
+        scoreboardImage.setPreserveRatio(true);
 
-            scoreboardPane.getChildren().add(scoreboardImage);
+        scoreboardPane.getChildren().add(scoreboardImage);
+        //da aggiungere anche il box con la legenda colori
 
-            AnchorPane.setTopAnchor(scoreboardImage, 15.0);
-            AnchorPane.setLeftAnchor(scoreboardImage, 84.0);
+        AnchorPane.setTopAnchor(scoreboardImage, 15.0);
+        AnchorPane.setLeftAnchor(scoreboardImage, 84.0);
 
-
-            scoreBoard.updatePlaceholders();
-            for (ImageView placeholder : scoreBoard.getPlaceholders().values()) {
-                scoreboardPane.getChildren().add(placeholder);
-            }
-
-            Scene scoreboardScene = new Scene(scoreboardPane, 735, 700);
-            newStage.setScene(scoreboardScene);
-            newStage.initModality(Modality.WINDOW_MODAL);
-            newStage.initOwner(stage);
-            newStage.setResizable(false);
-            newStage.show();
-        }else {
-            return;
+        scoreBoard.updatePlaceholders();
+        for (ImageView placeholder : scoreBoard.getPlaceholders().values()) {
+            scoreboardPane.getChildren().add(placeholder);
         }
+
+        Scene scoreboardScene = new Scene(scoreboardPane, 735, 700);
+        newStage.setScene(scoreboardScene);
+        newStage.initModality(Modality.WINDOW_MODAL);
+        newStage.initOwner(stage);
+        newStage.setResizable(false);
+        newStage.show();
     }
 
 
