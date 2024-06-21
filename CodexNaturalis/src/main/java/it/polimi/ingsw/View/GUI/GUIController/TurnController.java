@@ -83,9 +83,9 @@ public class TurnController extends GUIController{
     }
 
     private void loadAllArgs() {
-//        for(int i=0; i<2; i++){
-//            this.omar.add(i, true);
-        //        }
+        for(int i=0; i<3; i++){
+            this.omar.add(i, true);
+               }
         loadResourceBox();
         loadGoldBox();
         loadGoalBox();
@@ -178,7 +178,6 @@ public class TurnController extends GUIController{
                             face = FB.BACK;
                         }
                         client.placeCard(client, cardIndex, prato.getX() , prato.getY(), face);
-                        omar.clear();
                         success = true;
                     } catch (RemoteException e) {
                         System.out.println("Error in place card");
@@ -226,8 +225,8 @@ public class TurnController extends GUIController{
         messageLabel.setText("IT'S YOUR TURN!");
         messageLabel.setVisible(true);
 
-        for(int cardIndex = 0; cardIndex < myhand.size(); cardIndex++) {
-            PlayableCard card = myhand.get(cardIndex);
+        for(int cardIndex = 0; cardIndex < this.gui.getClient().getClient().getHand().size(); cardIndex++) {
+            PlayableCard card = this.gui.getClient().getClient().getHand().get(cardIndex);
             for (Node node : myHandBox.getChildren()) {
                 if (node instanceof ImageView) {
                     ImageView imageView = (ImageView) node;
@@ -429,14 +428,14 @@ public class TurnController extends GUIController{
 
     private void loadMyHand() {
         for(int i = 0; i < 3; i++)
-            this.omar.add(i, true);
+            this.omar.set(i, true);
 
         myHandBox.getChildren().clear();
         myHandBox.setPrefHeight(160.0);
         myHandBox.setPrefWidth(492.0);
         double imageViewWidth = (myHandBox.getPrefWidth()-45) / 3.0;
         try {
-            for (PlayableCard card : myhand) {
+            for (PlayableCard card : this.gui.getClient().getClient().getHand()) {
                 Image image;
                 image = loadCardFrontImage(card.getId());
                 ImageView imageView = new ImageView(image);
@@ -537,31 +536,36 @@ public class TurnController extends GUIController{
             try {
                 if (isFrontImageLoaded) {
                     Image flippedImage = loadCardBackImage(cardId);
-                    for(int i=0; i<myhand.size(); i++){
-                        if(myhand.get(i).getId()==cardId){
-                            omar.add(i, false);
+                    for(int i=0; i<this.gui.getClient().getClient().getHand().size(); i++){
+                        if(this.gui.getClient().getClient().getHand().get(i).getId()==cardId){
+                            omar.set(i, false);
                         }
                     }
                     imageView.setImage(flippedImage);
                     isFrontImageLoaded = false;
                 } else {
                     Image frontImage = loadCardFrontImage(cardId);
-                    for(int i=0; i<myhand.size(); i++) {
-                        if (myhand.get(i).getId() == cardId) {
-                            omar.add(i, true);
+                    for(int i=0; i<this.gui.getClient().getClient().getHand().size(); i++) {
+                        if (this.gui.getClient().getClient().getHand().get(i).getId() == cardId) {
+                            omar.set(i, true);
                         }
                     }
                     imageView.setImage(frontImage);
                     isFrontImageLoaded = true;
                 }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+            } catch (FileNotFoundException ignored) {
+                System.out.println("boh");
+            } catch (IndexOutOfBoundsException e){
+                System.out.println("IndexOutOfBoundsException in setmyHandinteraction");
+                System.out.println("myhand size: " + this.gui.getClient().getClient().getHand().size());
+                System.out.println("omar size: " + omar.size());
+                System.out.println("cardId: " + cardId);
             }
         });
     }
 
     public void updateHands(LinkedList<PlayableCard> hand) {
-        myhand=hand;
+        myhand = hand;
         loadMyHand();
     }
     public void updatePoints(HashMap<String, Integer> points) {
