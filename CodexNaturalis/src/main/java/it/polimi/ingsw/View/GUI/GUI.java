@@ -33,8 +33,11 @@ public class GUI implements GameView {
     private Player Turn;
     private CommonClient client;
     private String[] args;
-    public boolean first_turn=true;
+    public boolean first_turn = true;
 
+    public void setFirst_turn(boolean first_turn) {
+        this.first_turn = first_turn;
+    }
 
     //-------METODI DEI CONTROLLER---------------------------
     public void start(String[] args, Stage stage) throws IOException {
