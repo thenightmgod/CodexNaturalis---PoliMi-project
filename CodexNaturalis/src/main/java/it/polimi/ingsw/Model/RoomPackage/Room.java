@@ -91,7 +91,7 @@ public class Room implements Serializable {
         if(turn.getPointsCounter()>=20)
             this.twenty = true;
         if(twenty && !lastRound)
-            if(turn.getPointsCounter()>=1)
+            if(turn.getPointsCounter()>=20)
                 observerManager.twenty(turn.getName());
     }
     /**
