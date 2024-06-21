@@ -56,7 +56,7 @@
            <children>
                <Pane prefHeight="193.0" prefWidth="515.0">
                    <children>
-                       <Button fx:id="myPointsButton" layoutX="15.0" layoutY="89.0" mnemonicParsing="false" onAction="#showPointsCounter" prefHeight="47.0" prefWidth="146.0" text="view scoreboard" />
+                       <Button fx:id="myPointsButton" styleClass="button-submit" layoutX="15.0" layoutY="89.0" mnemonicParsing="false" onAction="#showPointsCounter" prefHeight="47.0" prefWidth="146.0" text="view scoreboard" />
                        <Label fx:id="messageLabel" layoutX="15.0" layoutY="8.0" style="-fx-background-color: rgba(0,255,0,0.3);" text="YOUR MESSAGE HERE" textFill="#fffbfb">
                      <font>
                         <Font name="Weibei TC Bold" size="20.0" />
@@ -65,7 +65,4 @@
                </Pane>
            </children>
        </HBox>
-       <children>
-           <Button fx:id="piazzala" mnemonicParsing="false" onAction="#blabla" text="Button" />
-       </children>
 </AnchorPane>
