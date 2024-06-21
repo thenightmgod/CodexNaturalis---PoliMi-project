@@ -386,6 +386,7 @@ public class TurnController extends GUIController{
         VBox parent = (VBox) goalsBox.getParent();  // Assumiamo che goalsBox sia contenuto in un StackPane
         parent.getChildren().add(label);
         label.setVisible(false);
+        label.setStyle("-fx-text-fill: white; -fx-tick-label-font: 16px Weibei TC Bold;");
         imageView.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> {
             if(!revealed) {
                 label.setText("Click to reveal your secret goal card!");
