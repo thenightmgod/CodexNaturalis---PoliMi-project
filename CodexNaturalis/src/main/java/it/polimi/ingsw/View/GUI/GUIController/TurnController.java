@@ -5,10 +5,14 @@ import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
+import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
+import it.polimi.ingsw.View.GUI.GUIController.ScoreBoard.ScoreBoard;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.ColorAdjust;
@@ -19,9 +23,11 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.*;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
-import java.awt.event.ActionEvent;
 import java.io.FileNotFoundException;
+import java.util.*;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -38,6 +44,12 @@ public class TurnController extends GUIController{
     @FXML
     private Label messageLabel;
     @FXML
+    private Label myResource;
+    @FXML
+    private Label myGold;
+    @FXML
+    private Label myGoal;
+    @FXML
     private HBox label_button_box;
     @FXML
     private Button piazzala;
@@ -45,10 +57,14 @@ public class TurnController extends GUIController{
     private Button myPointsButton;
     @FXML
     private GridPane marione;
+    private AnchorPane anchorPane;
     private LinkedList<GoalCard> commongoals;
     private LinkedList<GoldCard> golddeck;
     private LinkedList<ResourceCard> resourcedeck = new LinkedList<>();
     private LinkedList<PlayableCard> myhand;
+    private LinkedHashMap<String,Integer> points = new LinkedHashMap<>();
+
+    private ScoreBoard scoreBoard;
     private PlayingField field;
     boolean myTurn;
     boolean isFrontImageLoaded=true;
@@ -75,6 +91,10 @@ public class TurnController extends GUIController{
         plotField();
         if(myTurn) {
             placeCard();
+            points.put("Player1", 21);
+            points.put("Player2", 21);
+            points.put("Player3", 56);
+            scoreBoard = new ScoreBoard(points);
         }else {
             waitMyTurn();
         }
@@ -229,6 +249,8 @@ public class TurnController extends GUIController{
     private void loadResourceBox() {
         resourceBox.setPrefHeight(160.0);
         resourceBox.setPrefWidth(492.0);
+        myResource.setText("DRAWABLE RESOURCECARDS");
+        myResource.setVisible(true);
         double imageViewWidth = (resourceBox.getPrefWidth()-45) / 3.0;
         try {
             for (int i =resourcedeck.size()-1 ; i >=0 ; i--) {
@@ -253,6 +275,8 @@ public class TurnController extends GUIController{
     private void loadGoldBox() {
         goldBox.setPrefHeight(160.0);
         goldBox.setPrefWidth(492.0);
+        myGold.setText("DRAWABLE GOLDCARDS");
+        myGold.setVisible(true);
         double imageViewWidth = (goldBox.getPrefWidth()-45) / 3.0;
 
         try {
@@ -278,6 +302,8 @@ public class TurnController extends GUIController{
     private void loadGoalBox() {
         goalsBox.setPrefHeight(160.0);
         goalsBox.setPrefWidth(492.0);
+        myGoal.setText("GOALCARDS");
+        myGoal.setVisible(true);
         double imageViewWidth = (goalsBox.getPrefWidth()-45) / 3.0;
         try {
             for (int i = commongoals.size()-1 ; i >=0 ; i--) {
@@ -427,6 +453,42 @@ public class TurnController extends GUIController{
         myhand=hand;
         loadMyHand();
     }
+    public void updatePoints(HashMap<String, Integer> points) {
+        this.points=(LinkedHashMap<String, Integer>) points;
+        this.scoreBoard=new ScoreBoard(this.points);
+    }
+
+    @FXML
+    public void showPointsCounter(ActionEvent event) {
+        Stage newStage = new Stage();
+        newStage.setTitle("Scoreboard");
+
+        AnchorPane scoreboardPane = new AnchorPane();
+        Image image = loadImage("/view/MyCodexNaturalisPhotos/plateau.png");
+        ImageView scoreboardImage = new ImageView(image);
+        scoreboardImage.setFitWidth(334);
+        scoreboardImage.setFitHeight(679);
+        scoreboardImage.setPreserveRatio(true);
+
+        scoreboardPane.getChildren().add(scoreboardImage);
+        //da aggiungere anche il box con la legenda colori
+
+        AnchorPane.setTopAnchor(scoreboardImage, 15.0);
+        AnchorPane.setLeftAnchor(scoreboardImage, 84.0);
+
+        scoreBoard.updatePlaceholders();
+        for (ImageView placeholder : scoreBoard.getPlaceholders().values()) {
+            scoreboardPane.getChildren().add(placeholder);
+        }
+
+        Scene scoreboardScene = new Scene(scoreboardPane, 735, 700);
+        newStage.setScene(scoreboardScene);
+        newStage.initModality(Modality.WINDOW_MODAL);
+        newStage.initOwner(stage);
+        newStage.setResizable(false);
+        newStage.show();
+    }
+
 
     public void showException(String exception) {
         switch (exception) {

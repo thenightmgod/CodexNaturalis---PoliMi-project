@@ -5,38 +5,33 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
 
 public class ScoreBoard {
     private LinkedHashMap<String, Integer> points;
     private HashMap<PlayerColor, ImageView> placeholders;
+    private Set<ScoreBoardPosition> occupiedPositions;  // Set to track occupied positions
 
     public ScoreBoard(LinkedHashMap<String, Integer> points) {
         this.points = points;
         this.placeholders = createPlaceholders();
+        this.occupiedPositions = new HashSet<>();
         updatePlaceholders();
     }
 
     private HashMap<PlayerColor, ImageView> createPlaceholders() {
         HashMap<PlayerColor, ImageView> placeholders = new HashMap<>();
-
-
         int numPlayers = points.size();
         PlayerColor[] playerColors = PlayerColor.values();
 
-        // Create placeholders for the number of players
         for (int i = 0; i < numPlayers; i++) {
             PlayerColor color = playerColors[i];
             ImageView placeholder = new ImageView(loadImage("/view/MyCodexNaturalisPhotos/CODEX_pion_" + color.name().toLowerCase() + ".png"));
-            placeholder.setFitWidth(30);  // Set appropriate width
-            placeholder.setFitHeight(30); // Set appropriate height
+            placeholder.setFitWidth(50);  // Set appropriate width
+            placeholder.setFitHeight(50); // Set appropriate height
             placeholder.setPreserveRatio(true);
             placeholders.put(color, placeholder);
         }
-
         return placeholders;
     }
 
@@ -48,23 +43,79 @@ public class ScoreBoard {
         }
         return new Image(resourceUrl.toString());
     }
+
     private List<ScoreBoardPosition> generatePositions() {
         List<ScoreBoardPosition> positions = new ArrayList<>();
-        // Esempio di posizioni, devono essere precise e basate sul tuo layout
-        positions.add(new ScoreBoardPosition(85, 531));  // Posizione 0
-        positions.add(new ScoreBoardPosition(155, 529)); // Posizione 1
-        // ... aggiungi tutte le posizioni fino a 29
+        positions.add(new ScoreBoardPosition(145, 612));  // position 0
+        positions.add(new ScoreBoardPosition(225, 621));  // position 1
+        positions.add(new ScoreBoardPosition(307, 612));
+        positions.add(new ScoreBoardPosition(340,543));
+        positions.add(new ScoreBoardPosition(263,549)); //4
+
+        positions.add(new ScoreBoardPosition(174,551));
+        positions.add(new ScoreBoardPosition(101, 552));
+        positions.add(new ScoreBoardPosition(105, 481)); //7
+        positions.add(new ScoreBoardPosition(178,481));
+        positions.add(new ScoreBoardPosition(261,481));
+        positions.add(new ScoreBoardPosition(347,480)); //10
+        positions.add(new ScoreBoardPosition(347,411)); //11
+        positions.add(new ScoreBoardPosition(267,399));
+        positions.add(new ScoreBoardPosition(188,400));
+        positions.add(new ScoreBoardPosition(99,398));
+
+        positions.add(new ScoreBoardPosition(105,325)); //15
+        positions.add(new ScoreBoardPosition(186,321));
+        positions.add(new ScoreBoardPosition(259,324));
+        positions.add(new ScoreBoardPosition(341,321));
+
+        positions.add(new ScoreBoardPosition(338,253)); //19
+        positions.add(new ScoreBoardPosition(225,228));
+        positions.add(new ScoreBoardPosition(106,256)); //21
+        positions.add(new ScoreBoardPosition(105,184));
+
+        positions.add(new ScoreBoardPosition(103,112));
+        positions.add(new ScoreBoardPosition(153,55));
+        positions.add(new ScoreBoardPosition(222,35)); //25
+        positions.add(new ScoreBoardPosition(298,55));
+        positions.add(new ScoreBoardPosition(343,119));
+        positions.add(new ScoreBoardPosition(340,184)); //28
+        positions.add(new ScoreBoardPosition(225,125));
         return positions;
     }
 
     private ScoreBoardPosition calculatePosition(int points) {
         List<ScoreBoardPosition> positions = generatePositions();
-        return positions.get(points);
+        if (points < positions.size()) {
+            return positions.get(points);
+        } else {
+            System.out.println("Points exceed predefined positions. Defaulting to last position.");
+            return positions.get(positions.size() - 1);
+        }
     }
 
     private void movePlaceholderToPosition(ImageView placeholder, ScoreBoardPosition position) {
-        placeholder.setLayoutX(position.getX());
-        placeholder.setLayoutY(position.getY());
+        double x = position.getX();
+        double y = position.getY();
+
+        // Check if the position is already occupied and adjust if necessary
+        while (isPositionOccupied(x, y)) {
+            x += 10;  // Adjust these values as needed to ensure proper spacing
+            y += 10;
+        }
+
+        occupiedPositions.add(new ScoreBoardPosition(x, y));
+        placeholder.setLayoutX(x);
+        placeholder.setLayoutY(y);
+        System.out.println("Placeholder moved to: (" + x + ", " + y + ")");
+    }
+
+    private boolean isPositionOccupied(double x, double y) {
+        for (ScoreBoardPosition pos : occupiedPositions) {
+            if (pos.getX() == x && pos.getY() == y) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public HashMap<PlayerColor, ImageView> getPlaceholders() {
@@ -72,15 +123,22 @@ public class ScoreBoard {
     }
 
     public void updatePlaceholders() {
-        PlayerColor[] colors = {PlayerColor.RED, PlayerColor.BLUE, PlayerColor.GREEN, PlayerColor.YELLOW};
+        PlayerColor[] colors = {PlayerColor.RED, PlayerColor.YELLOW, PlayerColor.BLUE, PlayerColor.GREEN};
         int index = 0;
+        occupiedPositions.clear();  // Clear occupied positions before updating
+
         for (String player : points.keySet()) {
             if (index >= colors.length) break;
             int playerPoints = points.get(player);
+            if(playerPoints > 29) {
+                playerPoints=29;
+            }
             ScoreBoardPosition position = calculatePosition(playerPoints);
             ImageView placeholder = placeholders.get(colors[index]);
+
             if (placeholder != null) {
                 movePlaceholderToPosition(placeholder, position);
+                System.out.println("Moved placeholder for color " + colors[index] + " to position: (" + position.getX() + ", " + position.getY() + ")");
             } else {
                 System.out.println("Placeholder for color " + colors[index] + " is null.");
             }
