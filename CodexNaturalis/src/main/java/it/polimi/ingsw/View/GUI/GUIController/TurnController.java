@@ -159,8 +159,7 @@ public class TurnController extends GUIController{
                 event.consume();
             });
 
-            int finalMinX = minX;
-            int finalMaxY = maxY;
+
             imageView.setOnDragDropped(event -> {
                 Dragboard db = event.getDragboard();
                 boolean success = false;
@@ -168,7 +167,7 @@ public class TurnController extends GUIController{
                     try {
                         int cardIndex = Integer.parseInt(db.getString());
                         this.gui.setFirst_turn(false);
-                        client.placeCard(client, cardIndex, prato.getX() /*+ finalMinX*/, /*finalMaxY - */prato.getY(), FB.BACK);
+                        client.placeCard(client, cardIndex, prato.getX() , prato.getY(), FB.BACK);
                         success = true;
                     } catch (RemoteException e) {
                         System.out.println("Error in place card");
@@ -227,26 +226,6 @@ public class TurnController extends GUIController{
                             if (event.getDragboard().hasString()) {
                                 event.acceptTransferModes(TransferMode.MOVE);
                             }
-                            event.consume();
-                        });
-                        imageView.setOnDragDropped(event -> {
-                            Dragboard db = event.getDragboard();
-                            boolean success = false;
-                            if (db.hasString()) {
-                                try {
-                                    int cardId = Integer.parseInt(db.getString()) - 1; // -1 because cardId starts from 1
-                                    int x = GridPane.getColumnIndex(imageView);
-                                    int y = GridPane.getRowIndex(imageView);
-                                    // Check if the position is free before placing the card
-                                    if (field.getFreePositions().contains(new Position(x, y))) {
-                                        client.placeCard(client, cardId, x, y, FB.BACK);
-                                        success = true;
-                                    }
-                                } catch (RemoteException e) {
-                                    System.out.println("Error in place card");
-                                }
-                            }
-                            event.setDropCompleted(success);
                             event.consume();
                         });
                     }
