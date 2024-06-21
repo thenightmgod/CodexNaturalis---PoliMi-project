@@ -89,7 +89,6 @@ public class TurnController extends GUIController{
         plotField();
         if(myTurn) {
             isYourTurn();
-            placeCard();
             points.put("Player1", 21);
             points.put("Player2", 21);
             points.put("Player3", 56);
@@ -160,6 +159,8 @@ public class TurnController extends GUIController{
                 event.consume();
             });
 
+            int finalMinX = minX;
+            int finalMaxY = maxY;
             imageView.setOnDragDropped(event -> {
                 Dragboard db = event.getDragboard();
                 boolean success = false;
@@ -167,7 +168,7 @@ public class TurnController extends GUIController{
                     try {
                         int cardIndex = Integer.parseInt(db.getString());
                         this.gui.setFirst_turn(false);
-                        client.placeCard(client, cardIndex, prato.getX(), prato.getY(), FB.BACK);
+                        client.placeCard(client, cardIndex, prato.getX() /*+ finalMinX*/, /*finalMaxY - */prato.getY(), FB.BACK);
                         success = true;
                     } catch (RemoteException e) {
                         System.out.println("Error in place card");
