@@ -5,10 +5,14 @@ import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
+import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
+import it.polimi.ingsw.View.GUI.GUIController.ScoreBoard.ScoreBoard;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.ColorAdjust;
@@ -16,9 +20,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.awt.event.ActionEvent;
 import java.io.FileNotFoundException;
+import java.util.*;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -48,11 +55,17 @@ public class TurnController extends GUIController{
     private Button myPointsButton;
     @FXML
     private GridPane marione;
+    private AnchorPane anchorPane;
     private LinkedList<GoalCard> commongoals;
     private LinkedList<GoldCard> golddeck;
     private LinkedList<ResourceCard> resourcedeck = new LinkedList<>();
     private LinkedList<PlayableCard> myhand;
+    private LinkedHashMap<String,Integer> points = new LinkedHashMap<>();
+
+    private HashMap<PlayerColor, ImageView> placeholders = new HashMap<>();
+    private ScoreBoard scoreBoard;
     private PlayingField field;
+    private int Points;
     boolean myTurn;
     boolean isFrontImageLoaded=true;
     boolean revealed;
@@ -489,6 +502,40 @@ public class TurnController extends GUIController{
         myhand=hand;
         loadMyHand();
     }
+    public void updatePoints(HashMap<String, Integer> points) {
+        this.points=(LinkedHashMap<String, Integer>) points;
+        this.scoreBoard=new ScoreBoard(this.points);
+    }
+
+    @FXML
+    private void showPointsCounter(ActionEvent event) {
+
+        Stage newStage = new Stage();
+        newStage.setTitle("Scoreboard");
+
+        AnchorPane scoreboardPane = new AnchorPane();
+        Image image = loadImage("/view/MyCodexNaturalisPhotos/plateau.png");
+        ImageView scoreboardImage = new ImageView(image);
+        scoreboardImage.setFitWidth(400);
+        scoreboardImage.setFitHeight(600);
+        scoreboardImage.setPreserveRatio(true);
+
+        scoreboardPane.getChildren().add(scoreboardImage);
+
+        // Update and add the placeholders to the scoreboardPane
+        scoreBoard.updatePlaceholders();
+        for (ImageView placeholder : scoreBoard.getPlaceholders().values()) {
+            scoreboardPane.getChildren().add(placeholder);
+        }
+
+        Scene scoreboardScene = new Scene(scoreboardPane, 700, 700);
+        newStage.setScene(scoreboardScene);
+        newStage.initModality(Modality.WINDOW_MODAL);
+        newStage.initOwner(stage);
+        newStage.setResizable(false);
+        newStage.show();
+    }
+
 
     public void showException(String exception) {
         switch (exception) {
