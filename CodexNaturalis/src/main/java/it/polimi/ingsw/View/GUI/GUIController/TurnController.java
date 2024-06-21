@@ -5,29 +5,20 @@ import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
-import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
-import it.polimi.ingsw.View.GUI.GUIController.ScoreBoard.ScoreBoard;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
+import javafx.scene.input.*;
 import javafx.scene.layout.*;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
+import java.awt.event.ActionEvent;
 import java.io.FileNotFoundException;
-import java.util.*;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -57,14 +48,10 @@ public class TurnController extends GUIController{
     private Button myPointsButton;
     @FXML
     private GridPane marione;
-    private AnchorPane anchorPane;
     private LinkedList<GoalCard> commongoals;
     private LinkedList<GoldCard> golddeck;
     private LinkedList<ResourceCard> resourcedeck = new LinkedList<>();
     private LinkedList<PlayableCard> myhand;
-    private LinkedHashMap<String,Integer> points = new LinkedHashMap<>();
-
-    private ScoreBoard scoreBoard;
     private PlayingField field;
     boolean myTurn;
     boolean isFrontImageLoaded=true;
@@ -90,11 +77,7 @@ public class TurnController extends GUIController{
         loadmyLabelBox();
         plotField();
         if(myTurn) {
-            placeCard();
-            points.put("Player1", 21);
-            points.put("Player2", 21);
-            points.put("Player3", 56);
-            scoreBoard = new ScoreBoard(points);
+            isYourTurn();
         }else {
             waitMyTurn();
         }
@@ -153,7 +136,8 @@ public class TurnController extends GUIController{
             imageView.setOpacity(0.4);
             imageView.setPreserveRatio(true);
             this.marione.add(imageView, x, y);
-            /*imageView.setOnDragOver(event -> {
+
+            imageView.setOnDragOver(event -> {
                 if (event.getDragboard().hasString()) {
                     event.acceptTransferModes(TransferMode.MOVE);
                 }
@@ -163,18 +147,19 @@ public class TurnController extends GUIController{
             imageView.setOnDragDropped(event -> {
                 Dragboard db = event.getDragboard();
                 boolean success = false;
-                if (db.hasString()) {
-                    // Place the card at the dropped position
+                if(db.hasString()) {
                     try {
-                        client.placeCard(client, Integer.parseInt(db.getString()), prato.getX(), prato.getY(), FB.BACK);
+                        int cardIndex = Integer.parseInt(db.getString());
+                        client.placeCard(client, cardIndex, prato.getX(), prato.getY(), FB.BACK);
                         success = true;
                     } catch (RemoteException e) {
-                        System.out.println("errore nella place card");
+                        System.out.println("Error in place card");
                     }
                 }
                 event.setDropCompleted(success);
                 event.consume();
-            });*/
+            });
+
         }
 
         for (Position p : field.getField().keySet()) {
@@ -200,30 +185,81 @@ public class TurnController extends GUIController{
         }
     }
 
+    @FXML
+    private void placeCard(DragEvent event){
+        System.out.println("duce");
+        Node node = event.getPickResult().getIntersectedNode();
 
-    private void placeCard() {
+        if(node instanceof ImageView && node.getParent() instanceof GridPane){
+            Integer cIndex = GridPane.getColumnIndex(node);
+            Integer rIndex = GridPane.getRowIndex(node);
+
+            int x = cIndex == 698 ? 0 : cIndex;
+            int y = rIndex == 698 ? 0 : rIndex;
+
+            Dragboard db = event.getDragboard();
+            boolean success = false;
+            if(db.hasString()) {
+                System.out.println("Dragboard contains a string");
+                try {
+                    int cardIndex = Integer.parseInt(db.getString());
+
+                    client.placeCard(client, cardIndex, x, y, FB.BACK);
+                    success = true;
+                } catch (RemoteException e) {
+                    System.out.println("errore nella place card");
+                }
+
+            } else {
+                System.out.println("Dragboard does not contain a string");
+            }
+        }
+    }
+
+    private void isYourTurn() {
         messageLabel.setText("IT'S YOUR TURN!");
         messageLabel.setVisible(true);
 
-        for(PlayableCard card : myhand) {
+        for(int cardIndex = 0; cardIndex < myhand.size(); cardIndex++) {
+            PlayableCard card = myhand.get(cardIndex);
             for (Node node : myHandBox.getChildren()) {
                 if (node instanceof ImageView) {
                     ImageView imageView = (ImageView) node;
                     if (imageView.getImage().getUrl().contains(String.valueOf(card.getId()))) {
+                        int finalCardIndex = cardIndex;
                         imageView.setOnDragDetected(event -> {
                             Dragboard db = imageView.startDragAndDrop(TransferMode.ANY);
                             ClipboardContent content = new ClipboardContent();
-                            content.putString(String.valueOf(card.getId()));
+                            content.putString(String.valueOf(finalCardIndex + 1)); // +1 because cardIndex starts from 0
                             db.setContent(content);
                             db.setDragView(imageView.getImage());
                             event.consume();
                         });
-
-                        imageView.setOnDragDone(event -> {
-                           /* if (event.getTransferMode() != TransferMode.MOVE) {
-                                updateHands(myhand);
+                        imageView.setOnDragOver(event -> {
+                            if (event.getDragboard().hasString()) {
+                                event.acceptTransferModes(TransferMode.MOVE);
                             }
-                            event.consume();*/
+                            event.consume();
+                        });
+                        imageView.setOnDragDropped(event -> {
+                            Dragboard db = event.getDragboard();
+                            boolean success = false;
+                            if (db.hasString()) {
+                                try {
+                                    int cardId = Integer.parseInt(db.getString()) - 1; // -1 because cardId starts from 1
+                                    int x = GridPane.getColumnIndex(imageView);
+                                    int y = GridPane.getRowIndex(imageView);
+                                    // Check if the position is free before placing the card
+                                    if (field.getFreePositions().contains(new Position(x, y))) {
+                                        client.placeCard(client, cardId, x, y, FB.BACK);
+                                        success = true;
+                                    }
+                                } catch (RemoteException e) {
+                                    System.out.println("Error in place card");
+                                }
+                            }
+                            event.setDropCompleted(success);
+                            event.consume();
                         });
                     }
                 }
@@ -453,42 +489,6 @@ public class TurnController extends GUIController{
         myhand=hand;
         loadMyHand();
     }
-    public void updatePoints(HashMap<String, Integer> points) {
-        this.points=(LinkedHashMap<String, Integer>) points;
-        this.scoreBoard=new ScoreBoard(this.points);
-    }
-
-    @FXML
-    public void showPointsCounter(ActionEvent event) {
-        Stage newStage = new Stage();
-        newStage.setTitle("Scoreboard");
-
-        AnchorPane scoreboardPane = new AnchorPane();
-        Image image = loadImage("/view/MyCodexNaturalisPhotos/plateau.png");
-        ImageView scoreboardImage = new ImageView(image);
-        scoreboardImage.setFitWidth(334);
-        scoreboardImage.setFitHeight(679);
-        scoreboardImage.setPreserveRatio(true);
-
-        scoreboardPane.getChildren().add(scoreboardImage);
-        //da aggiungere anche il box con la legenda colori
-
-        AnchorPane.setTopAnchor(scoreboardImage, 15.0);
-        AnchorPane.setLeftAnchor(scoreboardImage, 84.0);
-
-        scoreBoard.updatePlaceholders();
-        for (ImageView placeholder : scoreBoard.getPlaceholders().values()) {
-            scoreboardPane.getChildren().add(placeholder);
-        }
-
-        Scene scoreboardScene = new Scene(scoreboardPane, 735, 700);
-        newStage.setScene(scoreboardScene);
-        newStage.initModality(Modality.WINDOW_MODAL);
-        newStage.initOwner(stage);
-        newStage.setResizable(false);
-        newStage.show();
-    }
-
 
     public void showException(String exception) {
         switch (exception) {
