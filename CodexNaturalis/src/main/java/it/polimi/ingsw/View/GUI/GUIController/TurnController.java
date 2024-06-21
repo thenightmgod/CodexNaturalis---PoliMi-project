@@ -94,7 +94,6 @@ public class TurnController extends GUIController{
         loadGoldBox();
         loadGoalBox();
         loadMyHand();
-        loadmyLabelBox();
         plotField();
         if(myTurn) {
             isYourTurn();
@@ -276,11 +275,9 @@ public class TurnController extends GUIController{
                 System.out.println("Errore nel draw card");
             }
             removeDrawEffect();
-            messageLabel.setText("Well done.");
+            messageLabel.setText("Well done, now wait your turn.");
         });
     }
-
-    public void waitYourTurn(){}
 
     private int getIndexInHBox(ImageView image, int deck) {
         if (deck==1) {
@@ -324,16 +321,9 @@ public class TurnController extends GUIController{
         }
     }
 
-
-
-    private void waitMyTurn() {
+    public void waitMyTurn() {
         messageLabel.setText("Please, wait your turn to place a card");
         messageLabel.setVisible(true);
-        //mettere che posso vedere punti
-    }
-
-    private void loadmyLabelBox() {
-        //aggiungere il bottone dei punteggi
     }
 
     private void loadResourceBox() {
@@ -457,7 +447,7 @@ public class TurnController extends GUIController{
         VBox parent = (VBox) goalsBox.getParent();  // Assumiamo che goalsBox sia contenuto in un StackPane
         parent.getChildren().add(label);
         label.setVisible(false);
-        label.setStyle("-fx-text-fill: white; -fx-tick-label-font: 16px Weibei TC Bold;");
+        label.setStyle("-fx-text-fill: white");
         imageView.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> {
             if(!revealed) {
                 label.setText("Click to reveal your secret goal card!");
@@ -585,6 +575,22 @@ public class TurnController extends GUIController{
             newStage.setTitle("Scoreboard");
 
             AnchorPane scoreboardPane = new AnchorPane();
+            VBox vbox = new VBox();
+            scoreboardPane.getChildren().add(vbox);
+            vbox.setPrefWidth(500);
+            vbox.setPrefHeight(300);
+            AnchorPane.setTopAnchor(vbox, 300.0);
+            AnchorPane.setLeftAnchor(vbox, 450.0);
+            PlayerColor[] playerColors = PlayerColor.values();
+            LinkedList<String> playersName = new LinkedList<>();
+            for(String key : points.keySet()){
+                playersName.add(key);
+            }
+            for(int i=0; i< points.size(); i++){
+                PlayerColor color = playerColors[i];
+                HBox hbox1 = createHbox("/view/MyCodexNaturalisPhotos/CODEX_pion_" + color.name().toLowerCase() + ".png", playersName.get(i));
+                vbox.getChildren().add(hbox1);
+            }
             Image image = loadImage("/view/MyCodexNaturalisPhotos/plateau.png");
             ImageView scoreboardImage = new ImageView(image);
             scoreboardImage.setFitWidth(334);
@@ -609,8 +615,23 @@ public class TurnController extends GUIController{
             newStage.setResizable(false);
             newStage.show();
         }else {
+            String text= messageLabel.getText();
+            messageLabel.setText("This game has just started! Every players has zero points.\n" +text);
             return;
         }
+    }
+
+    private HBox createHbox(String imagePath, String labelText){
+        ImageView image = new ImageView(loadImage(imagePath));
+        image.setFitWidth(50);  // Set appropriate width
+        image.setFitHeight(50); // Set appropriate height
+        image.setPreserveRatio(true);
+
+        Label label = new Label(labelText);
+        label.setStyle("-fx-text-fill: black; -fx-tick-label-font: 50px Weibei TC Bold;");
+        HBox hbox = new HBox(10); // Spaziatura tra ImageView e Label
+        hbox.getChildren().addAll(image, label);
+        return hbox;
     }
 
 
@@ -620,17 +641,6 @@ public class TurnController extends GUIController{
                 messageLabel.setText("The requirements for the card you chose aren't satisfied!\n" +
                         "Please, flip this gold card or play another one.");
                 //setterò di nuovo la carta posizionabile nel field
-            }
-        }
-    }
-
-    public void blabla(javafx.event.ActionEvent actionEvent) throws RemoteException {
-        if (myTurn) {
-            this.gui.first_turn = false;
-            if (!this.gui.getClient().getClient().getHand().isEmpty()) {
-                if (!this.gui.getClient().getClient().getField().getFreePositions().isEmpty()) {
-                    client.placeCard(client, 1, client.getClient().getField().getFreePositions().getFirst().getX(), client.getClient().getField().getFreePositions().getFirst().getY(), FB.BACK);
-                }
             }
         }
     }

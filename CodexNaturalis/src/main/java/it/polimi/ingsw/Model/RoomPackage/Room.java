@@ -88,10 +88,10 @@ public class Room implements Serializable {
      * Sets the flag indicating whether the game has reached the twenty points threshold.
      */
     public void setTwentyFlag() {
-        if(turn.getPointsCounter()>=20)
+        if(turn.getPointsCounter()>=1)
             this.twenty = true;
         if(twenty && !lastRound)
-            if(turn.getPointsCounter()>=20)
+            if(turn.getPointsCounter()>=1)
                 observerManager.twenty(turn.getName());
     }
     /**
@@ -190,10 +190,11 @@ public class Room implements Serializable {
     /**
      * Starts the game for the specified player.
      * @param p The player to start the game for.
+     * @param otherPlayers The other players in the same Room.
      * @throws RemoteException If a remote communication error occurs.
      */
-    public void startingGame(Player p) throws RemoteException {
-        observerManager.getObserver(p.getName()).startingGame(p);
+    public void startingGame(Player p, LinkedList<Player> otherPlayers) throws RemoteException {
+        observerManager.getObserver(p.getName()).startingGame(p, otherPlayers);
     }
 
     /**

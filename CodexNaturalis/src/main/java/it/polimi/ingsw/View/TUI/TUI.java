@@ -23,6 +23,8 @@ public class TUI implements GameView {
     Player Turn;
     String name = "Carlos O'Connell";
     CommonClient client;
+
+    LinkedList<Player> otherPlayers = new LinkedList<Player>();
     int ServerPort= 4444;
     String serverIp;
     InputHandler inputHandler;
@@ -222,7 +224,8 @@ public class TUI implements GameView {
         inputHandler.handleUserInput("createGame");
     }
 
-    public void startingGame(){
+    public void startingGame(LinkedList<Player> players){
+        otherPlayers = players;
         System.out.println("Game is starting...");
     }
 

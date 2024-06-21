@@ -254,7 +254,7 @@ public class GUI implements GameView {
     }
 
     @Override
-    public void startingGame() throws RemoteException {
+    public void startingGame(LinkedList<Player> players) throws RemoteException {
         Platform.runLater(() -> {
             try {
                 switchToScene("startCard", 1);
@@ -301,7 +301,7 @@ public class GUI implements GameView {
                         if(first_turn) {
                             switchToScene("turn", client.getClient().getDrawableResourceCards(), client.getClient().getDrawableGoldCards(), client.getClient().getCommonGoals(), client.getClient().getHand(), client.getClient().getField(), false);
                         }
-                        else ((TurnController) guicontrollers.get("turn")).waitYourTurn();
+                        else ((TurnController) guicontrollers.get("turn")).waitMyTurn();
                         first_turn = false;
                 } catch (IOException e) {
                     System.out.println("turnScene non correttamente inizializzata");

@@ -30,5 +30,25 @@
 .winnerBackground {
     -fx-background-image: url("MyCodexNaturalisPhotos/berlusca.jpg");
 }
+.button-submit {
+    -fx-background-color: #154c16; /* Colore di sfondo verde */
+    -fx-text-fill: white; /* Colore del testo bianco */
+    -fx-font-size: 14px; /* Dimensione del font */
+    -fx-font-family: "Arial"; /* Famiglia del font */
+    -fx-padding: 8px 16px; /* Padding interno (top-bottom, left-right) */
+    -fx-border-radius: 5px; /* Arrotondamento dei bordi */
+    -fx-background-radius: 5px; /* Arrotondamento dei bordi del background */
+    -fx-cursor: hand; /* Cambia il cursore quando si passa sopra il bottone */
+}
+
+/* Stile quando il mouse è sopra il bottone */
+.button-submit:hover {
+    -fx-background-color: #45a049; /* Cambia il colore di sfondo quando il mouse è sopra */
+}
+
+/* Stile quando il bottone è premuto */
+.button-submit:pressed {
+    -fx-background-color: #357a38; /* Cambia il colore di sfondo quando il bottone è premuto */
+}
 
 
