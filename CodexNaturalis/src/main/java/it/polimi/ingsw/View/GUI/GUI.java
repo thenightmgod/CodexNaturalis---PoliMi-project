@@ -33,8 +33,11 @@ public class GUI implements GameView {
     private Player Turn;
     private CommonClient client;
     private String[] args;
-    public boolean first_turn=true;
+    public boolean first_turn = true;
 
+    public void setFirst_turn(boolean first_turn) {
+        this.first_turn = first_turn;
+    }
 
     //-------METODI DEI CONTROLLER---------------------------
     public void start(String[] args, Stage stage) throws IOException {
@@ -98,6 +101,10 @@ public class GUI implements GameView {
 
     @Override
     public void updatePoints(HashMap<String, Integer> points, String name) {
+        client.getClient().setPointsCounter(points);
+        Platform.runLater(()-> {
+            ((TurnController)guicontrollers.get("turn")).updatePoints(points);
+        });
     }
 
     @Override
@@ -143,7 +150,7 @@ public class GUI implements GameView {
 
     @Override
     public void updateFreePosition(String name, LinkedList<Position> freePositions) {
-
+        //PROB INUTILE IN TUTTO IL CODICE
     }
 
 
@@ -165,6 +172,11 @@ public class GUI implements GameView {
                     guicontrollers.get("turn").showException("RequirementsNotSatisfied");
                 });
             }
+            case "Nothing" -> {
+                Platform.runLater(() -> {
+                    ((TurnController) guicontrollers.get("turn")).drawCard();
+                });
+            }
         }
     }
 
@@ -183,27 +195,34 @@ public class GUI implements GameView {
 
     @Override
     public void updateTurn(Player player, String mex) throws RemoteException {
+        //in tutta questa non ci va il platoform run later???
         this.Turn = player;
         if (Turn.getName().equals(client.getName())) {
             Platform.runLater(() -> {
-                switch (mex) {
-                    case "StartCard" -> {
-                            ((StartCardController) guicontrollers.get("startCard")).chooseStartCard();
-                    }
-                    case "GoalCard" -> {
-                            ((GoalCardController) guicontrollers.get("goalCard")).chooseGoalCard();
-                    }
-                    case "NormalTurn"-> {
-                        try {
-                            switchToScene("turn", client.getClient().getDrawableResourceCards(), client.getClient().getDrawableGoldCards() , client.getClient().getCommonGoals(), client.getClient().getHand(), client.getClient().getField(), true);
-                            first_turn=false;
-                        } catch (IOException e) {
-                            System.out.println("turnScene non correttamente inizializzata");
+                    switch (mex) {
+                        case "StartCard" -> {
+                                ((StartCardController) guicontrollers.get("startCard")).chooseStartCard();
+                        }
+                        case "GoalCard" -> {
+                                ((GoalCardController) guicontrollers.get("goalCard")).chooseGoalCard();
+                        }
+                        case "NormalTurn"-> {
+                            try {
+                                switchToScene("turn", client.getClient().getDrawableResourceCards(), client.getClient().getDrawableGoldCards() , client.getClient().getCommonGoals(), client.getClient().getHand(), client.getClient().getField(), true);
+                                first_turn=false;
+                            } catch (IOException e) {
+                                System.out.println("turnScene non correttamente inizializzata");
+                            }
                         }
                     }
-                }
-            });
+                });
             } else {
+            //Non sono sicuro, forse il switch to scene
+                try {
+                    switchToScene("turn", client.getClient().getDrawableResourceCards(), client.getClient().getDrawableGoldCards(), client.getClient().getCommonGoals(), client.getClient().getHand(), client.getClient().getField(), true);
+                } catch (IOException e) {
+                    System.out.println("turnScene non correttamente inizializzata, non turno mio");
+                }
         }
     }
 
