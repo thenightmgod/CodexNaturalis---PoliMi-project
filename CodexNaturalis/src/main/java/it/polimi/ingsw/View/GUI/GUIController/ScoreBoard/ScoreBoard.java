@@ -106,7 +106,7 @@ public class ScoreBoard {
         occupiedPositions.add(new ScoreBoardPosition(x, y));
         placeholder.setLayoutX(x);
         placeholder.setLayoutY(y);
-        System.out.println("Placeholder moved to: (" + x + ", " + y + ")");
+        //System.out.println("Placeholder moved to: (" + x + ", " + y + ")");
     }
 
     private boolean isPositionOccupied(double x, double y) {
@@ -138,7 +138,7 @@ public class ScoreBoard {
 
             if (placeholder != null) {
                 movePlaceholderToPosition(placeholder, position);
-                System.out.println("Moved placeholder for color " + colors[index] + " to position: (" + position.getX() + ", " + position.getY() + ")");
+               // System.out.println("Moved placeholder for color " + colors[index] + " to position: (" + position.getX() + ", " + position.getY() + ")");
             } else {
                 System.out.println("Placeholder for color " + colors[index] + " is null.");
             }
