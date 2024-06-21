@@ -59,11 +59,17 @@ public class GUI implements GameView {
             guicontrollers.put(sceneName, controller);
         }
         primaryStage.setScene(controller.getScene());
-        if(!sceneName.equals("login")){
-            primaryStage.setTitle(client.getName() + "'s " + sceneName);
-        }
-        else{
-            primaryStage.setTitle("Login");
+
+        switch(sceneName) {
+            case "declareWinner" -> {
+                primaryStage.setTitle("FINAL RESULTS");
+            }
+            case "login" -> {
+                primaryStage.setTitle("Login");
+            }
+            default -> {
+                primaryStage.setTitle(client.getName() + "'s " + sceneName);
+            }
         }
         primaryStage.show();
     }
@@ -201,7 +207,10 @@ public class GUI implements GameView {
                         }
                         case "NormalTurn"-> {
                             try {
-                                switchToScene("turn", client.getClient().getDrawableResourceCards(), client.getClient().getDrawableGoldCards() , client.getClient().getCommonGoals(), client.getClient().getHand(), client.getClient().getField(), true);
+                                if(first_turn) {
+                                    switchToScene("turn", client.getClient().getDrawableResourceCards(), client.getClient().getDrawableGoldCards() , client.getClient().getCommonGoals(), client.getClient().getHand(), client.getClient().getField(), true);
+                                }
+                                else ((TurnController) guicontrollers.get("turn")).isYourTurn();
                                 first_turn=false;
                             } catch (IOException e) {
                                 System.out.println("turnScene non correttamente inizializzata");
@@ -225,20 +234,23 @@ public class GUI implements GameView {
 
     @Override
     public void updateGoldDeck(LinkedList<GoldCard> deck, boolean start, String name) {
-        Platform.runLater(() -> {
-            if (start) {
-                client.getClient().setDrawableGoldCards(deck);
-            }
-        });
+        client.getClient().setDrawableGoldCards(deck);
+        if(!first_turn) {
+            Platform.runLater(() -> {
+                ((TurnController) guicontrollers.get("turn")).updateGoldDeck(deck);
+
+            });
+        }
     }
 
     @Override
     public void updateResourceDeck(LinkedList<ResourceCard> deck, boolean start, String name) {
-        Platform.runLater(() -> {
-            if (start) {
-                client.getClient().setDrawableResourceCards(deck);
-            }
-        });
+        client.getClient().setDrawableResourceCards(deck);
+        if(!first_turn) {
+            Platform.runLater(() -> {
+                ((TurnController) guicontrollers.get("turn")).updateResourceDeck(deck);
+            });
+        }
     }
 
     @Override
@@ -254,7 +266,13 @@ public class GUI implements GameView {
 
     @Override
     public void declareWinner(LinkedList<String> standings) {
-
+        Platform.runLater( () -> {
+            try {
+                switchToScene("declareWinner", standings);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     @Override
@@ -280,8 +298,11 @@ public class GUI implements GameView {
                 }
                 case "NormalTurn"->{
                     try {
-                    switchToScene("turn", client.getClient().getDrawableResourceCards(), client.getClient().getDrawableGoldCards() , client.getClient().getCommonGoals(), client.getClient().getHand(), client.getClient().getField(), false);
-                    first_turn=false;
+                        if(first_turn) {
+                            switchToScene("turn", client.getClient().getDrawableResourceCards(), client.getClient().getDrawableGoldCards(), client.getClient().getCommonGoals(), client.getClient().getHand(), client.getClient().getField(), false);
+                        }
+                        else ((TurnController) guicontrollers.get("turn")).waitYourTurn();
+                        first_turn = false;
                 } catch (IOException e) {
                     System.out.println("turnScene non correttamente inizializzata");
                 }
