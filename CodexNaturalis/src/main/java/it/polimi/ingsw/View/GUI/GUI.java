@@ -148,6 +148,9 @@ public class GUI implements GameView {
                 });
             }
         }
+        else {
+            client.getClient().getOtherFields().put(name, field);
+        }
     }
 
     @Override

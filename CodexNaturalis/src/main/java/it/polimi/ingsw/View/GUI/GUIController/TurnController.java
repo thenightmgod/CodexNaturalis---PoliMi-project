@@ -14,10 +14,12 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -28,6 +30,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import javax.swing.*;
 import java.io.FileNotFoundException;
 import java.util.*;
 import java.rmi.RemoteException;
@@ -54,8 +57,6 @@ public class TurnController extends GUIController{
     @FXML
     private HBox label_button_box;
     @FXML
-    private Button piazzala;
-    @FXML
     private Button myPointsButton;
     @FXML
     private GridPane marione;
@@ -65,6 +66,7 @@ public class TurnController extends GUIController{
     private LinkedList<ResourceCard> resourcedeck = new LinkedList<>();
     private LinkedList<PlayableCard> myhand;
     private LinkedHashMap<String,Integer> points = new LinkedHashMap<>();
+    private LinkedHashMap<String, PlayingField> othersPlayingField;
     private ScoreBoard scoreBoard;
     private PlayingField field;
     private int Points;
@@ -663,4 +665,102 @@ public class TurnController extends GUIController{
         }
         messageLabel.setVisible(true);
     }
+
+    @FXML
+    private void viewOthersPlayingField(ActionEvent event) {
+        Stage newStage = new Stage();
+        newStage.setTitle("MyCodexNaturalis");
+
+        VBox vbox = new VBox();
+        vbox.setSpacing(10);
+        vbox.setPadding(new Insets(10));
+
+        Label instructionLabel = new Label("Whose playing field do you want to view?");
+        vbox.getChildren().add(instructionLabel);
+
+        HashMap<String, PlayingField> others = client.getClient().getOtherFields();
+
+        for (String playerName : others.keySet()) {
+            Button playerButton = new Button(playerName);
+            playerButton.setOnAction(e -> {
+                plotOthersField(playerName);
+            });
+            vbox.getChildren().add(playerButton);
+        }
+
+        Scene scene = new Scene(vbox, 300, 400);
+        newStage.setScene(scene);
+        newStage.initModality(Modality.WINDOW_MODAL);
+        newStage.initOwner(stage);
+        newStage.show();
+    }
+
+    public void plotOthersField(String name){
+
+        PlayingField field = this.gui.getClient().getClient().getOtherFields().get(name);
+        AnchorPane anchorPane = new AnchorPane();
+        ScrollPane scrollPane = new ScrollPane();
+        GridPane mariuccio = new GridPane();
+
+        mariuccio.setHgap(0);
+        mariuccio.setVgap(0);
+
+        double cellWidth = 210;
+        double cellHeight = 140.0;
+
+        int maxX = field.getField().keySet().stream().mapToInt(Position::getX).max().orElse(400);
+        int minX = field.getField().keySet().stream().mapToInt(Position::getX).min().orElse(400);
+        int maxY = field.getField().keySet().stream().mapToInt(Position::getY).max().orElse(400);
+        int minY = field.getField().keySet().stream().mapToInt(Position::getY).min().orElse(400);
+
+        for (int j = 0; j < maxY - minY + 1; j++) {
+            RowConstraints rowConstraints = new RowConstraints();
+            rowConstraints.setMinHeight(cellHeight);
+            rowConstraints.setMaxHeight(cellHeight);
+            mariuccio.getRowConstraints().add(rowConstraints);
+        }
+        for (int i = 0; i < maxX - minX + 1; i++) {
+            ColumnConstraints columnConstraints = new ColumnConstraints();
+            columnConstraints.setMinWidth(cellWidth);
+            columnConstraints.setMaxWidth(cellWidth);
+            mariuccio.getColumnConstraints().add(columnConstraints);
+        }
+
+        for (Position p : field.getField().keySet()) {
+            PlayableCard card = field.getField().get(p);
+            ImageView imageView = new ImageView();
+            try {
+                int x = p.getX() - minX;
+                int y = maxY - p.getY();
+                Image image;
+                if (p.getFace() == FB.BACK) {
+                    image = loadCardBackImage(card.getId());
+                } else {
+                    image = loadCardFrontImage(card.getId());
+                }
+                imageView.setImage(image);
+                imageView.setFitWidth(cellWidth);
+                imageView.setFitHeight(cellHeight);
+                imageView.setPreserveRatio(true);
+                GridPane.setMargin(imageView, new javafx.geometry.Insets(0, 0, 111 * y, -45.94 * x));
+                mariuccio.add(imageView, x, y);
+            } catch (FileNotFoundException e) {
+                System.out.println("errore nel print playing field");
+            }
+        }
+
+        scrollPane.setContent(mariuccio);
+        anchorPane.getChildren().add(scrollPane);
+
+        Stage stage = new Stage();
+        Scene scene = new Scene(anchorPane, 800, 600);
+        stage.setScene(scene);
+        stage.setTitle(name + "'s Playing Field");
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initOwner(this.stage);
+        stage.show();
+    }
+
+
+
 }
