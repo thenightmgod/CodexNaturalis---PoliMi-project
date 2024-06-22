@@ -2,6 +2,8 @@ package it.polimi.ingsw.View.GUI.GUIController;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.util.LinkedList;
 
@@ -15,6 +17,14 @@ public class WinnerController extends GUIController {
     private Label labelTre;
     @FXML
     private Label labelQuattro;
+    @FXML
+    private ImageView image1;
+    @FXML
+    private ImageView image2;
+    @FXML
+    private ImageView image3;
+    @FXML
+    private ImageView image4;
     @Override
     public void setArgs(Object... args){
         standings = (LinkedList<String>) args[0];
@@ -27,34 +37,50 @@ public class WinnerController extends GUIController {
                 loadLabelTre();
             }
             case 4 -> {
-                loadLabelDue();
-                loadLabelTre();
                 loadLabelQuattro();
             }
         }
     }
     private void loadLabelDue(){
-        labelUno.setText("1."+standings.get(1));
+        Image primo = loadImage("/view/MyCodexNaturalisPhotos/oro.png");
+        image1.setImage(primo);
+        labelUno.setText(standings.get(1));
         labelUno.setVisible(true);
-        labelDue.setText("2."+ standings.get(0));
+        Image secondo = loadImage("/view/MyCodexNaturalisPhotos/argento.png");
+        image2.setImage(secondo);
+        labelDue.setText(standings.get(0));
         labelDue.setVisible(true);
     }
     private void loadLabelTre(){
-        labelUno.setText("1."+ standings.get(2));
+        Image primo = loadImage("/view/MyCodexNaturalisPhotos/oro.png");
+        image1.setImage(primo);
+        labelUno.setText(standings.get(2));
         labelUno.setVisible(true);
-        labelDue.setText("2."+ standings.get(1));
+        Image secondo = loadImage("/view/MyCodexNaturalisPhotos/argento.png");
+        image2.setImage(secondo);
+        labelDue.setText(standings.get(1));
         labelDue.setVisible(true);
-        labelTre.setText("3."+standings.get(0));
+        Image terzo = loadImage("/view/MyCodexNaturalisPhotos/bronzo.png");
+        image3.setImage(terzo);
+        labelTre.setText(standings.get(0));
         labelTre.setVisible(true);
     }
     private void loadLabelQuattro(){
-        labelUno.setText("1."+standings.get(3));
+        Image primo = loadImage("/view/MyCodexNaturalisPhotos/oro.png");
+        image1.setImage(primo);
+        labelUno.setText(standings.get(3));
         labelUno.setVisible(true);
-        labelDue.setText("2."+standings.get(2));
+        Image secondo = loadImage("/view/MyCodexNaturalisPhotos/argento.png");
+        image2.setImage(secondo);
+        labelDue.setText(standings.get(2));
         labelDue.setVisible(true);
-        labelTre.setText("3."+standings.get(1));
+        Image terzo = loadImage("/view/MyCodexNaturalisPhotos/bronzo.png");
+        image3.setImage(terzo);
+        labelTre.setText(standings.get(1));
         labelTre.setVisible(true);
-        labelQuattro.setText("4."+standings.get(0));
+        Image quarto = loadImage("/view/MyCodexNaturalisPhotos/carbone.png");
+        image4.setImage(quarto);
+        labelQuattro.setText(standings.get(0));
         labelQuattro.setVisible(true);
     }
 }
