@@ -12,6 +12,7 @@ import it.polimi.ingsw.View.GUI.GUIController.ScoreBoard.ScoreBoard;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -87,7 +88,7 @@ public class TurnController extends GUIController{
     private void loadAllArgs() {
         for(int i=0; i<3; i++){
             this.omar.add(i, true);
-               }
+        }
         loadResourceBox();
         loadGoldBox();
         loadGoalBox();
@@ -229,17 +230,27 @@ public class TurnController extends GUIController{
         loadMyHand();
         for(int cardIndex = 0; cardIndex < this.gui.getClient().getClient().getHand().size(); cardIndex++) {
             PlayableCard card = this.gui.getClient().getClient().getHand().get(cardIndex);
-            ImageView imageView = (ImageView) myHandBox.getChildren().get(cardIndex);
-            if (imageView.getImage().getUrl().contains(String.valueOf(card.getId()))) {
-                int finalCardIndex = cardIndex;
-                imageView.setOnDragDetected(event -> {
-                    Dragboard db = imageView.startDragAndDrop(TransferMode.ANY);
-                    ClipboardContent content = new ClipboardContent();
-                    content.putString(String.valueOf(finalCardIndex + 1)); // +1 because cardIndex starts from 0
-                    db.setContent(content);
-                    db.setDragView(imageView.getImage());
-                    event.consume();
-                });
+            for (Node node : myHandBox.getChildren()) {
+                if (node instanceof ImageView) {
+                    ImageView imageView = (ImageView) node;
+                    if (imageView.getImage().getUrl().contains(String.valueOf(card.getId()))) {
+                        int finalCardIndex = cardIndex;
+                        imageView.setOnDragDetected(event -> {
+                            Dragboard db = imageView.startDragAndDrop(TransferMode.ANY);
+                            ClipboardContent content = new ClipboardContent();
+                            content.putString(String.valueOf(finalCardIndex + 1)); // +1 because cardIndex starts from 0
+                            db.setContent(content);
+                            db.setDragView(imageView.getImage());
+                            event.consume();
+                        });
+                        imageView.setOnDragOver(event -> {
+                            if (event.getDragboard().hasString()) {
+                                event.acceptTransferModes(TransferMode.MOVE);
+                            }
+                            event.consume();
+                        });
+                    }
+                }
             }
         }
     }
@@ -567,12 +578,12 @@ public class TurnController extends GUIController{
             newStage.setTitle("Scoreboard");
 
             AnchorPane scoreboardPane = new AnchorPane();
-            BackgroundFill backgroundFill = new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, null);
 
-            // Crea un Background usando il BackgroundFill
+            BackgroundFill backgroundFill = new BackgroundFill(Color.PALEGREEN, CornerRadii.EMPTY, null);
             Background background = new Background(backgroundFill);
 
             scoreboardPane.setBackground(background);
+
             VBox vbox = new VBox();
             scoreboardPane.getChildren().add(vbox);
             vbox.setPrefWidth(500);
@@ -627,7 +638,7 @@ public class TurnController extends GUIController{
         image.setPreserveRatio(true);
 
         Label label = new Label(labelText);
-        label.setStyle("-fx-text-fill: white; -fx-tick-label-font: 50px Weibei TC Bold;");
+        label.setStyle("-fx-text-fill: black; -fx-font-size: 40px; -fx-font-family: 'Weibei TC'; -fx-font-weight: bold;");
         HBox hbox = new HBox(10); // Spaziatura tra ImageView e Label
         hbox.getChildren().addAll(image, label);
         return hbox;
@@ -661,14 +672,23 @@ public class TurnController extends GUIController{
         Stage newStage = new Stage();
         newStage.setTitle("MyCodexNaturalis");
 
+        StackPane stackPane = new StackPane();
+
+        BackgroundFill backgroundFill = new BackgroundFill(Color.PALEGREEN, CornerRadii.EMPTY, null);
+        Background background = new Background(backgroundFill);
+        stackPane.setBackground(background);
+
         VBox vbox = new VBox();
         vbox.setSpacing(10);
         vbox.setPadding(new Insets(10));
 
+        stackPane.getChildren().add(vbox);
         Label instructionLabel = new Label("Whose playing field do you want to view?");
+        instructionLabel.setStyle("-fx-text-fill: black; -fx-font-size: 20px; -fx-font-family: 'Weibei TC'; -fx-font-weight: bold;");
         vbox.getChildren().add(instructionLabel);
 
         HashMap<String, PlayingField> others = client.getClient().getOtherFields();
+
 
         for (String playerName : others.keySet()) {
             Button playerButton = new Button(playerName);
@@ -678,19 +698,24 @@ public class TurnController extends GUIController{
             vbox.getChildren().add(playerButton);
         }
 
-        Scene scene = new Scene(vbox, 300, 400);
+
+        Scene scene = new Scene(stackPane, 700, 700);
         newStage.setScene(scene);
         newStage.initModality(Modality.WINDOW_MODAL);
         newStage.initOwner(stage);
         newStage.show();
     }
 
-    public void plotOthersField(String name){
-
+    public void plotOthersField(String name) {
         PlayingField field = this.gui.getClient().getClient().getOtherFields().get(name);
-        AnchorPane anchorPane = new AnchorPane();
+        StackPane stackPane = new StackPane();
         ScrollPane scrollPane = new ScrollPane();
         GridPane mariuccio = new GridPane();
+
+        // Set background color
+        BackgroundFill backgroundFill = new BackgroundFill(Color.PALEGREEN, CornerRadii.EMPTY, null);
+        Background background = new Background(backgroundFill);
+        stackPane.setBackground(background);
 
         mariuccio.setHgap(0);
         mariuccio.setVgap(0);
@@ -732,25 +757,24 @@ public class TurnController extends GUIController{
                 imageView.setFitWidth(cellWidth);
                 imageView.setFitHeight(cellHeight);
                 imageView.setPreserveRatio(true);
-                GridPane.setMargin(imageView, new javafx.geometry.Insets(0, 0, 111 * y, -45.94 * x));
+                GridPane.setMargin(imageView, new Insets(0, 0, 111 * y, -45.94 * x));
                 mariuccio.add(imageView, x, y);
             } catch (FileNotFoundException e) {
-                System.out.println("errore nel print playing field");
+                System.out.println("Errore nel print playing field");
             }
         }
-
+        mariuccio.setAlignment(Pos.CENTER);
         scrollPane.setContent(mariuccio);
-        anchorPane.getChildren().add(scrollPane);
+        stackPane.getChildren().add(scrollPane);
+        StackPane.setAlignment(scrollPane, Pos.CENTER);
 
         Stage stage = new Stage();
-        Scene scene = new Scene(anchorPane, 800, 600);
+        Scene scene = new Scene(stackPane, 800, 600);
         stage.setScene(scene);
         stage.setTitle(name + "'s Playing Field");
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(this.stage);
         stage.show();
     }
-
-
 
 }
