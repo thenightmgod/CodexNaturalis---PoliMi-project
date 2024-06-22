@@ -12,10 +12,13 @@
    <children>
       <VBox layoutX="350.0" layoutY="145.0" opacity="0.95" prefHeight="440.0" prefWidth="600.0" styleClass="tappeto-background" stylesheets="@styles.css">
          <children>
-            <HBox prefHeight="400.0" prefWidth="200.0">
+            <HBox prefHeight="110.0" prefWidth="200.0">
                <children>
-                  <ImageView fx:id="image1" fitHeight="150.0" fitWidth="100.0" layoutX="10.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" />
-                  <Label fx:id="labelUno" layoutX="5.0" prefHeight="100.0" prefWidth="550.0" textAlignment="CENTER" textFill="WHITE">
+                  <ImageView fx:id="image1" fitHeight="100.0" fitWidth="100.0" layoutX="10.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets left="10.0" top="10.0" />
+                     </HBox.margin></ImageView>
+                  <Label fx:id="labelUno" layoutX="5.0" prefHeight="110.0" prefWidth="550.0" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="Weibei TC Bold" size="60.0" />
                      </font>
@@ -25,10 +28,13 @@
                   </Label>
                </children>
             </HBox>
-            <HBox prefHeight="400.0" prefWidth="200.0">
+            <HBox prefHeight="110.0" prefWidth="200.0">
                <children>
-                  <ImageView fx:id="image2" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" />
-                  <Label fx:id="labelDue" alignment="TOP_LEFT" prefHeight="100.0" prefWidth="550.0" textFill="WHITE">
+                  <ImageView fx:id="image2" fitHeight="100.0" fitWidth="200.0" layoutX="10.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets left="10.0" top="10.0" />
+                     </HBox.margin></ImageView>
+                  <Label fx:id="labelDue" alignment="TOP_LEFT" prefHeight="110.0" prefWidth="550.0" textFill="WHITE">
                      <font>
                         <Font name="Weibei TC Bold" size="60.0" />
                      </font>
@@ -38,10 +44,13 @@
                   </Label>
                </children>
             </HBox>
-            <HBox prefHeight="400.0" prefWidth="200.0">
+            <HBox prefHeight="110.0" prefWidth="200.0">
                <children>
-                  <ImageView fx:id="image3" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" />
-                  <Label fx:id="labelTre" alignment="TOP_LEFT" prefHeight="100.0" prefWidth="550.0" textFill="WHITE">
+                  <ImageView fx:id="image3" fitHeight="100.0" fitWidth="200.0" layoutX="10.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets left="10.0" top="10.0" />
+                     </HBox.margin></ImageView>
+                  <Label fx:id="labelTre" alignment="TOP_LEFT" prefHeight="110.0" prefWidth="550.0" textFill="WHITE">
                      <font>
                         <Font name="Weibei TC Bold" size="60.0" />
                      </font>
@@ -51,10 +60,13 @@
                   </Label>
                </children>
             </HBox>
-            <HBox prefHeight="400.0" prefWidth="200.0">
+            <HBox prefHeight="110.0" prefWidth="200.0">
                <children>
-                  <ImageView fx:id="image4" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" />
-                  <Label fx:id="labelQuattro" alignment="TOP_LEFT" prefHeight="100.0" prefWidth="550.0" textFill="#fffdfd">
+                  <ImageView fx:id="image4" fitHeight="100.0" fitWidth="200.0" layoutX="10.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets left="10.0" top="10.0" />
+                     </HBox.margin></ImageView>
+                  <Label fx:id="labelQuattro" alignment="TOP_LEFT" prefHeight="110.0" prefWidth="550.0" textFill="#fffdfd">
                      <font>
                         <Font size="60.0" />
                      </font>
