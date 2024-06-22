@@ -18,25 +18,43 @@ public class WinnerController extends GUIController {
     @Override
     public void setArgs(Object... args){
         standings = (LinkedList<String>) args[0];
-        loadLabelUno();
-        loadLabelDue();
-        loadLabelTre();
-        loadLabelQuattro();
-    }
-    private void loadLabelUno(){
-        labelUno = new Label("1." + standings.get(0));
-        labelUno.setVisible(true);
+        int size = standings.size();
+        switch(size) {
+            case 2 -> {
+                loadLabelDue();
+            }
+            case 3 -> {
+                loadLabelTre();
+            }
+            case 4 -> {
+                loadLabelDue();
+                loadLabelTre();
+                loadLabelQuattro();
+            }
+        }
     }
     private void loadLabelDue(){
-        labelDue = new Label("2." + standings.get(1));
+        labelUno = new Label("1." + standings.get(1));
+        labelUno.setVisible(true);
+        labelDue = new Label("2." + standings.get(0));
         labelDue.setVisible(true);
     }
     private void loadLabelTre(){
-        labelTre =  new Label("2." + standings.get(1));
+        labelUno = new Label("1." + standings.get(2));
+        labelUno.setVisible(true);
+        labelDue = new Label("2." + standings.get(1));
+        labelDue.setVisible(true);
+        labelTre =  new Label("3." + standings.get(0));
         labelTre.setVisible(true);
     }
     private void loadLabelQuattro(){
-        labelQuattro = new Label("4." + standings.get(3));
+        labelUno = new Label("1." + standings.get(3));
+        labelUno.setVisible(true);
+        labelDue = new Label("2." + standings.get(2));
+        labelDue.setVisible(true);
+        labelTre =  new Label("3." + standings.get(1));
+        labelTre.setVisible(true);
+        labelQuattro = new Label("4." + standings.get(0));
         labelQuattro.setVisible(true);
     }
 }
