@@ -61,3 +61,11 @@
     -fx-background-position: center center;
     -fx-background-size: cover;
 }
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+}
