@@ -130,13 +130,13 @@ public class TurnController extends GUIController{
         this.marione.setVgap(0);
         this.marione.setHgap(0);
 
-        for (int i = 0; i < maxX - minX + 1; i++) {
+        for (int j = 0; j < maxY - minY + 1; j++) {
             RowConstraints rowConstraints = new RowConstraints();
             rowConstraints.setMinHeight(cellHeight);
             rowConstraints.setMaxHeight(cellHeight);
             this.marione.getRowConstraints().add(rowConstraints);
         }
-        for (int j = 0; j < maxY - minY + 1; j++) {
+        for (int i = 0; i < maxX - minX + 1; i++) {
             ColumnConstraints columnConstraints = new ColumnConstraints();
             columnConstraints.setMinWidth(cellWidth);
             columnConstraints.setMaxWidth(cellWidth);
