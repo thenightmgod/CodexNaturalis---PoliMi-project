@@ -20,6 +20,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -574,12 +575,18 @@ public class TurnController extends GUIController{
             newStage.setTitle("Scoreboard");
 
             AnchorPane scoreboardPane = new AnchorPane();
+            BackgroundFill backgroundFill = new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, null);
+
+            // Crea un Background usando il BackgroundFill
+            Background background = new Background(backgroundFill);
+
+            scoreboardPane.setBackground(background);
             VBox vbox = new VBox();
             scoreboardPane.getChildren().add(vbox);
             vbox.setPrefWidth(500);
             vbox.setPrefHeight(300);
-            AnchorPane.setTopAnchor(vbox, 300.0);
-            AnchorPane.setLeftAnchor(vbox, 450.0);
+            AnchorPane.setTopAnchor(vbox, 270.0);
+            AnchorPane.setLeftAnchor(vbox, 440.0);
             PlayerColor[] playerColors = PlayerColor.values();
             LinkedList<String> playersName = new LinkedList<>();
             for(String key : points.keySet()){
@@ -628,7 +635,7 @@ public class TurnController extends GUIController{
         image.setPreserveRatio(true);
 
         Label label = new Label(labelText);
-        label.setStyle("-fx-text-fill: black; -fx-tick-label-font: 50px Weibei TC Bold;");
+        label.setStyle("-fx-text-fill: white; -fx-tick-label-font: 50px Weibei TC Bold;");
         HBox hbox = new HBox(10); // Spaziatura tra ImageView e Label
         hbox.getChildren().addAll(image, label);
         return hbox;
