@@ -258,6 +258,8 @@ public class GUI implements GameView {
 
     @Override
     public void declareWinner(LinkedList<String> standings) {
+        System.out.println("Primo è: " + standings.get(0));
+        System.out.println("Secondo è: " + standings.get(1));
         Platform.runLater( () -> {
             try {
                 switchToScene("declareWinner", standings);
