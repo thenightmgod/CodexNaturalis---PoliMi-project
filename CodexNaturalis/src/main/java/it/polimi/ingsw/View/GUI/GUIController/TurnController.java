@@ -223,7 +223,7 @@ public class TurnController extends GUIController{
     public void isYourTurn() {
         messageLabel.setText("IT'S YOUR TURN!");
         messageLabel.setVisible(true);
-
+        loadMyHand();
         for(int cardIndex = 0; cardIndex < this.gui.getClient().getClient().getHand().size(); cardIndex++) {
             PlayableCard card = this.gui.getClient().getClient().getHand().get(cardIndex);
             for (Node node : myHandBox.getChildren()) {
@@ -419,7 +419,6 @@ public class TurnController extends GUIController{
     private void loadMyHand() {
         for(int i = 0; i < 3; i++)
             this.omar.set(i, true);
-
         myHandBox.getChildren().clear();
         myHandBox.setPrefHeight(160.0);
         myHandBox.setPrefWidth(492.0);
@@ -615,6 +614,7 @@ public class TurnController extends GUIController{
             newStage.setResizable(false);
             newStage.show();
         }else {
+            messageLabel.setText("");
             String text= messageLabel.getText();
             messageLabel.setText("This game has just started! Every players has zero points.\n" +text);
             return;
@@ -644,5 +644,16 @@ public class TurnController extends GUIController{
             }
         }
     }
-
+    public void lastRound() {
+        messageLabel.setText("This is the last round!");
+        messageLabel.setVisible(true);
+    }
+    public void twenty(String name) {
+        if (! (name.equals(client.getName()))) {
+            messageLabel.setText("" + name+ "has reached 20 points!");
+        } else {
+            messageLabel.setText("Wow, you reached 20 points!");
+        }
+        messageLabel.setVisible(true);
+    }
 }
