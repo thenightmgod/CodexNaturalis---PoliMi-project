@@ -19,9 +19,9 @@ public class ClientModel {
     private HashMap<String, Integer> points;
     private LinkedList<GoalCard> commonGoals;
     private LinkedList<Position> freePosition;
-
     private LinkedList<GoldCard> drawableGoldCards;
     private LinkedList<ResourceCard> drawableResourceCards;
+    private HashMap<String, PlayingField> otherFields;
 
     public ClientModel(String name){
         this.name = name;
@@ -96,6 +96,14 @@ public class ClientModel {
 
     public void setCommonGoals(LinkedList<GoalCard> commonGoals){
         this.commonGoals = commonGoals;
+    }
+
+    public void setOtherFields(HashMap<String, PlayingField> otherFields){
+        this.otherFields = otherFields;
+    }
+
+    public HashMap<String, PlayingField> getOtherFields(){
+        return otherFields;
     }
 
 }
