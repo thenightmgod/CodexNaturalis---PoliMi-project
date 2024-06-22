@@ -64,7 +64,6 @@ public class TurnController extends GUIController{
     private LinkedList<ResourceCard> resourcedeck = new LinkedList<>();
     private LinkedList<PlayableCard> myhand;
     private LinkedHashMap<String,Integer> points = new LinkedHashMap<>();
-
     private ScoreBoard scoreBoard;
     private PlayingField field;
     private int Points;
@@ -127,6 +126,7 @@ public class TurnController extends GUIController{
         double cellWidth = 210;
         double cellHeight = 140.0;
 
+        //boh non so come andrebbero settati
         this.marione.setVgap(0);
         this.marione.setHgap(0);
 
@@ -268,13 +268,13 @@ public class TurnController extends GUIController{
     }
 
     private void addDrawEffect(ImageView image, int deck, int index) {
-        image.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+        image.setOnMouseClicked(event -> {
+            removeDrawEffect();
             try {
                 client.drawCard(deck, index, this.client);
             } catch (RemoteException e) {
                 System.out.println("Errore nel draw card");
             }
-            removeDrawEffect();
             messageLabel.setText("Well done, now wait your turn.");
         });
     }
@@ -448,7 +448,7 @@ public class TurnController extends GUIController{
         parent.getChildren().add(label);
         label.setVisible(false);
         label.setStyle("-fx-text-fill: white");
-        imageView.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> {
+        imageView.setOnMouseEntered(event -> {
             if(!revealed) {
                 label.setText("Click to reveal your secret goal card!");
             }else {
@@ -462,7 +462,7 @@ public class TurnController extends GUIController{
             }
             imageView.setEffect(colorAdjust);
         });
-        imageView.addEventHandler(MouseEvent.MOUSE_EXITED, event -> {
+        imageView.setOnMouseExited(event -> {
             label.setVisible(false);
             if (colorAdjust.getBrightness() == 0.5) {
                 colorAdjust.setBrightness(0);
@@ -471,7 +471,7 @@ public class TurnController extends GUIController{
             }
             imageView.setEffect(colorAdjust);
         });
-        imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+        imageView.setOnMouseClicked(event -> {
             if(!revealed) {
                 try {
                     Image frontImage = loadCardFrontImage(id);
@@ -496,8 +496,7 @@ public class TurnController extends GUIController{
 
     private void addClickEffect(ImageView imageView) {
         ColorAdjust colorAdjust = new ColorAdjust();
-        imageView.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> {
-
+        imageView.setOnMouseEntered(event -> {
             if (colorAdjust.getBrightness() == 0) {
                 colorAdjust.setBrightness(0.5);
             } else {
@@ -505,7 +504,8 @@ public class TurnController extends GUIController{
             }
             imageView.setEffect(colorAdjust);
         });
-        imageView.addEventHandler(MouseEvent.MOUSE_EXITED, event -> {
+
+        imageView.setOnMouseExited( event -> {
             if (colorAdjust.getBrightness() == 0.5) {
                 colorAdjust.setBrightness(0);
             } else {
