@@ -643,5 +643,16 @@ public class TurnController extends GUIController{
             }
         }
     }
-
+    public void lastRound() {
+        messageLabel.setText("This is the last round!");
+        messageLabel.setVisible(true);
+    }
+    public void twenty(String name) {
+        if (! (name.equals(client.getName()))) {
+            messageLabel.setText("" + name+ "has reached 20 points!");
+        } else {
+            messageLabel.setText("Wow, you reached 20 points!");
+        }
+        messageLabel.setVisible(true);
+    }
 }

@@ -277,12 +277,16 @@ public class GUI implements GameView {
 
     @Override
     public void twenty(String name) {
-
+        Platform.runLater(() -> {
+            ((TurnController) guicontrollers.get("turn")).twenty(name);
+        });
     }
 
     @Override
     public void lastRound() {
-
+        Platform.runLater(() -> {
+            ((TurnController) guicontrollers.get("turn")).lastRound();
+        });
     }
 
     @Override
