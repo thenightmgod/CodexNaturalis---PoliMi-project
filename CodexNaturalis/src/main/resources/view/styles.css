@@ -57,7 +57,6 @@
     -fx-background-repeat: stretch; /* Centra l'immagine */
 }
 .custom-background {
-    -fx-background-image: url("MyCodexNaturalisPhotos/pepo.jpg");
     -fx-background-repeat: no-repeat;
     -fx-background-position: center center;
     -fx-background-size: cover;
