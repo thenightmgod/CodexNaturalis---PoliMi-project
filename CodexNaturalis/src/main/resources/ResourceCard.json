@@ -365,7 +365,7 @@
         "Color": "BLUE",
         "Points": 0,
         "Corners": [
-          {"Res": "ABSENT", "Orient": "HR"},
+          {"Res": "EMPTY", "Orient": "HR"},
           {"Res": "ABSENT", "Orient": "HL"},
           {"Res": "ANIMAL_KINGDOM", "Orient": "LR"},
           {"Res": "ANIMAL_KINGDOM", "Orient": "LL"}
