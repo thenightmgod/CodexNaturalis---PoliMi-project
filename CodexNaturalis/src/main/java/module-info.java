@@ -6,6 +6,7 @@ module it.polimi.ingsw {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.graphics;
+    requires java.sql;
     exports it.polimi.ingsw.View;
     exports it.polimi.ingsw.Model.PlayerPackage;
     exports it.polimi.ingsw.View.GUI;

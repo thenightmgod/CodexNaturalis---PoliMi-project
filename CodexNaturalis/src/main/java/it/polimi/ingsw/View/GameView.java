@@ -8,7 +8,6 @@ import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.StartCard;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
-import it.polimi.ingsw.Network.CommonClient;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -17,9 +16,9 @@ import java.util.LinkedList;
 
 public interface GameView {
 
-     void updatePoints(HashMap<String, Integer> points, String name);
+    void updatePoints(HashMap<String, Integer> points, String name);
 
-     void updateGoals(LinkedList<GoalCard> goals, String name) throws RemoteException;
+    void updateGoals(LinkedList<GoalCard> goals, String name) throws RemoteException;
 
     void updateCommonGoals(LinkedList<GoalCard> goals, String name) throws RemoteException;
 
@@ -32,12 +31,7 @@ public interface GameView {
     void showException(String name, String exception) throws RemoteException, NotBoundException;
 
     void showStartCard(StartCard card) throws RemoteException;
-    void setStartCardFace() throws RemoteException;
-    void createGame() throws RemoteException, NotBoundException;
-    void joinGame() throws RemoteException;
-    CommonClient chooseClient(String name);
-    void getNickname();
-    void isYourTurn() throws RemoteException;
+
     void updateTurn(Player player, String mex) throws RemoteException;
 
     void updateGoldDeck(LinkedList<GoldCard> deck, boolean start, String name);
