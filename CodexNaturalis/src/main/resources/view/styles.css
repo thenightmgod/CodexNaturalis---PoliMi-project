@@ -61,12 +61,11 @@
     -fx-background-position: center center;
     -fx-background-size: cover;
 }
-.tappeto-background {
-    -fx-background-image: url("MyCodexNaturalisPhotos/sfondorosso.jpeg");
-    -fx-background-size: cover;
-    -fx-background-position: center center;
-    -fx-border-color: rgba(255, 0, 0, 0.5);
-    -fx-border-width: 3; /* Larghezza del bordo */
-    -fx-border-radius: 10;
 
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
 }
