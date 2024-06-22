@@ -32,6 +32,7 @@ public class ClientModel {
         this.freePosition = new LinkedList<>();
         this.drawableGoldCards = new LinkedList<>();
         this.drawableResourceCards = new LinkedList<>();
+        this.otherFields = new HashMap<>();
     }
 
     public LinkedList<GoldCard> getDrawableGoldCards(){
@@ -96,10 +97,6 @@ public class ClientModel {
 
     public void setCommonGoals(LinkedList<GoalCard> commonGoals){
         this.commonGoals = commonGoals;
-    }
-
-    public void setOtherFields(HashMap<String, PlayingField> otherFields){
-        this.otherFields = otherFields;
     }
 
     public HashMap<String, PlayingField> getOtherFields(){
