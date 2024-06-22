@@ -103,61 +103,6 @@ public class TurnController extends GUIController{
         }
     }
 
-    public void plotOthersField(String name){
-
-        PlayingField field = this.gui.getClient().getClient().getOtherFields().get(name);
-        AnchorPane anchorPane = new AnchorPane();
-        ScrollPane scrollPane = new ScrollPane();
-        GridPane mariuccio = new GridPane();
-
-        mariuccio.setHgap(0);
-        mariuccio.setVgap(0);
-
-        double cellWidth = 210;
-        double cellHeight = 140.0;
-
-        int maxX = field.getField().keySet().stream().mapToInt(Position::getX).max().orElse(400);
-        int minX = field.getField().keySet().stream().mapToInt(Position::getX).min().orElse(400);
-        int maxY = field.getField().keySet().stream().mapToInt(Position::getY).max().orElse(400);
-        int minY = field.getField().keySet().stream().mapToInt(Position::getY).min().orElse(400);
-
-        for (int j = 0; j < maxY - minY + 1; j++) {
-            RowConstraints rowConstraints = new RowConstraints();
-            rowConstraints.setMinHeight(cellHeight);
-            rowConstraints.setMaxHeight(cellHeight);
-            mariuccio.getRowConstraints().add(rowConstraints);
-        }
-        for (int i = 0; i < maxX - minX + 1; i++) {
-            ColumnConstraints columnConstraints = new ColumnConstraints();
-            columnConstraints.setMinWidth(cellWidth);
-            columnConstraints.setMaxWidth(cellWidth);
-            mariuccio.getColumnConstraints().add(columnConstraints);
-        }
-
-        for (Position p : field.getField().keySet()) {
-            PlayableCard card = field.getField().get(p);
-            ImageView imageView = new ImageView();
-            try {
-                int x = p.getX() - minX;
-                int y = maxY - p.getY();
-                if(p.getFace()==FB.BACK) {
-                    Image image = loadCardBackImage(card.getId());
-                    imageView.setImage(image);
-                } else {Image image = loadCardFrontImage(card.getId());
-                    imageView.setImage(image);
-                }
-                imageView.setFitWidth(cellWidth);
-                imageView.setFitHeight(cellHeight);
-                GridPane.setMargin(imageView, new javafx.geometry.Insets(0, 0, 111 * y, -45.94 * x));
-                imageView.setPreserveRatio(true);
-                this.marione.add(imageView, x, y);
-            } catch (FileNotFoundException e) {
-                System.out.println("errore nel print playing field");
-            }
-        }
-    }
-
-
     public void plotField() {
         PlayingField field = this.gui.getClient().getClient().getField();
         this.marione.getChildren().clear();
@@ -731,7 +676,6 @@ public class TurnController extends GUIController{
         for (String playerName : others.keySet()) {
             Button playerButton = new Button(playerName);
             playerButton.setOnAction(e -> {
-                //funzione per vedere il campo da gioco in base al nome
                 plotOthersField(playerName);
             });
             vbox.getChildren().add(playerButton);
@@ -744,9 +688,72 @@ public class TurnController extends GUIController{
         newStage.show();
     }
 
-    private void plotOthersField(String playerName) {
-        System.out.println("ciao");
+    public void plotOthersField(String name){
+
+        PlayingField field = this.gui.getClient().getClient().getOtherFields().get(name);
+        AnchorPane anchorPane = new AnchorPane();
+        ScrollPane scrollPane = new ScrollPane();
+        GridPane mariuccio = new GridPane();
+
+        mariuccio.setHgap(0);
+        mariuccio.setVgap(0);
+
+        double cellWidth = 210;
+        double cellHeight = 140.0;
+
+        int maxX = field.getField().keySet().stream().mapToInt(Position::getX).max().orElse(400);
+        int minX = field.getField().keySet().stream().mapToInt(Position::getX).min().orElse(400);
+        int maxY = field.getField().keySet().stream().mapToInt(Position::getY).max().orElse(400);
+        int minY = field.getField().keySet().stream().mapToInt(Position::getY).min().orElse(400);
+
+        for (int j = 0; j < maxY - minY + 1; j++) {
+            RowConstraints rowConstraints = new RowConstraints();
+            rowConstraints.setMinHeight(cellHeight);
+            rowConstraints.setMaxHeight(cellHeight);
+            mariuccio.getRowConstraints().add(rowConstraints);
+        }
+        for (int i = 0; i < maxX - minX + 1; i++) {
+            ColumnConstraints columnConstraints = new ColumnConstraints();
+            columnConstraints.setMinWidth(cellWidth);
+            columnConstraints.setMaxWidth(cellWidth);
+            mariuccio.getColumnConstraints().add(columnConstraints);
+        }
+
+        for (Position p : field.getField().keySet()) {
+            PlayableCard card = field.getField().get(p);
+            ImageView imageView = new ImageView();
+            try {
+                int x = p.getX() - minX;
+                int y = maxY - p.getY();
+                Image image;
+                if (p.getFace() == FB.BACK) {
+                    image = loadCardBackImage(card.getId());
+                } else {
+                    image = loadCardFrontImage(card.getId());
+                }
+                imageView.setImage(image);
+                imageView.setFitWidth(cellWidth);
+                imageView.setFitHeight(cellHeight);
+                imageView.setPreserveRatio(true);
+                GridPane.setMargin(imageView, new javafx.geometry.Insets(0, 0, 111 * y, -45.94 * x));
+                mariuccio.add(imageView, x, y);
+            } catch (FileNotFoundException e) {
+                System.out.println("errore nel print playing field");
+            }
+        }
+
+        scrollPane.setContent(mariuccio);
+        anchorPane.getChildren().add(scrollPane);
+
+        Stage stage = new Stage();
+        Scene scene = new Scene(anchorPane, 800, 600);
+        stage.setScene(scene);
+        stage.setTitle(name + "'s Playing Field");
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initOwner(this.stage);
+        stage.show();
     }
+
 
 
 }
