@@ -102,7 +102,7 @@ class GameControllerTest {
             }
 
             @Override
-            public void startingGame(Player p, LinkedList<Player> players) throws RemoteException {
+            public void startingGame(Player p) throws RemoteException {
 
             }
 
@@ -213,7 +213,7 @@ class GameControllerTest {
             }
 
             @Override
-            public void startingGame(Player p, LinkedList<Player> players) throws RemoteException {
+            public void startingGame(Player p) throws RemoteException {
 
             }
 
@@ -324,7 +324,7 @@ class GameControllerTest {
             }
 
             @Override
-            public void startingGame(Player p, LinkedList<Player> players) throws RemoteException {
+            public void startingGame(Player p) throws RemoteException {
 
             }
 
@@ -435,7 +435,7 @@ class GameControllerTest {
             }
 
             @Override
-            public void startingGame(Player p, LinkedList<Player> players) throws RemoteException {
+            public void startingGame(Player p) throws RemoteException {
 
             }
 
