@@ -223,7 +223,7 @@ public class TurnController extends GUIController{
     public void isYourTurn() {
         messageLabel.setText("IT'S YOUR TURN!");
         messageLabel.setVisible(true);
-
+        loadMyHand();
         for(int cardIndex = 0; cardIndex < this.gui.getClient().getClient().getHand().size(); cardIndex++) {
             PlayableCard card = this.gui.getClient().getClient().getHand().get(cardIndex);
             for (Node node : myHandBox.getChildren()) {
@@ -419,7 +419,6 @@ public class TurnController extends GUIController{
     private void loadMyHand() {
         for(int i = 0; i < 3; i++)
             this.omar.set(i, true);
-
         myHandBox.getChildren().clear();
         myHandBox.setPrefHeight(160.0);
         myHandBox.setPrefWidth(492.0);
