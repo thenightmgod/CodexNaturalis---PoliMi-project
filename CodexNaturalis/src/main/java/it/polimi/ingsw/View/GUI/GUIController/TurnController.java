@@ -14,6 +14,7 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -27,6 +28,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import javax.swing.*;
 import java.io.FileNotFoundException;
 import java.util.*;
 import java.rmi.RemoteException;
@@ -53,8 +55,6 @@ public class TurnController extends GUIController{
     @FXML
     private HBox label_button_box;
     @FXML
-    private Button piazzala;
-    @FXML
     private Button myPointsButton;
     @FXML
     private GridPane marione;
@@ -64,6 +64,7 @@ public class TurnController extends GUIController{
     private LinkedList<ResourceCard> resourcedeck = new LinkedList<>();
     private LinkedList<PlayableCard> myhand;
     private LinkedHashMap<String,Integer> points = new LinkedHashMap<>();
+    private LinkedHashMap<String, PlayingField> othersPlayingField;
     private ScoreBoard scoreBoard;
     private PlayingField field;
     private int Points;
@@ -656,4 +657,40 @@ public class TurnController extends GUIController{
         }
         messageLabel.setVisible(true);
     }
+
+    @FXML
+    private void viewOthersPlayingField(ActionEvent event) {
+        Stage newStage = new Stage();
+        newStage.setTitle("MyCodexNaturalis");
+
+        VBox vbox = new VBox();
+        vbox.setSpacing(10);
+        vbox.setPadding(new Insets(10));
+
+        Label instructionLabel = new Label("Whose playing field do you want to view?");
+        vbox.getChildren().add(instructionLabel);
+
+        HashMap<String, PlayingField> others = client.getClient().getOtherFields();
+
+        for (String playerName : others.keySet()) {
+            Button playerButton = new Button(playerName);
+            playerButton.setOnAction(e -> {
+                //funzione per vedere il campo da gioco in base al nome
+                plotOthersField(playerName);
+            });
+            vbox.getChildren().add(playerButton);
+        }
+
+        Scene scene = new Scene(vbox, 300, 400);
+        newStage.setScene(scene);
+        newStage.initModality(Modality.WINDOW_MODAL);
+        newStage.initOwner(stage);
+        newStage.show();
+    }
+
+    private void plotOthersField(String playerName) {
+        System.out.println("ciao");
+    }
+
+
 }
