@@ -614,6 +614,7 @@ public class TurnController extends GUIController{
             newStage.setResizable(false);
             newStage.show();
         }else {
+            messageLabel.setText("");
             String text= messageLabel.getText();
             messageLabel.setText("This game has just started! Every players has zero points.\n" +text);
             return;
