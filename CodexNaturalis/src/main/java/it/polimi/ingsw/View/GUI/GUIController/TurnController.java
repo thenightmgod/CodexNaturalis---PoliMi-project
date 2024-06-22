@@ -229,27 +229,17 @@ public class TurnController extends GUIController{
         loadMyHand();
         for(int cardIndex = 0; cardIndex < this.gui.getClient().getClient().getHand().size(); cardIndex++) {
             PlayableCard card = this.gui.getClient().getClient().getHand().get(cardIndex);
-            for (Node node : myHandBox.getChildren()) {
-                if (node instanceof ImageView) {
-                    ImageView imageView = (ImageView) node;
-                    if (imageView.getImage().getUrl().contains(String.valueOf(card.getId()))) {
-                        int finalCardIndex = cardIndex;
-                        imageView.setOnDragDetected(event -> {
-                            Dragboard db = imageView.startDragAndDrop(TransferMode.ANY);
-                            ClipboardContent content = new ClipboardContent();
-                            content.putString(String.valueOf(finalCardIndex + 1)); // +1 because cardIndex starts from 0
-                            db.setContent(content);
-                            db.setDragView(imageView.getImage());
-                            event.consume();
-                        });
-                        imageView.setOnDragOver(event -> {
-                            if (event.getDragboard().hasString()) {
-                                event.acceptTransferModes(TransferMode.MOVE);
-                            }
-                            event.consume();
-                        });
-                    }
-                }
+            ImageView imageView = (ImageView) myHandBox.getChildren().get(cardIndex);
+            if (imageView.getImage().getUrl().contains(String.valueOf(card.getId()))) {
+                int finalCardIndex = cardIndex;
+                imageView.setOnDragDetected(event -> {
+                    Dragboard db = imageView.startDragAndDrop(TransferMode.ANY);
+                    ClipboardContent content = new ClipboardContent();
+                    content.putString(String.valueOf(finalCardIndex + 1)); // +1 because cardIndex starts from 0
+                    db.setContent(content);
+                    db.setDragView(imageView.getImage());
+                    event.consume();
+                });
             }
         }
     }
