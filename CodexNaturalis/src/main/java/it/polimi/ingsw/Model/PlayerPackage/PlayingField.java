@@ -129,11 +129,11 @@ public class PlayingField implements Serializable {
         }
         else {
             Position front = getPosFromCorner(p, o);
-            if(!containsInField(front)){
+            if(!Field.containsKey(front)){
                 //Orientation Lazzaro = getOppFromCorner(o);  angolo da non controllare ma sti cazzi
                 for(Orientation Orien : Orientation.values()) {//per tutti gli altri
                     Position toCheck = getPosFromCorner(front, Orien);  // posizione da checkare
-                    if (containsInField(toCheck)) {   //se c'è carta alla posizione di fronte all'angolo
+                    if (Field.containsKey(toCheck)) {   //se c'è carta alla posizione di fronte all'angolo
                         if ((Field.get(toCheck).getCorner(getOppFromCorner(Orien))).getRes().equals(ABSENT)) //vediamo se l'angolo opposto a quello che stiamo controllando, nella carta in pos toCheck ha effettivamente l'angolo
                             return;
                     }
