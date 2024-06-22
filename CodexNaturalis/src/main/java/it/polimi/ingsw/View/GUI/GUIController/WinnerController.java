@@ -34,27 +34,27 @@ public class WinnerController extends GUIController {
         }
     }
     private void loadLabelDue(){
-        labelUno = new Label("1." + standings.get(1));
+        labelUno.setText("1."+standings.get(1));
         labelUno.setVisible(true);
-        labelDue = new Label("2." + standings.get(0));
+        labelDue.setText("2."+ standings.get(0));
         labelDue.setVisible(true);
     }
     private void loadLabelTre(){
-        labelUno = new Label("1." + standings.get(2));
+        labelUno.setText("1."+ standings.get(2));
         labelUno.setVisible(true);
-        labelDue = new Label("2." + standings.get(1));
+        labelDue.setText("2."+ standings.get(1));
         labelDue.setVisible(true);
-        labelTre =  new Label("3." + standings.get(0));
+        labelTre.setText("3."+standings.get(0));
         labelTre.setVisible(true);
     }
     private void loadLabelQuattro(){
-        labelUno = new Label("1." + standings.get(3));
+        labelUno.setText("1."+standings.get(3));
         labelUno.setVisible(true);
-        labelDue = new Label("2." + standings.get(2));
+        labelDue.setText("2."+standings.get(2));
         labelDue.setVisible(true);
-        labelTre =  new Label("3." + standings.get(1));
+        labelTre.setText("3."+standings.get(1));
         labelTre.setVisible(true);
-        labelQuattro = new Label("4." + standings.get(0));
+        labelQuattro.setText("4."+standings.get(0));
         labelQuattro.setVisible(true);
     }
 }
