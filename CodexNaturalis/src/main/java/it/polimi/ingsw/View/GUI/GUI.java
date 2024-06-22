@@ -75,6 +75,7 @@ public class GUI implements GameView {
                 primaryStage.setTitle(client.getName() + "'s " + sceneName);
             }
         }
+        primaryStage.centerOnScreen();
         primaryStage.show();
     }
 
