@@ -182,6 +182,14 @@ public class LoginController extends GUIController {
                     alert.showAndWait();
                     createGame();
                 }
+                case "RoomFullException" -> {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information");
+                    alert.setHeaderText("Room is full");
+                    alert.setContentText("The room is full, please start a new one");
+                    alert.showAndWait();
+                    createGame();
+                }
                 default -> {
                 }
             }

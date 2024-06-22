@@ -16,27 +16,27 @@ import java.util.LinkedList;
 
 public interface GameView {
 
-     void updatePoints(HashMap<String, Integer> points, String name);
+    void updatePoints(HashMap<String, Integer> points, String name);
 
-     void updateGoals(LinkedList<GoalCard> goals, String name) throws RemoteException;
+    void updateGoals(LinkedList<GoalCard> goals, String name) throws RemoteException;
 
-    public void updateCommonGoals(LinkedList<GoalCard> goals, String name) throws RemoteException;
+    void updateCommonGoals(LinkedList<GoalCard> goals, String name) throws RemoteException;
 
-    public void updateHands(LinkedList<PlayableCard> hand, String name);
+    void updateHands(LinkedList<PlayableCard> hand, String name);
 
-    public void updateField(PlayingField field, String name);
+    void updateField(PlayingField field, String name);
 
-    public void updateFreePosition(String name, LinkedList<Position> freePositions);
+    void updateFreePosition(String name, LinkedList<Position> freePositions);
 
-    public void showException(String name, String exception) throws RemoteException, NotBoundException;
+    void showException(String name, String exception) throws RemoteException, NotBoundException;
 
-    public void showStartCard(StartCard card) throws RemoteException;
+    void showStartCard(StartCard card) throws RemoteException;
 
-    public void updateTurn(Player player, String mex) throws RemoteException;
+    void updateTurn(Player player, String mex) throws RemoteException;
 
-    public void updateGoldDeck(LinkedList<GoldCard> deck, boolean start, String name);
+    void updateGoldDeck(LinkedList<GoldCard> deck, boolean start, String name);
 
-    public void updateResourceDeck(LinkedList<ResourceCard> deck, boolean start, String name);
+    void updateResourceDeck(LinkedList<ResourceCard> deck, boolean start, String name);
 
     void startingGame() throws RemoteException;
 

@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -166,6 +167,11 @@ public class GUI implements GameView {
                     guicontrollers.get("login").showException("RoomNotExistsException");
                 });
             }
+            case "RoomFullException" -> {
+                Platform.runLater(() -> {
+                    guicontrollers.get("login").showException("RoomFullException");
+                });
+            }
             case "RequirementsNotSatisfied" -> {
                 Platform.runLater( () -> {
                     guicontrollers.get("turn").showException("RequirementsNotSatisfied");
@@ -307,7 +313,7 @@ public class GUI implements GameView {
 
     @Override
     public void leaveGameMessage() {
-
+        System.out.println("Some");
     }
 
     public CommonClient getClient() {
