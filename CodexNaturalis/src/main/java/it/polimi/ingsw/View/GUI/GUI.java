@@ -231,7 +231,6 @@ public class GUI implements GameView {
         if(!first_turn) {
             Platform.runLater(() -> {
                 ((TurnController) guicontrollers.get("turn")).updateGoldDeck(deck);
-
             });
         }
     }
@@ -247,7 +246,7 @@ public class GUI implements GameView {
     }
 
     @Override
-    public void startingGame(LinkedList<Player> players) throws RemoteException {
+    public void startingGame() throws RemoteException {
         Platform.runLater(() -> {
             try {
                 switchToScene("startCard", 1);

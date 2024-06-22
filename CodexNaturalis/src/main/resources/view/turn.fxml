@@ -11,14 +11,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" styleClass="woodBackground" stylesheets="@stylesturn.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.GUI.GUIController.TurnController">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" styleClass="woodBackground" stylesheets="@stylesturn.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.GUI.GUIController.TurnController">
       <Label layoutX="20.0" layoutY="515.0" style="-fx-background-color: rgba(255,0,0,0.4);" text="YOUR HAND" textFill="WHITE">
          <font>
             <Font name="Weibei TC Bold" size="20.0" />
          </font>
       </Label>
       <HBox fx:id="myHandBox" layoutX="20.0" layoutY="560.0" prefHeight="150.0" prefWidth="750.0" spacing="15.0" />
-      <ScrollPane layoutX="12.0" layoutY="19.0" prefHeight="468.0" prefWidth="739.0" style="-fx-border-color: red; -fx-border-width: 4px; -fx-border-style: solid; -fx-background-radius: 10px;" styleClass="custom-background" stylesheets="@styles.css">
+      <ScrollPane layoutX="12.0" layoutY="19.0" opacity="0.47" prefHeight="468.0" prefWidth="739.0" style="-fx-border-color: red; -fx-border-width: 4px; -fx-border-style: solid; -fx-background-radius: 10px;" styleClass="custom-background" stylesheets="@styles.css">
          <content>
             <GridPane fx:id="marione" prefHeight="470.0" prefWidth="697.0" styleClass="custom-background" stylesheets="@styles.css">
             </GridPane>
@@ -56,7 +56,7 @@
            <children>
                <Pane prefHeight="193.0" prefWidth="515.0">
                    <children>
-                       <Button fx:id="myPointsButton" styleClass="button-submit" layoutX="15.0" layoutY="89.0" mnemonicParsing="false" onAction="#showPointsCounter" prefHeight="47.0" prefWidth="146.0" text="view scoreboard" />
+                       <Button fx:id="myPointsButton" layoutX="15.0" layoutY="89.0" mnemonicParsing="false" onAction="#showPointsCounter" prefHeight="47.0" prefWidth="146.0" styleClass="button-submit" text="view scoreboard" />
                        <Label fx:id="messageLabel" layoutX="15.0" layoutY="8.0" style="-fx-background-color: rgba(0,255,0,0.3);" text="YOUR MESSAGE HERE" textFill="#fffbfb">
                      <font>
                         <Font name="Weibei TC Bold" size="20.0" />

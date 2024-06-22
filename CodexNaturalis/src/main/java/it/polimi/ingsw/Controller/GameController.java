@@ -143,9 +143,7 @@ public class GameController {
     public void startGame() throws RemoteException {
         initializeRoom();
         for (Player p : players) {
-            LinkedList<Player> otherPlayers = new LinkedList<Player>();
-            otherPlayers = players;
-            this.game.startingGame(p, otherPlayers);
+            this.game.startingGame(p);
         }
         createDecks();
         createCommonGoals();

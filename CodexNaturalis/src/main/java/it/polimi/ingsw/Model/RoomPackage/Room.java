@@ -190,11 +190,10 @@ public class Room implements Serializable {
     /**
      * Starts the game for the specified player.
      * @param p The player to start the game for.
-     * @param otherPlayers The other players in the same Room.
      * @throws RemoteException If a remote communication error occurs.
      */
-    public void startingGame(Player p, LinkedList<Player> otherPlayers) throws RemoteException {
-        observerManager.getObserver(p.getName()).startingGame(p, otherPlayers);
+    public void startingGame(Player p) throws RemoteException {
+        observerManager.getObserver(p.getName()).startingGame(p);
     }
 
     /**

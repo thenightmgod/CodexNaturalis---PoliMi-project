@@ -38,7 +38,7 @@ public interface GameView {
 
     public void updateResourceDeck(LinkedList<ResourceCard> deck, boolean start, String name);
 
-    void startingGame(LinkedList<Player> pLayers) throws RemoteException;
+    void startingGame() throws RemoteException;
 
     void declareWinner(LinkedList<String> standings);
 
