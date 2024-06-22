@@ -1,35 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane opacity="0.41" prefHeight="720.0" prefWidth="1280.0" styleClass="winnerBackground" stylesheets="@stylesturn.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.GUI.GUIController.WinnerController">
+<AnchorPane opacity="0.8" prefHeight="720.0" prefWidth="1280.0" styleClass="winnerBackground" stylesheets="@stylesturn.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.GUI.GUIController.WinnerController">
    <children>
-      <VBox layoutX="350.0" layoutY="145.0" prefHeight="400.0" prefWidth="550.0">
+      <VBox layoutX="350.0" layoutY="145.0" opacity="0.95" prefHeight="440.0" prefWidth="600.0" styleClass="tappeto-background" stylesheets="@styles.css">
          <children>
-            <Label fx:id="labelUno" alignment="CENTER" prefHeight="100.0" prefWidth="550.0" textAlignment="CENTER" textFill="WHITE">
-               <font>
-                  <Font name="Weibei TC Bold" size="60.0" />
-               </font>
-            </Label>
-            <Label fx:id="labelDue" alignment="CENTER" prefHeight="100.0" prefWidth="550.0" textFill="WHITE">
-               <font>
-                  <Font size="60.0" />
-               </font>
-            </Label>
-            <Label fx:id="labelTre" alignment="CENTER" prefHeight="100.0" prefWidth="550.0" textFill="WHITE">
-               <font>
-                  <Font name="Weibei TC Bold" size="60.0" />
-               </font>
-            </Label>
-            <Label fx:id="labelQuattro" alignment="CENTER" prefHeight="100.0" prefWidth="550.0" textFill="#fffdfd">
-               <font>
-                  <Font size="60.0" />
-               </font>
-            </Label>
+            <HBox prefHeight="400.0" prefWidth="200.0">
+               <children>
+                  <ImageView fx:id="image1" fitHeight="150.0" fitWidth="100.0" layoutX="10.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label fx:id="labelUno" layoutX="5.0" prefHeight="100.0" prefWidth="550.0" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="Weibei TC Bold" size="60.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="110.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="400.0" prefWidth="200.0">
+               <children>
+                  <ImageView fx:id="image2" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label fx:id="labelDue" alignment="TOP_LEFT" prefHeight="100.0" prefWidth="550.0" textFill="WHITE">
+                     <font>
+                        <Font name="Weibei TC Bold" size="60.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="110.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="400.0" prefWidth="200.0">
+               <children>
+                  <ImageView fx:id="image3" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label fx:id="labelTre" alignment="TOP_LEFT" prefHeight="100.0" prefWidth="550.0" textFill="WHITE">
+                     <font>
+                        <Font name="Weibei TC Bold" size="60.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="110.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="400.0" prefWidth="200.0">
+               <children>
+                  <ImageView fx:id="image4" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label fx:id="labelQuattro" alignment="TOP_LEFT" prefHeight="100.0" prefWidth="550.0" textFill="#fffdfd">
+                     <font>
+                        <Font size="60.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="110.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
          </children>
       </VBox>
    </children>
