@@ -45,6 +45,9 @@ public class GUI implements GameView {
         this.client = null;
         this.args = args;
         this.primaryStage = stage;
+        this.primaryStage.setOnCloseRequest(event -> {
+            System.exit(0);
+        });
         this.Turn = null;
         switchToScene("login");
     }
@@ -122,7 +125,6 @@ public class GUI implements GameView {
     @Override
     public void updateCommonGoals(LinkedList<GoalCard> goals, String name) throws RemoteException {
         client.getClient().setCommonGoals(goals);
-        //Platform.runLater(() -> gameController.updateCommonGoals(goals));
     }
 
 
@@ -277,12 +279,16 @@ public class GUI implements GameView {
 
     @Override
     public void twenty(String name) {
-
+        Platform.runLater(() -> {
+            ((TurnController) guicontrollers.get("turn")).twenty(name);
+        });
     }
 
     @Override
     public void lastRound() {
-
+        Platform.runLater(() -> {
+            ((TurnController) guicontrollers.get("turn")).lastRound();
+        });
     }
 
     @Override
@@ -313,7 +319,8 @@ public class GUI implements GameView {
 
     @Override
     public void leaveGameMessage() {
-        System.out.println("Some");
+        System.out.println("Someone left the game");
+        System.exit(0);
     }
 
     public CommonClient getClient() {
