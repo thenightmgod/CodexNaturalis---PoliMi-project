@@ -1,8 +1,6 @@
 package it.polimi.ingsw.Network.Socket;
 
-import it.polimi.ingsw.Exceptions.RoomFullException;
-import it.polimi.ingsw.Exceptions.RoomNotExistsException;
-import it.polimi.ingsw.Exceptions.WrongPlayersNumberException;
+
 import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 

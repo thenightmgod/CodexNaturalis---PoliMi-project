@@ -118,7 +118,7 @@ public class MainController {
                             while (iterator.hasNext()) {
                                 VirtualView view = iterator.next();
                                 try {
-                                    view.isAlive();
+                                    view.isAlivee();
                                 } catch (RemoteException e) {
                                     iterator.remove();
                                     for (VirtualView otherView : views) {

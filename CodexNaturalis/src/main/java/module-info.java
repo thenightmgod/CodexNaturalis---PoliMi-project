@@ -14,6 +14,7 @@ module it.polimi.ingsw {
     exports it.polimi.ingsw.Network;
     exports it.polimi.ingsw.Controller;
     exports it.polimi.ingsw.View.TUI;
+    exports it.polimi.ingsw.Model.CornerPackage;
     exports it.polimi.ingsw.Model.CardPackage.PlayableCardPackage;
     exports it.polimi.ingsw.Model.CardPackage.GoalCardPackage;
     exports it.polimi.ingsw.View.GUI.GUIController;

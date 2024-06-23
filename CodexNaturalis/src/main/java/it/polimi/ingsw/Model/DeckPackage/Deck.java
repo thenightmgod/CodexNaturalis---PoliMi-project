@@ -11,8 +11,8 @@ import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.StartCard;
 import it.polimi.ingsw.Model.CornerPackage.CardRes;
-import it.polimi.ingsw.Model.CornerPackage.CardResDeserializer;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
+import it.polimi.ingsw.Model.CornerPackage.CardResDeserializer;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;

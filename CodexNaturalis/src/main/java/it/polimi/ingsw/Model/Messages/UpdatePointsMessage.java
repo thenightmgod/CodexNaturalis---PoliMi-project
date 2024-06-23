@@ -2,11 +2,13 @@ package it.polimi.ingsw.Model.Messages;
 
 //MEX SERVER --> CLIENT
 
+import java.util.HashMap;
+
 public class UpdatePointsMessage extends Message {
-    private int points;
+    private HashMap<String, Integer> points;
     private String name;
 
-    public UpdatePointsMessage(int points, String name) {
+    public UpdatePointsMessage(HashMap<String, Integer> points, String name) {
         super("UpdatePointsMessage");
         this.points=points;
         this.name=name;
@@ -15,7 +17,7 @@ public class UpdatePointsMessage extends Message {
     public String getName() {
         return name;
     }
-    public int getPoints() {
+    public HashMap<String, Integer> getPoints() {
         return points;
     }
 }

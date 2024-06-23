@@ -7,7 +7,7 @@ import com.google.gson.Gson;
 
 import java.io.Serializable;
 
-import static com.sun.management.HotSpotDiagnosticMXBean.ThreadDumpFormat.JSON;
+//import static com.sun.management.HotSpotDiagnosticMXBean.ThreadDumpFormat.JSON;
 
 /**
  * The Message class  is an abstract class that represents a generic message.

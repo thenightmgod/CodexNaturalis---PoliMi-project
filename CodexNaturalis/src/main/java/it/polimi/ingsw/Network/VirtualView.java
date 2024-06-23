@@ -172,7 +172,7 @@ public interface VirtualView extends Remote {
      *
      * @throws RemoteException If a remote access error occurs.
      */
-    void isAlive() throws RemoteException;
+    void isAlivee() throws RemoteException;
 
     /**
      * Leaves the game to this client that they have left the game.

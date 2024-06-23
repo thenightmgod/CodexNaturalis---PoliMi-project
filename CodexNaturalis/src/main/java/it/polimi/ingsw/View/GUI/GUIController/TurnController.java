@@ -692,6 +692,32 @@ public class TurnController extends GUIController{
 
         for (String playerName : others.keySet()) {
             Button playerButton = new Button(playerName);
+            playerButton.setStyle(
+                    "-fx-background-color: #154c16;" + // Colore di sfondo verde
+                            "-fx-text-fill: white;" + // Colore del testo bianco
+                            "-fx-font-size: 14px;" + // Dimensione del font
+                            "-fx-font-family: 'Arial';" + // Famiglia del font
+                            "-fx-padding: 8px 16px;" + // Padding interno (top-bottom, left-right)
+                            "-fx-border-radius: 5px;" + // Arrotondamento dei bordi
+                            "-fx-background-radius: 5px;" + // Arrotondamento dei bordi del background
+                            "-fx-cursor: hand;" + // Cambia il cursore quando si passa sopra il bottone
+                            "-fx-background-color: #154c16;" + // Colore di sfondo verde
+                            "-fx-text-fill: white;" + // Colore del testo bianco
+                            "-fx-font-size: 14px;" + // Dimensione del font
+                            "-fx-font-family: 'Arial';" + // Famiglia del font
+                            "-fx-padding: 8px 16px;" + // Padding interno (top-bottom, left-right)
+                            "-fx-border-radius: 5px;" + // Arrotondamento dei bordi
+                            "-fx-background-radius: 5px;" + // Arrotondamento dei bordi del background
+                            "-fx-cursor: hand;" + // Cambia il cursore quando si passa sopra il bottone
+                            "-fx-background-color: #154c16;" + // Colore di sfondo verde
+                            "-fx-text-fill: white;" + // Colore del testo bianco
+                            "-fx-font-size: 14px;" + // Dimensione del font
+                            "-fx-font-family: 'Arial';" +
+                            "-fx-padding: 8px 16px;" + // Padding interno (top-bottom, left-right)
+                            "-fx-border-radius: 5px;" + // Arrotondamento dei bordi
+                            "-fx-background-radius: 5px;" + // Arrotondamento dei bordi del background
+                            "-fx-cursor: hand;" // Cambia il cursore quando si passa sopra il bottone
+            );
             playerButton.setOnAction(e -> {
                 plotOthersField(playerName);
             });
@@ -699,12 +725,13 @@ public class TurnController extends GUIController{
         }
 
 
-        Scene scene = new Scene(stackPane, 700, 700);
+        Scene scene = new Scene(stackPane, 600, 400);
         newStage.setScene(scene);
         newStage.initModality(Modality.WINDOW_MODAL);
         newStage.initOwner(stage);
         newStage.show();
     }
+
 
     public void plotOthersField(String name) {
         PlayingField field = this.gui.getClient().getClient().getOtherFields().get(name);
@@ -712,8 +739,7 @@ public class TurnController extends GUIController{
         ScrollPane scrollPane = new ScrollPane();
         GridPane mariuccio = new GridPane();
 
-        // Set background color
-        BackgroundFill backgroundFill = new BackgroundFill(Color.PALEGREEN, CornerRadii.EMPTY, null);
+        BackgroundFill backgroundFill = new BackgroundFill(Color.PALEGREEN, CornerRadii.EMPTY, Insets.EMPTY);
         Background background = new Background(backgroundFill);
         stackPane.setBackground(background);
 
@@ -763,8 +789,14 @@ public class TurnController extends GUIController{
                 System.out.println("Errore nel print playing field");
             }
         }
+
         mariuccio.setAlignment(Pos.CENTER);
         scrollPane.setContent(mariuccio);
+        // Imposta le dimensioni prefissate per abilitare lo scorrimento
+        scrollPane.setPrefSize(800, 600);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+
         stackPane.getChildren().add(scrollPane);
         StackPane.setAlignment(scrollPane, Pos.CENTER);
 

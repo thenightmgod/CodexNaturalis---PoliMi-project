@@ -1,7 +1,6 @@
 package it.polimi.ingsw.Network.Socket;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
@@ -13,6 +12,7 @@ import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
 import it.polimi.ingsw.Network.CommonClient;
+import it.polimi.ingsw.Network.RMI.VirtualServer;
 import it.polimi.ingsw.View.GameView;
 import it.polimi.ingsw.View.TUI.ClientModel;
 
@@ -117,7 +117,7 @@ public class SocketClient implements CommonClient {
                 this.view.showException(exception, details);
             }
             case "UpdatePointsMessage" -> {
-                int points= ((UpdatePointsMessage)mex).getPoints();
+                HashMap<String, Integer> points= ((UpdatePointsMessage)mex).getPoints();
                 String name= ((UpdatePointsMessage)mex).getName();
                 this.view.updatePoints(points, name);
             }
@@ -128,7 +128,8 @@ public class SocketClient implements CommonClient {
             }
             case "NotYourTurnMessage" -> {
                 Player p = ((NotYourTurnMessage)mex).getPlayer();
-                this.view.printNotYourTurn(p);
+                String mess = ((NotYourTurnMessage)mex).getMex();
+                this.view.printNotYourTurn(p, "blabla");
             }
             case "StartingGameMessage" -> {
                 this.view.startingGame();
@@ -199,35 +200,29 @@ public class SocketClient implements CommonClient {
         server.createGame(gson);
     }
 
-    @Override
-    public void leaveGame(String name) {
-        LeaveGameMessage msg = new LeaveGameMessage(name);
-        String gson = msg.MessageToJson();
-        server.leaveGame(gson);
-    }
 
     @Override
-    public void placeCard(int whichInHand, int x, int y, FB face) {
+    public void placeCard(CommonClient client, int whichInHand, int x, int y, FB face) {
         PlaceCardMessage msg = new PlaceCardMessage(name, whichInHand, x, y, face);
         String gson = msg.MessageToJson();
         server.placeCard(gson);
     }
 
     @Override
-    public void setStartCardFace(boolean face, String name) {
+    public void setStartCardFace(boolean face, CommonClient client) {
         SetStartCardFaceMessage msg = new SetStartCardFaceMessage(face, name);
         String gson = msg.MessageToJson();
         server.setStartCardFace(gson);
     }
 
     @Override
-    public void chooseGoalCard(int i, String name)  {
+    public void chooseGoalCard(int i, CommonClient client)  {
         ChooseGoalCardMessage msg = new ChooseGoalCardMessage(i, name);
         String gson = msg.MessageToJson();
         server.chooseGoalcard(gson);
     }
     @Override
-    public void drawCard(int i, int whichOne, String name){
+    public void drawCard(int i, int whichOne, CommonClient client){
         DrawCardMessage msg = new DrawCardMessage(i, whichOne, name);
         String gson = msg.MessageToJson();
         server.drawCard(gson);
@@ -254,6 +249,16 @@ public class SocketClient implements CommonClient {
         EndTurnMessage msg = new EndTurnMessage(name, mex);
         String gson = msg.MessageToJson();
         server.endTurn(gson);
+    }
+
+    /**
+     * Gets the server.
+     *
+     * @return The server.
+     */
+    @Override
+    public VirtualServer getServer() {
+        return null;
     }
 
 }

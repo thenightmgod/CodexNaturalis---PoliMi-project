@@ -427,7 +427,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
      * @throws RemoteException If a remote access error occurs.
      */
     @Override
-    public void isAlive() throws RemoteException{
+    public void isAlivee() throws RemoteException{
 
     }
 

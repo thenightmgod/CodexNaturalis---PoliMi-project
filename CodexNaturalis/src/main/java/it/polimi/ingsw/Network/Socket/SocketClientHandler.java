@@ -3,7 +3,6 @@ package it.polimi.ingsw.Network.Socket;
 import com.google.gson.Gson;
 import it.polimi.ingsw.Controller.GameController;
 import it.polimi.ingsw.Controller.MainController;
-import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
@@ -22,7 +21,6 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Map;
 import java.net.*;
 
 public class SocketClientHandler extends Thread implements VirtualView {
@@ -71,20 +69,22 @@ public class SocketClientHandler extends Thread implements VirtualView {
     public void handleCommand(Message msg) throws RemoteException, NotBoundException {
         switch(msg.getType()){
             case "JoinExistingGameMessage" -> {
-                String name = ((JoinExistingGameMessage) msg).getName();
-                controller.joinGame(name, this); //capire come gestire i messaggi di errore e recapitarli al client giusto
+                /*String name = ((JoinExistingGameMessage) msg).getName();
+                controller.joinGame(name, this); //capire come gestire i messaggi di errore e recapitarli al client giusto*/
             }
             case "CreateGameMessage" -> {
-                String name = ((CreateGameMessage) msg).getName();
+                /*String name = ((CreateGameMessage) msg).getName();
                 int numPlayers = ((CreateGameMessage) msg).getNumPlayers();
-                controller.createGame(name, numPlayers, this);
+                controller.createGame(name, numPlayers, this);*/
             }
             case "LeaveGameMessage" -> {
+                // VA MESSO
+                /*
                 String name = ((LeaveGameMessage) msg).getName();
                 HashMap<Integer, GameController> map = controller.getControllersPerGame();
                 GameController gc = findGameController(name);
                 int k = gc.getRoomId();
-                GameController useless = controller.leaveGame(name, k);
+                GameController useless = controller.leaveGame(name, k);*/
             }
             case "PlaceCardMessage" -> {
                 String name = ((PlaceCardMessage) msg).getName();
@@ -96,7 +96,7 @@ public class SocketClientHandler extends Thread implements VirtualView {
                 gc.placeCard(whichInHand, x, y, face);
             }
             case "SetStartCardMessage" -> {
-                //da fare dopo aver sistemato il metodo nel game controller
+                //VA MESSO
             }
             case "ChooseGoalCardMessage" -> {
                 int i= ((ChooseGoalCardMessage)msg).getI();
@@ -110,11 +110,6 @@ public class SocketClientHandler extends Thread implements VirtualView {
                 String name = ((DrawCardMessage)msg).getName();
                 GameController gc = findGameController(name);
                 gc.drawCard(i,WhichOne);
-            }
-            case "CheckGoalCardMessage" -> {
-                String name = ((CheckGoalCardMessage)msg).getName();
-                GameController gc = findGameController(name);
-                gc.checkGoals(name);
             }
             case "EndTurnMessage" -> {
                 String name = ((EndTurnMessage)msg).getName();
@@ -137,6 +132,37 @@ public class SocketClientHandler extends Thread implements VirtualView {
         String gson = message.MessageToJson();
         proxy.lastRound(gson);
     }
+
+    /**
+     * Checks if this client is alive.
+     *
+     * @throws RemoteException If a remote access error occurs.
+     */
+    @Override
+    public void isAlivee() throws RemoteException {
+
+    }
+
+    /**
+     * Leaves the game to this client that they have left the game.
+     *
+     * @throws RemoteException If a remote access error occurs.
+     */
+    @Override
+    public void leaveGame() throws RemoteException {
+
+    }
+
+    /**
+     * Sends a message to this client that they have left the game.
+     *
+     * @throws RemoteException If a remote access error occurs.
+     */
+    @Override
+    public void leaveGameMessage() throws RemoteException {
+
+    }
+
     @Override
     public void showException(String exception, String details) throws RemoteException{
         ExceptionMessage message= new ExceptionMessage(exception, details);
@@ -144,23 +170,34 @@ public class SocketClientHandler extends Thread implements VirtualView {
         proxy.showException(gson);
     }
 
+
     @Override
-    public void updatePoints(int points, String name) throws RemoteException {
+    public void updatePoints(HashMap<String, Integer> points, String name) throws RemoteException {
         UpdatePointsMessage message= new UpdatePointsMessage(points, name);
         String gson = message.MessageToJson();
         proxy.updatePoints(gson);
     }
+
     @Override
     public void updateTurn(Player turn, String mex) throws RemoteException {
         UpdateTurnMessage message = new UpdateTurnMessage(turn, mex);
         String gson = message.MessageToJson();
         proxy.updateTurn(gson);
     }
+
+    /**
+     * Notifies a player that it's not their turn.
+     *
+     * @param turn The player to be notified.
+     * @param mex  The message to be displayed.
+     * @throws RemoteException If a remote access error occurs.
+     */
+
     @Override
-    public void notYourTurn(Player turn){
-        NotYourTurnMessage message = new NotYourTurnMessage(turn);
+    public void notYourTurn(Player turn, String mex){
+        /*NotYourTurnMessage message = new NotYourTurnMessage(turn);
         String gson = message.MessageToJson();
-        proxy.notYourTurn(gson);
+        proxy.notYourTurn(gson);*/
     }
     public void declareWinner(LinkedList<String> standings){
         DeclareWinnerMessage message = new DeclareWinnerMessage(standings);
@@ -185,20 +222,20 @@ public class SocketClientHandler extends Thread implements VirtualView {
         proxy.showStartCard(gson);
     }
     @Override
-    public void updateGoals(LinkedList<GoalCard> goals, String name) throws RemoteException {
+    public void updateGoals(LinkedList<GoalCard> goals) throws RemoteException {
         ShowGoalsMessage message= new ShowGoalsMessage(goals, name);
         String gson = message.MessageToJson();
         proxy.showGoals(gson);
     }
     @Override
-    public void updateCommonGoals(LinkedList<GoalCard> goals, String name) throws RemoteException{
+    public void updateCommonGoals(LinkedList<GoalCard> goals) throws RemoteException{
         UpdateCommonGoalsMessage message = new UpdateCommonGoalsMessage(goals, name);
         String gson = message.MessageToJson();
         proxy.updateCommonGoals(gson);
     }
 
     @Override
-    public void showHand(LinkedList<PlayableCard> hand, String name) throws RemoteException {
+    public void showHand(LinkedList<PlayableCard> hand) throws RemoteException {
         ShowHandMessage message= new ShowHandMessage(hand, name);
         String gson = message.MessageToJson();
         proxy.showHand(gson);
@@ -244,7 +281,7 @@ public class SocketClientHandler extends Thread implements VirtualView {
 
     public GameController findGameController(String name) throws RemoteException {
         GameController gc = null;
-        LinkedList<GameController> gameControllers = controller.getControllers();
+        /*LinkedList<GameController> gameControllers = controller.getControllers();
         for(GameController elem : gameControllers){
             Room curr = elem.getGame();
             LinkedList<Player> players = curr.getPlayers();
@@ -253,7 +290,7 @@ public class SocketClientHandler extends Thread implements VirtualView {
                     return elem;
                 }
             }
-        }
+        }*/
         return gc;
     }
 
@@ -261,5 +298,6 @@ public class SocketClientHandler extends Thread implements VirtualView {
         int x = 4;
         System.out.println(4);
     }
+
 }
 

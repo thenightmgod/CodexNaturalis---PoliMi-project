@@ -4,9 +4,15 @@ import it.polimi.ingsw.Model.PlayerPackage.Player;
 
 public class NotYourTurnMessage extends Message{
     private Player p;
-    public NotYourTurnMessage(Player p){
+    private String mex;
+    public NotYourTurnMessage(Player p, String mess){
         super("NotYourTurnMessage");
         this.p = p;
+        this.mex = mess;
+    }
+
+    public String getMex() {
+        return mex;
     }
 
     public Player getPlayer() {
