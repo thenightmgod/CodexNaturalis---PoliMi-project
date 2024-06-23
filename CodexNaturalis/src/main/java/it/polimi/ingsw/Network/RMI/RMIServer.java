@@ -19,7 +19,7 @@ public class RMIServer implements VirtualServer {
     final MainController controller;
     int port;
     ExecutorService executorService;
-    final ConcurrentHashMap<Integer, MultipleFlow> actionsPerGame;
+    ConcurrentHashMap<Integer, MultipleFlow> actionsPerGame;
     PriorityBlockingQueue<Actions> joins;
 
     /**
@@ -33,7 +33,6 @@ public class RMIServer implements VirtualServer {
         this.joins = joins;
         port =  49666;
         this.actionsPerGame = actionsPerGame;
-
 
     }
 
