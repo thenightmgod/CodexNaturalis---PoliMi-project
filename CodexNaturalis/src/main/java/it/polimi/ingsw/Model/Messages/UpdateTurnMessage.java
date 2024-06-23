@@ -3,8 +3,8 @@ package it.polimi.ingsw.Model.Messages;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 
 public class UpdateTurnMessage extends Message{
-    private Player player;
-    private String mex;
+    public Player player;
+    public String mex;
 
     public UpdateTurnMessage(Player p, String mex){
         super("UpdateTurnMessage");

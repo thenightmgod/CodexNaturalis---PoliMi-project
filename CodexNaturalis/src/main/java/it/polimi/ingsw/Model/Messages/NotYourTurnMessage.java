@@ -3,8 +3,8 @@ package it.polimi.ingsw.Model.Messages;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 
 public class NotYourTurnMessage extends Message{
-    private Player p;
-    private String mex;
+    public Player p;
+    public String mex;
     public NotYourTurnMessage(Player p, String mess){
         super("NotYourTurnMessage");
         this.p = p;

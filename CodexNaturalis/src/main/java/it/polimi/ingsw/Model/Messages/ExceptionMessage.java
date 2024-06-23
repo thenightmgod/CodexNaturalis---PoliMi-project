@@ -1,8 +1,8 @@
 package it.polimi.ingsw.Model.Messages;
 
 public class ExceptionMessage extends Message {
-    private String details;
-    private String exception;
+    public String details;
+    public String exception;
 
     public ExceptionMessage(String exception, String details) {
         super("ExceptionMessage");

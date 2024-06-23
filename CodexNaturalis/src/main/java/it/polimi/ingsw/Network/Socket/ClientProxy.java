@@ -45,6 +45,7 @@ public class ClientProxy {
 
     public void sendMessage(String stringMessage){
         output.write(stringMessage);
+        output.write("\n");
         output.flush();
     }
 }

@@ -1,8 +1,8 @@
 package it.polimi.ingsw.Model.Messages;
 
 public class EndTurnMessage extends Message{
-    private String name;
-    private String mex;
+    public String name;
+    public String mex;
     public EndTurnMessage(String name, String mex){
         super("EndTurnMessage");
         this.name = name;

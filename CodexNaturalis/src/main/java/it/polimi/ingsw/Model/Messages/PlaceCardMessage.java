@@ -4,11 +4,11 @@ import it.polimi.ingsw.Network.CommonClient;
 
 
 public class PlaceCardMessage extends Message{
-   private int whichInHand;
-   private int x;
-   private int y;
-   private FB face;
-   private String name;
+   public int whichInHand;
+   public int x;
+   public int y;
+   public FB face;
+   public String name;
 
    public PlaceCardMessage(String name, int whichInHand, int x, int y, FB face) {
        super("PlaceCardMessage");

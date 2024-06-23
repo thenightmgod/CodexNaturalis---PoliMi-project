@@ -3,8 +3,8 @@ package it.polimi.ingsw.Model.Messages;
 import it.polimi.ingsw.Network.CommonClient;
 
 public class SetStartCardFaceMessage extends Message {
-    private boolean Face;
-    private String name;
+    public boolean Face;
+    public String name;
 
     public SetStartCardFaceMessage(boolean face, String name) {
         super("SetStartCardFaceMessage");

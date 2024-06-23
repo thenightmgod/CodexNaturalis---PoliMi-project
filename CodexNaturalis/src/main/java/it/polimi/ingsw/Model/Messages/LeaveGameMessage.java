@@ -3,7 +3,7 @@ package it.polimi.ingsw.Model.Messages;
 import it.polimi.ingsw.Network.CommonClient;
 
 public class LeaveGameMessage extends Message {
-    private String name;
+    public String name;
     public LeaveGameMessage(String name) {
         super("LeaveGameMessage");
         this.name=name;

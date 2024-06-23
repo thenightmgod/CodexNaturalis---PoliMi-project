@@ -5,8 +5,8 @@ import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import java.util.LinkedList;
 
 public class ShowGoalsMessage extends Message{
-    private LinkedList<GoalCard> goals;
-    private String name;
+    public LinkedList<GoalCard> goals;
+    public String name;
 
     public ShowGoalsMessage(LinkedList<GoalCard> cards, String name) {
         super("ShowGoalsMessage");

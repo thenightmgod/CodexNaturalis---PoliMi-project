@@ -5,8 +5,8 @@ package it.polimi.ingsw.Model.Messages;
 import java.util.HashMap;
 
 public class UpdatePointsMessage extends Message {
-    private HashMap<String, Integer> points;
-    private String name;
+    public HashMap<String, Integer> points;
+    public String name;
 
     public UpdatePointsMessage(HashMap<String, Integer> points, String name) {
         super("UpdatePointsMessage");

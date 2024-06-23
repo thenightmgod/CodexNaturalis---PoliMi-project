@@ -4,9 +4,9 @@ import it.polimi.ingsw.Network.CommonClient;
 import it.polimi.ingsw.Network.Socket.SocketClient;
 
 public class DrawCardMessage extends Message {
-    private int i;
-    private int whichOne;
-    private String name;
+    public int i;
+    public int whichOne;
+    public String name;
     public DrawCardMessage(int i, int whichOne, String name){
         super("DrawCardMessage");
         this.i=i;

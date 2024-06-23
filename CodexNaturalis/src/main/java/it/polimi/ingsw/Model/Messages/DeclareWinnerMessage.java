@@ -3,7 +3,7 @@ package it.polimi.ingsw.Model.Messages;
 import java.util.LinkedList;
 
 public class DeclareWinnerMessage extends Message{
-    private LinkedList<String> standings;
+    public LinkedList<String> standings;
     public DeclareWinnerMessage(LinkedList<String> standings){
         super("DeclareWinnerMessage");
         this.standings = standings;

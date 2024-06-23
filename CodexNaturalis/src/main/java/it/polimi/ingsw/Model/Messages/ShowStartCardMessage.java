@@ -3,7 +3,7 @@ package it.polimi.ingsw.Model.Messages;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.StartCard;
 
 public class ShowStartCardMessage extends Message{
-    private StartCard start;
+    public StartCard start;
     public ShowStartCardMessage(StartCard s){
         super("ShowStartCardMessage");
         this.start = s;

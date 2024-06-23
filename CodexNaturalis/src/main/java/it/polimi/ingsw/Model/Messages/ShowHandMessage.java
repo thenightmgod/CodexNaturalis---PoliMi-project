@@ -5,8 +5,8 @@ import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import java.util.LinkedList;
 
 public class ShowHandMessage extends Message{
-    private LinkedList<PlayableCard> hand;
-    private String name;
+    public LinkedList<PlayableCard> hand;
+    public String name;
 
     public ShowHandMessage(LinkedList<PlayableCard> cards, String name) {
         super("ShowHandMessage");

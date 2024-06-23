@@ -4,8 +4,8 @@ import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 
 
 public class CreateGameMessage extends Message{
-    private String name;
-    private int NumPlayers;
+    public String name;
+    public int NumPlayers;
 
     public CreateGameMessage(String nickname, int NumPlayers) {
         super("CreateGameMessage");
