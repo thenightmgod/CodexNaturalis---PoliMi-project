@@ -24,8 +24,8 @@ public class ChooseGoalCardAction extends Actions{
      * @param roomId The ID of the room where this action is executed.
      * @see Actions
      */
-    public ChooseGoalCardAction(int i, VirtualView view, MainController manager, RMIServer server, int priority, int roomId){
-        super(view, manager, server, priority);
+    public ChooseGoalCardAction(int i, VirtualView view, MainController manager, int priority, int roomId){
+        super(view, manager, priority);
         this.i = i;
         this.roomId = roomId;
     }

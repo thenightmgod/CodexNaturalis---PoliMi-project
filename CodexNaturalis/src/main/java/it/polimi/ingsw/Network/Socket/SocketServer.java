@@ -54,7 +54,7 @@ public class SocketServer {
                 //quando creo il socketclienthandler devo mettergli come input l'ouput del ServerProxy e devo mettergli
                 //come output il client Proxy che smista il mex verso il client
 
-                SocketClientHandler handler = new SocketClientHandler(this.controller, this, clientSocket, this.actionsPerGame);
+                SocketClientHandler handler = new SocketClientHandler(this.controller, this, clientSocket, this.actionsPerGame, this.joins);
                 handler.start();
                 synchronized (this.clients) {
                     clients.add(handler);

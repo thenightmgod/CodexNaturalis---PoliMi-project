@@ -30,12 +30,12 @@ public class PlaceCardAction extends Actions{
      * @param x The x-coordinate of the location where the card is to be placed.
      * @param y The y-coordinate of the location where the card is to be placed.
      * @param face The face of the card to be placed.
-     * @param server The RMIServer where this action is executed.
+
      * @param priority The priority of this action.
      * @param roomId The ID of the room where this action is executed.
      */
-    public PlaceCardAction(MainController manager, VirtualView view, int whichInHand, int x, int y, FB face, RMIServer server, int priority, int roomId){
-        super(view, manager, server, priority);
+    public PlaceCardAction(MainController manager, VirtualView view, int whichInHand, int x, int y, FB face, int priority, int roomId){
+        super(view, manager, priority);
         this.whichInHand = whichInHand;
         this.x = x;
         this.y = y;

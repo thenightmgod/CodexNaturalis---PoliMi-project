@@ -15,7 +15,6 @@ public abstract class Actions implements Comparable<Actions>{
 
     private VirtualView view;
     private MainController manager;
-    private RMIServer server;
     private int priority;
 
     /**
@@ -23,13 +22,11 @@ public abstract class Actions implements Comparable<Actions>{
      *
      * @param view The VirtualView associated with this action.
      * @param manager The MainController managing this action.
-     * @param server The RMIServer where this action is executed.
      * @param priority The priority of this action.
      */
-    public Actions(VirtualView view, MainController manager, RMIServer server, int priority) {
+    public Actions(VirtualView view, MainController manager,int priority) {
         this.view = view;
         this.manager = manager;
-        this.server = server;
         this.priority = priority;
     }
 
@@ -38,7 +35,6 @@ public abstract class Actions implements Comparable<Actions>{
      *
      * @return The server of this action.
      */
-    public RMIServer getServer() {return server;}
 
     /**
      * Retrieves the manager of this action.

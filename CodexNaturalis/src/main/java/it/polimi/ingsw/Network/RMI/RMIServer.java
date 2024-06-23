@@ -50,7 +50,7 @@ public class RMIServer implements VirtualServer {
         stub = (VirtualServer) UnicastRemoteObject.exportObject(this, port);
         registry = LocateRegistry.createRegistry(port);
         registry.rebind(serverName, stub);
-        System.out.println("Server buond.");
+        System.out.println("Server bound.");
     }
 
     /**
@@ -67,10 +67,10 @@ public class RMIServer implements VirtualServer {
             int roomId = controller.getControllers().size() - 1;
             if (roomId < 0) {
                 actionsPerGame.put(0, new MultipleFlow());
-                Actions jGame = new JoinAction(client, controller, Name, this, 1, 0);
+                Actions jGame = new JoinAction(client, controller, Name, 1, 0);
                 joins.add(jGame);
             } else {
-                Actions jGame = new JoinAction(client, controller, Name, this, 1, roomId);
+                Actions jGame = new JoinAction(client, controller, Name, 1, roomId);
                 joins.add(jGame);
 
             }
@@ -91,10 +91,10 @@ public class RMIServer implements VirtualServer {
             int roomId = controller.getControllers().size();
             if (roomId > 0) {
                 actionsPerGame.put(roomId, new MultipleFlow());
-                Actions cGame = new CreateAction(numPlayers, client, controller, Name, this, 0, roomId);
+                Actions cGame = new CreateAction(numPlayers, client, controller, Name, 0, roomId);
                 joins.add(cGame);
             } else {
-                Actions cGame = new CreateAction(numPlayers, client, controller, Name, this, 0, 0);
+                Actions cGame = new CreateAction(numPlayers, client, controller, Name, 0, 0);
                 joins.add(cGame);
             }
         }
@@ -109,7 +109,7 @@ public class RMIServer implements VirtualServer {
     @Override
     public void leaveGame(VirtualView client) throws RemoteException {
         int roomId = controller.getYourRoomId(client.getName());
-        Actions lAction = new LeaveAction(client, controller, this, 2, roomId);
+        Actions lAction = new LeaveAction(client, controller, 2, roomId);
         actionsPerGame.get(roomId).getActionsQueue().add(lAction);
     }
 
@@ -126,7 +126,7 @@ public class RMIServer implements VirtualServer {
     @Override
     public void placeCard(VirtualView client, int whichInHand, int x, int y, FB face) throws RemoteException {
         int roomId = controller.getYourRoomId(client.getName());
-        Actions pAction = new PlaceCardAction(controller, client, whichInHand, x, y, face, this, 0, roomId);
+        Actions pAction = new PlaceCardAction(controller, client, whichInHand, x, y, face, 0, roomId);
         actionsPerGame.get(roomId).getActionsQueue().add(pAction);
         System.err.println("Place Card Action: whichInHand-" + whichInHand + " X: " + x + " Y: " + y + " face" + face + " Player-" + client.getName());
     }
@@ -141,7 +141,7 @@ public class RMIServer implements VirtualServer {
     @Override
     public void setStartCardFace(boolean face, VirtualView client) throws RemoteException { //ordine initialize game tutto gestito nella view
         int roomId = controller.getYourRoomId(client.getName());
-        Actions ssAction = new SetStartCardFaceAction(face, client, controller, this, 0, roomId);
+        Actions ssAction = new SetStartCardFaceAction(face, client, controller, 0, roomId);
         actionsPerGame.get(roomId).getActionsQueue().add(ssAction);
     }
 
@@ -155,7 +155,7 @@ public class RMIServer implements VirtualServer {
     @Override
     public void chooseGoalCard(int i, VirtualView client) throws RemoteException {
         int roomId = controller.getYourRoomId(client.getName());
-        Actions cgAction = new ChooseGoalCardAction(i, client, controller, this, 0, roomId);
+        Actions cgAction = new ChooseGoalCardAction(i, client, controller, 0, roomId);
         actionsPerGame.get(roomId).getActionsQueue().add(cgAction);
     }
 
@@ -170,7 +170,7 @@ public class RMIServer implements VirtualServer {
     @Override
     public void drawCard(int i, int whichOne, VirtualView client) throws RemoteException {
         int roomId = controller.getYourRoomId(client.getName());
-        Actions dAction = new DrawCardAction(i, whichOne, client, controller, this, 0, roomId);
+        Actions dAction = new DrawCardAction(i, whichOne, client, controller, 0, roomId);
         actionsPerGame.get(roomId).getActionsQueue().add(dAction);
     }
 
@@ -184,7 +184,7 @@ public class RMIServer implements VirtualServer {
     @Override
     public void endTurn(VirtualView client, String mex) throws RemoteException {
         int roomId = controller.getYourRoomId(client.getName());
-        Actions eAction = new EndTurnAction(client, controller, this, mex, 0, roomId);
+        Actions eAction = new EndTurnAction(client, controller, mex, 0, roomId);
         actionsPerGame.get(roomId).getActionsQueue().add(eAction);
     }
 

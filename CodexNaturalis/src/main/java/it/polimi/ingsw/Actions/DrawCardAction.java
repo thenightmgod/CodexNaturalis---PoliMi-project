@@ -25,12 +25,11 @@ public class DrawCardAction extends Actions {
      * @param whichOne The index of the card to be drawn.
      * @param view The VirtualView associated with this action.
      * @param manager The MainController managing this action.
-     * @param server The RMIServer where this action is executed.
      * @param priority The priority of this action.
      * @param roomId The ID of the room where this action is executed.
      */
-    public DrawCardAction(int i, int whichOne, VirtualView view, MainController manager, RMIServer server, int priority, int roomId){
-        super(view, manager, server, priority);
+    public DrawCardAction(int i, int whichOne, VirtualView view, MainController manager, int priority, int roomId){
+        super(view, manager, priority);
         this.i = i;
         this.whichOne = whichOne;
         this.roomId = roomId;

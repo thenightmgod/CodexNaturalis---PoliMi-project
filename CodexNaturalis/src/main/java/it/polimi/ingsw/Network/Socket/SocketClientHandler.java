@@ -1,8 +1,7 @@
 package it.polimi.ingsw.Network.Socket;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.Actions.Actions;
-import it.polimi.ingsw.Actions.LeaveAction;
+import it.polimi.ingsw.Actions.*;
 import it.polimi.ingsw.Controller.GameController;
 import it.polimi.ingsw.Controller.MainController;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
@@ -26,6 +25,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.net.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.PriorityBlockingQueue;
 
 public class SocketClientHandler extends Thread implements VirtualView {
 
@@ -34,15 +34,16 @@ public class SocketClientHandler extends Thread implements VirtualView {
     private ClientProxy proxy;
     private final SocketServer server;
     private BufferedReader input;
-    private final String name;
+    private String name;
     ConcurrentHashMap<Integer, MultipleFlow> actionsPerGame;
+    PriorityBlockingQueue<Actions> joins;
 
-    public SocketClientHandler(MainController controller, SocketServer server, Socket socket, ConcurrentHashMap<Integer, MultipleFlow> actionsPerGame) throws IOException {
+    public SocketClientHandler(MainController controller, SocketServer server, Socket socket, ConcurrentHashMap<Integer, MultipleFlow> actionsPerGame, PriorityBlockingQueue<Actions> joins) throws IOException {
         this.controller = controller;
         this.actionsPerGame = actionsPerGame;
+        this.joins = joins;
         this.server = server;
         this.clientSocket = socket;
-        this.name = "a";
     }
 
     @Override
@@ -74,15 +75,37 @@ public class SocketClientHandler extends Thread implements VirtualView {
     public void handleCommand(Message msg) throws RemoteException, NotBoundException {
         switch(msg.getType()){
             case "JoinExistingGameMessage" -> {
-                /*String name = ((JoinExistingGameMessage) msg).getName();
-                controller.joinGame(name, this); //capire come gestire i messaggi di errore e recapitarli al client giusto*/
+                String name = ((JoinExistingGameMessage) msg).getName();
+                System.err.println("joinGame");
+                synchronized (actionsPerGame) {
+                    int roomId = controller.getControllers().size() - 1;
+                    if (roomId < 0) {
+                        actionsPerGame.put(0, new MultipleFlow());
+                        Actions jGame = new JoinAction(this, controller, name, 1, 0);
+                        joins.add(jGame);
+                    } else {
+                        Actions jGame = new JoinAction(this, controller, name, 1, roomId);
+                        joins.add(jGame);
+
+                    }
+                    this.name = name;
+                }
             }
             case "CreateGameMessage" -> {
-                /*String name = ((CreateGameMessage) msg).getName();
+                String name = ((CreateGameMessage) msg).getName();
                 int numPlayers = ((CreateGameMessage) msg).getNumPlayers();
-                controller.createGame(name, numPlayers, this);*/
-            }
-            case "LeaveGameMessage" -> {
+                synchronized (actionsPerGame) {
+                    int roomId = controller.getControllers().size();
+                    if (roomId > 0) {
+                        actionsPerGame.put(roomId, new MultipleFlow());
+                        Actions cGame = new CreateAction(numPlayers, this, controller, name, 0, roomId);
+                        joins.add(cGame);
+                    } else {
+                        Actions cGame = new CreateAction(numPlayers, this, controller, name, 0, 0);
+                        joins.add(cGame);
+                    }
+                    this.name = name;
+                }
             }
             case "PlaceCardMessage" -> {
                 String name = ((PlaceCardMessage) msg).getName();
@@ -90,31 +113,39 @@ public class SocketClientHandler extends Thread implements VirtualView {
                 int y = ((PlaceCardMessage) msg).getY();
                 int whichInHand = ((PlaceCardMessage) msg).getWhichInHand();
                 FB face = ((PlaceCardMessage) msg).getFace();
-                GameController gc = findGameController(name);
-                gc.placeCard(whichInHand, x, y, face);
+                int roomId = controller.getYourRoomId(name);
+                Actions pAction = new PlaceCardAction(controller, this, whichInHand, x, y, face, 0, roomId);
+                actionsPerGame.get(roomId).getActionsQueue().add(pAction);
+                System.err.println("Place Card Action: whichInHand-" + whichInHand + " X: " + x + " Y: " + y + " face" + face + " Player-" + name);
             }
             case "SetStartCardMessage" -> {
                 String name = ((SetStartCardFaceMessage) msg).getName();
-
+                boolean face = ((SetStartCardFaceMessage) msg).getFace();
+                int roomId = controller.getYourRoomId(name);
+                Actions ssAction = new SetStartCardFaceAction(face, this, controller, 0, roomId);
+                actionsPerGame.get(roomId).getActionsQueue().add(ssAction);
             }
             case "ChooseGoalCardMessage" -> {
                 int i= ((ChooseGoalCardMessage)msg).getI();
                 String name = ((ChooseGoalCardMessage)msg).getName();
-                GameController gc = findGameController(name);
-                gc.chooseGoalCard(name, i);
+                int roomId = controller.getYourRoomId(name);
+                Actions cgAction = new ChooseGoalCardAction(i, this, controller, 0, roomId);
+                actionsPerGame.get(roomId).getActionsQueue().add(cgAction);
             }
             case "DrawCardMessage" -> {
                 int i= ((DrawCardMessage)msg).getI();
-                int WhichOne= ((DrawCardMessage)msg).getWhichOne();
+                int whichOne= ((DrawCardMessage)msg).getWhichOne();
                 String name = ((DrawCardMessage)msg).getName();
-                GameController gc = findGameController(name);
-                gc.drawCard(i,WhichOne);
+                int roomId = controller.getYourRoomId(name);
+                Actions dAction = new DrawCardAction(i, whichOne, this, controller, 0, roomId);
+                actionsPerGame.get(roomId).getActionsQueue().add(dAction);
             }
             case "EndTurnMessage" -> {
                 String name = ((EndTurnMessage)msg).getName();
                 String mex = ((EndTurnMessage)msg).getMex();
-                GameController gc = findGameController(name);
-                gc.changeTurns(mex);
+                int roomId = controller.getYourRoomId(name);
+                Actions eAction = new EndTurnAction(this, controller, mex, 0, roomId);
+                actionsPerGame.get(roomId).getActionsQueue().add(eAction);
             }
         }
     }
@@ -149,7 +180,9 @@ public class SocketClientHandler extends Thread implements VirtualView {
      */
     @Override
     public void leaveGame() throws RemoteException {
-
+        int roomId = controller.getYourRoomId(name);
+        Actions lAction = new LeaveAction(this, controller, 2, roomId);
+        actionsPerGame.get(roomId).getActionsQueue().add(lAction);
     }
 
     /**
@@ -200,6 +233,7 @@ public class SocketClientHandler extends Thread implements VirtualView {
         String gson = message.MessageToJson();
         proxy.notYourTurn(gson);*/
     }
+    @Override
     public void declareWinner(LinkedList<String> standings){
         DeclareWinnerMessage message = new DeclareWinnerMessage(standings);
         String gson = message.MessageToJson();
@@ -276,27 +310,6 @@ public class SocketClientHandler extends Thread implements VirtualView {
     @Override
     public void showOtherField(String player) throws RemoteException {
 
-    }
-
-
-    public GameController findGameController(String name) throws RemoteException {
-        GameController gc = null;
-        /*LinkedList<GameController> gameControllers = controller.getControllers();
-        for(GameController elem : gameControllers){
-            Room curr = elem.getGame();
-            LinkedList<Player> players = curr.getPlayers();
-            for(Player p : players){
-                if(p.getName().equals(name)){
-                    return elem;
-                }
-            }
-        }*/
-        return gc;
-    }
-
-    public static void main(String[] args){
-        int x = 4;
-        System.out.println(4);
     }
 
 }
