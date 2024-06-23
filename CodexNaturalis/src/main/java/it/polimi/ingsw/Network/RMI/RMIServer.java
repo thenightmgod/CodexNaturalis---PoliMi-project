@@ -19,8 +19,8 @@ public class RMIServer implements VirtualServer {
     final MainController controller;
     int port;
     ExecutorService executorService;
-    final ConcurrentHashMap<Integer, MultipleFlow> actionsPerGame;
-    PriorityBlockingQueue<Actions> joins = new PriorityBlockingQueue<>();
+    static ConcurrentHashMap<Integer, MultipleFlow> actionsPerGame;
+    static PriorityBlockingQueue<Actions> joins;
 
     /**
      * Constructor for the RMIServer class.
@@ -28,12 +28,14 @@ public class RMIServer implements VirtualServer {
      * @param controller The main controller of the game.
      * @throws RemoteException If a remote access error occurs.
      */
-    public RMIServer(MainController controller) throws RemoteException {
+    public RMIServer(MainController controller, ConcurrentHashMap<Integer, MultipleFlow> actionsPerGame, PriorityBlockingQueue<Actions> joins) throws RemoteException {
         this.controller = controller;
+        this.joins = joins;
         port =  49666;
-        actionsPerGame = new ConcurrentHashMap<>();
+        this.actionsPerGame = actionsPerGame;
         executeGame();
         executeStart();
+
     }
 
     /**
@@ -190,7 +192,7 @@ public class RMIServer implements VirtualServer {
     /**
      * Executes the game logic.
      */
-    public void executeGame() {
+    public static void executeGame() {
         new Thread(() -> {
             while (true) {
                 synchronized (actionsPerGame) {
@@ -214,9 +216,10 @@ public class RMIServer implements VirtualServer {
     /**
      * Executes the start of the game.
      */
-    public void executeStart() {
+    public static void executeStart() {
         new Thread(() -> {
             while (true) {
+
                 Actions now = joins.poll();
                 if (now != null) {
                     try {
