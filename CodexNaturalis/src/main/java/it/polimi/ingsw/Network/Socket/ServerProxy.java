@@ -54,6 +54,7 @@ public class ServerProxy implements VirtualServerSocket {
 
     public void sendMessage(String stringMessage){
             output.write(stringMessage);
+            output.write("\n");
             output.flush();
     }
     //per ogni metodo che chiamo dal client mando sul output del canale output.write(gson)
