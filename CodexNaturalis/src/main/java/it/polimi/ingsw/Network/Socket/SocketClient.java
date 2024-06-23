@@ -36,7 +36,7 @@ public class SocketClient implements CommonClient {
     public SocketClient(String name) {
         this.name = name;
         String ip = "127.0.0.1";
-        this.initializeClient(this, ip, 4445);
+        this.initializeClient(this, ip, 44458);
     }
 
     public String getName() {
@@ -187,6 +187,13 @@ public class SocketClient implements CommonClient {
 
     //             FUNZIONI DEL COMMONCLIENT
     @Override
+    public void setStartCardFace(boolean face, CommonClient client) {
+        SetStartCardFaceMessage msg = new SetStartCardFaceMessage(face, name);
+        String gson = msg.MessageToJson();
+        server.setStartCardFace(gson);
+    }
+
+    @Override
     public void joinGame(String name) {
         JoinExistingGameMessage msg = new JoinExistingGameMessage(name);
         String gson = msg.MessageToJson();
@@ -206,13 +213,6 @@ public class SocketClient implements CommonClient {
         PlaceCardMessage msg = new PlaceCardMessage(name, whichInHand, x, y, face);
         String gson = msg.MessageToJson();
         server.placeCard(gson);
-    }
-
-    @Override
-    public void setStartCardFace(boolean face, CommonClient client) {
-        SetStartCardFaceMessage msg = new SetStartCardFaceMessage(face, name);
-        String gson = msg.MessageToJson();
-        server.setStartCardFace(gson);
     }
 
     @Override
@@ -250,7 +250,6 @@ public class SocketClient implements CommonClient {
         String gson = msg.MessageToJson();
         server.endTurn(gson);
     }
-
     /**
      * Gets the server.
      *

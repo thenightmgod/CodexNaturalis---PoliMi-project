@@ -21,7 +21,7 @@ public class SocketServer {
     public static SocketServer createServer(MainController mc){
         SocketServer server = null;
         try{
-            ServerSocket listenSocket = new ServerSocket(4445);
+            ServerSocket listenSocket = new ServerSocket(44458);
             server = new SocketServer(mc,listenSocket);
             System.out.println("Server Socket ready");
             return server;
