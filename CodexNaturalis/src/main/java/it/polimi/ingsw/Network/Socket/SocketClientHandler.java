@@ -1,6 +1,8 @@
 package it.polimi.ingsw.Network.Socket;
 
 import com.google.gson.Gson;
+import it.polimi.ingsw.Actions.Actions;
+import it.polimi.ingsw.Actions.LeaveAction;
 import it.polimi.ingsw.Controller.GameController;
 import it.polimi.ingsw.Controller.MainController;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
@@ -150,7 +152,9 @@ public class SocketClientHandler extends Thread implements VirtualView {
      */
     @Override
     public void leaveGame() throws RemoteException {
-
+        /*int roomId = controller.getYourRoomId(client.getName());
+        Actions lAction = new LeaveAction(client, controller, this, 2, roomId);
+        actionsPerGame.get(roomId).getActionsQueue().add(lAction); */
     }
 
     /**
