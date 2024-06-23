@@ -1,6 +1,8 @@
 package it.polimi.ingsw.Network.Socket;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
@@ -17,6 +19,7 @@ import it.polimi.ingsw.View.GameView;
 import it.polimi.ingsw.View.TUI.ClientModel;
 
 import java.io.*;
+import java.lang.reflect.Type;
 import java.net.Socket;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -91,12 +94,15 @@ public class SocketClient implements CommonClient {
         while (true) {
             try {
                 while ((receivedMessage = input.readLine()) != null) {
-                    receivedMessage = input.readLine();
                     Gson gson = new Gson();
-                    Message mex = gson.fromJson(receivedMessage, Message.class);
-                    handleCommand(mex);
+                    JsonParser parser = new JsonParser();
+                    JsonObject jsonObject = parser.parse(receivedMessage).getAsJsonObject();
+                    String type = jsonObject.get("type").getAsString();
+                    Class<?> clazz = Class.forName("it.polimi.ingsw.Model.Messages." + type);
+                    Message message = gson.fromJson(receivedMessage, (Type) clazz);
+                    handleCommand(message);
                 }
-            } catch (RuntimeException | IOException | NotBoundException e) {
+            } catch (RuntimeException | IOException | NotBoundException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }

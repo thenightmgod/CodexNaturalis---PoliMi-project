@@ -219,6 +219,7 @@ public class TUI implements GameView {
     }
 
     public void createGame() throws RemoteException {
+        System.err.println("Creating game");
         inputHandler.handleUserInput("createGame");
     }
 
