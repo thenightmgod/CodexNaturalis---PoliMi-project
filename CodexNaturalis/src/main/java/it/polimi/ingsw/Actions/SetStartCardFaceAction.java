@@ -23,12 +23,11 @@ public class SetStartCardFaceAction extends Actions {
      * @param face The face of the start card.
      * @param view The VirtualView associated with this action.
      * @param manager The MainController managing this action.
-     * @param server The RMIServer where this action is executed.
      * @param priority The priority of this action.
      * @param roomId The ID of the room where this action is executed.
      */
-    public SetStartCardFaceAction(boolean face, VirtualView view, MainController manager, RMIServer server, int priority, int roomId){
-        super(view, manager, server, priority);
+    public SetStartCardFaceAction(boolean face, VirtualView view, MainController manager, int priority, int roomId){
+        super(view, manager, priority);
         this.face = face;
         this.roomId = roomId;
     }

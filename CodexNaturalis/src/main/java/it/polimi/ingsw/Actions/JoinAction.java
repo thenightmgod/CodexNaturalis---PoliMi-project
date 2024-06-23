@@ -22,12 +22,11 @@ public class JoinAction extends Actions {
      * @param view The VirtualView associated with this action.
      * @param manager The MainController managing this action.
      * @param name The name of the player joining the game.
-     * @param server The RMIServer where this action is executed.
      * @param priority The priority of this action.
      * @param roomId The ID of the room where this action is executed.
      */
-    public JoinAction(VirtualView view, MainController manager, String name, RMIServer server, int priority, int roomId){
-        super( view, manager, server, priority);
+    public JoinAction(VirtualView view, MainController manager, String name, int priority, int roomId){
+        super( view, manager,priority);
         this.roomId = roomId;
         this.name = name;
     }
