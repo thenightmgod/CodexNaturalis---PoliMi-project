@@ -4,6 +4,7 @@ import it.polimi.ingsw.Controller.MainController;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Network.CommonClient;
 import it.polimi.ingsw.Network.RMI.RMIClient;
+import it.polimi.ingsw.Network.Socket.SocketClient;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -247,9 +248,9 @@ public class InputHandler extends Thread{
                     System.out.print("NotBoundException occurred while initializing the client");
                 }
             }else {
-                /*client = new SocketClient(name);
-                client.setView(this);
-                connectionType = true;*/
+                this.tui.client = new SocketClient(this.tui.name);
+                this.tui.client.setView(this.tui);
+                connectionType = true;
             }
 
         } while(!connection.equals("0") && !connection.equals("1"));

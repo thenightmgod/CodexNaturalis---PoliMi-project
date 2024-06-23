@@ -30,5 +30,4 @@ public abstract class Message implements Serializable {
         return gson.toJson(this);
     }
 
-    public void execute() {};
 }
