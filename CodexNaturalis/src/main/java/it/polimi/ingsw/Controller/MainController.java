@@ -151,7 +151,7 @@ public class MainController {
     public int getYourRoomId(String name) throws RemoteException {
         for (int roomId : viewPerGame.keySet()) {
             for (VirtualView v : viewPerGame.get(roomId)) {
-                if (v.getName().equals(name)) {
+                if (v.getNames().equals(name)) {
                     return roomId;
                 }
             }

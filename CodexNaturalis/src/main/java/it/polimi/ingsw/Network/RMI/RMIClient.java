@@ -78,7 +78,8 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
      *
      * @return The name of this client.
      */
-    public String getName(){
+    @Override
+    public String getNames(){
         return name;
     }
 
@@ -457,7 +458,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
         }
         VirtualView that = (VirtualView) obj;
         try {
-            return Objects.equals(getName(), that.getName());
+            return Objects.equals(getNames(), that.getNames());
         } catch (RemoteException e) {
             e.printStackTrace();
         }

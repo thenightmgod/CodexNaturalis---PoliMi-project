@@ -44,7 +44,7 @@ public class SetStartCardFaceAction extends Actions {
             GameController controller = getManager().getControllers().get(roomId);
             FB f = FB.FRONT;
             if(!face) f = FB.BACK;
-            controller.placeStartCard(getView().getName(), f);
+            controller.placeStartCard(getView().getNames(), f);
     }
 
 }
