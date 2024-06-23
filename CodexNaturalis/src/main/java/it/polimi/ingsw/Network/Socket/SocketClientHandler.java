@@ -1,5 +1,8 @@
 package it.polimi.ingsw.Network.Socket;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import java.lang.reflect.Type;
 import com.google.gson.Gson;
 import it.polimi.ingsw.Actions.*;
 import it.polimi.ingsw.Controller.GameController;
@@ -57,13 +60,18 @@ public class SocketClientHandler extends Thread implements VirtualView {
                 try {
                     while ((receivedmessage = input.readLine()) != null) {
                         Gson gson = new Gson();
-                        Message message = gson.fromJson(receivedmessage, Message.class);
-                        //gestire le eccezioni di handleCommand in questo metodo
+                        JsonParser parser = new JsonParser();
+                        JsonObject jsonObject = parser.parse(receivedmessage).getAsJsonObject();
+                        String type = jsonObject.get("type").getAsString();
+                        Class<?> clazz = Class.forName("it.polimi.ingsw.Model.Messages." + type);
+                        Message message = gson.fromJson(receivedmessage, (Type) clazz);                        //gestire le eccezioni di handleCommand in questo metodo
                         handleCommand(message);
                     }
                 } catch (RuntimeException | IOException e) {
                     e.printStackTrace();
                 } catch (NotBoundException e) {
+                    throw new RuntimeException(e);
+                } catch (ClassNotFoundException e) {
                     throw new RuntimeException(e);
                 }
             }

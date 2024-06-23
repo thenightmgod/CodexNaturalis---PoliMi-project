@@ -15,7 +15,7 @@ import java.io.Serializable;
  * It implements Serializable.
  */
 
-public abstract class Message implements Serializable {
+public class Message implements Serializable {
     public String type;
 
     public Message(String type) {
