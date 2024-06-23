@@ -129,7 +129,14 @@ public class PlayingField implements Serializable {
         }
         else {
             Position front = getPosFromCorner(p, o);
-            if(!Field.containsKey(front)){
+            Boolean pinotto = true;
+            for(Position free : FreePositions){
+                if(free.equals(front)){
+                    pinotto = false;
+                    break;
+                }
+            }
+            if(pinotto){
                 //Orientation Lazzaro = getOppFromCorner(o);  angolo da non controllare ma sti cazzi
                 for(Orientation Orien : Orientation.values()) {//per tutti gli altri
                     Position toCheck = getPosFromCorner(front, Orien);  // posizione da checkare
