@@ -16,6 +16,7 @@ import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
 import it.polimi.ingsw.Model.RoomPackage.Room;
+import it.polimi.ingsw.Network.RMI.MultipleFlow;
 import it.polimi.ingsw.Network.VirtualView;
 
 import java.io.*;
@@ -24,6 +25,7 @@ import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.net.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class SocketClientHandler extends Thread implements VirtualView {
 
@@ -33,10 +35,11 @@ public class SocketClientHandler extends Thread implements VirtualView {
     private final SocketServer server;
     private BufferedReader input;
     private final String name;
+    ConcurrentHashMap<Integer, MultipleFlow> actionsPerGame;
 
-
-    public SocketClientHandler(MainController controller, SocketServer server, Socket socket) throws IOException {
+    public SocketClientHandler(MainController controller, SocketServer server, Socket socket, ConcurrentHashMap<Integer, MultipleFlow> actionsPerGame) throws IOException {
         this.controller = controller;
+        this.actionsPerGame = actionsPerGame;
         this.server = server;
         this.clientSocket = socket;
         this.name = "a";

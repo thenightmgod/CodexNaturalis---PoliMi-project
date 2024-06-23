@@ -19,8 +19,8 @@ public class RMIServer implements VirtualServer {
     final MainController controller;
     int port;
     ExecutorService executorService;
-    static ConcurrentHashMap<Integer, MultipleFlow> actionsPerGame;
-    static PriorityBlockingQueue<Actions> joins;
+    final ConcurrentHashMap<Integer, MultipleFlow> actionsPerGame;
+    PriorityBlockingQueue<Actions> joins;
 
     /**
      * Constructor for the RMIServer class.
@@ -33,8 +33,7 @@ public class RMIServer implements VirtualServer {
         this.joins = joins;
         port =  49666;
         this.actionsPerGame = actionsPerGame;
-        executeGame();
-        executeStart();
+
 
     }
 
@@ -64,6 +63,7 @@ public class RMIServer implements VirtualServer {
      */
     @Override
     public void joinGame(String Name, VirtualView client) throws RemoteException {
+        System.err.println("joinGame");
         synchronized (actionsPerGame) {
             int roomId = controller.getControllers().size() - 1;
             if (roomId < 0) {
@@ -189,47 +189,5 @@ public class RMIServer implements VirtualServer {
         actionsPerGame.get(roomId).getActionsQueue().add(eAction);
     }
 
-    /**
-     * Executes the game logic.
-     */
-    public static void executeGame() {
-        new Thread(() -> {
-            while (true) {
-                synchronized (actionsPerGame) {
-                    for (Integer room : actionsPerGame.keySet()) {
-                        Actions now = actionsPerGame.get(room).getActionsQueue().poll();
-                        if (now != null) {
-                            actionsPerGame.get(room).getExecutorService().submit(() -> {
-                                try {
-                                    now.executor();
-                                } catch (RemoteException | NotBoundException e) {
-                                    System.out.println("there has been a problem in the execution of actions");
-                                }
-                            });
-                        }
-                    }
-                }
-            }
-        }).start();
-    }
-
-    /**
-     * Executes the start of the game.
-     */
-    public static void executeStart() {
-        new Thread(() -> {
-            while (true) {
-
-                Actions now = joins.poll();
-                if (now != null) {
-                    try {
-                        now.executor();
-                    } catch (RemoteException | NotBoundException e) {
-                        System.out.println("there has been a problem in the execution of actions in join");
-                    }
-                }
-            }
-        }).start();
-    }
 
 }

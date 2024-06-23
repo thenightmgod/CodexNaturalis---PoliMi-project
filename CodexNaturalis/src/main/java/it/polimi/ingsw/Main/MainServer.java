@@ -39,8 +39,53 @@ public class MainServer {
         rmi.startServer();
         SocketServer socket = SocketServer.createServer(mc, actionsPerGame, joins);
         new Thread(socket::startServer).start();
-
+        new Thread(MainServer::executeGame).start();
+        new Thread(MainServer::executeStart).start();
     }
+
+    /**
+     * Executes the game logic.
+     */
+    public static void executeGame() {
+        new Thread(() -> {
+            while (true) {
+                //synchronized (actionsPerGame) {
+                    for (Integer room : actionsPerGame.keySet()) {
+                        Actions now = actionsPerGame.get(room).getActionsQueue().poll();
+                        if (now != null) {
+                            actionsPerGame.get(room).getExecutorService().submit(() -> {
+                                try {
+                                    now.executor();
+                                } catch (RemoteException | NotBoundException e) {
+                                    System.out.println("there has been a problem in the execution of actions");
+                                }
+                            });
+                        }
+                    }
+                //}
+            }
+        }).start();
+    }
+
+    /**
+     * Executes the start of the game.
+     */
+    public static void executeStart() {
+        new Thread(() -> {
+            while (true) {
+
+                Actions now = joins.poll();
+                if (now != null) {
+                    try {
+                        now.executor();
+                    } catch (RemoteException | NotBoundException e) {
+                        System.out.println("there has been a problem in the execution of actions in join");
+                    }
+                }
+            }
+        }).start();
+    }
+
 
 
 }
