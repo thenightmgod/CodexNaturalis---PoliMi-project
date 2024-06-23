@@ -11,8 +11,7 @@ import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Scanner;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.PriorityBlockingQueue;
+import java.util.concurrent.*;
 
 public class MainServer {
 
@@ -39,52 +38,45 @@ public class MainServer {
         rmi.startServer();
         SocketServer socket = SocketServer.createServer(mc, actionsPerGame, joins);
         new Thread(socket::startServer).start();
-        new Thread(MainServer::executeGame).start();
-        new Thread(MainServer::executeStart).start();
+        new Thread(() -> executeGame(actionsPerGame)).start();
+        new Thread(() -> executeStart(joins)).start();
     }
 
-    /**
-     * Executes the game logic.
-     */
-    public static void executeGame() {
-        new Thread(() -> {
-            while (true) {
-                //synchronized (actionsPerGame) {
-                    for (Integer room : actionsPerGame.keySet()) {
-                        Actions now = actionsPerGame.get(room).getActionsQueue().poll();
-                        if (now != null) {
-                            actionsPerGame.get(room).getExecutorService().submit(() -> {
-                                try {
-                                    now.executor();
-                                } catch (RemoteException | NotBoundException e) {
-                                    System.out.println("there has been a problem in the execution of actions");
-                                }
-                            });
-                        }
-                    }
-                //}
-            }
-        }).start();
-    }
 
-    /**
-     * Executes the start of the game.
-     */
-    public static void executeStart() {
-        new Thread(() -> {
-            while (true) {
-
-                Actions now = joins.poll();
-                if (now != null) {
-                    try {
-                        now.executor();
-                    } catch (RemoteException | NotBoundException e) {
-                        System.out.println("there has been a problem in the execution of actions in join");
+    public static void executeGame(ConcurrentHashMap<Integer, MultipleFlow> actionsPerGame) {
+        ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
+        executorService.scheduleAtFixedRate(() -> {
+            synchronized (actionsPerGame) {
+                for (Integer room : actionsPerGame.keySet()) {
+                    Actions now = actionsPerGame.get(room).getActionsQueue().poll();
+                    if (now != null) {
+                        actionsPerGame.get(room).getExecutorService().submit(() -> {
+                            try {
+                                now.executor();
+                            } catch (RemoteException | NotBoundException e) {
+                                System.out.println("there has been a problem in the execution of actions");
+                            }
+                        });
                     }
                 }
             }
-        }).start();
+        }, 0, 200, TimeUnit.MILLISECONDS);
     }
+
+    public static void executeStart(PriorityBlockingQueue<Actions> joins) {
+        ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
+        executorService.scheduleAtFixedRate(() -> {
+            Actions now = joins.poll();
+            if (now != null) {
+                try {
+                    now.executor();
+                } catch (RemoteException | NotBoundException e) {
+                    System.out.println("there has been a problem in the execution of actions in join");
+                }
+            }
+        }, 0, 200, TimeUnit.MILLISECONDS);
+    }
+
 
 
 
