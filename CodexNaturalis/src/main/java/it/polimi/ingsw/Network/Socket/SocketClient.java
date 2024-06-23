@@ -178,9 +178,13 @@ public class SocketClient implements CommonClient {
             case "ShowOtherField"-> {
                 //Lori non sa ancora se mettere la showOtherField nella GameView o no
             }
-            /*case "DeclareWinnerMessage" -> {
-                HashMap<String, Integer> c = ((DeclareWinnerMessage)mex).getClassifica();
-                this.view.declareWinner(c); */
+            case "DeclareWinnerMessage" -> {
+                LinkedList<String> standings = ((DeclareWinnerMessage) mex).getStandings();
+                this.view.declareWinner(standings);
+            }
+            case "LeaveGameMessage" -> {
+                this.view.leaveGameMessage();
+            }
         }
     }
 
@@ -230,19 +234,10 @@ public class SocketClient implements CommonClient {
     public void setView(GameView view){
         this.view = view;
     }
-    //il client deve avere un main che
-    //si connette al socket del server
-    //passandogli negli argomenti del main al posto 0 l'host,
-    //al posto 1 la porta
-    //
+
     @Override
     public ClientModel getClient() {
         return model;
-    }
-    public void checkGoals(String name){
-        CheckGoalCardMessage msg = new CheckGoalCardMessage(name);
-        String gson = msg.MessageToJson();
-        server.checkGoals(gson);
     }
     @Override
     public void endTurn(String name, String mex){

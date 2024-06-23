@@ -83,13 +83,6 @@ public class SocketClientHandler extends Thread implements VirtualView {
                 controller.createGame(name, numPlayers, this);*/
             }
             case "LeaveGameMessage" -> {
-                // VA MESSO
-                /*
-                String name = ((LeaveGameMessage) msg).getName();
-                HashMap<Integer, GameController> map = controller.getControllersPerGame();
-                GameController gc = findGameController(name);
-                int k = gc.getRoomId();
-                GameController useless = controller.leaveGame(name, k);*/
             }
             case "PlaceCardMessage" -> {
                 String name = ((PlaceCardMessage) msg).getName();
@@ -101,7 +94,8 @@ public class SocketClientHandler extends Thread implements VirtualView {
                 gc.placeCard(whichInHand, x, y, face);
             }
             case "SetStartCardMessage" -> {
-                //VA MESSO
+                String name = ((SetStartCardFaceMessage) msg).getName();
+
             }
             case "ChooseGoalCardMessage" -> {
                 int i= ((ChooseGoalCardMessage)msg).getI();
@@ -155,9 +149,7 @@ public class SocketClientHandler extends Thread implements VirtualView {
      */
     @Override
     public void leaveGame() throws RemoteException {
-        /*int roomId = controller.getYourRoomId(client.getName());
-        Actions lAction = new LeaveAction(client, controller, this, 2, roomId);
-        actionsPerGame.get(roomId).getActionsQueue().add(lAction); */
+
     }
 
     /**
@@ -167,7 +159,9 @@ public class SocketClientHandler extends Thread implements VirtualView {
      */
     @Override
     public void leaveGameMessage() throws RemoteException {
-
+        LeaveGameMessage message = new LeaveGameMessage(name);
+        String gson = message.MessageToJson();
+        proxy.leaveGameMessage(gson);
     }
 
     @Override
@@ -279,10 +273,9 @@ public class SocketClientHandler extends Thread implements VirtualView {
 
     } //update il clientModel
 
+    @Override
     public void showOtherField(String player) throws RemoteException {
-        ShowOtherFieldMessage message= new ShowOtherFieldMessage(player);
-        String gson= message.MessageToJson();
-        proxy.showOtherField(gson);
+
     }
 
 
