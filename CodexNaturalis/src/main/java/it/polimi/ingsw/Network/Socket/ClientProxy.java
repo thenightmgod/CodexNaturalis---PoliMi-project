@@ -40,6 +40,7 @@ public class ClientProxy {
     public void showOtherField(String StringMessage) {
         sendMessage(StringMessage);
     }
+    public void leaveGameMessage(String StringMessage) { sendMessage(StringMessage); }
 
 
     public void sendMessage(String stringMessage){
