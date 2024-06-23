@@ -221,9 +221,18 @@ public class GameController {
         this.game.getObserverManager().showNewHand(this.game.getTurn().getName(), this.game.getTurn().getHand());
         LinkedList<ResourceCard> cards = new LinkedList<>();
         ResourceDeck deck = this.game.getResourceDeck();
+        if(deck.getSize()>=3){
         cards.add((ResourceCard) deck.getCards().get(0));
         cards.add((ResourceCard) deck.getCards().get(1));
         cards.add((ResourceCard) deck.getCards().get(2));
+        }
+        if(deck.getSize()==2){
+            cards.add((ResourceCard) deck.getCards().get(0));
+            cards.add((ResourceCard) deck.getCards().get(1));
+        }
+        if(deck.getSize()==1){
+            cards.add((ResourceCard) deck.getCards().getFirst());
+        }
         for(Player p: players) {
             this.game.getObserverManager().updateResourceDeck(p.getName(), false, cards);
         }
@@ -241,9 +250,18 @@ public class GameController {
         this.game.getObserverManager().showNewHand(this.game.getTurn().getName(), this.game.getTurn().getHand());
         LinkedList<GoldCard> cards = new LinkedList<>();
         GoldDeck deck = this.game.getGoldDeck();
-        cards.add((GoldCard) deck.getCards().get(0));
-        cards.add((GoldCard) deck.getCards().get(1));
-        cards.add((GoldCard) deck.getCards().get(2));
+        if(deck.getSize()>=3){
+            cards.add((GoldCard) deck.getCards().get(0));
+            cards.add((GoldCard) deck.getCards().get(1));
+            cards.add((GoldCard) deck.getCards().get(2));
+        }
+        if(deck.getSize()==2){
+            cards.add((GoldCard) deck.getCards().get(0));
+            cards.add((GoldCard) deck.getCards().get(1));
+        }
+        if(deck.getSize()==1){
+            cards.add((GoldCard) deck.getCards().getFirst());
+        }
         for(Player p: players) {
             this.game.getObserverManager().updateGoldDeck(p.getName(), false, cards);
         }

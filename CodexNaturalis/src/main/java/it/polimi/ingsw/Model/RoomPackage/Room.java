@@ -356,7 +356,7 @@ public class Room implements Serializable {
      */
     public void changeTurns(String mex) throws RemoteException {
         setLL();
-        if(ll){
+        if(ll || (getGoldDeck().getSize()==0 && getResourceDeck().getSize()==0)){
             for(Player p: players)
                 checkGoals(p);
             declareWinner();
