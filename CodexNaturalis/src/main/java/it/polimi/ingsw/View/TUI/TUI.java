@@ -111,7 +111,7 @@ public class TUI implements GameView {
 //                System.out.println("These are the new drawable cards");
                 client.getClient().setDrawableResourceCards(resourceCards);
             } else {
-                System.out.println(name + " has drawn a card");
+                System.out.println(Turn.getName() + " has drawn a card");
 //                System.out.println("These are the new drawable cards");
                 client.getClient().setDrawableResourceCards(resourceCards);
             }

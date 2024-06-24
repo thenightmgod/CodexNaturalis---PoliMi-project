@@ -1146,6 +1146,7 @@ public class CardsTUI {
         System.out.println();
         System.out.println("CARD 1               CARD 2               CARD 3");
         for(PlayableCard card : toPrint){
+            System.out.println("Actual class: " + card.getClass().getName());
             if (card.getId() >= 1 && card.getId() <= 40) {
                 ResourceCard c = (ResourceCard) card;
                 printResourceCardJackie(c);

@@ -131,7 +131,7 @@ public class SocketClientHandler extends Thread implements VirtualView {
                 actionsPerGame.get(roomId).getActionsQueue().add(pAction);
                 System.err.println("Place Card Action: whichInHand-" + whichInHand + " X: " + x + " Y: " + y + " face" + face + " Player-" + name);
             }
-            case "SetStartCardMessage" -> {
+            case "SetStartCardFaceMessage" -> {
                 String name = ((SetStartCardFaceMessage) msg).getName();
                 boolean face = ((SetStartCardFaceMessage) msg).getFace();
                 int roomId = controller.getYourRoomId(name);
