@@ -654,8 +654,9 @@ public class TurnController extends GUIController{
         }
     }
     public void lastRound() {
-        mirko = false;
+        this.mirko = false;
     }
+
     public void twenty(String name) {
         if (! (name.equals(client.getNames()))) {
             secondmessageLabel.setText(name+ "HAS REACHED 20 POINTS!");
@@ -663,7 +664,7 @@ public class TurnController extends GUIController{
             secondmessageLabel.setText("WOW, YOU REACHED 20 POINTS!");
         }
         secondmessageLabel.setVisible(true);
-        lastRound=true;
+//        lastRound=true;
     }
 
     @FXML
