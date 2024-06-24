@@ -71,6 +71,7 @@ public class TurnController extends GUIController{
     boolean revealed;
     boolean updatedPoints=false;
     boolean lastRound=false;
+    boolean mirko = true;
     LinkedList<Boolean> omar = new LinkedList<>();
 
 
@@ -245,19 +246,22 @@ public class TurnController extends GUIController{
         }
     }
 
-    public void drawCard(){
+    public void drawCard() throws RemoteException {
         messageLabel.setText("Now, draw a card!");
         messageLabel.setVisible(true);
-
-        for (int i = 0; i < resourceBox.getChildren().size(); i++) {
-            ImageView imageView = (ImageView) resourceBox.getChildren().get(i);
-            int indexCard= getIndexInHBox(imageView, 1);
-            addDrawEffect(imageView,1, indexCard);
-        }
-        for (int i = 0; i < goldBox.getChildren().size(); i++) {
-            ImageView imageView = (ImageView) goldBox.getChildren().get(i);
-            int indexCard= getIndexInHBox(imageView, 2);
-            addDrawEffect(imageView, 2, indexCard);
+        if(mirko){
+            for (int i = 0; i < resourceBox.getChildren().size(); i++) {
+                ImageView imageView = (ImageView) resourceBox.getChildren().get(i);
+                int indexCard= getIndexInHBox(imageView, 1);
+                addDrawEffect(imageView,1, indexCard);
+            }
+            for (int i = 0; i < goldBox.getChildren().size(); i++) {
+                ImageView imageView = (ImageView) goldBox.getChildren().get(i);
+                int indexCard= getIndexInHBox(imageView, 2);
+                addDrawEffect(imageView, 2, indexCard);
+            }
+        } else{
+            this.gui.endTurn("NormalTurn");
         }
     }
 
@@ -650,9 +654,10 @@ public class TurnController extends GUIController{
         }
     }
     public void lastRound() {
+        mirko = false;
     }
     public void twenty(String name) {
-        if (! (name.equals(client.getName()))) {
+        if (! (name.equals(client.getNames()))) {
             secondmessageLabel.setText(name+ "HAS REACHED 20 POINTS!");
         } else {
             secondmessageLabel.setText("WOW, YOU REACHED 20 POINTS!");

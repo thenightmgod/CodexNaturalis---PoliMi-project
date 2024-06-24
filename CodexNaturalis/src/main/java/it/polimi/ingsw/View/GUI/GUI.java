@@ -185,7 +185,11 @@ public class GUI implements GameView {
             }
             case "Nothing" -> {
                 Platform.runLater(() -> {
-                    ((TurnController) guicontrollers.get("turn")).drawCard();
+                    try {
+                        ((TurnController) guicontrollers.get("turn")).drawCard();
+                    } catch (RemoteException e) {
+                        System.out.println();
+                    }
                 });
             }
         }
