@@ -98,7 +98,9 @@ public class Room implements Serializable {
      * Sets the last round flag if the twenty points threshold is reached and it's the first player's turn.
      */
     public void setLastRound() {
-        if(twenty)
+        ResourceDeck rd = getResourceDeck();
+        GoldDeck gd = getGoldDeck();
+        if(twenty || (gd.getSize()==0 && rd.getSize()==0))
             if(turn.equals(players.getFirst()))
                 this.lastRound = true;
     }
@@ -356,9 +358,7 @@ public class Room implements Serializable {
      */
     public void changeTurns(String mex) throws RemoteException {
         setLL();
-        ResourceDeck rd = getResourceDeck();
-        GoldDeck gd = getGoldDeck();
-        if(ll || (gd.getSize()==0 && rd.getSize()==0)){
+        if(ll){
             for(Player p: players)
                 checkGoals(p);
             declareWinner();
