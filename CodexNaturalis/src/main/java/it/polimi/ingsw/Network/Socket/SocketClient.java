@@ -91,7 +91,6 @@ public class SocketClient implements CommonClient {
         while (true) {
             try {
                 while ((receivedMessage = input.readLine()) != null) {
-                    receivedMessage = input.readLine();
                     Gson gson = new Gson();
                     Message mex = gson.fromJson(receivedMessage, Message.class);
                     handleCommand(mex);
