@@ -115,7 +115,7 @@ public class LoginController extends GUIController {
 
     @FXML
     public void submitNickname(ActionEvent event) throws NotBoundException, RemoteException {
-        username= myText.getText();
+        username = myText.getText();
         myText.clear();
         if (username == null || username.isEmpty()) {
             showAlert("Error", "Username cannot be empty.");

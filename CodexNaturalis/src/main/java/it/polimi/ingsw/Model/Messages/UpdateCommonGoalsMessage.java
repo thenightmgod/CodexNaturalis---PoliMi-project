@@ -5,16 +5,16 @@ import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import java.util.LinkedList;
 
 public class UpdateCommonGoalsMessage extends Message {
-    public LinkedList<GoalCard> goals;
+    public LinkedList<Integer> goalIds;
     public String name;
 
-    public UpdateCommonGoalsMessage(LinkedList<GoalCard> cards, String name) {
+    public UpdateCommonGoalsMessage(LinkedList<Integer> goalIds, String name) {
         super("UpdateCommonGoalsMessage");
-        this.goals = cards;
+        this.goalIds = goalIds;
         this.name = name;
     }
-    public LinkedList<GoalCard> getGoals() {
-        return goals;
+    public LinkedList<Integer> getGoalIds() {
+        return goalIds;
     }
 
     public String getName() {

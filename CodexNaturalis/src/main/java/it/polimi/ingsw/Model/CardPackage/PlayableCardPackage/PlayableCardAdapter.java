@@ -11,7 +11,6 @@ public class PlayableCardAdapter implements JsonDeserializer<PlayableCard>, Json
     @Override
     public PlayableCard deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
-        System.out.println(jsonObject);  // print the entire jsonObject
         JsonElement idElement = jsonObject.get("Id");
 
         if(idElement != null) {
@@ -41,10 +40,9 @@ public class PlayableCardAdapter implements JsonDeserializer<PlayableCard>, Json
                 goldCard.setPointsCondition(PointsCondition.valueOf(jsonObject.get("PointsC").getAsString()));
 
                 // Deserialize properties of ResourceCard
-                JsonObject resourceCardObject = jsonObject.getAsJsonObject("resourceCard");
-                goldCard.setColor(CardColor.valueOf(resourceCardObject.get("Color").getAsString()));
-                goldCard.setPoints(resourceCardObject.get("Points").getAsInt());
-                goldCard.setCheckk(resourceCardObject.get("Check").getAsBoolean());
+                goldCard.setColor(CardColor.valueOf(jsonObject.get("Color").getAsString()));
+                goldCard.setPoints(jsonObject.get("Points").getAsInt());
+                goldCard.setCheckk(jsonObject.get("Check").getAsBoolean());
                 return goldCard;
             } else {
                 StartCard startCard = context.deserialize(json, StartCard.class);

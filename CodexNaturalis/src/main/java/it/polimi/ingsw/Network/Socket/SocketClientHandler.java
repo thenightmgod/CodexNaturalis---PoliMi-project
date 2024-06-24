@@ -6,7 +6,6 @@ import com.google.gson.JsonParser;
 import java.lang.reflect.Type;
 import com.google.gson.Gson;
 import it.polimi.ingsw.Actions.*;
-import it.polimi.ingsw.Controller.GameController;
 import it.polimi.ingsw.Controller.MainController;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.*;
@@ -15,7 +14,6 @@ import it.polimi.ingsw.Model.CornerPackage.CardResDeserializer;
 import it.polimi.ingsw.Model.CornerPackage.CardResSerializer;
 import it.polimi.ingsw.Model.Messages.*;
 import it.polimi.ingsw.Model.PlayerPackage.*;
-import it.polimi.ingsw.Model.RoomPackage.Room;
 import it.polimi.ingsw.Network.RMI.MultipleFlow;
 import it.polimi.ingsw.Network.VirtualView;
 
@@ -270,14 +268,22 @@ public class SocketClientHandler extends Thread implements VirtualView {
 
     @Override
     public void updateGoals(LinkedList<GoalCard> goals) throws RemoteException {
-        ShowGoalsMessage message= new ShowGoalsMessage(goals, name);
+        LinkedList<Integer> goalIds= new LinkedList<>();
+        for(int i=0; i<goals.size(); i++){
+            goalIds.add(goals.get(i).getId());
+        }
+        ShowGoalsMessage message= new ShowGoalsMessage(goalIds, name);
         String gson = message.MessageToJson();
         proxy.showGoals(gson);
     }
 
     @Override
     public void updateCommonGoals(LinkedList<GoalCard> goals) throws RemoteException{
-        UpdateCommonGoalsMessage message = new UpdateCommonGoalsMessage(goals, name);
+        LinkedList<Integer> goalIds = new LinkedList<>();
+        for(int i=0; i<goals.size(); i++){
+            goalIds.add(goals.get(i).getId());
+        }
+        UpdateCommonGoalsMessage message = new UpdateCommonGoalsMessage(goalIds, name);
         String gson = message.MessageToJson();
         proxy.updateCommonGoals(gson);
     }

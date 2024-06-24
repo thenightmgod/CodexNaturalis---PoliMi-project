@@ -9,6 +9,7 @@ import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.*;
 import it.polimi.ingsw.Model.CornerPackage.CardRes;
 import it.polimi.ingsw.Model.CornerPackage.CardResDeserializer;
 import it.polimi.ingsw.Model.CornerPackage.CardResSerializer;
+import it.polimi.ingsw.Model.DeckPackage.GoalCardLoader;
 import it.polimi.ingsw.Model.Messages.*;
 import it.polimi.ingsw.Model.PlayerPackage.*;
 import it.polimi.ingsw.Network.CommonClient;
@@ -20,9 +21,10 @@ import java.io.*;
 import java.lang.reflect.Type;
 import java.net.Socket;
 import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static java.lang.System.exit;
 
@@ -111,7 +113,7 @@ public class SocketClient implements CommonClient {
         }
     }
 
-    public void handleCommand(Message mex) throws RemoteException, NotBoundException {
+    public void handleCommand(Message mex) throws IOException, NotBoundException {
         switch(mex.getType()) {
             case "TwentyMessage" -> {
                 String name = ((TwentyMessage)mex).getName();
@@ -148,13 +150,21 @@ public class SocketClient implements CommonClient {
                 this.view.showStartCard(card);
             }
             case "ShowGoalsMessage" -> {
-                LinkedList<GoalCard> cards= ((ShowGoalsMessage)mex).getGoals();
+                LinkedList<Integer> goalIds= ((ShowGoalsMessage)mex).getGoals();
                 String name = ((ShowGoalsMessage)mex).getName();
+                Map<Integer, GoalCard> goalCards = GoalCardLoader.loadGoalCards();
+                LinkedList<GoalCard> cards = goalIds.stream()
+                        .map(goalCards::get)
+                        .collect(Collectors.toCollection(LinkedList::new));
                 this.view.updateGoals(cards, name);
             }
             case "UpdateCommonGoalsMessage" -> {
-                LinkedList<GoalCard> cards= ((UpdateCommonGoalsMessage)mex).getGoals();
+                LinkedList<Integer> goalIds = ((UpdateCommonGoalsMessage)mex).getGoalIds();
                 String name = ((UpdateCommonGoalsMessage)mex).getName();
+                Map<Integer, GoalCard> goalCards = GoalCardLoader.loadGoalCards();
+                LinkedList<GoalCard> cards = goalIds.stream()
+                        .map(goalCards::get)
+                        .collect(Collectors.toCollection(LinkedList::new));
                 this.view.updateCommonGoals(cards, name);
             }
             case "ShowHandMessage" -> {
