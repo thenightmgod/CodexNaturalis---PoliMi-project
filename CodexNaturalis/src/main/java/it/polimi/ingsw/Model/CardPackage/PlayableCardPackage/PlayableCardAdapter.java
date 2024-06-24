@@ -11,23 +11,23 @@ public class PlayableCardAdapter implements JsonDeserializer<PlayableCard>, Json
     @Override
     public PlayableCard deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
-        JsonElement idElement = jsonObject.get("id");
+        System.out.println(jsonObject);  // print the entire jsonObject
+        JsonElement idElement = jsonObject.get("Id");
 
         if(idElement != null) {
 
             int id = idElement.getAsInt();
-            JsonArray backResArray = jsonObject.getAsJsonArray("backRes");
+            JsonArray backResArray = jsonObject.getAsJsonArray("BackRes");
             boolean[] backRes = new boolean[Resources.values().length];
             for (int i = 0; i < backResArray.size(); i++) {
-                backRes[i] = Resources.valueOf(backResArray.get(i).getAsString()) != null;
-            }
+                backRes[i] = backResArray.get(i).getAsBoolean();            }
 
             if (id >= 1 && id <= 40) {
                 ResourceCard resourceCard = context.deserialize(json, ResourceCard.class);
                 resourceCard.setId(id);
-                resourceCard.setColor(CardColor.valueOf(jsonObject.get("color").getAsString()));
-                resourceCard.setPoints(jsonObject.get("points").getAsInt());
-                resourceCard.setCheckk(jsonObject.get("check").getAsBoolean());
+                resourceCard.setColor(CardColor.valueOf(jsonObject.get("Color").getAsString()));
+                resourceCard.setPoints(jsonObject.get("Points").getAsInt());
+                resourceCard.setCheckk(jsonObject.get("Check").getAsBoolean());
                 return resourceCard;
             } else if (id > 40 && id <= 80) {
                 GoldCard goldCard = context.deserialize(json, GoldCard.class);
@@ -38,24 +38,28 @@ public class PlayableCardAdapter implements JsonDeserializer<PlayableCard>, Json
                     requirements[i] = requirementsArray.get(i).getAsInt();
                 }
                 goldCard.setRequirements(requirements);
-                goldCard.setPointsCondition(PointsCondition.valueOf(jsonObject.get("pointsCondition").getAsString()));
+                goldCard.setPointsCondition(PointsCondition.valueOf(jsonObject.get("PointsC").getAsString()));
 
                 // Deserialize properties of ResourceCard
                 JsonObject resourceCardObject = jsonObject.getAsJsonObject("resourceCard");
-                goldCard.setColor(CardColor.valueOf(resourceCardObject.get("color").getAsString()));
-                goldCard.setPoints(resourceCardObject.get("points").getAsInt());
-                goldCard.setCheckk(resourceCardObject.get("check").getAsBoolean());
+                goldCard.setColor(CardColor.valueOf(resourceCardObject.get("Color").getAsString()));
+                goldCard.setPoints(resourceCardObject.get("Points").getAsInt());
+                goldCard.setCheckk(resourceCardObject.get("Check").getAsBoolean());
                 return goldCard;
             } else {
                 StartCard startCard = context.deserialize(json, StartCard.class);
                 startCard.setId(id);
-                JsonArray backCornersArray = jsonObject.getAsJsonArray("backCorners");
+                JsonArray backCornersArray = jsonObject.getAsJsonArray("BackCorners");
                 for (JsonElement cornerElement : backCornersArray) {
                     JsonObject cornerObject = cornerElement.getAsJsonObject();
-                    Resources res = Resources.valueOf(cornerObject.get("res").getAsString());
-                    Orientation orientation = Orientation.valueOf(cornerObject.get("orientation").getAsString());
-                    Corner corner = new Corner(res, orientation);
-                    startCard.addBackCorner(corner);
+                    try {
+                        Resources res = Resources.valueOf(cornerObject.get("Res").getAsString());
+                        Orientation orientation = Orientation.valueOf(cornerObject.get("Orient").getAsString());
+                        Corner corner = new Corner(res, orientation);
+                        startCard.addBackCorner(corner);
+                    } catch (IllegalArgumentException e) {
+                        System.err.println("Invalid resource value: " + cornerObject.get("Res"));
+                    }
                 }
                 return startCard;
             }
@@ -72,7 +76,7 @@ public class PlayableCardAdapter implements JsonDeserializer<PlayableCard>, Json
         for (Resources res : src.getBackRes()) {
             backResArray.add(res.toString());
         }
-        jsonObject.add("backRes", backResArray);
+        jsonObject.add("BackRes", backResArray);
 
         //switch da fare sull'id forse
         switch (src) {
@@ -82,26 +86,26 @@ public class PlayableCardAdapter implements JsonDeserializer<PlayableCard>, Json
                     requirementsArray.add(requirement);
                 }
                 jsonObject.add("requirements", requirementsArray);
-                jsonObject.addProperty("pointsCondition", goldCard.getPointsCondition().toString());
+                jsonObject.addProperty("PointsC", goldCard.getPointsCondition().toString());
 
                 JsonObject resourceCardObject = context.serialize(goldCard, ResourceCard.class).getAsJsonObject();
-                jsonObject.add("resourceCard", resourceCardObject);
+                jsonObject.add("ResourceCard", resourceCardObject);
             }
             case ResourceCard resourceCard -> {
-                jsonObject.addProperty("color", resourceCard.getColor().toString());
-                jsonObject.addProperty("points", resourceCard.getPoints());
-                jsonObject.addProperty("check", resourceCard.getCheck());
+                jsonObject.addProperty("Color", resourceCard.getColor().toString());
+                jsonObject.addProperty("Points", resourceCard.getPoints());
+                jsonObject.addProperty("Check", resourceCard.getCheck());
             }
             case StartCard startCard -> {
                 JsonArray backCornersArray = new JsonArray();
                 for (Orientation orientation : Orientation.values()) {
                     Corner corner = startCard.getBackCorner(orientation);
                     JsonObject cornerObject = new JsonObject();
-                    cornerObject.addProperty("res", corner.getRes().toString());
-                    cornerObject.addProperty("orientation", corner.getOrientation().toString());
+                    cornerObject.addProperty("Res", corner.getRes().toString());
+                    cornerObject.addProperty("Orient", corner.getOrientation().toString());
                     backCornersArray.add(cornerObject);
                 }
-                jsonObject.add("backCorners", backCornersArray);
+                jsonObject.add("BackCorners", backCornersArray);
             }
             default -> throw new IllegalStateException("Unexpected value: " + src);
         }

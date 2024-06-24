@@ -23,7 +23,6 @@ public class PlayingFieldAdapter implements JsonSerializer<PlayingField>, JsonDe
 
     @Override
     public PlayingField deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        System.out.println("JSON Element: " + json.toString()); // Print the json element
 
         JsonObject jsonObject = json.getAsJsonObject();
         PlayingField playingField = new PlayingField();

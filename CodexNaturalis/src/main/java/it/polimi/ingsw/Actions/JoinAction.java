@@ -38,7 +38,6 @@ public class JoinAction extends Actions {
     public void executor() {
         new Thread(() -> {
             try {
-                System.err.println("Joining game");
                 getManager().joinGame(name, getView(), roomId);
             } catch (RemoteException | NotBoundException e) {
                 System.out.println("There has been a problem in the execution of join game action");
