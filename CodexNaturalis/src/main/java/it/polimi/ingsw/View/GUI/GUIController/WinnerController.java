@@ -46,19 +46,19 @@ public class WinnerController extends GUIController {
         image1.setImage(primo);
         image1.setFitHeight(110.0);
         image1.setFitWidth(110.0);
-        labelUno.setText(standings.get(1));
+        labelUno.setText(standings.get(0));
         labelUno.setVisible(true);
         Image secondo = loadImage("/view/MyCodexNaturalisPhotos/argento.png");
         image2.setImage(secondo);
         image2.setFitHeight(110.0);
         image2.setFitWidth(110.0);
-        labelDue.setText(standings.get(0));
+        labelDue.setText(standings.get(1));
         labelDue.setVisible(true);
     }
     private void loadLabelTre(){
         Image primo = loadImage("/view/MyCodexNaturalisPhotos/oro.png");
         image1.setImage(primo);
-        labelUno.setText(standings.get(2));
+        labelUno.setText(standings.get(0));
         labelUno.setVisible(true);
         Image secondo = loadImage("/view/MyCodexNaturalisPhotos/argento.png");
         image2.setImage(secondo);
@@ -66,7 +66,7 @@ public class WinnerController extends GUIController {
         labelDue.setVisible(true);
         Image terzo = loadImage("/view/MyCodexNaturalisPhotos/bronzo.png");
         image3.setImage(terzo);
-        labelTre.setText(standings.get(0));
+        labelTre.setText(standings.get(2));
         labelTre.setVisible(true);
     }
     private void loadLabelQuattro(){
@@ -74,25 +74,26 @@ public class WinnerController extends GUIController {
         image1.setImage(primo);
         image1.setFitHeight(110.0);
         image1.setFitWidth(110.0);
-        labelUno.setText(standings.get(3));
+        labelUno.setText(standings.get(0));
         labelUno.setVisible(true);
         Image secondo = loadImage("/view/MyCodexNaturalisPhotos/argento.png");
         image2.setImage(secondo);
         image2.setFitHeight(110.0);
         image2.setFitWidth(110.0);
-        labelDue.setText(standings.get(2));
+        labelDue.setText(standings.get(1));
         labelDue.setVisible(true);
         Image terzo = loadImage("/view/MyCodexNaturalisPhotos/bronzo.png");
         image3.setImage(terzo);
         image3.setFitHeight(110.0);
         image3.setFitWidth(110.0);
-        labelTre.setText(standings.get(1));
+        labelTre.setText(standings.get(2));
         labelTre.setVisible(true);
         Image quarto = loadImage("/view/MyCodexNaturalisPhotos/carbone.png");
         image4.setImage(quarto);
         image4.setFitHeight(110.0);
         image4.setFitWidth(110.0);
-        labelQuattro.setText(standings.get(0));
+        labelQuattro.setText(standings.get(3
+        ));
         labelQuattro.setVisible(true);
     }
 }

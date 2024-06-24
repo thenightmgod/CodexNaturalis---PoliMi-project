@@ -52,7 +52,7 @@ public class TurnController extends GUIController{
     @FXML
     private Label myGoal;
     @FXML
-    private HBox label_button_box;
+    private Label secondmessageLabel;
     @FXML
     private Button myPointsButton;
     @FXML
@@ -66,11 +66,11 @@ public class TurnController extends GUIController{
     private LinkedHashMap<String, PlayingField> othersPlayingField;
     private ScoreBoard scoreBoard;
     private PlayingField field;
-    private int Points;
     boolean myTurn;
     boolean isFrontImageLoaded=true;
     boolean revealed;
     boolean updatedPoints=false;
+    boolean lastRound=false;
     LinkedList<Boolean> omar = new LinkedList<>();
 
 
@@ -96,10 +96,6 @@ public class TurnController extends GUIController{
         plotField();
         if(myTurn) {
             isYourTurn();
-            points.put("Player1", 21);
-            points.put("Player2", 21);
-            points.put("Player3", 56);
-            scoreBoard = new ScoreBoard(points);
         }else {
             waitMyTurn();
         }
@@ -243,6 +239,10 @@ public class TurnController extends GUIController{
                 });
             }
         }
+        if(lastRound) {
+            secondmessageLabel.setText("THIS IS THE LAST ROUND!");
+            secondmessageLabel.setVisible(true);
+        }
     }
 
     public void drawCard(){
@@ -318,7 +318,12 @@ public class TurnController extends GUIController{
     public void waitMyTurn() {
         messageLabel.setText("Please, wait your turn to place a card");
         messageLabel.setVisible(true);
+        if (lastRound) {
+            secondmessageLabel.setText("THIS IS THE LAST ROUND!");
+            secondmessageLabel.setVisible(true);
+        }
     }
+
 
     private void loadResourceBox() {
 
@@ -638,23 +643,22 @@ public class TurnController extends GUIController{
     public void showException(String exception) {
         switch (exception) {
             case "RequirementsNotSatisfied"-> {
-                messageLabel.setText("The requirements for the card you chose aren't satisfied!\n" +
+                messageLabel.setText("Requirements NOT satisfied!\n" +
                         "Please, flip this gold card or play another one.");
                 //setterò di nuovo la carta posizionabile nel field
             }
         }
     }
     public void lastRound() {
-        messageLabel.setText("This is the last round!");
-        messageLabel.setVisible(true);
     }
     public void twenty(String name) {
-        if (! (name.equals(client.getNames()))) {
-            messageLabel.setText("" + name+ "has reached 20 points!");
+        if (! (name.equals(client.getName()))) {
+            secondmessageLabel.setText(name+ "HAS REACHED 20 POINTS!");
         } else {
-            messageLabel.setText("Wow, you reached 20 points!");
+            secondmessageLabel.setText("WOW, YOU REACHED 20 POINTS!");
         }
-        messageLabel.setVisible(true);
+        secondmessageLabel.setVisible(true);
+        lastRound=true;
     }
 
     @FXML
