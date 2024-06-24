@@ -18,8 +18,8 @@ import static it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PointsCondit
  * Extends the PlayableCard class.
  */
 public class ResourceCard extends PlayableCard implements Serializable {
-    private final CardColor Color;
-    private final int Points;
+    private CardColor Color;
+    private int Points;
 
     private boolean Check;
 
@@ -48,6 +48,10 @@ public class ResourceCard extends PlayableCard implements Serializable {
         return Color;
     }
 
+    public void setColor(CardColor color) {
+        Color = color;
+    }
+
     /**
      * Gets the points associated with the ResourceCard.
      *
@@ -55,6 +59,10 @@ public class ResourceCard extends PlayableCard implements Serializable {
      */
     public int getPoints() {
         return Points;
+    }
+
+    public void setPoints(int points) {
+        Points = points;
     }
 
     /**
@@ -65,6 +73,10 @@ public class ResourceCard extends PlayableCard implements Serializable {
 
     public void setCheck(){
         Check = true;
+    }
+
+    public void setCheckk(boolean check) {
+        Check = check;
     }
 
     public boolean getCheck(){

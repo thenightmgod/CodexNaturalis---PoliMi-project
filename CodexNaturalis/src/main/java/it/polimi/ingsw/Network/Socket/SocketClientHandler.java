@@ -9,18 +9,12 @@ import it.polimi.ingsw.Actions.*;
 import it.polimi.ingsw.Controller.GameController;
 import it.polimi.ingsw.Controller.MainController;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
-import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
-import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
-import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
-import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.StartCard;
+import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.*;
 import it.polimi.ingsw.Model.CornerPackage.CardRes;
 import it.polimi.ingsw.Model.CornerPackage.CardResDeserializer;
 import it.polimi.ingsw.Model.CornerPackage.CardResSerializer;
 import it.polimi.ingsw.Model.Messages.*;
-import it.polimi.ingsw.Model.PlayerPackage.FB;
-import it.polimi.ingsw.Model.PlayerPackage.Player;
-import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
-import it.polimi.ingsw.Model.PlayerPackage.Position;
+import it.polimi.ingsw.Model.PlayerPackage.*;
 import it.polimi.ingsw.Model.RoomPackage.Room;
 import it.polimi.ingsw.Network.RMI.MultipleFlow;
 import it.polimi.ingsw.Network.VirtualView;
@@ -66,6 +60,8 @@ public class SocketClientHandler extends Thread implements VirtualView {
                         Gson gson = new GsonBuilder().
                                 registerTypeAdapter(CardRes.class, new CardResDeserializer())
                                 .registerTypeAdapter(CardRes.class, new CardResSerializer())
+                                .registerTypeAdapter(PlayingField.class, new PlayingFieldAdapter())
+                                .registerTypeAdapter(PlayableCard.class, new PlayableCardAdapter())
                                 .create();
                         JsonParser parser = new JsonParser();
                         JsonObject jsonObject = parser.parse(receivedmessage).getAsJsonObject();

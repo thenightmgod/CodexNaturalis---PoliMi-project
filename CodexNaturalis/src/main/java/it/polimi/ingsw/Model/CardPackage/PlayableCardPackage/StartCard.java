@@ -50,4 +50,8 @@ public class StartCard extends PlayableCard implements Serializable {
             case LL -> this.BackCorners.get(3);
         };
     }
+
+    public void addBackCorner(Corner corner){
+        this.BackCorners.add(corner);
+    }
 }

@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Represents a generic card in the game.
  */
 public abstract class Card implements Serializable {
-    private final int Id;
+    public int Id;
     /**
      * Constructs a new Card with the specified identifier.
      *
@@ -25,5 +25,8 @@ public abstract class Card implements Serializable {
         return Id;
     }
 
+    public void setId(int id) {
+        Id = id;
+    }
 
 }

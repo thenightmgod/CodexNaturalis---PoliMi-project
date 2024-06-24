@@ -19,8 +19,8 @@ import java.util.LinkedList;
  *
  */
 public class GoldCard extends ResourceCard implements Serializable {
-    private final int[] requirements;
-    private final PointsCondition PointsC;
+    private int[] requirements;
+    private PointsCondition PointsC;
 
 
     /**
@@ -60,6 +60,12 @@ public class GoldCard extends ResourceCard implements Serializable {
         return requirements;
     }
 
+    public void setRequirements(int[] requirements) {
+        for (int i = 0; i < 4; i++) {
+            this.requirements[i] = requirements[i];
+        }
+    }
+
     /**
      * @return the condition that can be positional ("CORNERS"), based on a number of objects (OBJECTS_QUILL,OBJECTS_INKWEL or OBJECTS_MANUSCRIPT)
      *         or nothing ("FREE"). If the player meets this condition, he can get a certain number of points calculated by pointsCalc().
@@ -68,6 +74,10 @@ public class GoldCard extends ResourceCard implements Serializable {
         return PointsC;
     }
 
+
+    public void setPointsCondition(PointsCondition pointsCondition) {
+        PointsC = pointsCondition;
+    }
     /**
      *
      *Determines whether the player has the necessary resources, as described in the requirements, to place the GoldCard in the playing field.

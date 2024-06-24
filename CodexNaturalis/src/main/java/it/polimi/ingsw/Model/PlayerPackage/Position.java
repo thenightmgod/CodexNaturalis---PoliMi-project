@@ -8,7 +8,6 @@ import java.util.Objects;
  */
 public class Position implements Serializable {
 
-    private boolean free = false;
     private int x;
     private int y;
     private final FB face;
@@ -88,11 +87,7 @@ public class Position implements Serializable {
         return this.x == position.getX() && this.y == position.getY();
     }
 
-    public void setFree(boolean free) {
-        this.free = free;
-    }
-
-    /**
+   /**
      * Returns a hash code value for the position.
      * @return A hash code value for the position.
      */
@@ -103,10 +98,7 @@ public class Position implements Serializable {
 
     @Override
     public String toString() {
-        return "{" +
-                 + x + " , "
-                 + y +
-                '}';
+        return "{\"x\": " + x + ", \"y\": " + y + ", \"face\": \"" + face + "\"}";
     }
 
 }

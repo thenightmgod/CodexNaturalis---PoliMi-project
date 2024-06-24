@@ -25,6 +25,14 @@ public class PlayingField implements Serializable {
         FreePositions = new LinkedList<>();
     }
 
+    public void setField(LinkedHashMap<Position, PlayableCard> field) {
+        Field = field;
+    }
+
+    public void setFreePositions(LinkedList<Position> freePositions) {
+        FreePositions = freePositions;
+    }
+
     public boolean containsFreePosition(Position p){
         for(Position pos : FreePositions){
             if(pos.equals(p)){
