@@ -88,10 +88,10 @@ public class Room implements Serializable {
      * Sets the flag indicating whether the game has reached the twenty points threshold.
      */
     public void setTwentyFlag() {
-        if(turn.getPointsCounter()>=20)
+        if(turn.getPointsCounter()>=2)
             this.twenty = true;
         if(twenty && !lastRound)
-            if(turn.getPointsCounter()>=20)
+            if(turn.getPointsCounter()>=2)
                 observerManager.twenty(turn.getName());
     }
     /**
@@ -101,7 +101,7 @@ public class Room implements Serializable {
         ResourceDeck rd = getResourceDeck();
         GoldDeck gd = getGoldDeck();
         if(twenty || (gd.getSize()==0 && rd.getSize()==0))
-            if(turn.equals(players.getFirst()))
+            if(turn.equals(players.getLast()))
                 this.lastRound = true;
     }
 
@@ -364,8 +364,8 @@ public class Room implements Serializable {
             declareWinner();
         }
         else {
-            setLastRound();
             setTwentyFlag();
+            setLastRound();
 
             int index = players.indexOf(turn);
             turn = players.getLast().equals(turn) ? players.getFirst() : players.get(index + 1);

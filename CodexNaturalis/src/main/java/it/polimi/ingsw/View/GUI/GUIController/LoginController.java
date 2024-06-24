@@ -254,6 +254,7 @@ public class LoginController extends GUIController {
 
         animateLabelText(myLabel2, "Waiting for other participants...");
 
+
         String newImagePath = "/view/MyCodexNaturalisPhotos/pic6069793.jpg";
         Image newImage = loadImage(newImagePath);
         myImage.setImage(newImage);

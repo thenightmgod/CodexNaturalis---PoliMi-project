@@ -118,8 +118,8 @@
     "Corners": [
       {"Res": "MANUSCRIPT", "Orient": "HR"},
       {"Res": "ABSENT", "Orient": "HL"},
-      {"Res": "ABSENT", "Orient": "LR"},
-      {"Res": "EMPTY", "Orient": "LL"}
+      {"Res": "EMPTY", "Orient": "LR"},
+      {"Res": "ABSENT", "Orient": "LL"}
     ]
   },
   {  "Id": 50,
