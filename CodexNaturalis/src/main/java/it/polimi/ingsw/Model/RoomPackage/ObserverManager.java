@@ -51,12 +51,12 @@ public class ObserverManager {
     public void updateTurn(Player turn, String mex) {
         try {
             for (String s : observers.keySet()) {
-                if (!observers.get(s).getName().equals(turn.getName())) { //printo is not your turn a tutti quelli che non sono in turno
+                if (!observers.get(s).getNames().equals(turn.getName())) { //printo is not your turn a tutti quelli che non sono in turno
                     observers.get(s).notYourTurn(turn, mex);
                 }
             }
             for (String s : observers.keySet()) {
-                if (observers.get(s).getName().equals(turn.getName())) {  //inizio a chiamare azioni sul player che ha il turno
+                if (observers.get(s).getNames().equals(turn.getName())) {  //inizio a chiamare azioni sul player che ha il turno
                     observers.get(s).updateTurn(turn, mex);
                 }
             }

@@ -80,7 +80,7 @@ public interface CommonClient {
      *
      * @return The name of the player.
      */
-    String getName();
+    String getNames();
 
     /**
      * Gets the client model.

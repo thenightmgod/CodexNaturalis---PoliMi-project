@@ -649,7 +649,7 @@ public class TurnController extends GUIController{
         messageLabel.setVisible(true);
     }
     public void twenty(String name) {
-        if (! (name.equals(client.getName()))) {
+        if (! (name.equals(client.getNames()))) {
             messageLabel.setText("" + name+ "has reached 20 points!");
         } else {
             messageLabel.setText("Wow, you reached 20 points!");

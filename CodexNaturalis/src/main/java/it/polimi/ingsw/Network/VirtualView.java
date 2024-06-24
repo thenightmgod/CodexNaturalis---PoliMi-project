@@ -135,7 +135,7 @@ public interface VirtualView extends Remote {
      */
 
 
-    String getName() throws RemoteException;
+    String getNames() throws RemoteException;
 
     /**
      * Shows the start card to this client.

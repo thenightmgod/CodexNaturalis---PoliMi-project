@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Network.Socket;
 
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.lang.reflect.Type;
@@ -12,6 +13,9 @@ import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.StartCard;
+import it.polimi.ingsw.Model.CornerPackage.CardRes;
+import it.polimi.ingsw.Model.CornerPackage.CardResDeserializer;
+import it.polimi.ingsw.Model.CornerPackage.CardResSerializer;
 import it.polimi.ingsw.Model.Messages.*;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
@@ -59,7 +63,10 @@ public class SocketClientHandler extends Thread implements VirtualView {
             while (true) {
                 try {
                     while ((receivedmessage = input.readLine()) != null) {
-                        Gson gson = new Gson();
+                        Gson gson = new GsonBuilder().
+                                registerTypeAdapter(CardRes.class, new CardResDeserializer())
+                                .registerTypeAdapter(CardRes.class, new CardResSerializer())
+                                .create();
                         JsonParser parser = new JsonParser();
                         JsonObject jsonObject = parser.parse(receivedmessage).getAsJsonObject();
                         String type = jsonObject.get("type").getAsString();
@@ -83,8 +90,7 @@ public class SocketClientHandler extends Thread implements VirtualView {
     public void handleCommand(Message msg) throws RemoteException, NotBoundException {
         switch(msg.getType()){
             case "JoinExistingGameMessage" -> {
-                String name = ((JoinExistingGameMessage) msg).getName();
-                System.err.println("joinGame");
+                name = ((JoinExistingGameMessage) msg).getName();
                 synchronized (actionsPerGame) {
                     int roomId = controller.getControllers().size() - 1;
                     if (roomId < 0) {
@@ -96,7 +102,6 @@ public class SocketClientHandler extends Thread implements VirtualView {
                         joins.add(jGame);
 
                     }
-                    this.name = name;
                 }
             }
             case "CreateGameMessage" -> {
@@ -126,7 +131,7 @@ public class SocketClientHandler extends Thread implements VirtualView {
                 actionsPerGame.get(roomId).getActionsQueue().add(pAction);
                 System.err.println("Place Card Action: whichInHand-" + whichInHand + " X: " + x + " Y: " + y + " face" + face + " Player-" + name);
             }
-            case "SetStartCardMessage" -> {
+            case "SetStartCardFaceMessage" -> {
                 String name = ((SetStartCardFaceMessage) msg).getName();
                 boolean face = ((SetStartCardFaceMessage) msg).getFace();
                 int roomId = controller.getYourRoomId(name);
@@ -232,15 +237,15 @@ public class SocketClientHandler extends Thread implements VirtualView {
      *
      * @param turn The player to be notified.
      * @param mex  The message to be displayed.
-     * @throws RemoteException If a remote access error occurs.
      */
 
     @Override
     public void notYourTurn(Player turn, String mex){
-        /*NotYourTurnMessage message = new NotYourTurnMessage(turn);
+        NotYourTurnMessage message = new NotYourTurnMessage(turn, mex);
         String gson = message.MessageToJson();
-        proxy.notYourTurn(gson);*/
+        proxy.notYourTurn(gson);
     }
+
     @Override
     public void declareWinner(LinkedList<String> standings){
         DeclareWinnerMessage message = new DeclareWinnerMessage(standings);
@@ -248,28 +253,32 @@ public class SocketClientHandler extends Thread implements VirtualView {
         proxy.declareWinner(gson);
     }
 
-
+    @Override
     public String getNames() throws RemoteException {
         return this.name;
     }
+
     @Override
     public void startingGame(Player p){
         StartingGameMessage message = new StartingGameMessage();
         String gson = message.MessageToJson();
         proxy.startingGame(gson);
     }
+
     @Override
     public void showStartCard(StartCard card){
         ShowStartCardMessage message = new ShowStartCardMessage(card);
         String gson = message.MessageToJson();
         proxy.showStartCard(gson);
     }
+
     @Override
     public void updateGoals(LinkedList<GoalCard> goals) throws RemoteException {
         ShowGoalsMessage message= new ShowGoalsMessage(goals, name);
         String gson = message.MessageToJson();
         proxy.showGoals(gson);
     }
+
     @Override
     public void updateCommonGoals(LinkedList<GoalCard> goals) throws RemoteException{
         UpdateCommonGoalsMessage message = new UpdateCommonGoalsMessage(goals, name);
@@ -297,12 +306,14 @@ public class SocketClientHandler extends Thread implements VirtualView {
         String gson = message.MessageToJson();
         proxy.showFreePositions(gson);
     }
+
     @Override
     public void updateGoldDeck(String name, boolean start, LinkedList<GoldCard> deck){
         UpdateGoldDeckMessage message = new UpdateGoldDeckMessage(name, start, deck);
         String gson = message.MessageToJson();
         proxy.updateGoldDeck(gson);
     }
+
     @Override
     public void updateResourceDeck(String name, boolean start, LinkedList<ResourceCard> deck){
         UpdateResourceDeckMessage message = new UpdateResourceDeckMessage(name, start, deck);

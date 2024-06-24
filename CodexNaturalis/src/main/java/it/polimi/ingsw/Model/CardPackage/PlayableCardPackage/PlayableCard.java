@@ -13,7 +13,7 @@ import java.util.LinkedList;
  * Represents the generic Card that the player can draw and place in his playing field at each turn.
  * The PlayableCard includes ResourceCard and GoldCard.
  */
-public abstract class PlayableCard extends Card implements Serializable {
+public class PlayableCard extends Card implements Serializable {
 
     private final boolean[] BackRes;
     private LinkedList<Corner> Corners;

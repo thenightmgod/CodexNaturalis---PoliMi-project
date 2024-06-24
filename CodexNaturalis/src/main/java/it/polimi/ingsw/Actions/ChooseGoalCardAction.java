@@ -39,6 +39,6 @@ public class ChooseGoalCardAction extends Actions{
     @Override
     public void executor() throws RemoteException {
         GameController controller = getManager().getControllers().get(roomId);
-        controller.chooseGoalCard(getView().getName(), i);
+        controller.chooseGoalCard(getView().getNames(), i);
     }
 }

@@ -72,7 +72,7 @@ public class GUI implements GameView {
                 primaryStage.setTitle("Login");
             }
             default -> {
-                primaryStage.setTitle(client.getName() + "'s " + sceneName);
+                primaryStage.setTitle(client.getNames() + "'s " + sceneName);
             }
         }
         primaryStage.centerOnScreen();
@@ -141,7 +141,7 @@ public class GUI implements GameView {
 
     @Override
     public void updateField(PlayingField field, String name) {
-        if (name.equals(client.getName())) {
+        if (name.equals(client.getNames())) {
             client.getClient().setField(field);
             if (!first_turn) {
                 Platform.runLater(() -> {
@@ -208,7 +208,7 @@ public class GUI implements GameView {
     public void updateTurn(Player player, String mex) throws RemoteException {
         //in tutta questa non ci va il platoform run later???
         this.Turn = player;
-        if (Turn.getName().equals(client.getName())) {
+        if (Turn.getName().equals(client.getNames())) {
             Platform.runLater(() -> {
                     switch (mex) {
                         case "StartCard" -> {

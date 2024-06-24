@@ -1,11 +1,17 @@
 package it.polimi.ingsw.Network.Socket;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.StartCard;
+import it.polimi.ingsw.Model.CornerPackage.CardRes;
+import it.polimi.ingsw.Model.CornerPackage.CardResDeserializer;
+import it.polimi.ingsw.Model.CornerPackage.CardResSerializer;
 import it.polimi.ingsw.Model.Messages.*;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
@@ -17,6 +23,7 @@ import it.polimi.ingsw.View.GameView;
 import it.polimi.ingsw.View.TUI.ClientModel;
 
 import java.io.*;
+import java.lang.reflect.Type;
 import java.net.Socket;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -39,7 +46,7 @@ public class SocketClient implements CommonClient {
         this.initializeClient(this, ip, 44458);
     }
 
-    public String getName() {
+    public String getNames() {
         return this.name;
     }
 
@@ -66,7 +73,7 @@ public class SocketClient implements CommonClient {
             System.out.println(e);
             exit(1);
         }
-        this.model = new ClientModel(client.getName());
+        this.model = new ClientModel(client.getNames());
         this.input = new BufferedReader(socketRx);
         this.server = new ServerProxy(socketTx);
         this.run();
@@ -91,11 +98,18 @@ public class SocketClient implements CommonClient {
         while (true) {
             try {
                 while ((receivedMessage = input.readLine()) != null) {
-                    Gson gson = new Gson();
-                    Message mex = gson.fromJson(receivedMessage, Message.class);
-                    handleCommand(mex);
+                    Gson gson = new GsonBuilder().
+                            registerTypeAdapter(CardRes.class, new CardResDeserializer())
+                            .registerTypeAdapter(CardRes.class, new CardResSerializer())
+                            .create();
+                    JsonParser parser = new JsonParser();
+                    JsonObject jsonObject = parser.parse(receivedMessage).getAsJsonObject();
+                    String type = jsonObject.get("type").getAsString();
+                    Class<?> clazz = Class.forName("it.polimi.ingsw.Model.Messages." + type);
+                    Message message = gson.fromJson(receivedMessage, (Type) clazz);
+                    handleCommand(message);
                 }
-            } catch (RuntimeException | IOException | NotBoundException e) {
+            } catch (RuntimeException | IOException | NotBoundException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }
@@ -128,7 +142,7 @@ public class SocketClient implements CommonClient {
             case "NotYourTurnMessage" -> {
                 Player p = ((NotYourTurnMessage)mex).getPlayer();
                 String mess = ((NotYourTurnMessage)mex).getMex();
-                this.view.printNotYourTurn(p, "blabla");
+                this.view.printNotYourTurn(p, mess);
             }
             case "StartingGameMessage" -> {
                 this.view.startingGame();

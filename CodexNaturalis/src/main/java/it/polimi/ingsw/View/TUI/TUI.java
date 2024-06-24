@@ -39,7 +39,7 @@ public class TUI implements GameView {
 
     @Override
     public void twenty(String name){
-        if(name.equals(client.getName()))
+        if(name.equals(client.getNames()))
             System.out.println("You arrived at 20 points");
         else System.out.println( name + " arrived at 20 points");
     }
@@ -82,7 +82,7 @@ public class TUI implements GameView {
 
     @Override
     public void updateField(PlayingField field, String name) {
-        if(name.equals(client.getName())) {
+        if(name.equals(client.getNames())) {
             client.getClient().setField(field);
             System.out.println("Your new field is:\n");
             cards.plotPlayingField(client.getClient());
@@ -111,7 +111,7 @@ public class TUI implements GameView {
 //                System.out.println("These are the new drawable cards");
                 client.getClient().setDrawableResourceCards(resourceCards);
             } else {
-                System.out.println(name + " has drawn a card");
+                System.out.println(Turn.getName() + " has drawn a card");
 //                System.out.println("These are the new drawable cards");
                 client.getClient().setDrawableResourceCards(resourceCards);
             }
@@ -219,6 +219,7 @@ public class TUI implements GameView {
     }
 
     public void createGame() throws RemoteException {
+        System.err.println("Creating game");
         inputHandler.handleUserInput("createGame");
     }
 
@@ -247,7 +248,7 @@ public class TUI implements GameView {
     public void updateTurn(Player player, String mex) throws RemoteException {
         //robaccia per printare che non è il tuo turno e bla bla
         this.Turn = player;
-        if(Turn.getName().equals(client.getName())) {
+        if(Turn.getName().equals(client.getNames())) {
             switch (mex) {
                 case "StartCard" -> setStartCardFace();
                 case "GoalCard" -> chooseGoalCard();
@@ -278,12 +279,12 @@ public class TUI implements GameView {
         System.out.println("...");
 
 
-        if(client.getName().equals(standings.get(0)))
+        if(client.getNames().equals(standings.get(0)))
             System.out.println("JACKIE DOWN THE LINE YOU WON");
-        else if (client.getName().equals(standings.get(1))) {
+        else if (client.getNames().equals(standings.get(1))) {
             System.out.println("JACKIE DOWN THE LINE YOU GOT THE SECOND PLACE");
         }
-        else if (client.getName().equals(standings.get(2))) {
+        else if (client.getNames().equals(standings.get(2))) {
             System.out.println("JACKIE DOWN THE LINE YOU GOT THE THIRD PLACE");
         } else {
             System.out.println("JACKIE DOWN THE LINE YOU GOT THE FOURTH PLACE COGLIONE");
