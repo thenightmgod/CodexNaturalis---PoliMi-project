@@ -11,8 +11,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" styleClass="woodBackground" stylesheets="@stylesturn.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.GUI.GUIController.TurnController">
-      <Label layoutX="20.0" layoutY="515.0" style="-fx-background-color: rgba(255,0,0,0.4);" text="YOUR HAND" textFill="WHITE">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" styleClass="woodBackground" stylesheets="@stylesturn.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.GUI.GUIController.TurnController">
+      <Label layoutX="20.0" layoutY="515.0" style="-fx-background-color: rgba(255,0,0,0.4);" text="YOUR HAND" textFill="#f2eded">
          <font>
             <Font name="Weibei TC Bold" size="20.0" />
          </font>
@@ -56,15 +56,15 @@
            <children>
                <Pane prefHeight="193.0" prefWidth="515.0">
                    <children>
-                       <Button fx:id="myPointsButton" layoutX="14.0" layoutY="123.0" mnemonicParsing="false" onAction="#showPointsCounter" prefHeight="47.0" prefWidth="146.0" styleClass="button-submit" text="SCOREBOARD">
+                       <Button fx:id="myPointsButton" layoutX="14.0" layoutY="123.0" mnemonicParsing="false" onAction="#showPointsCounter" prefHeight="47.0" prefWidth="146.0" styleClass="buttonA" stylesheets="@styles.css" text="SCOREBOARD" textFill="#e8e4e4">
                   <font>
                      <Font name="Weibei TC Bold" size="13.0" />
                   </font></Button>
-                       <Label fx:id="messageLabel" layoutX="15.0" layoutY="8.0" style="-fx-background-color: rgba(0,255,0,0.3);" text="YOUR MESSAGE HERE" textFill="#fffbfb">
+                       <Label fx:id="messageLabel" layoutX="15.0" layoutY="8.0" style="-fx-background-color: rgba(0,255,0,0.3);" text="YOUR MESSAGE HERE" textFill="#eeebeb">
                      <font>
                         <Font name="Weibei TC Bold" size="20.0" />
                      </font></Label>
-               <Button fx:id="playingFieldButton" layoutX="283.0" layoutY="123.0" mnemonicParsing="false" onAction="#viewOthersPlayingField" prefHeight="47.0" prefWidth="210.0" styleClass="button-submit" text="OTHER'S PLAYING  FIELD">
+               <Button fx:id="playingFieldButton" layoutX="283.0" layoutY="123.0" mnemonicParsing="false" onAction="#viewOthersPlayingField" prefHeight="47.0" prefWidth="210.0" styleClass="buttonA" stylesheets="@styles.css" text="OTHER'S PLAYING  FIELD" textFill="#fcf8f8">
                   <font>
                      <Font name="Weibei TC Bold" size="13.0" />
                   </font></Button>

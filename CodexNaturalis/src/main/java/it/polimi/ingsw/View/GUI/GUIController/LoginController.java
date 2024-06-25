@@ -1,6 +1,7 @@
 package it.polimi.ingsw.View.GUI.GUIController;
 
 import it.polimi.ingsw.Network.RMI.RMIClient;
+import it.polimi.ingsw.Network.Socket.SocketClient;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -125,7 +126,9 @@ public class LoginController extends GUIController {
         if(!(connectionType)) {
             ((RMIClient) this.client ).setName(username);
         }
-        //else socket
+        else{
+            ((SocketClient) this.client).setName(username);
+        }
         joinGame();
         myNicknameButton.setVisible(false);
         myNicknameButton.setDisable(true);
@@ -265,7 +268,15 @@ public class LoginController extends GUIController {
     //--------STARTARE IL SOCKET!!!-----------------
     @FXML
     public void startSocket(ActionEvent event) {
-        System.out.println("Stai startando un socketserver");
+        client= new SocketClient(username);
+        connectionType = true;
+        gui.setClient(client);
+        client.setView(gui);
+        joinGame();
+        myButton1.setVisible(false);
+        myButton1.setDisable(true);
+        myButton2.setVisible(false);
+        myButton2.setDisable(true);
 
     }
     public boolean isValidFormat(String input) {

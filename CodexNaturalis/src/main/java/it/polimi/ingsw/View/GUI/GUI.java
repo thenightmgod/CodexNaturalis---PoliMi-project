@@ -71,6 +71,9 @@ public class GUI implements GameView {
             case "login" -> {
                 primaryStage.setTitle("Login");
             }
+            case "turn" -> {
+                primaryStage.setTitle(client.getNames());
+            }
             default -> {
                 primaryStage.setTitle(client.getNames() + "'s " + sceneName);
             }
