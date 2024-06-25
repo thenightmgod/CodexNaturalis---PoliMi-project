@@ -33,7 +33,7 @@ public class SocketServer {
         try{
             ServerSocket listenSocket = new ServerSocket(44458);
             server = new SocketServer(mc,listenSocket, actionsPerGame, joins);
-            System.out.println("Server Socket ready");
+            System.out.println("Server Socket bound.");
             return server;
         }
         catch (IOException e){

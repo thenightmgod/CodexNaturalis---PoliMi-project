@@ -50,7 +50,7 @@ public class RMIServer implements VirtualServer {
         stub = (VirtualServer) UnicastRemoteObject.exportObject(this, port);
         registry = LocateRegistry.createRegistry(port);
         registry.rebind(serverName, stub);
-        System.out.println("Server bound.");
+        System.out.println("Server RMI bound.");
     }
 
     /**
