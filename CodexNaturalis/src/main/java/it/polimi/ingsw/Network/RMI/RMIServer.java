@@ -52,7 +52,7 @@ public class RMIServer implements VirtualServer {
         stub = (VirtualServer) UnicastRemoteObject.exportObject(this, port);
         registry = LocateRegistry.createRegistry(port);
         registry.rebind(serverName, stub);
-        System.out.println("Server bound.");
+        System.out.println("Server RMI bound.");
     }
 
     /**
@@ -64,7 +64,6 @@ public class RMIServer implements VirtualServer {
      */
     @Override
     public void joinGame(String Name, VirtualView client) throws RemoteException {
-        System.err.println("joinGame");
         synchronized (actionsPerGame) {
             int roomId = controller.getControllers().size() - 1;
             if (roomId < 0) {

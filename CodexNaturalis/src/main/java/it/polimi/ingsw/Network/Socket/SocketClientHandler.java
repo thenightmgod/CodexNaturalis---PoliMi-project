@@ -131,7 +131,6 @@ public class SocketClientHandler extends Thread implements VirtualView {
                 int roomId = controller.getYourRoomId(name);
                 Actions pAction = new PlaceCardAction(controller, this, whichInHand, x, y, face, 0, roomId);
                 actionsPerGame.get(roomId).getActionsQueue().add(pAction);
-                //System.err.println("Place Card Action: whichInHand-" + whichInHand + " X: " + x + " Y: " + y + " face" + face + " Player-" + name);
             }
             case "SetStartCardFaceMessage" -> {
                 String name = ((SetStartCardFaceMessage) msg).getName();

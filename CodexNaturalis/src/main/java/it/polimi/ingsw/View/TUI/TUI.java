@@ -28,6 +28,7 @@ public class TUI implements GameView {
     String serverIp;
     InputHandler inputHandler;
     TuiChat chat = new TuiChat();
+    Boolean mirko = true;
 
     public TUI(){}
 
@@ -48,6 +49,7 @@ public class TUI implements GameView {
 
     @Override
     public void lastRound(){
+        mirko = false;
         System.out.println("This is your last turn");
     }
 
@@ -186,8 +188,12 @@ public class TUI implements GameView {
                 }
             }
             case "Nothing" -> {
-                if(details.equals("PlaceCardWell"))
-                    drawCard();
+                if(details.equals("PlaceCardWell")) {
+                    if (mirko) drawCard();
+                    else {
+                        endTurn("NormalTurn");
+                    }
+                }
             }
             case "WrongPositionException" -> {
                 System.out.println("The position you chose isn't in the free ones!");
@@ -224,7 +230,6 @@ public class TUI implements GameView {
     }
 
     public void createGame() throws RemoteException {
-        System.err.println("Creating game");
         inputHandler.handleUserInput("createGame");
     }
 

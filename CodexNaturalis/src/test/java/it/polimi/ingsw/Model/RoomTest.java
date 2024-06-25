@@ -90,7 +90,7 @@ class RoomTest {
             }
 
             @Override
-            public String getName() throws RemoteException {
+            public String getNames() throws RemoteException {
                 return "";
             }
 
@@ -115,7 +115,7 @@ class RoomTest {
             }
 
             @Override
-            public void isAlive() throws RemoteException {
+            public void isAlivee() throws RemoteException {
 
             }
 
@@ -201,7 +201,7 @@ class RoomTest {
             }
 
             @Override
-            public String getName() throws RemoteException {
+            public String getNames() throws RemoteException {
                 return "";
             }
 
@@ -226,7 +226,7 @@ class RoomTest {
             }
 
             @Override
-            public void isAlive() throws RemoteException {
+            public void isAlivee() throws RemoteException {
 
             }
 
@@ -312,7 +312,7 @@ class RoomTest {
             }
 
             @Override
-            public String getName() throws RemoteException {
+            public String getNames() throws RemoteException {
                 return "";
             }
 
@@ -337,7 +337,7 @@ class RoomTest {
             }
 
             @Override
-            public void isAlive() throws RemoteException {
+            public void isAlivee() throws RemoteException {
 
             }
 
@@ -423,7 +423,7 @@ class RoomTest {
             }
 
             @Override
-            public String getName() throws RemoteException {
+            public String getNames() throws RemoteException {
                 return "";
             }
 
@@ -448,7 +448,7 @@ class RoomTest {
             }
 
             @Override
-            public void isAlive() throws RemoteException {
+            public void isAlivee() throws RemoteException {
 
             }
 
@@ -472,6 +472,7 @@ class RoomTest {
 
             }
         };
+
 
         Player p1 = new Player("lollo", PlayerColor.RED);
         Player p2 = new Player("nina", PlayerColor.GREEN);
