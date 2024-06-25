@@ -1,5 +1,7 @@
 package it.polimi.ingsw.Network.RMI;
 
+import it.polimi.ingsw.Chat.ChatMessage;
+import it.polimi.ingsw.Model.Messages.ChatMessageMessage;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Network.VirtualView;
 import java.rmi.Remote;
@@ -85,5 +87,7 @@ public interface VirtualServer extends Remote {
      * @throws RemoteException If a remote access error occurs.
      */
     void endTurn(VirtualView client, String mex) throws RemoteException;
+
+    void sendChatMessage(ChatMessage message, VirtualView client) throws RemoteException;
 
 }

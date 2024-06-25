@@ -332,6 +332,7 @@ public class GUI implements GameView {
         System.exit(0);
     }
 
+
     public CommonClient getClient() {
         return this.client;
     }

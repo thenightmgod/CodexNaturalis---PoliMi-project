@@ -1,5 +1,6 @@
 package it.polimi.ingsw.View.TUI;
 
+import it.polimi.ingsw.Chat.ChatMessage;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
@@ -26,6 +27,7 @@ public class TUI implements GameView {
     int ServerPort= 4444;
     String serverIp;
     InputHandler inputHandler;
+    TuiChat chat = new TuiChat();
 
     public TUI(){}
 
@@ -160,6 +162,9 @@ public class TUI implements GameView {
         inputHandler.handleUserInput("drawCard");
     }
 
+    public void sendChatMessage(ChatMessage mex) throws RemoteException {
+        client.sendChatMessage(mex);
+    }
 
     @Override
     public void showException(String exception, String details) throws RemoteException, NotBoundException {
@@ -240,6 +245,7 @@ public class TUI implements GameView {
         System.out.println();
         cards.plotPoints(client.getClient());
         System.out.println();
+        inputHandler.handleUserInput("chatMessage");
         placeCard();
     }
 

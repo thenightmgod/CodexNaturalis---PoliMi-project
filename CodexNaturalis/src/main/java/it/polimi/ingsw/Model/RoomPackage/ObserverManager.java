@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Model.RoomPackage;
 
 
+import it.polimi.ingsw.Chat.ChatMessage;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
@@ -137,7 +138,16 @@ public class ObserverManager {
         } catch (RemoteException ignored) {}
     }
 
+    public void sendPlayers(LinkedList<String> players){
+        try {
+            for (String s : observers.keySet())
+                observers.get(s).sendPlayers(players);
+        } catch (RemoteException ignored) {}
+    }
 
+    public void updateChat(String name, LinkedList<ChatMessage> chat){
+
+    }
 
 
     //eventualmente implementarli

@@ -14,6 +14,7 @@ import java.util.LinkedList;
 public class ClientModel {
 
     private String name;
+    private LinkedList<String> players;
     private LinkedList<PlayableCard> hand;
     private PlayingField field;
     private HashMap<String, Integer> points;
@@ -33,6 +34,15 @@ public class ClientModel {
         this.drawableGoldCards = new LinkedList<>();
         this.drawableResourceCards = new LinkedList<>();
         this.otherFields = new HashMap<>();
+        this.players = new LinkedList<>();
+    }
+
+    public void setPlayers(LinkedList<String> players){
+        this.players = players;
+    }
+
+    public LinkedList<String> getPlayers(){
+        return players;
     }
 
     public LinkedList<GoldCard> getDrawableGoldCards(){

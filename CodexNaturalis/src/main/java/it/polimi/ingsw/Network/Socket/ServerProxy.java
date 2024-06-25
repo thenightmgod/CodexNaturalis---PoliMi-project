@@ -15,6 +15,10 @@ public class ServerProxy implements VirtualServerSocket {
     public void joinGame(String stringMessage)  {
         sendMessage(stringMessage);
     }
+    @Override
+    public void sendChatMessage(String message){
+        sendMessage(message);
+    }
 
     @Override
     public void createGame(String stringMessage)  {

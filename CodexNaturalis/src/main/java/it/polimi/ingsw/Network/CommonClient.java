@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Network;
 
+import it.polimi.ingsw.Chat.ChatMessage;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.View.GameView;
 import it.polimi.ingsw.View.TUI.ClientModel;
@@ -104,4 +105,7 @@ public interface CommonClient {
      * @return The server.
      */
     VirtualServer getServer();
+
+    void sendChatMessage(ChatMessage message) throws RemoteException;
+
 }

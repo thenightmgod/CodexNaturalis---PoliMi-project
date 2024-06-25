@@ -6,6 +6,7 @@ import com.google.gson.JsonParser;
 import java.lang.reflect.Type;
 import com.google.gson.Gson;
 import it.polimi.ingsw.Actions.*;
+import it.polimi.ingsw.Chat.ChatMessage;
 import it.polimi.ingsw.Controller.MainController;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.*;
@@ -83,6 +84,13 @@ public class SocketClientHandler extends Thread implements VirtualView {
     }
     public void handleCommand(Message msg) throws RemoteException, NotBoundException {
         switch(msg.getType()){
+            case "ChatMessageMessage" ->{
+                String name = ((ChatMessageMessage) msg).getName();
+                ChatMessage message = ((ChatMessageMessage) msg).getMessage();
+                int roomId = controller.getYourRoomId(name);
+                Actions cAction = new ChatMessageAction(this, controller, 0, message, roomId);
+                actionsPerGame.get(roomId).getActionsQueue().add(cAction);
+            }
             case "JoinExistingGameMessage" -> {
                 name = ((JoinExistingGameMessage) msg).getName();
                 synchronized (actionsPerGame) {
@@ -123,7 +131,7 @@ public class SocketClientHandler extends Thread implements VirtualView {
                 int roomId = controller.getYourRoomId(name);
                 Actions pAction = new PlaceCardAction(controller, this, whichInHand, x, y, face, 0, roomId);
                 actionsPerGame.get(roomId).getActionsQueue().add(pAction);
-                System.err.println("Place Card Action: whichInHand-" + whichInHand + " X: " + x + " Y: " + y + " face" + face + " Player-" + name);
+                //System.err.println("Place Card Action: whichInHand-" + whichInHand + " X: " + x + " Y: " + y + " face" + face + " Player-" + name);
             }
             case "SetStartCardFaceMessage" -> {
                 String name = ((SetStartCardFaceMessage) msg).getName();
@@ -202,6 +210,13 @@ public class SocketClientHandler extends Thread implements VirtualView {
         LeaveGameMessage message = new LeaveGameMessage(name);
         String gson = message.MessageToJson();
         proxy.leaveGameMessage(gson);
+    }
+
+    @Override
+    public void sendPlayers(LinkedList<String> players){
+        SendPlayerMessage message = new SendPlayerMessage(players);
+        String gson = message.MessageToJson();
+        proxy.sendPlayers(gson);
     }
 
     @Override

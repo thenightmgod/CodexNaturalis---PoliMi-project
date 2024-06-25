@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Network.RMI;
 
+import it.polimi.ingsw.Chat.ChatMessage;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
@@ -58,6 +59,11 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public void sendPlayers(LinkedList<String> players) throws RemoteException {
+        this.model.setPlayers(players);
     }
 
     /**
@@ -440,6 +446,11 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     @Override
     public void leaveGameMessage() throws RemoteException {
         this.view.leaveGameMessage();
+    }
+
+    @Override
+    public void sendChatMessage(ChatMessage message) throws RemoteException {
+        this.server.sendChatMessage(message, this);
     }
 
     /**

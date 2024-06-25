@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import it.polimi.ingsw.Chat.ChatMessage;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.*;
 import it.polimi.ingsw.Model.CornerPackage.CardRes;
@@ -115,6 +116,10 @@ public class SocketClient implements CommonClient {
 
     public void handleCommand(Message mex) throws IOException, NotBoundException {
         switch(mex.getType()) {
+            case "SendPlayerMessage" -> {
+                LinkedList<String> players = ((SendPlayerMessage)mex).getPlayers();
+                model.setPlayers(players);
+            }
             case "TwentyMessage" -> {
                 String name = ((TwentyMessage)mex).getName();
                 this.view.twenty(name);
@@ -244,6 +249,14 @@ public class SocketClient implements CommonClient {
         String gson = msg.MessageToJson();
         server.chooseGoalcard(gson);
     }
+
+    @Override
+    public void sendChatMessage(ChatMessage message) {
+        ChatMessageMessage msg = new ChatMessageMessage(message, name);
+        String gson = msg.MessageToJson();
+        server.sendChatMessage(gson);
+    }
+
     @Override
     public void drawCard(int i, int whichOne, CommonClient client){
         DrawCardMessage msg = new DrawCardMessage(i, whichOne, name);
@@ -258,6 +271,7 @@ public class SocketClient implements CommonClient {
     public ClientModel getClient() {
         return model;
     }
+
     @Override
     public void endTurn(String name, String mex){
         EndTurnMessage msg = new EndTurnMessage(name, mex);

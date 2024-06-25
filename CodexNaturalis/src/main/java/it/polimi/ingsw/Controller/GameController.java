@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Controller;
 
+import it.polimi.ingsw.Chat.ChatMessage;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
 import it.polimi.ingsw.Model.DeckPackage.GoldDeck;
@@ -147,6 +148,7 @@ public class GameController {
         }
         createDecks();
         createCommonGoals();
+        this.game.sendPlayers();
         this.game.giveStartCards();
         this.game.start();
     }
@@ -318,5 +320,9 @@ public class GameController {
      */
     public Player getPlayerByName(String name) {
         return players.stream().filter(x -> x.getName().equals(name)).findFirst().orElse(null);
+    }
+
+    public void sendChatMessage(ChatMessage message) throws RemoteException {
+        this.game.sendChatMessage(message);
     }
 }

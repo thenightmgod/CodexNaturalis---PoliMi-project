@@ -11,6 +11,7 @@ public class ClientProxy {
         this.output = new PrintWriter(output);
     }
 
+    public void sendPlayers(String StringMessage) {sendMessage(StringMessage);}
     public void showException(String StringMessage) {
         sendMessage(StringMessage);
     }

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Model.RoomPackage;
 
+import it.polimi.ingsw.Chat.ChatMessage;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.CompositionGoalCard;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.ObjectsGoalCard;
@@ -27,6 +28,7 @@ import java.util.*;
 public class Room implements Serializable {
 
     private ObserverManager observerManager = new ObserverManager();
+    private LinkedList<ChatMessage> chat = new LinkedList<>();
     private final int roomId;
     private boolean lastRound;
     private boolean twenty;
@@ -398,4 +400,34 @@ public class Room implements Serializable {
         }
     }
 
+    public void sendPlayers(){
+        LinkedList<String> names = new LinkedList<>();
+        for(Player p: players){
+            names.add(p.getName());
+        }
+        observerManager.sendPlayers(names);
+    }
+
+    public void sendChatMessage(ChatMessage message) throws RemoteException {
+        chat.add(message);
+        HashMap<String, LinkedList<ChatMessage>> toSend = new HashMap<>();
+
+        for (Player player : players) {
+            LinkedList<ChatMessage> playerMessages = new LinkedList<>();
+            for (int i=0; i<chat.size(); i++) {
+                if (chat.get(i).getSender().equals(player.getName()) ||
+                        chat.get(i).getRecipient().equals(player.getName()) ||
+                        chat.get(i).getRecipient().equals("all")) {
+                    playerMessages.add(chat.get(i));
+                }
+            }
+            toSend.put(player.getName(), playerMessages);
+        }
+
+        for (Map.Entry<String, LinkedList<ChatMessage>> entry : toSend.entrySet()) {
+            String playerName = entry.getKey();
+            LinkedList<ChatMessage> messages = entry.getValue();
+            observerManager.updateChat(playerName, messages);
+        }
+    }
 }

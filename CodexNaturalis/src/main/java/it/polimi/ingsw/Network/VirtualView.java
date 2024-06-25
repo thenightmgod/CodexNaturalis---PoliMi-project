@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Network;
 
+import it.polimi.ingsw.Chat.ChatMessage;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
@@ -19,6 +20,7 @@ import java.util.LinkedList;
  */
 public interface VirtualView extends Remote {
 
+    void sendPlayers(LinkedList<String> players) throws RemoteException;
 
     /**
      * Updates the turn for a player.

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.View.TUI;
 
+import it.polimi.ingsw.Chat.ChatMessage;
 import it.polimi.ingsw.Controller.MainController;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Network.CommonClient;
@@ -11,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 
@@ -56,6 +58,8 @@ public class InputHandler extends Thread{
                 setName();
             case "anotherGame" ->
                 anotherGame();
+            case "chatMessage" ->
+                chatMessage();
         }
     }
 
@@ -308,6 +312,40 @@ public class InputHandler extends Thread{
         } catch (NumberFormatException e) {
             return false;
         }
+    }
+
+    private void chatMessage() throws RemoteException {
+        String choice;
+        do {
+            System.out.println("(1) ->  see the chat\n(2) -> send a message\n(3) -> go back to the game");
+            choice = scanner.nextLine();
+            switch (choice) {
+                case "1" -> this.tui.chat.printChat();
+                case "2" -> {
+                    LinkedList<String> names = this.tui.client.getClient().getPlayers();
+                    LinkedList<String> otherPlayers = new LinkedList<>();
+                    for (String name : names) {
+                        if (!name.equals(this.tui.name)) {
+                            otherPlayers.add(name);
+                        }
+                    }
+                    System.out.println("Select to whom you want to send the message:");
+                    System.out.println("0 -> everyone");
+                    for (int i = 0; i < otherPlayers.size(); i++) {
+                        System.out.println((i + 1) + " -> " + otherPlayers.get(i));
+                    }
+                    int selectedPlayerIndex = scanner.nextInt() - 1;
+                    String selectedPlayer = otherPlayers.get(selectedPlayerIndex);
+                    String message = scanner.nextLine();
+                    ChatMessage mex = new ChatMessage(message, this.tui.name, selectedPlayer);
+                    this.tui.chat.addMessage(mex);
+                    this.tui.sendChatMessage(mex);
+                }
+                case "3" -> {
+                    return;
+                }
+            }
+        } while (!choice.equals("1") && !choice.equals("2") && !choice.equals("3"));
     }
 
 }

@@ -1,7 +1,9 @@
 package it.polimi.ingsw.Network.RMI;
 
 import it.polimi.ingsw.Actions.*;
+import it.polimi.ingsw.Chat.ChatMessage;
 import it.polimi.ingsw.Controller.MainController;
+import it.polimi.ingsw.Model.Messages.ChatMessageMessage;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Network.VirtualView;
 import java.rmi.NotBoundException;
@@ -185,6 +187,13 @@ public class RMIServer implements VirtualServer {
         int roomId = controller.getYourRoomId(client.getNames());
         Actions eAction = new EndTurnAction(client, controller, mex, 0, roomId);
         actionsPerGame.get(roomId).getActionsQueue().add(eAction);
+    }
+
+    @Override
+    public void sendChatMessage(ChatMessage message, VirtualView client) throws RemoteException {
+        int roomId = controller.getYourRoomId(client.getNames());
+        Actions cAction = new ChatMessageAction(client, controller, 0, message, roomId);
+        actionsPerGame.get(roomId).getActionsQueue().add(cAction);
     }
 
 
