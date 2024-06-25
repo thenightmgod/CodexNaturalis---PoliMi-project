@@ -1,7 +1,6 @@
 package it.polimi.ingsw.Actions;
 
 import it.polimi.ingsw.Controller.MainController;
-import it.polimi.ingsw.Network.RMI.RMIServer;
 import it.polimi.ingsw.Network.VirtualView;
 
 import java.rmi.NotBoundException;
@@ -29,12 +28,6 @@ public abstract class Actions implements Comparable<Actions>{
         this.manager = manager;
         this.priority = priority;
     }
-
-    /**
-     * Retrieves the server of this action.
-     *
-     * @return The server of this action.
-     */
 
     /**
      * Retrieves the manager of this action.
