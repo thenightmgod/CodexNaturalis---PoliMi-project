@@ -287,9 +287,10 @@ public class TUI implements GameView {
         else if (client.getNames().equals(standings.get(2))) {
             System.out.println("JACKIE DOWN THE LINE YOU GOT THE THIRD PLACE");
         } else {
-            System.out.println("JACKIE DOWN THE LINE YOU GOT THE FOURTH PLACE COGLIONE");
+            System.out.println("JACKIE DOWN THE LINE YOU GOT THE FOURTH PLACE");
         }
         //far finire tutto
+        System.exit(0);
     }
 
 }
