@@ -62,7 +62,6 @@ public class RMIServer implements VirtualServer {
      */
     @Override
     public void joinGame(String Name, VirtualView client) throws RemoteException {
-        System.err.println("joinGame");
         synchronized (actionsPerGame) {
             int roomId = controller.getControllers().size() - 1;
             if (roomId < 0) {
