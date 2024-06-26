@@ -37,4 +37,7 @@ public class ChatMessage implements Serializable {
     public void setRecipient(String receiver) {
         this.recipient = receiver;
     }
+    public boolean isVisibleTo(String clientName) {
+        return recipient.equals("everyone") || recipient.equals(clientName);
+    }
 }

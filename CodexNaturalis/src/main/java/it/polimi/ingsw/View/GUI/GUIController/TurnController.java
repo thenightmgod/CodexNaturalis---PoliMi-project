@@ -9,11 +9,14 @@ import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
 import it.polimi.ingsw.View.GUI.GUIController.ScoreBoard.ScoreBoard;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -29,6 +32,8 @@ import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URL;
 import java.util.*;
 import java.rmi.RemoteException;
 import java.util.HashMap;
@@ -808,6 +813,34 @@ public class TurnController extends GUIController{
         stage.initOwner(this.stage);
         stage.show();
     }
+
+    @FXML
+    private void openChat(ActionEvent event) throws IOException {
+        URL fxmlUrl = getClass().getResource("/view/chat.fxml");
+        FXMLLoader loader = new FXMLLoader(fxmlUrl);
+        AnchorPane chatRoot = loader.load();
+        ChatController chatController = loader.getController();
+        //il chatController ha i riferimenti alla gui e al client
+        chatController.setGui(this.gui);
+        chatController.setClient(client);
+        chatController.initializeChat();
+        this.gui.setChatController(chatController);
+
+        Scene chatScene = new Scene(chatRoot);
+
+        Stage chatStage = new Stage();
+        chatStage.setTitle("Chat");
+        chatStage.setScene(chatScene);
+        chatStage.initModality(Modality.WINDOW_MODAL);
+        chatStage.initOwner(((Button) event.getSource()).getScene().getWindow());
+        chatStage.setOnCloseRequest(e -> {
+            // Gestisci la chiusura della chat se necessario
+        });
+        chatStage.show();
+    }
+
+
+    //usando la client.sendChatMessage
 
     //ci serve funzione che ti chiami poi la client.sendChatMessage(mex);
     //la updateChat ti arriva già qua e la piazza sul client model

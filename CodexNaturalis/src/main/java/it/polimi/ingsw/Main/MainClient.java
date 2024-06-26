@@ -90,7 +90,6 @@ public class MainClient {
             } catch (NumberFormatException e) {
                 System.out.println("Please enter a number");
             }
-
         } while(!goon);
     }
 }

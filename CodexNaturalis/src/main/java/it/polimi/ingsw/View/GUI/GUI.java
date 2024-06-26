@@ -35,6 +35,7 @@ public class GUI implements GameView {
     private CommonClient client;
     private String[] args;
     public boolean first_turn = true;
+    private ChatController chatController;
 
     public void setFirst_turn(boolean first_turn) {
         this.first_turn = first_turn;
@@ -333,8 +334,13 @@ public class GUI implements GameView {
 
     @Override
     public void updateChat(String name, LinkedList<ChatMessage> chat){
-        if(name.equals(this.username)){
+        if(name.equals(this.username) || (name.equals("everyone"))){
             this.client.getClient().setChat(chat);
+            Platform.runLater(() -> {
+                if (chatController != null) {
+                    chatController.refreshChat();
+                }
+            });
         }
     }
 
@@ -345,6 +351,9 @@ public class GUI implements GameView {
     public PlayerColor getPlayerColor() {
         PlayerColor color = Turn.getColor();
         return color;
+    }
+    public void setChatController(ChatController chatController) {
+        this.chatController = chatController;
     }
 
     public Player getTurn() {
