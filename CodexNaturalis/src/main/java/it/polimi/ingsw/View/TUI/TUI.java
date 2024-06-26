@@ -106,6 +106,7 @@ public class TUI implements GameView {
     public void updateFreePosition(String name, LinkedList<Position> freePositions) {
         client.getClient().setFreePositions(freePositions);
         System.out.println("Your new free positions are:");
+        System.out.println("(remember that the start card is placed in (0, 0))");
         cards.plotFreePos(client.getClient());
 
     }

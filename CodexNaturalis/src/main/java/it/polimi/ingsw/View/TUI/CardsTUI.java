@@ -1129,7 +1129,7 @@ public class CardsTUI {
         PlayingField field = model.getField();
         LinkedList<Position> pos = field.getFreePositions();
         for(Position p : pos){
-            System.out.println("x : " + p.getX() + ", y : " + p.getY());
+            System.out.println("(" + p.getX() + ", " + p.getY() + ")");
         }
     }
 
