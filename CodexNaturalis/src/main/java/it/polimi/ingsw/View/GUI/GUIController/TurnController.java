@@ -809,4 +809,7 @@ public class TurnController extends GUIController{
         stage.show();
     }
 
+    //ci serve funzione che ti chiami poi la client.sendChatMessage(mex);
+    //la updateChat ti arriva già qua e la piazza sul client model
+
 }
