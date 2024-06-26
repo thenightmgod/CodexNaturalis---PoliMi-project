@@ -116,6 +116,11 @@ public class SocketClient implements CommonClient {
 
     public void handleCommand(Message mex) throws IOException, NotBoundException {
         switch(mex.getType()) {
+            case "UpdateChatMessage" -> {
+                String name = ((UpdateChatMessage) mex).getName();
+                LinkedList<ChatMessage> chat = ((UpdateChatMessage) mex).getChat();
+                this.view.updateChat(name, chat);
+            }
             case "SendPlayerMessage" -> {
                 LinkedList<String> players = ((SendPlayerMessage)mex).getPlayers();
                 model.setPlayers(players);

@@ -3,17 +3,18 @@ package it.polimi.ingsw.View.TUI;
 import it.polimi.ingsw.Chat.ChatMessage;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class TuiChat {
-    private List<ChatMessage> messages;
+    private LinkedList<ChatMessage> messages;
 
     public TuiChat() {
-        this.messages = new ArrayList<>();
+        this.messages = new LinkedList<>();
     }
 
-    public void addMessage(ChatMessage message) {
-        this.messages.add(message);
+    public void setMessages(LinkedList<ChatMessage> messages){
+        this.messages = messages;
     }
 
     public void printChat() {

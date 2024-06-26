@@ -1,5 +1,6 @@
 package it.polimi.ingsw.View.GUI;
 
+import it.polimi.ingsw.Chat.ChatMessage;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
@@ -332,6 +333,12 @@ public class GUI implements GameView {
         System.exit(0);
     }
 
+    @Override
+    public void updateChat(String name, LinkedList<ChatMessage> chat){
+        if(name.equals(this.username)){
+            this.client.getClient().setChat(chat);
+        }
+    }
 
     public CommonClient getClient() {
         return this.client;

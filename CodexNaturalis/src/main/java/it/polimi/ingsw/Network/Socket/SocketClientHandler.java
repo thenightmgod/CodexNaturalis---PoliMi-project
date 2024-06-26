@@ -212,6 +212,13 @@ public class SocketClientHandler extends Thread implements VirtualView {
     }
 
     @Override
+    public void updateChat(String name, LinkedList<ChatMessage> chat) {
+        UpdateChatMessage message = new UpdateChatMessage(name, chat);
+        String gson = message.MessageToJson();
+        proxy.updateChat(gson);
+    }
+
+    @Override
     public void sendPlayers(LinkedList<String> players){
         SendPlayerMessage message = new SendPlayerMessage(players);
         String gson = message.MessageToJson();

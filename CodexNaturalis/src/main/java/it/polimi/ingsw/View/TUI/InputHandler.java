@@ -33,7 +33,10 @@ public class InputHandler extends Thread{
     public void run(){
         while (true) {
             try {
-                handleUserInput(whatToDo);
+                if (!whatToDo.isEmpty()) {
+                    handleUserInput(whatToDo);
+                    whatToDo = "";
+                }
             } catch (RemoteException ignored) {}
         }
     }
@@ -116,14 +119,12 @@ public class InputHandler extends Thread{
 
     private int getIndex() {
         int input = 77;
-
         while (true) {
             try {
-                input = scanner.nextInt();
+                input = Integer.parseInt(scanner.nextLine());
                 break;  // if input was a valid integer, break the loop
             } catch (NumberFormatException e) {
                 System.out.println("Please enter a valid number!");
-                scanner.next();  // discard the invalid input
             }
         }
         return input;
@@ -334,18 +335,18 @@ public class InputHandler extends Thread{
                     for (int i = 0; i < otherPlayers.size(); i++) {
                         System.out.println((i + 1) + " -> " + otherPlayers.get(i));
                     }
-                    int selectedPlayerIndex = scanner.nextInt() - 1;
+                    int selectedPlayerIndex = getIndex() - 1;
                     String selectedPlayer = otherPlayers.get(selectedPlayerIndex);
+                    System.out.println("Write your message:");
                     String message = scanner.nextLine();
                     ChatMessage mex = new ChatMessage(message, this.tui.name, selectedPlayer);
-                    this.tui.chat.addMessage(mex);
                     this.tui.sendChatMessage(mex);
                 }
                 case "3" -> {
                     return;
                 }
             }
-        } while (!choice.equals("1") && !choice.equals("2") && !choice.equals("3"));
+        } while (!choice.equals("3"));
     }
 
 }

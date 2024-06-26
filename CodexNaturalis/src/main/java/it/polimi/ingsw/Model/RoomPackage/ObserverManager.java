@@ -145,8 +145,8 @@ public class ObserverManager {
         } catch (RemoteException ignored) {}
     }
 
-    public void updateChat(String name, LinkedList<ChatMessage> chat){
-
+    public void updateChat(String name, LinkedList<ChatMessage> chat) throws RemoteException {
+        observers.get(name).updateChat(name, chat);
     }
 
 

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Controller;
 
+import it.polimi.ingsw.Chat.ChatMessage;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
@@ -22,6 +23,16 @@ class MainControllerTest {
         MainController game1 = new MainController();
 
         VirtualView v1 = new VirtualView() {
+            @Override
+            public void sendPlayers(LinkedList<String> players) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateChat(String name, LinkedList<ChatMessage> chat) throws RemoteException {
+
+            }
+
             @Override
             public void updateTurn(Player p, String mex) throws RemoteException {
 
@@ -82,10 +93,17 @@ class MainControllerTest {
 
             }
 
+            /**
+             * Gets the name of the player.
+             *
+             * @return The name of the player.
+             * @throws RemoteException If a remote access error occurs.
+             */
             @Override
-            public String getName() throws RemoteException {
+            public String getNames() throws RemoteException {
                 return "";
             }
+
 
             @Override
             public void showStartCard(StartCard card) throws RemoteException {
@@ -107,10 +125,16 @@ class MainControllerTest {
 
             }
 
+            /**
+             * Checks if this client is alive.
+             *
+             * @throws RemoteException If a remote access error occurs.
+             */
             @Override
-            public void isAlive() throws RemoteException {
+            public void isAlivee() throws RemoteException {
 
             }
+
 
             @Override
             public void leaveGame() throws RemoteException {
@@ -136,6 +160,16 @@ class MainControllerTest {
 
         VirtualView v2 = new VirtualView() {
             @Override
+            public void sendPlayers(LinkedList<String> players) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateChat(String name, LinkedList<ChatMessage> chat) throws RemoteException {
+
+            }
+
+            @Override
             public void updateTurn(Player p, String mex) throws RemoteException {
 
             }
@@ -196,7 +230,7 @@ class MainControllerTest {
             }
 
             @Override
-            public String getName() throws RemoteException {
+            public String getNames() throws RemoteException {
                 return "";
             }
 
@@ -221,7 +255,7 @@ class MainControllerTest {
             }
 
             @Override
-            public void isAlive() throws RemoteException {
+            public void isAlivee() throws RemoteException {
 
             }
 

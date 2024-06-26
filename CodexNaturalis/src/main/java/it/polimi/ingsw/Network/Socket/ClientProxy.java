@@ -1,8 +1,11 @@
 package it.polimi.ingsw.Network.Socket;
 
 
+import it.polimi.ingsw.Chat.ChatMessage;
+
 import java.io.PrintWriter;
 import java.rmi.RemoteException;
+import java.util.LinkedList;
 
 
 public class ClientProxy {
@@ -11,6 +14,7 @@ public class ClientProxy {
         this.output = new PrintWriter(output);
     }
 
+    public void updateChat(String message) {sendMessage(message);}
     public void sendPlayers(String StringMessage) {sendMessage(StringMessage);}
     public void showException(String StringMessage) {
         sendMessage(StringMessage);

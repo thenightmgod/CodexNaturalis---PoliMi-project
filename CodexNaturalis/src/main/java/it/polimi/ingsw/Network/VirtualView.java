@@ -22,6 +22,8 @@ public interface VirtualView extends Remote {
 
     void sendPlayers(LinkedList<String> players) throws RemoteException;
 
+    void updateChat(String name, LinkedList<ChatMessage> chat) throws RemoteException;
+
     /**
      * Updates the turn for a player.
      *

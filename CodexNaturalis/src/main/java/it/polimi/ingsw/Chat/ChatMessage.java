@@ -1,6 +1,8 @@
 package it.polimi.ingsw.Chat;
 
-public class ChatMessage {
+import java.io.Serializable;
+
+public class ChatMessage implements Serializable {
 
     private String message;
     private String sender;

@@ -39,6 +39,12 @@ public class TUI implements GameView {
         joinGame();
     }
 
+    @Override
+    public void updateChat(String name, LinkedList<ChatMessage> chat){
+        if(name.equals(this.name)){
+            this.chat.setMessages(chat);
+        }
+    }
 
     @Override
     public void twenty(String name){

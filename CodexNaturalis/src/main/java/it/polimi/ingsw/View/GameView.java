@@ -1,5 +1,6 @@
 package it.polimi.ingsw.View;
 
+import it.polimi.ingsw.Chat.ChatMessage;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
@@ -15,6 +16,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 public interface GameView {
+
+    void updateChat(String name, LinkedList<ChatMessage> chat);
 
     void updatePoints(HashMap<String, Integer> points, String name);
 

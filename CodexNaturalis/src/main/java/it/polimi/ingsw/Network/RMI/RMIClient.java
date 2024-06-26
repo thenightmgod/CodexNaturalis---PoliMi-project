@@ -75,7 +75,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
      */
     public void initializeClient(String serverIp) throws RemoteException, NotBoundException {
         final String serverName = "CodexServer";
-        registry = LocateRegistry.getRegistry(serverIp, 49666);
+        registry = LocateRegistry.getRegistry(serverIp, 59666);
         this.server = (VirtualServer) registry.lookup(serverName);
     }
 
@@ -451,6 +451,13 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     @Override
     public void sendChatMessage(ChatMessage message) throws RemoteException {
         this.server.sendChatMessage(message, this);
+    }
+
+    @Override
+    public void updateChat(String name, LinkedList<ChatMessage> chat) {
+        if(name.equals(this.name)){
+            this.view.updateChat(name, chat);
+        }
     }
 
     /**
