@@ -11,7 +11,7 @@ public enum PointsCondition {
     /**
      * The GoldCard provides points freely, without any specific condition.
      */
-    FREE(" "),
+    FREE("   "),
 
     /**
      * The GoldCard provides points based on the positions of its corners.

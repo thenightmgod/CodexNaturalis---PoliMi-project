@@ -1,7 +1,6 @@
 package it.polimi.ingsw.Network.RMI;
 
-import it.polimi.ingsw.Chat.ChatMessage;
-import it.polimi.ingsw.Model.Messages.ChatMessageMessage;
+import it.polimi.ingsw.View.ChatMessage;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Network.VirtualView;
 import java.rmi.Remote;

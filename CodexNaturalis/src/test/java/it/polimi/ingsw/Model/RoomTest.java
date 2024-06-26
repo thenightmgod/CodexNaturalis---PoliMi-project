@@ -1,9 +1,6 @@
 package it.polimi.ingsw.Model;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import it.polimi.ingsw.Chat.ChatMessage;
-import it.polimi.ingsw.Controller.GameController;
+import it.polimi.ingsw.View.ChatMessage;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.*;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
@@ -22,6 +19,7 @@ import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.LinkedList;
 class RoomTest {
+
     /**
      * This test checks if various small functions of the Room class works properly, (createDecks, placeCard,
      * changeTurns, show2GoalCards, pickGoalCard).
@@ -514,7 +512,6 @@ class RoomTest {
             }
         };
 
-
         Player p1 = new Player("lollo", PlayerColor.RED);
         Player p2 = new Player("nina", PlayerColor.GREEN);
         Player p3 = new Player("hamin", PlayerColor.BLUE);
@@ -551,8 +548,3 @@ class RoomTest {
         r1.declareWinner();
     }
 }
-
-
-/**
- *
- */

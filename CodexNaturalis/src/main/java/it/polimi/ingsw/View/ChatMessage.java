@@ -1,4 +1,4 @@
-package it.polimi.ingsw.Chat;
+package it.polimi.ingsw.View;
 
 import java.io.Serializable;
 

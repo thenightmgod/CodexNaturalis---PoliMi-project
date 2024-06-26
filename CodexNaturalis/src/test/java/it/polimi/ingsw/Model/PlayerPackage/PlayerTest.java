@@ -3,7 +3,6 @@ package it.polimi.ingsw.Model.PlayerPackage;
 
 import it.polimi.ingsw.Model.CardPackage.Card;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.CardColor;
-import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.StartCard;
 import it.polimi.ingsw.Model.CornerPackage.Corner;
@@ -12,10 +11,7 @@ import it.polimi.ingsw.Model.CornerPackage.Orientation;
 import it.polimi.ingsw.Model.CornerPackage.Resources;
 import it.polimi.ingsw.Model.DeckPackage.GoldDeck;
 import it.polimi.ingsw.Model.DeckPackage.ResourceDeck;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.HashMap;
 import java.util.LinkedList;
 
 import static it.polimi.ingsw.Model.CornerPackage.CornerState.ABSENT;
@@ -23,6 +19,7 @@ import static it.polimi.ingsw.Model.CornerPackage.CornerState.EMPTY;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
+
     /**
      * This test is composed of an inizialization of all the elements needed to call the PlaceStartCard function
      * on the player, such as the card itself and a player. Then checks if the card is correctly placed.
@@ -79,14 +76,14 @@ class PlayerTest {
         Corner secondoLLfront = new Corner(Resources.INSECT_KINGDOM, Orientation.LL);
         LinkedList<Corner> CornersSecondo = new LinkedList<>();
         LinkedList<Corner> CornersSecondofront = new LinkedList<>();
-        CornersSecondo.addLast(primoHR);
-        CornersSecondo.addLast(primoHL);
-        CornersSecondo.addLast(primoLR);
-        CornersSecondo.addLast(primoLL);
-        CornersSecondofront.addLast(primoHR);
-        CornersSecondofront.addLast(primoHL);
-        CornersSecondofront.addLast(primoLR);
-        CornersSecondofront.addLast(primoLL);
+        CornersSecondo.addLast(secondoHR);
+        CornersSecondo.addLast(secondoHL);
+        CornersSecondo.addLast(secondoLR);
+        CornersSecondo.addLast(secondoLL);
+        CornersSecondofront.addLast(secondoHRfront);
+        CornersSecondofront.addLast(secondoHLfront);
+        CornersSecondofront.addLast(secondoLRfront);
+        CornersSecondofront.addLast(secondoLLfront);
 
         StartCard startcard2 = new StartCard(6, secondoRes, CornersSecondo, CornersSecondofront);
 
@@ -164,6 +161,7 @@ class PlayerTest {
         assertEquals(1, player3.getResourceCounter(Resources.PLANT_KINGDOM));
         assertEquals(1, player3.getResourceCounter(Resources.FUNGI_KINGDOM));
     }
+
     /**
      * This test is composed of an inizialization of all the elements needed to call the PlaceCard function
      * on the player, such as the card itself and a player. Then checks if the card is correctly placed.
@@ -257,6 +255,7 @@ class PlayerTest {
 
         assertEquals(1, player1.getResourceCounter(Resources.INSECT_KINGDOM));
     }
+
     /**
      * This test checks if the player's points are updated correctly.
      */

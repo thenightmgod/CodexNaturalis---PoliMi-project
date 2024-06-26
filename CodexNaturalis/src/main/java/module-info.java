@@ -18,7 +18,6 @@ module it.polimi.ingsw {
     exports it.polimi.ingsw.Model.CardPackage.PlayableCardPackage;
     exports it.polimi.ingsw.Model.CardPackage.GoalCardPackage;
     exports it.polimi.ingsw.View.GUI.GUIController;
-    exports it.polimi.ingsw.Chat;
     exports it.polimi.ingsw.Model.Messages to com.google.gson;
     opens it.polimi.ingsw.Controller to javafx.fxml, javafx.graphics;
     opens it.polimi.ingsw.View.GUI.GUIController to javafx.fxml;
@@ -26,6 +25,7 @@ module it.polimi.ingsw {
     opens it.polimi.ingsw.Model.CornerPackage to com.google.gson;
     opens it.polimi.ingsw.Model.DeckPackage to com.google.gson;
     opens it.polimi.ingsw.Model.PlayerPackage to com.google.gson;
+    opens it.polimi.ingsw.View to com.google.gson;
     opens it.polimi.ingsw.Model.CardPackage.PlayableCardPackage to com.google.gson;
     opens it.polimi.ingsw.Model.CardPackage.GoalCardPackage to com.google.gson;
 

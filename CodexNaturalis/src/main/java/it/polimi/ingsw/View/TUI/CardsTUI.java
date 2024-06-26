@@ -567,7 +567,6 @@ public class CardsTUI {
             System.out.print(ANSI_BLUE);
         } else if (card.getColor().equals(CardColor.RED))
             System.out.print(ANSI_RED);
-
     }
 
     public void printRequirement(GoldCard card) {

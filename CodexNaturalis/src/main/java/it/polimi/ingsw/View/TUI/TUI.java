@@ -1,6 +1,6 @@
 package it.polimi.ingsw.View.TUI;
 
-import it.polimi.ingsw.Chat.ChatMessage;
+import it.polimi.ingsw.View.ChatMessage;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
@@ -107,8 +107,7 @@ public class TUI implements GameView {
         client.getClient().setFreePositions(freePositions);
         System.out.println("Your new free positions are:");
         cards.plotFreePos(client.getClient());
-//        LinkedList<Position> positions = client.getClient().getFreePositions();
-//        System.out.println(positions);
+
     }
 
     @Override

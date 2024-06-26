@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import it.polimi.ingsw.Chat.ChatMessage;
+import it.polimi.ingsw.View.ChatMessage;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.*;
 import it.polimi.ingsw.Model.CornerPackage.CardRes;
@@ -116,6 +116,9 @@ public class SocketClient implements CommonClient {
 
     public void handleCommand(Message mex) throws IOException, NotBoundException {
         switch(mex.getType()) {
+            case "IsAliveMessage" -> {
+                String name = ((IsAliveMessage) mex).getName();
+            }
             case "UpdateChatMessage" -> {
                 String name = ((UpdateChatMessage) mex).getName();
                 LinkedList<ChatMessage> chat = ((UpdateChatMessage) mex).getChat();

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Network;
 
-import it.polimi.ingsw.Chat.ChatMessage;
+import it.polimi.ingsw.View.ChatMessage;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
@@ -9,6 +9,8 @@ import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.StartCard;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
+
+import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -176,7 +178,7 @@ public interface VirtualView extends Remote {
      *
      * @throws RemoteException If a remote access error occurs.
      */
-    void isAlivee() throws RemoteException;
+    void isAlivee() throws IOException;
 
     /**
      * Leaves the game to this client that they have left the game.

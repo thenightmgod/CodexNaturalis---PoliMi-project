@@ -6,7 +6,7 @@ import com.google.gson.JsonParser;
 import java.lang.reflect.Type;
 import com.google.gson.Gson;
 import it.polimi.ingsw.Actions.*;
-import it.polimi.ingsw.Chat.ChatMessage;
+import it.polimi.ingsw.View.ChatMessage;
 import it.polimi.ingsw.Controller.MainController;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.*;
@@ -69,8 +69,6 @@ public class SocketClientHandler extends Thread implements VirtualView {
                         Message message = gson.fromJson(receivedmessage, (Type) clazz);                        //gestire le eccezioni di handleCommand in questo metodo
                         handleCommand(message);
                     }
-                } catch (RuntimeException | IOException e) {
-                    e.printStackTrace();
                 } catch (NotBoundException e) {
                     throw new RuntimeException(e);
                 } catch (ClassNotFoundException e) {
@@ -82,6 +80,16 @@ public class SocketClientHandler extends Thread implements VirtualView {
             System.out.println("Error in Socket connection");
         }
     }
+
+    public boolean isClientConnected() {
+        try {
+            clientSocket.sendUrgentData(0xFF);
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
     public void handleCommand(Message msg) throws RemoteException, NotBoundException {
         switch(msg.getType()){
             case "ChatMessageMessage" ->{
@@ -183,8 +191,10 @@ public class SocketClientHandler extends Thread implements VirtualView {
      * @throws RemoteException If a remote access error occurs.
      */
     @Override
-    public void isAlivee() throws RemoteException {
-
+    public void isAlivee() throws IOException {
+        IsAliveMessage message = new IsAliveMessage(name, "I'm alive");
+        String gson = message.MessageToJson();
+        proxy.isAlivee(gson);
     }
 
     /**

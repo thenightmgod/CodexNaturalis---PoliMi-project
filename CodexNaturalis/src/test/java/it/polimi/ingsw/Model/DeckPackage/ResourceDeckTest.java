@@ -1,17 +1,14 @@
 package it.polimi.ingsw.Model.DeckPackage;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.CornerPackage.Orientation;
 import it.polimi.ingsw.Model.CornerPackage.Resources;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
-import org.junit.Before;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.LinkedList;
+
 /**
  * This test first creates the resource deck, and then checks if some of the main methods that use this Class work.
  */
