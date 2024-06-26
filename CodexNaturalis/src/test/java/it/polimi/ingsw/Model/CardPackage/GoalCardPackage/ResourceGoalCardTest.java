@@ -4,7 +4,6 @@ import it.polimi.ingsw.Model.CornerPackage.Resources;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import org.junit.jupiter.api.Test;
-import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.ResourceGoalCard;
 
 import static org.junit.jupiter.api.Assertions.*;
 /**
