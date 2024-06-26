@@ -25,6 +25,7 @@ module it.polimi.ingsw {
     opens it.polimi.ingsw.Model.CornerPackage to com.google.gson;
     opens it.polimi.ingsw.Model.DeckPackage to com.google.gson;
     opens it.polimi.ingsw.Model.PlayerPackage to com.google.gson;
+    opens it.polimi.ingsw.View to com.google.gson;
     opens it.polimi.ingsw.Model.CardPackage.PlayableCardPackage to com.google.gson;
     opens it.polimi.ingsw.Model.CardPackage.GoalCardPackage to com.google.gson;
 
