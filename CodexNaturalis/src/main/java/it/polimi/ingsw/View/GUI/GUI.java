@@ -213,7 +213,6 @@ public class GUI implements GameView {
 
     @Override
     public void updateTurn(Player player, String mex) throws RemoteException {
-        //in tutta questa non ci va il platoform run later???
         this.Turn = player;
         if (Turn.getName().equals(client.getNames())) {
             Platform.runLater(() -> {
