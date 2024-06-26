@@ -1126,6 +1126,14 @@ public class CardsTUI {
             }
     }
 
+    public void plotFreePos(ClientModel model){
+        PlayingField field = model.getField();
+        LinkedList<Position> pos = field.getFreePositions();
+        for(Position p : pos){
+            System.out.println("x : " + p.getX() + ", y : " + p.getY());
+        }
+    }
+
     public void printEmpty(){
         System.out.print("               ");
     }

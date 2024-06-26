@@ -1,6 +1,6 @@
 ## COMPONENTI GRUPPO
 
-+ D'Ovidio Lorenzo,
++ D'Ovidio Lorenzo, 
 + Gelati Pietro, 10770957
 + Gerini Caterina,
 + Jang Hamin,
