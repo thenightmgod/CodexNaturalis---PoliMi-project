@@ -32,10 +32,8 @@ public class PlayingFieldAdapter implements JsonSerializer<PlayingField>, JsonDe
 
         LinkedHashMap<Position, PlayableCard> convertedField = new LinkedHashMap<>();
         for (Map.Entry<String, PlayableCard> entry : field.entrySet()) {
-            String key = entry.getKey().replaceAll("[{}\"]", ""); // Remove the curly braces and quotes
-            System.out.println("Key: " + key); // Print the key
+            String key = entry.getKey().replaceAll("[{}\"]", "");
             String[] parts = key.split(",");
-            System.out.println("Parts: " + Arrays.toString(parts)); // Print the parts array
             int x = Integer.parseInt(parts[0].split(":")[1].trim());
             int y = Integer.parseInt(parts[1].split(":")[1].trim());
             String faceString = parts[2].split(":")[1].trim();

@@ -2,7 +2,10 @@ package it.polimi.ingsw.Controller;
 
 import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
+import it.polimi.ingsw.Network.Socket.SocketClientHandler;
 import it.polimi.ingsw.Network.VirtualView;
+
+import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.*;
@@ -118,8 +121,21 @@ public class MainController {
                             while (iterator.hasNext()) {
                                 VirtualView view = iterator.next();
                                 try {
-                                    view.isAlivee();
-                                } catch (RemoteException e) {
+                                    if (view instanceof SocketClientHandler) {
+                                        if (!((SocketClientHandler) view).isClientConnected()) {
+                                            iterator.remove();
+                                            for (VirtualView otherView : views) {
+                                                try {
+                                                    otherView.leaveGame();
+                                                } catch (RemoteException leaveGameException) {
+                                                    System.out.println("Error while trying to remove client: ");
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        view.isAlivee();
+                                    }
+                                } catch (IOException e) {
                                     iterator.remove();
                                     for (VirtualView otherView : views) {
                                         try {
@@ -136,7 +152,7 @@ public class MainController {
             };
 
             long delay = 5000L;
-            long period = 10000L;
+            long period = 5000L;
             timer.scheduleAtFixedRate(task, delay, period);
         }).start();
     }

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Network;
 
-import it.polimi.ingsw.Chat.ChatMessage;
+import it.polimi.ingsw.View.ChatMessage;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.View.GameView;
 import it.polimi.ingsw.View.TUI.ClientModel;

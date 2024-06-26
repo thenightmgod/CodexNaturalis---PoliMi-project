@@ -1,9 +1,7 @@
 package it.polimi.ingsw.View.TUI;
 
-import it.polimi.ingsw.Chat.ChatMessage;
-import it.polimi.ingsw.Controller.MainController;
+import it.polimi.ingsw.View.ChatMessage;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
-import it.polimi.ingsw.Network.CommonClient;
 import it.polimi.ingsw.Network.RMI.RMIClient;
 import it.polimi.ingsw.Network.Socket.SocketClient;
 

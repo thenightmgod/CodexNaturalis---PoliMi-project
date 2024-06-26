@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Model.RoomPackage;
 
-import it.polimi.ingsw.Chat.ChatMessage;
+import it.polimi.ingsw.View.ChatMessage;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.CompositionGoalCard;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.ObjectsGoalCard;
@@ -14,8 +14,6 @@ import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
 import it.polimi.ingsw.Network.VirtualView;
 
-import javax.sound.sampled.AudioSystem;
-import java.io.File;
 import java.io.Serializable;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Model.Messages;
 
-import it.polimi.ingsw.Chat.ChatMessage;
+import it.polimi.ingsw.View.ChatMessage;
 
 public class ChatMessageMessage extends Message{
 

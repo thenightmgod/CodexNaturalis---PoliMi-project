@@ -1,18 +1,13 @@
 package it.polimi.ingsw.Model;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import it.polimi.ingsw.Chat.ChatMessage;
-import it.polimi.ingsw.Controller.GameController;
+import it.polimi.ingsw.View.ChatMessage;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.*;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.StartCard;
-import it.polimi.ingsw.Model.DeckPackage.GoldDeck;
 import it.polimi.ingsw.Model.DeckPackage.ResourceDeck;
 import it.polimi.ingsw.Model.PlayerPackage.*;
-import it.polimi.ingsw.Model.RoomPackage.ObserverManager;
 import it.polimi.ingsw.Model.RoomPackage.Room;
 import it.polimi.ingsw.Network.VirtualView;
 import org.junit.jupiter.api.Test;

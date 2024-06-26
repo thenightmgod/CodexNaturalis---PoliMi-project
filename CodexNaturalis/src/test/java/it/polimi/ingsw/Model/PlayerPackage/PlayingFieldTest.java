@@ -1,13 +1,9 @@
 package it.polimi.ingsw.Model.PlayerPackage;
-import it.polimi.ingsw.Chat.ChatMessage;
-import it.polimi.ingsw.Controller.GameController;
-import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.Composition;
-import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.CompositionGoalCard;
+import it.polimi.ingsw.View.ChatMessage;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.*;
 import it.polimi.ingsw.Model.CornerPackage.Corner;
 import it.polimi.ingsw.Model.CornerPackage.Orientation;
-import it.polimi.ingsw.Model.CornerPackage.Resources;
 import it.polimi.ingsw.Model.DeckPackage.GoldDeck;
 import it.polimi.ingsw.Model.DeckPackage.ResourceDeck;
 import it.polimi.ingsw.Model.DeckPackage.StartDeck;

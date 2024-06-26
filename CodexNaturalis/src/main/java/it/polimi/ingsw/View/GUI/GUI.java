@@ -1,6 +1,6 @@
 package it.polimi.ingsw.View.GUI;
 
-import it.polimi.ingsw.Chat.ChatMessage;
+import it.polimi.ingsw.View.ChatMessage;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;

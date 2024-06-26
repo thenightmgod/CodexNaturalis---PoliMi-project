@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Actions;
 
-import it.polimi.ingsw.Chat.ChatMessage;
+import it.polimi.ingsw.View.ChatMessage;
 import it.polimi.ingsw.Controller.GameController;
 import it.polimi.ingsw.Controller.MainController;
 import it.polimi.ingsw.Network.VirtualView;
