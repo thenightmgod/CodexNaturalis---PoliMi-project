@@ -3,6 +3,8 @@ package it.polimi.ingsw.View.TUI;
 import it.polimi.ingsw.View.ChatMessage;
 
 import java.util.LinkedList;
+import java.util.List;
+import java.util.ArrayList;
 
 public class TuiChat {
     private LinkedList<ChatMessage> messages;

@@ -415,7 +415,7 @@ public class Room implements Serializable {
             for (int i=0; i<chat.size(); i++) {
                 if (chat.get(i).getSender().equals(player.getName()) ||
                         chat.get(i).getRecipient().equals(player.getName()) ||
-                        chat.get(i).getRecipient().equals("all")) {
+                        chat.get(i).getRecipient().equals("everyone")) {
                     playerMessages.add(chat.get(i));
                 }
             }
