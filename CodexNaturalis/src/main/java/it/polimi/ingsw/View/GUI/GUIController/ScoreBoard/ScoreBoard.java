@@ -10,7 +10,7 @@ import java.util.*;
 public class ScoreBoard {
     private LinkedHashMap<String, Integer> points;
     private HashMap<PlayerColor, ImageView> placeholders;
-    private Set<ScoreBoardPosition> occupiedPositions;  // Set to track occupied positions
+    private Set<ScoreBoardPosition> occupiedPositions;
 
     public ScoreBoard(LinkedHashMap<String, Integer> points) {
         this.points = points;
