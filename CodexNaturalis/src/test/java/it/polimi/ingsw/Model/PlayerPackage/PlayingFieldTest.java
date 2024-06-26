@@ -1,4 +1,5 @@
 package it.polimi.ingsw.Model.PlayerPackage;
+import it.polimi.ingsw.Chat.ChatMessage;
 import it.polimi.ingsw.Controller.GameController;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.Composition;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.CompositionGoalCard;
@@ -86,6 +87,16 @@ class PlayingFieldTest {
         players.add(p1);
         LinkedList<VirtualView> views = new LinkedList<>();
         VirtualView v1 = new VirtualView() {
+            @Override
+            public void sendPlayers(LinkedList<String> players) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateChat(String name, LinkedList<ChatMessage> chat) throws RemoteException {
+
+            }
+
             @Override
             public void updateTurn(Player p, String mex) throws RemoteException {
 

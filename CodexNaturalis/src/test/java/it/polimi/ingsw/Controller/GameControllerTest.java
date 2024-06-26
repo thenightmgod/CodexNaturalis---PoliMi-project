@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Controller;
 
+import it.polimi.ingsw.Chat.ChatMessage;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
@@ -32,6 +33,16 @@ class GameControllerTest {
 
         VirtualView v1 = new VirtualView() {
             @Override
+            public void sendPlayers(LinkedList<String> players) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateChat(String name, LinkedList<ChatMessage> chat) throws RemoteException {
+
+            }
+
+            @Override
             public void updateTurn(Player p, String mex) throws RemoteException {
 
             }
@@ -92,7 +103,7 @@ class GameControllerTest {
             }
 
             @Override
-            public String getName() throws RemoteException {
+            public String getNames() throws RemoteException {
                 return "";
             }
 
@@ -117,7 +128,7 @@ class GameControllerTest {
             }
 
             @Override
-            public void isAlive() throws RemoteException {
+            public void isAlivee() throws RemoteException {
 
             }
 
@@ -143,6 +154,16 @@ class GameControllerTest {
         };
         VirtualView v2 = new VirtualView() {
             @Override
+            public void sendPlayers(LinkedList<String> players) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateChat(String name, LinkedList<ChatMessage> chat) throws RemoteException {
+
+            }
+
+            @Override
             public void updateTurn(Player p, String mex) throws RemoteException {
 
             }
@@ -203,7 +224,7 @@ class GameControllerTest {
             }
 
             @Override
-            public String getName() throws RemoteException {
+            public String getNames() throws RemoteException {
                 return "";
             }
 
@@ -228,7 +249,7 @@ class GameControllerTest {
             }
 
             @Override
-            public void isAlive() throws RemoteException {
+            public void isAlivee() throws RemoteException {
 
             }
 
@@ -254,6 +275,16 @@ class GameControllerTest {
         };
         VirtualView v3 = new VirtualView() {
             @Override
+            public void sendPlayers(LinkedList<String> players) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateChat(String name, LinkedList<ChatMessage> chat) throws RemoteException {
+
+            }
+
+            @Override
             public void updateTurn(Player p, String mex) throws RemoteException {
 
             }
@@ -314,7 +345,7 @@ class GameControllerTest {
             }
 
             @Override
-            public String getName() throws RemoteException {
+            public String getNames() throws RemoteException {
                 return "";
             }
 
@@ -339,7 +370,7 @@ class GameControllerTest {
             }
 
             @Override
-            public void isAlive() throws RemoteException {
+            public void isAlivee() throws RemoteException {
 
             }
 
@@ -365,6 +396,16 @@ class GameControllerTest {
         };
         VirtualView v4 = new VirtualView() {
             @Override
+            public void sendPlayers(LinkedList<String> players) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateChat(String name, LinkedList<ChatMessage> chat) throws RemoteException {
+
+            }
+
+            @Override
             public void updateTurn(Player p, String mex) throws RemoteException {
 
             }
@@ -425,7 +466,7 @@ class GameControllerTest {
             }
 
             @Override
-            public String getName() throws RemoteException {
+            public String getNames() throws RemoteException {
                 return "";
             }
 
@@ -450,7 +491,7 @@ class GameControllerTest {
             }
 
             @Override
-            public void isAlive() throws RemoteException {
+            public void isAlivee() throws RemoteException {
 
             }
 

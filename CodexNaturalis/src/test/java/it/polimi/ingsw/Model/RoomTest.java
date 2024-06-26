@@ -2,6 +2,7 @@ package it.polimi.ingsw.Model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import it.polimi.ingsw.Chat.ChatMessage;
 import it.polimi.ingsw.Controller.GameController;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.*;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
@@ -29,6 +30,16 @@ class RoomTest {
     void testMetodiMinori() throws RemoteException, NotBoundException {
 
         VirtualView client1 = new VirtualView() {
+            @Override
+            public void sendPlayers(LinkedList<String> players) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateChat(String name, LinkedList<ChatMessage> chat) throws RemoteException {
+
+            }
+
             @Override
             public void updateTurn(Player p, String mex) throws RemoteException {
 
@@ -141,6 +152,16 @@ class RoomTest {
         };
         VirtualView client2 = new VirtualView() {
             @Override
+            public void sendPlayers(LinkedList<String> players) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateChat(String name, LinkedList<ChatMessage> chat) throws RemoteException {
+
+            }
+
+            @Override
             public void updateTurn(Player p, String mex) throws RemoteException {
 
             }
@@ -252,6 +273,16 @@ class RoomTest {
         };
         VirtualView client3 = new VirtualView() {
             @Override
+            public void sendPlayers(LinkedList<String> players) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateChat(String name, LinkedList<ChatMessage> chat) throws RemoteException {
+
+            }
+
+            @Override
             public void updateTurn(Player p, String mex) throws RemoteException {
 
             }
@@ -362,6 +393,16 @@ class RoomTest {
             }
         };
         VirtualView client4 = new VirtualView() {
+            @Override
+            public void sendPlayers(LinkedList<String> players) throws RemoteException {
+
+            }
+
+            @Override
+            public void updateChat(String name, LinkedList<ChatMessage> chat) throws RemoteException {
+
+            }
+
             @Override
             public void updateTurn(Player p, String mex) throws RemoteException {
 
