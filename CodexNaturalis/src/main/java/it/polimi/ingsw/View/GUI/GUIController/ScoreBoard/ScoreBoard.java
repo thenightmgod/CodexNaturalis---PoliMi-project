@@ -27,8 +27,8 @@ public class ScoreBoard {
         for (int i = 0; i < numPlayers; i++) {
             PlayerColor color = playerColors[i];
             ImageView placeholder = new ImageView(loadImage("/view/MyCodexNaturalisPhotos/CODEX_pion_" + color.name().toLowerCase() + ".png"));
-            placeholder.setFitWidth(50);  // Set appropriate width
-            placeholder.setFitHeight(50); // Set appropriate height
+            placeholder.setFitWidth(50);
+            placeholder.setFitHeight(50);
             placeholder.setPreserveRatio(true);
             placeholders.put(color, placeholder);
         }
@@ -97,16 +97,14 @@ public class ScoreBoard {
         double x = position.getX();
         double y = position.getY();
 
-        // Check if the position is already occupied and adjust if necessary
         while (isPositionOccupied(x, y)) {
-            x += 10;  // Adjust these values as needed to ensure proper spacing
+            x += 10;
             y += 10;
         }
 
         occupiedPositions.add(new ScoreBoardPosition(x, y));
         placeholder.setLayoutX(x);
         placeholder.setLayoutY(y);
-        //System.out.println("Placeholder moved to: (" + x + ", " + y + ")");
     }
 
     private boolean isPositionOccupied(double x, double y) {
@@ -125,7 +123,7 @@ public class ScoreBoard {
     public void updatePlaceholders() {
         PlayerColor[] colors = {PlayerColor.RED, PlayerColor.YELLOW, PlayerColor.BLUE, PlayerColor.GREEN};
         int index = 0;
-        occupiedPositions.clear();  // Clear occupied positions before updating
+        occupiedPositions.clear();
 
         for (String player : points.keySet()) {
             if (index >= colors.length) break;
@@ -138,7 +136,6 @@ public class ScoreBoard {
 
             if (placeholder != null) {
                 movePlaceholderToPosition(placeholder, position);
-               // System.out.println("Moved placeholder for color " + colors[index] + " to position: (" + position.getX() + ", " + position.getY() + ")");
             } else {
                 System.out.println("Placeholder for color " + colors[index] + " is null.");
             }

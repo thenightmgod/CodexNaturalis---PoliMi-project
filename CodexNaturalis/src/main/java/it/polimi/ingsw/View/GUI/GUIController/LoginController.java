@@ -135,7 +135,6 @@ public class LoginController extends GUIController {
         myText.setVisible(false);
         myText.setDisable(true);
         myLabel.setVisible(false);
-        //if(VirtualServer server = client.getServer())
     }
 
 
@@ -167,7 +166,6 @@ public class LoginController extends GUIController {
     }
 
     public void showException(String exception) {
-        //forsePlatform
             switch(exception) {
                 case "NameAlreadyTakenException" -> {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
