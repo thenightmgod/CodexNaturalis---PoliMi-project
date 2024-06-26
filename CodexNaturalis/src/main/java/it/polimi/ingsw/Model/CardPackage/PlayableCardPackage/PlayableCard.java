@@ -14,8 +14,15 @@ import java.util.LinkedList;
  * The PlayableCard includes ResourceCard and GoldCard.
  */
 public class PlayableCard extends Card implements Serializable {
-
+    /**
+     * An array representing the resources present at the back of the PlayableCard.
+     * Each position in the array corresponds to a resource in the order they are declared
+     * in the "Resources" enum, and each value represents whether that resource is present or not.
+     */
     private final boolean[] BackRes;
+    /**
+     * The list of four corners at the extremities of the card. Each corner is an instance of the Corner class.
+     */
     private LinkedList<Corner> Corners;
 
     /**

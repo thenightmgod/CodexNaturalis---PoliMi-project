@@ -7,16 +7,33 @@ import java.io.Serializable;
  * These objects are implementations of the abstract interface CardRes.
  */
 public enum Objects implements CardRes {
+    /**
+     * Represents a quill object.
+     */
     QUILL("\uD83E\uDEB6"),
+    /**
+     * Represents an inkwell object.
+     */
     INKWELL("\uD83E\uDED9"),
+    /**
+     * Represents a manuscript object.
+     */
     MANUSCRIPT("\uD83D\uDCDC");
-
+    /**
+     * The short name of the object used for display purposes.
+     */
     private final String shortName;
-
+    /**
+     * Returns the short name of the object
+     * @return The short name of the object.
+     */
     public String getShortName() {
         return shortName;
     }
-
+    /**
+     * Constructs a new object with the specified short name.
+     * @param shortName The short name of the object.
+     */
     Objects(String shortName) {
         this.shortName = shortName;
     }

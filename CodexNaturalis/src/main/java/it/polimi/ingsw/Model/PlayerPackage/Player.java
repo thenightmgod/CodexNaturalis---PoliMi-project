@@ -19,16 +19,49 @@ import static it.polimi.ingsw.Model.CornerPackage.Resources.INSECT_KINGDOM;
  * Represents a player in the game. Each player has a name, a color, and keeps track of their points, resources, objects, hand, player goal, and playing field.
  */
 public class Player implements Serializable {
+    /**
+     * The name of the player.
+     */
     private final String Name;
+    /**
+     * The color assigned to the player.
+     */
     private final PlayerColor Color;
+    /**
+     * The counter for the points accumulated by the player.
+     */
     private int PointsCounter;
+    /**
+     * The counter for the points accumulated from the player's goal cards.
+     */
     private int GoalPointsCounter;
+    /**
+     * The total counter for the points accumulated by the player.
+     */
     private int TotalPointsCounter;
+    /**
+     * The counters for each type of resource the player has.
+     */
     private int[] ResourceCounter;
+    /**
+     * The counters for each type of object the player has.
+     */
     private int[] ObjectCounter;
+    /**
+     * The hand of the player, containing the cards they currently hold.
+     */
     private LinkedList<PlayableCard> Hand;
+    /**
+     * The goal cards specific to the player.
+     */
     private LinkedList<GoalCard> PlayerGoal;
+    /**
+     * The common goal cards in the game.
+     */
     private LinkedList<GoalCard> commonGoals = new LinkedList<>();
+    /**
+     * The playing field of the player.
+     */
     private PlayingField PlayerField;
 
     /**
@@ -54,23 +87,39 @@ public class Player implements Serializable {
         }
         PlayerField = new PlayingField();
     }
-
+    /**
+     * Retrieves the points accumulated from the player's goal cards.
+     *
+     * @return The points accumulated from the player's goal cards.
+     */
     public int getGoalPointsCounter(){
         return GoalPointsCounter;
     }
-
+    /**
+     * Adds a specified number of points to the player's goal points counter.
+     * @param points The number of points to be added.
+     */
     public void addGoalPoints(int points){
         GoalPointsCounter += points;
     }
-
+    /**
+     * Retrieves the total points counter for the player.
+     * @return The total points counter for the player.
+     */
     public int getTotalPointsCounter(){
         return TotalPointsCounter;
     }
-
+    /**
+     * Adds a specified number of points to the player's total points counter.
+     * @param points The number of points to be added.
+     */
     public void addTotalPoints(int points){
         TotalPointsCounter += points;
     }
-
+    /**
+     * Retrieves the playing field of the player.
+     * @return The playing field of the player.
+     */
     public PlayingField getPlayerField(){
         return this.PlayerField;
     }
@@ -103,8 +152,9 @@ public class Player implements Serializable {
     }
 
     /**
-     * Sets the goal card for the player.
-     *
+     * Sets the player's goal card. If the input is 1, the first goal card is added to the common goals,
+     * otherwise the second goal card is added to the common goals.
+     * @param i The index of the goal card to be set.
      */
     public void setPlayerGoal(int i){
 
@@ -112,7 +162,11 @@ public class Player implements Serializable {
             commonGoals.add(PlayerGoal.get(0));
         else commonGoals.add(PlayerGoal.get(1));
     }
-
+    /**
+     * Adds a goal card to the player's personal goals or the common goals, based on the provided string.
+     * @param card The goal card to be added.
+     * @param mex The string indicating where to add the goal card. "personal" adds to the player's personal goals, "common" adds to the common goals.
+     */
     public void addGoalCard(GoalCard card, String mex){
         switch(mex){
             case "personal" -> PlayerGoal.add(card);
@@ -151,15 +205,24 @@ public class Player implements Serializable {
         else
             return ObjectCounter[2];
     }
-
+    /**
+     * Retrieves the counters for each type of object the player has.
+     * @return An array of integers representing the counters for each type of object.
+     */
     public int[] getObjects(){
         return ObjectCounter;
     }
-
+    /**
+     * Retrieves the goal cards specific to the player.
+     * @return A LinkedList of GoalCard objects representing the player's specific goal cards.
+     */
     public LinkedList<GoalCard> get2Goals(){
         return PlayerGoal;
     }
-
+    /**
+     * Retrieves the common goal cards in the game.
+     * @return A LinkedList of GoalCard objects representing the common goal cards in the game.
+     */
     public LinkedList<GoalCard> getCommonGoals(){
         return commonGoals;
     }
@@ -290,7 +353,11 @@ public class Player implements Serializable {
         return;
     }
 
-
+    /**
+     * Retrieves a specific card from the player's hand.
+     * @param i The index of the card to be retrieved.
+     * @return The ResourceCard at the specified index in the player's hand.
+     */
     public ResourceCard getCardFromHand(int i){
         return (ResourceCard) this.Hand.get(i-1);
     }

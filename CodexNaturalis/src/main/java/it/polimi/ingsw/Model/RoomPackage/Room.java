@@ -24,19 +24,57 @@ import java.util.*;
  * Represents a game room where players participate.
  */
 public class Room implements Serializable {
-
+    /**
+     * Manages observers in the game.
+     */
     private ObserverManager observerManager = new ObserverManager();
+    /**
+     * Stores chat messages in the game.
+     */
     private LinkedList<ChatMessage> chat = new LinkedList<>();
+    /**
+     * The unique identifier of the room.
+     */
     private final int roomId;
+    /**
+     * Flag indicating if it's the last round of the game.
+     */
     private boolean lastRound;
+    /**
+     * Flag indicating if a player has reached twenty points.
+     */
     private boolean twenty;
+    /**
+     * List of players in the game.
+     */
     private LinkedList<Player> players;
+    /**
+     * The player whose turn it is.
+     */
     private Player turn;
+    /**
+     * The resource deck in the game.
+     */
     private ResourceDeck resourceDeck;
+    /**
+     * The gold deck in the game.
+     */
     private GoldDeck goldDeck;
+    /**
+     * The goal deck in the game.
+     */
     private Deck goalDeck;
+    /**
+     * The start deck in the game.
+     */
     private StartDeck startDeck;
+    /**
+     * List of common goal cards in the game.
+     */
     private LinkedList<GoalCard> commonGoals;
+    /**
+     * Flag indicating if it's the last round and it's the last player's turn.
+     */
     private boolean ll;
 
 
@@ -88,10 +126,10 @@ public class Room implements Serializable {
      * Sets the flag indicating whether the game has reached the twenty points threshold.
      */
     public void setTwentyFlag() {
-        if(turn.getPointsCounter()>=2)
+        if(turn.getPointsCounter()>=20)
             this.twenty = true;
         if(twenty && !lastRound)
-            if(turn.getPointsCounter()>=2)
+            if(turn.getPointsCounter()>=20)
                 observerManager.twenty(turn.getName());
     }
     /**
@@ -397,7 +435,9 @@ public class Room implements Serializable {
             }
         }
     }
-
+    /**
+     * Sends the list of player names to all observers.
+     */
     public void sendPlayers(){
         LinkedList<String> names = new LinkedList<>();
         for(Player p: players){
@@ -405,7 +445,12 @@ public class Room implements Serializable {
         }
         observerManager.sendPlayers(names);
     }
-
+    /**
+     * Sends a chat message to all relevant observers. The message is added to the chat history,
+     * and then sent to each player who is either the sender or recipient of the message, or if the message is intended for everyone.
+     * @param message The chat message to be sent.
+     * @throws RemoteException If a remote communication error occurs.
+     */
     public void sendChatMessage(ChatMessage message) throws RemoteException {
         chat.add(message);
         HashMap<String, LinkedList<ChatMessage>> toSend = new HashMap<>();

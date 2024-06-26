@@ -13,6 +13,9 @@ import java.io.Serializable;
  *
  */
 public class ResourceGoalCard extends GoalCard {
+    /**
+     * The specific Resource that concerns the goal of the ResourceGoalCard.
+     */
     private final Resources Res;
 
     /**

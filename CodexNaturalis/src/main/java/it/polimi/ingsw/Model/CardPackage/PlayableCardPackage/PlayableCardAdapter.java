@@ -5,9 +5,24 @@ import it.polimi.ingsw.Model.CornerPackage.Orientation;
 import it.polimi.ingsw.Model.CornerPackage.Resources;
 
 import java.lang.reflect.Type;
-
+/**
+ * This class is a custom adapter for the Gson library to handle the serialization and deserialization of PlayableCard objects.
+ * It implements the JsonDeserializer and JsonSerializer interfaces provided by Gson.
+ * The class overrides the deserialize and serialize methods to provide custom logic for converting between PlayableCard objects and JSON.
+ * This is necessary because PlayableCard is a superclass with multiple subclasses (ResourceCard, GoldCard, StartCard), and Gson needs to know how to handle each one.
+ */
 public class PlayableCardAdapter implements JsonDeserializer<PlayableCard>, JsonSerializer<PlayableCard> {
-
+    /**
+     * Custom deserialization logic for PlayableCard objects.
+     * This method determines the specific type of PlayableCard (ResourceCard, GoldCard, StartCard) based on the "Id" field in the JSON,
+     * and then deserializes the JSON into an object of that type.
+     *
+     * @param json The JsonElement to be deserialized.
+     * @param typeOfT The type of the Object to deserialize to.
+     * @param context Context for deserialization.
+     * @return The deserialized PlayableCard.
+     * @throws JsonParseException If json is not in the expected format of JsonObject.
+     */
     @Override
     public PlayableCard deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
@@ -64,7 +79,16 @@ public class PlayableCardAdapter implements JsonDeserializer<PlayableCard>, Json
         }
         return null;
     }
-
+    /**
+     * Custom serialization logic for PlayableCard objects.
+     * This method determines the specific type of the PlayableCard (ResourceCard, GoldCard, StartCard),
+     * and then serializes the object into JSON using the appropriate logic for that type.
+     *
+     * @param src The PlayableCard to be serialized.
+     * @param typeOfSrc The actual type of the source object.
+     * @param context Context for serialization.
+     * @return A JsonElement corresponding to the specified PlayableCard.
+     */
     @Override
     public JsonElement serialize(PlayableCard src, Type typeOfSrc, JsonSerializationContext context) {
         JsonObject jsonObject = new JsonObject();

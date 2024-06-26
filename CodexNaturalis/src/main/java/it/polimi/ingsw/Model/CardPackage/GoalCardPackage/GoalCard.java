@@ -9,7 +9,9 @@ import it.polimi.ingsw.Model.PlayerPackage.Player;
  */
 
 public class GoalCard extends Card {
-
+    /**
+     * The points of the GoalCard
+     */
     private final int points;
 
     /**

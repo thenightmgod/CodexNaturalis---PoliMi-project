@@ -17,6 +17,9 @@ import static it.polimi.ingsw.Model.CornerPackage.Resources.INSECT_KINGDOM;
  * Each player receives a StartCard in their first turn, and it will be the first card placed in their playing field.
  */
 public class StartCard extends PlayableCard implements Serializable {
+    /**
+     * A list of corners at the back of the StartCard.
+     */
     private LinkedList<Corner> BackCorners;
 
     /**
@@ -50,7 +53,11 @@ public class StartCard extends PlayableCard implements Serializable {
             case LL -> this.BackCorners.get(3);
         };
     }
-
+    /**
+     * Adds a corner to the back of the StartCard.
+     *
+     * @param corner The corner to be added to the back of the StartCard.
+     */
     public void addBackCorner(Corner corner){
         this.BackCorners.add(corner);
     }

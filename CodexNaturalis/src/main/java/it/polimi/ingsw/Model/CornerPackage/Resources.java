@@ -26,13 +26,21 @@ public enum Resources implements CardRes{
      * Represents the resource type for insects.
      */
     INSECT_KINGDOM("\uD83E\uDD8B");
-
+    /**
+     * The short name of the resource used for display purposes.
+     */
     private final String shortName;
-
+    /**
+     * Returns the short name of the resource.
+     * @return The short name of the resource.
+     */
     public String getShortName() {
         return shortName;
     }
-
+    /**
+     * Constructs a new resource with the specified short name.
+     * @param shortName The short name of the resource.
+     */
     Resources(String shortName) {
         this.shortName = shortName;
     }

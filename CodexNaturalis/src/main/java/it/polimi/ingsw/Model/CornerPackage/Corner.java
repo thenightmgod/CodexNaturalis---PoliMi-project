@@ -7,8 +7,17 @@ import java.io.Serializable;
  */
 
 public class Corner implements Serializable {
+    /**
+     * The orientation of the corner.
+     */
     private final Orientation Orient;
+    /**
+     * A boolean flag indicating whether the corner is covered or not.
+     */
     private boolean Covered;
+    /**
+     * The resource or object that the corner holds. This is an instance of a class that implements the CardRes interface.
+     */
     private CardRes Res;
 
     /**

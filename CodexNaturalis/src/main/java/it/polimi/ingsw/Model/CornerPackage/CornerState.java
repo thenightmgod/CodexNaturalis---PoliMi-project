@@ -16,17 +16,28 @@ public enum CornerState implements CardRes {
      * Absent is when the angle is not present.
      */
     ABSENT("⬛");
-
+    /**
+     * The short name of the corner state used for display purposes.
+     */
     private final String shortName;
-
+    /**
+     * Returns the short name of the corner state.
+     * @return The short name of the corner state.
+     */
     public String getShortName() {
         return shortName;
     }
-
+    /**
+     * Constructs a new corner state with the specified short name.
+     * @param shortName The short name of the corner state.
+     */
     CornerState(String shortName) {
         this.shortName = shortName;
     }
-
+    /**
+     * Returns the name of the corner state.
+     * @return The name of the corner state.
+     */
     public CornerState getName() {
         return this;
     }

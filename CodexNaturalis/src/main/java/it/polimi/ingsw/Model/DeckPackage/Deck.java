@@ -24,6 +24,9 @@ import java.util.*;
  * The deck is initialized based on the type specified, loading card data from a corresponding JSON file.
  */
 public class Deck implements Serializable {
+    /**
+     * The list of cards in the deck.
+     */
     private LinkedList<Card> cards;
 
     /**

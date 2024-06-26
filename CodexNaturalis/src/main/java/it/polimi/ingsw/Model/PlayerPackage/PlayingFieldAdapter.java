@@ -10,9 +10,19 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Map;
-
+/**
+ * This class is a custom serializer and deserializer for the PlayingField class.
+ * It implements JsonSerializer and JsonDeserializer interfaces provided by the Gson library.
+ * The class is used to convert PlayingField objects to JSON format and vice versa.
+ */
 public class PlayingFieldAdapter implements JsonSerializer<PlayingField>, JsonDeserializer<PlayingField> {
-
+    /**
+     * This method is used to serialize a PlayingField object into a JsonElement.
+     * @param src The PlayingField object that needs to be serialized.
+     * @param typeOfSrc The specific genericized type of src.
+     * @param context Context for serialization that can be used to serialize other objects.
+     * @return A JsonElement corresponding to the specified PlayingField.
+     */
     @Override
     public JsonElement serialize(PlayingField src, Type typeOfSrc, JsonSerializationContext context) {
         JsonObject jsonObject = new JsonObject();
@@ -20,7 +30,14 @@ public class PlayingFieldAdapter implements JsonSerializer<PlayingField>, JsonDe
         jsonObject.add("FreePositions", context.serialize(src.getFreePositions()));
         return jsonObject;
     }
-
+    /**
+     * This method is used to deserialize a JsonElement into a PlayingField object.
+     * @param json The JsonElement that needs to be deserialized.
+     * @param typeOfT The specific genericized type of the object to be deserialized.
+     * @param context Context for deserialization that can be used to deserialize other objects.
+     * @return A PlayingField object corresponding to the specified JsonElement.
+     * @throws JsonParseException If json is not in the expected format of JsonObject.
+     */
     @Override
     public PlayingField deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
 

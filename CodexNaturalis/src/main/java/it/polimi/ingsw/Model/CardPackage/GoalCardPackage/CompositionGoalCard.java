@@ -21,16 +21,22 @@ import static it.polimi.ingsw.Model.CardPackage.GoalCardPackage.Composition.T;
  * of cards' positions on the playing field.
  */
 public class CompositionGoalCard extends GoalCard {
-
+    /**
+     * The composition of the CompositionGoalCard. This represents the specific configuration
+     * of cards' positions on the playing field that the player needs to achieve.
+     */
     private final Composition comp;
+    /**
+     * The color of the CompositionGoalCard.
+     */
     private final CardColor color;
 
     /**
      * Constructs a new CompositionGoalCard, with its id, points and Composition.
-     * @param id The specific id of the CompositionGoalCard
-     * @param points The specific points of the CompositionGoalCard
-     * @param c The specific composition between the three possible
-     * @param color the specific color of the CompositionGoalCard
+     * @param id The specific id of the CompositionGoalCard.
+     * @param points The specific points of the CompositionGoalCard.
+     * @param c The specific composition.
+     * @param color the specific color of the CompositionGoalCard.
      */
     public CompositionGoalCard(int id, int points, Composition c, CardColor color) {
         super(id,points);
@@ -75,7 +81,13 @@ public class CompositionGoalCard extends GoalCard {
             case DIAGONAL_DOWN -> pointsDD(p, c);
         };
     }
-
+    /**
+     * Calculates the points for a player based on the "L" composition.
+     * The "L" composition consists of two red cards in a vertical line and a green card to the right of the lower red card.
+     *
+     * @param p The player whose points are to be calculated.
+     * @return The points earned by the player for this composition.
+     */
     public int pointsL(Player p){
         int Points = 0;
         PlayingField field = p.getPlayerField();
@@ -115,7 +127,13 @@ public class CompositionGoalCard extends GoalCard {
         }
        return Points;
     }
-
+    /**
+     * Calculates the points for a player based on the "Reverse L" composition.
+     * The "Reverse L" composition consists of two green cards in a vertical line and a purple card to the left of the lower green card.
+     *
+     * @param p The player whose points are to be calculated.
+     * @return The points earned by the player for this composition.
+     */
     public int pointsRL(Player p){
         int Points = 0;
         PlayingField field = p.getPlayerField();
@@ -155,7 +173,13 @@ public class CompositionGoalCard extends GoalCard {
         }
         return Points;
     }
-
+    /**
+     * Calculates the points for a player based on the "T" composition.
+     * The "T" composition consists of a red card at the top and two blue cards underneath it in a vertical line.
+     *
+     * @param p The player whose points are to be calculated.
+     * @return The points earned by the player for this composition.
+     */
     public int pointsT(Player p){
         int Points = 0;
         PlayingField field = p.getPlayerField();
@@ -195,7 +219,13 @@ public class CompositionGoalCard extends GoalCard {
         }
         return Points;
     }
-
+    /**
+     * Calculates the points for a player based on the "Reverse T" composition.
+     * The "Reverse T" composition consists of a blue card at the top and two purple cards underneath it in a vertical line.
+     *
+     * @param p The player whose points are to be calculated.
+     * @return The points earned by the player for this composition.
+     */
     public int pointsRT(Player p){
         int Points = 0;
         PlayingField field = p.getPlayerField();
@@ -235,7 +265,14 @@ public class CompositionGoalCard extends GoalCard {
         }
         return Points;
     }
-
+    /**
+     * Calculates the points for a player based on the "Diagonal Up" composition.
+     * The "Diagonal Up" composition consists of three cards of the same color in a diagonal line from bottom left to top right.
+     *
+     * @param p The player whose points are to be calculated.
+     * @param color The color of the cards in the composition.
+     * @return The points earned by the player for this composition.
+     */
     public int pointsDU(Player p, CardColor color){
         int Points = 0;
         PlayingField field = p.getPlayerField();
@@ -275,7 +312,14 @@ public class CompositionGoalCard extends GoalCard {
         }
         return Points;
     }
-
+    /**
+     * Calculates the points for a player based on the "Diagonal Down" composition.
+     * The "Diagonal Down" composition consists of three cards of the same color in a diagonal line from top left to bottom right.
+     *
+     * @param p The player whose points are to be calculated.
+     * @param color The color of the cards in the composition.
+     * @return The points earned by the player for this composition.
+     */
     public int pointsDD(Player p, CardColor color){
         int Points = 0;
         PlayingField field = p.getPlayerField();

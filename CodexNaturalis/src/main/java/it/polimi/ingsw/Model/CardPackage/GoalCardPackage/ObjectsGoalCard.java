@@ -8,6 +8,10 @@ import it.polimi.ingsw.Model.CornerPackage.Objects;
  * An ObjectsGoalCard is a type of GoalCard that has a specific set of objects.
  */
 public class ObjectsGoalCard extends GoalCard {
+    /**
+     * An array of integers representing the objects of the ObjectsGoalCard.
+     * The array has a fixed size of 3, each index representing a specific object.
+     */
     private final int[] obj = new int[3];
     // QUILL, INKWELL, MANUSCRIPT
 

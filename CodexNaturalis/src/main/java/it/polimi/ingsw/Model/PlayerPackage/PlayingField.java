@@ -11,8 +11,13 @@ import static it.polimi.ingsw.Model.CornerPackage.CornerState.ABSENT;
  * Represents the playing field where cards are placed during the game.
  */
 public class PlayingField implements Serializable {
-
+    /**
+     * A map representing the playing field, where each position is mapped to the card placed there.
+     */
     private LinkedHashMap<Position, PlayableCard> Field;
+    /**
+     * A list of positions on the playing field that are currently free.
+     */
     private LinkedList<Position> FreePositions;
 
 
@@ -24,15 +29,25 @@ public class PlayingField implements Serializable {
         Field = new LinkedHashMap<>();
         FreePositions = new LinkedList<>();
     }
-
+    /**
+     * Sets the playing field with a given map of positions and corresponding cards.
+     * @param field The map of positions and corresponding cards.
+     */
     public void setField(LinkedHashMap<Position, PlayableCard> field) {
         Field = field;
     }
-
+    /**
+     * Sets the list of free positions on the playing field.
+     * @param freePositions The list of free positions.
+     */
     public void setFreePositions(LinkedList<Position> freePositions) {
         FreePositions = freePositions;
     }
-
+    /**
+     * Checks if a given position is free on the playing field.
+     * @param p The position to check.
+     * @return true if the position is free, false otherwise.
+     */
     public boolean containsFreePosition(Position p){
         for(Position pos : FreePositions){
             if(pos.equals(p)){
@@ -41,7 +56,11 @@ public class PlayingField implements Serializable {
         }
         return false;
     }
-
+    /**
+     * Retrieves the card at a given position on the playing field.
+     * @param p The position of the card.
+     * @return The card at the given position, or null if there is no card at that position.
+     */
     public PlayableCard getCardFromPos(Position p){
         Set<Position> positions = Field.keySet();
         for(Position pos : positions){
@@ -51,7 +70,10 @@ public class PlayingField implements Serializable {
         }
         return null;
     }
-
+    /**
+     * Checks if a given position is occupied on the playing field.
+     * @param p The position to check
+     */
     public boolean containsInField(Position p){
         Set<Position> set = Field.keySet();
         for(Position p1 : set){
@@ -60,12 +82,6 @@ public class PlayingField implements Serializable {
             }
         }
         return false;
-    }
-
-    public Position getPosition(int x, int y){
-        Position position = new Position(x, y);
-        List<Position> k = Field.keySet().stream().filter(s -> s.equals(position)).toList();
-        return k.getFirst();
     }
 
     /**

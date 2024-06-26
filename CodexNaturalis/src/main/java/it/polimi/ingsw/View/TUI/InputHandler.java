@@ -13,20 +13,38 @@ import java.rmi.RemoteException;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-
+/**
+ * This class handles user input in a separate thread.
+ */
 public class InputHandler extends Thread{
-
+    /**
+     * The TUI instance associated with this InputHandler.
+     */
     private final TUI tui;
+    /**
+     * Scanner to read user input.
+     */
     private Scanner scanner;
+    /**
+     * The current task to be performed.
+     */
     private String whatToDo;
+    /**
+     * The type of connection, true for Socket and false for RMI.
+     */
     boolean connectionType;
-
+    /**
+     * Constructor for the InputHandler class.
+     * @param tui The TUI instance associated with this InputHandler.
+     */
     public InputHandler(TUI tui){
         this.scanner = new Scanner(System.in);
         this.whatToDo = "";
         this.tui = tui;
     }
-
+    /**
+     * The main loop that runs in the thread, handling user input.
+     */
     @Override
     public void run(){
         while (true) {
@@ -38,7 +56,11 @@ public class InputHandler extends Thread{
             } catch (RemoteException ignored) {}
         }
     }
-
+    /**
+     * Handles user input based on the given command.
+     * @param whatToDo The command to be executed.
+     * @throws RemoteException If a remote communication error occurs.
+     */
     public void handleUserInput(String whatToDo) throws RemoteException {
         switch(whatToDo){
             case "createGame" ->
@@ -63,7 +85,12 @@ public class InputHandler extends Thread{
                 chatMessage();
         }
     }
-
+    /**
+     * Asks the user if they want to play another game. If the user chooses to play again, the game is restarted.
+     * If the user chooses not to play again, the application is closed.
+     *
+     * @throws RemoteException If a remote communication problem occurs.
+     */
     private void anotherGame() throws RemoteException {
         String carlos;
         do {
@@ -74,18 +101,24 @@ public class InputHandler extends Thread{
             this.tui.joinGame();
         else System.exit(0);
     }
-
+    /**
+     * Prompts the user to enter their nickname and sets it. If the connection type is not RMI, it prepares for a socket connection.
+     *
+     * @throws RemoteException If a remote communication problem occurs.
+     */
     private void setName() throws RemoteException {
         getNickname();
         if (!(connectionType)) {
             ((RMIClient) this.tui.client ).setName(this.tui.name);
         }
         else{
-            //fare socket
+            ((SocketClient) this.tui.client).setName(this.tui.name);
         }
         this.tui.joinGame();
     }
-
+    /**
+     * Prompts the user to create a new game by entering the number of players. The game is created with the entered number of players.
+     */
     private void createGame(){
         {
             System.out.println("CREATING A NEW GAME...");
@@ -114,7 +147,11 @@ public class InputHandler extends Thread{
             }
         }
     }
-
+    /**
+     * Prompts the user to enter a number and returns the entered number.
+     *
+     * @return The number entered by the user.
+     */
     private int getIndex() {
         int input = 77;
         while (true) {
@@ -127,7 +164,11 @@ public class InputHandler extends Thread{
         }
         return input;
     }
-
+    /**
+     * Prompts the user to place a card on the game board. The user is asked to choose a card, its position, and its orientation (front or back).
+     *
+     * @throws RemoteException If a remote communication problem occurs.
+     */
     private void placeCard() throws RemoteException {
         boolean goon = false;
         int i, x, y;
@@ -159,7 +200,11 @@ public class InputHandler extends Thread{
             }
         } while (!goon);
     }
-
+    /**
+     * Prompts the user to choose a goal card. The user can choose the card on the top or the card on the bottom.
+     *
+     * @throws RemoteException If a remote communication problem occurs.
+     */
     private void chooseGoalCard() throws RemoteException {
         boolean goon = false;
         int i;
@@ -181,7 +226,11 @@ public class InputHandler extends Thread{
         } while (!goon);
         this.tui.endTurn("GoalCard");
     }
-
+    /**
+     * Prompts the user to set the orientation (front or back) of their start card.
+     *
+     * @throws RemoteException If a remote communication problem occurs.
+     */
     private void setStartCardFace() throws RemoteException {
         String f;
         boolean face;
@@ -207,7 +256,9 @@ public class InputHandler extends Thread{
         this.tui.endTurn("StartCard");
 
     }
-
+    /**
+     * Prompts the user to draw a card from a specified deck.
+     */
     private void drawCard(){
         boolean goon = false;
         int whichDeck, whichCard;
@@ -228,7 +279,9 @@ public class InputHandler extends Thread{
         }while (!goon) ;
 
     }
-
+    /**
+     * Prompts the user to choose the type of client connection (RMI or Socket) and sets up the chosen connection.
+     */
     private void chooseClient(){
 
         getNickname();
@@ -259,7 +312,9 @@ public class InputHandler extends Thread{
         } while(!connection.equals("0") && !connection.equals("1"));
 
     }
-
+    /**
+     * Prompts the user to enter their nickname and sets it.
+     */
     private void getNickname(){
 
         String nickname = "Carlos";
@@ -275,14 +330,21 @@ public class InputHandler extends Thread{
 
         this.tui.name = nickname;
     }
-
+    /**
+     * Prompts the user to enter the server IP address.
+     */
     private void askServerIp(){
         do {
             System.out.println("Insert the server ip");
             this.tui.serverIp = scanner.nextLine();
         } while (!this.tui.serverIp.isEmpty() && !isValidFormat(this.tui.serverIp));
     }
-
+    /**
+     * Checks if the given string is a valid IP address format.
+     *
+     * @param input The string to check.
+     * @return true if the string is a valid IP address format, false otherwise.
+     */
     public static boolean isValidFormat(String input) {
 
         String[] parts = input.split("\\.");
@@ -303,7 +365,12 @@ public class InputHandler extends Thread{
 
         return true;
     }
-
+    /**
+     * Checks if the given string can be parsed to an integer.
+     *
+     * @param str The string to check.
+     * @return true if the string can be parsed to an integer, false otherwise.
+     */
     private static boolean isNumeric(String str) {
         try {
             Integer.parseInt(str);
@@ -312,15 +379,20 @@ public class InputHandler extends Thread{
             return false;
         }
     }
-
+    /**
+     * Handles the chat functionality of the game. The user can choose to see the chat, send a message, or go back to the game.
+     * If the user chooses to send a message, they can select the recipient of the message and write the message content.
+     *
+     * @throws RemoteException If a remote communication problem occurs.
+     */
     private void chatMessage() throws RemoteException {
-        String choice;
-        do {
+        int choice= 0;
+        while(choice != 3) {
             System.out.println("(1) ->  see the chat\n(2) -> send a message\n(3) -> go back to the game");
-            choice = scanner.nextLine();
+            choice = getIndex();
             switch (choice) {
-                case "1" -> this.tui.chat.printChat(this.tui.name);
-                case "2" -> {
+                case 1 -> this.tui.chat.printChat(this.tui.name);
+                case 2 -> {
                     LinkedList<String> names = this.tui.client.getClient().getPlayers();
                     LinkedList<String> otherPlayers = new LinkedList<>();
                     for (String name : names) {
@@ -334,7 +406,7 @@ public class InputHandler extends Thread{
                         System.out.println((i + 1) + " -> " + otherPlayers.get(i));
                     }
                     int selectedPlayerIndex = getIndex() - 1;
-                    if (selectedPlayerIndex==-1) {
+                    if (selectedPlayerIndex == -1) {
                         System.out.println("Write your message:");
                         String message = scanner.nextLine();
                         ChatMessage mex = new ChatMessage(message, this.tui.name, "everyone");
@@ -347,11 +419,11 @@ public class InputHandler extends Thread{
                     ChatMessage mex = new ChatMessage(message, this.tui.name, selectedPlayer);
                     this.tui.sendChatMessage(mex);
                 }
-                case "3" -> {
+                case 3 -> {
                     return;
                 }
             }
-        } while (!choice.equals("3"));
+        }
     }
 
 }

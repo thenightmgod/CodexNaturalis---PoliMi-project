@@ -7,9 +7,17 @@ import java.util.Objects;
  * Represents a position on the playing field.
  */
 public class Position implements Serializable {
-
+    /**
+     * The x-coordinate of the position.
+     */
     private int x;
+    /**
+     * The y-coordinate of the position.
+     */
     private int y;
+    /**
+     * The face of the position. This is of type FB, which is an enum representing the possible faces a position can have.
+     */
     private final FB face;
 
     /**

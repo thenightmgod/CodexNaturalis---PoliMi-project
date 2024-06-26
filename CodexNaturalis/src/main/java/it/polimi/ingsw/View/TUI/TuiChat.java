@@ -5,19 +5,34 @@ import it.polimi.ingsw.View.ChatMessage;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ArrayList;
-
+/**
+ * This class represents the chat feature of the application for the Text User Interface (TUI)
+ */
 public class TuiChat {
+    /**
+     * A list of chat messages.
+     */
     private LinkedList<ChatMessage> messages;
-
+    /**
+     * Constructor for the TuiChat class.
+     */
     public TuiChat() {
         this.messages = new LinkedList<>();
     }
-
+    /**
+     * Sets the list of chat messages.
+     *
+     * @param messages The list of chat messages.
+     */
     public void setMessages(LinkedList<ChatMessage> messages){
         this.messages = messages;
     }
 
-
+    /**
+     * Prints the chat messages. It separates public messages from private messages.
+     *
+     * @param myUsername The username of the current user.
+     */
     public void printChat(String myUsername) {
         String border = new String(new char[50]).replace('\0', '-');
         String resetColor = "\u001B[0m";
@@ -42,7 +57,17 @@ public class TuiChat {
         System.out.println("Private chat:");
         printMessagesPp(privateMessages, border, resetColor, senderColor, recipientColor, messageColor, myUsername);
     }
-
+    /**
+     * Prints private messages.
+     *
+     * @param messages The list of private messages.
+     * @param border The border to be printed.
+     * @param resetColor The reset color code.
+     * @param senderColor The sender color code.
+     * @param recipientColor The recipient color code.
+     * @param messageColor The message color code.
+     * @param myUsername The username of the current user.
+     */
     private void printMessagesPp(List<ChatMessage> messages, String border, String resetColor, String senderColor, String recipientColor, String messageColor, String myUsername) {
         if (messages.isEmpty()) {
             System.out.println("No messages to show");
@@ -60,7 +85,16 @@ public class TuiChat {
         System.out.println(border);
         System.out.println("\n");
     }
-
+    /**
+     * Prints public messages.
+     *
+     * @param messages The list of private messages.
+     * @param border The border to be printed.
+     * @param resetColor The reset color code.
+     * @param senderColor The sender color code.
+     * @param recipientColor The recipient color code.
+     * @param messageColor The message color code.
+     */
     private void printMessagesPu(List<ChatMessage> messages, String border, String resetColor, String senderColor, String recipientColor, String messageColor) {
         if (messages.isEmpty()) {
             System.out.println("No messages to show");
@@ -74,27 +108,5 @@ public class TuiChat {
         System.out.println("\n");
 
     }
-
-    /*public void printChat() {
-        String border = new String(new char[50]).replace('\0', '-');
-        String resetColor = "\u001B[0m";
-        String senderColor = "\u001B[31m";
-        String recipientColor = "\u001B[32m";
-        String messageColor = "\u001B[34m";
-
-        for (int i = 0; i < messages.size(); i++) {
-            if(messages.size() == 0){
-                System.out.println("No messages to show");
-                return;
-            }
-            System.out.println(border);
-            System.out.println(senderColor + "From: " + messages.get(i).getSender() + resetColor);
-            System.out.println(recipientColor + "To: " + messages.get(i).getRecipient() + resetColor);
-            System.out.println("\n" + messageColor + "Message: ");
-            System.out.println(messages.get(i).getMessage() + resetColor);
-            System.out.println(border);
-            System.out.println("\n");
-        }
-    }  */
 
 }

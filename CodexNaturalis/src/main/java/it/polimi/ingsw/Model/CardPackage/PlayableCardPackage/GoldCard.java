@@ -12,14 +12,24 @@ import java.io.Serializable;
 import java.util.LinkedList;
 
 /**
- * Represents the ResourceCard that, to be deployed on the playing field,
+ * Represents the GoldCard that, to be deployed on the playing field,
  * need the player to meet the resource requirements.
  * In addition to standard ResourceCard, a GoldCard can give points based on
  * certain positions in which they are fielded or based on the number of Objects the player has.
  *
  */
 public class GoldCard extends ResourceCard implements Serializable {
+    /**
+     * An array representing the resource requirements to play this GoldCard.
+     * Each position in the array corresponds to a resource in the order they are declared
+     * in the "Resources" enum, and each value represents the quantity of that resource required.
+     */
     private int[] requirements;
+    /**
+     * The condition under which additional points can be earned when this GoldCard is played.
+     * The condition can be positional ("CORNERS"), based on a number of objects (OBJECTS_QUILL,OBJECTS_INKWELL or OBJECTS_MANUSCRIPT)
+     * or nothing ("FREE"). If the player meets this condition, they can get a certain number of points calculated by pointsCalc().
+     */
     private PointsCondition PointsC;
 
 
@@ -53,13 +63,19 @@ public class GoldCard extends ResourceCard implements Serializable {
 
     /**
      *
-     * @return the array of 4 positions, each rappresentative of a resource (in the same order of the enum "Resources"),
+     * @return the array of 4 positions, each representative of a resource (in the same order of the enum "Resources"),
      *         containing in each position the number of that resource that the player must have to deploy the card on his playing field
      */
     public int[] getRequirements() {
         return requirements;
     }
-
+    /**
+     * Sets the resource requirements for this GoldCard.
+     * The requirements are represented as an array of integers, where each position corresponds to a resource in the order they are declared
+     * in the "Resources" enum, and each value represents the quantity of that resource required.
+     *
+     * @param requirements An array of integers representing the resource requirements for this GoldCard.
+     */
     public void setRequirements(int[] requirements) {
         for (int i = 0; i < 4; i++) {
             this.requirements[i] = requirements[i];
@@ -74,7 +90,12 @@ public class GoldCard extends ResourceCard implements Serializable {
         return PointsC;
     }
 
-
+    /**
+     * Sets the condition under which additional points can be earned when this GoldCard is played.
+     * If the player meets this condition, they can get a certain number of points calculated by pointsCalc().
+     *
+     * @param pointsCondition The new points condition for this GoldCard.
+     */
     public void setPointsCondition(PointsCondition pointsCondition) {
         PointsC = pointsCondition;
     }
