@@ -321,7 +321,7 @@ public class InputHandler extends Thread{
             System.out.println("(1) ->  see the chat\n(2) -> send a message\n(3) -> go back to the game");
             choice = scanner.nextLine();
             switch (choice) {
-                case "1" -> this.tui.chat.printChat();
+                case "1" -> this.tui.chat.printChat(this.tui.name);
                 case "2" -> {
                     LinkedList<String> names = this.tui.client.getClient().getPlayers();
                     LinkedList<String> otherPlayers = new LinkedList<>();
@@ -336,6 +336,13 @@ public class InputHandler extends Thread{
                         System.out.println((i + 1) + " -> " + otherPlayers.get(i));
                     }
                     int selectedPlayerIndex = getIndex() - 1;
+                    if (selectedPlayerIndex==-1) {
+                        System.out.println("Write your message:");
+                        String message = scanner.nextLine();
+                        ChatMessage mex = new ChatMessage(message, this.tui.name, "everyone");
+                        this.tui.sendChatMessage(mex);
+                        return;
+                    }
                     String selectedPlayer = otherPlayers.get(selectedPlayerIndex);
                     System.out.println("Write your message:");
                     String message = scanner.nextLine();
