@@ -29,7 +29,8 @@ class PlayingFieldTest {
     private static Position x;
     private static PlayingField prova;
     private static Position z;
-    private static Corner primoHR, primoHL, primoLR, primoLL, secondoHR, secondoHL, secondoLR, secondoLL, terzoHR, terzoHL, terzoLL,terzoLR, quartoHR,quartoHL,quartoLR,quartoLL,quintoHR,quintoHL,quintoLL,quintoLR,sestoHR,sestoLL,sestoHL,sestoLR;
+    private static Corner primoHR, primoHL, primoLR, primoLL, secondoHR, secondoHL, secondoLR, secondoLL, terzoHR, terzoHL, terzoLL, terzoLR, quartoHR, quartoHL,quartoLR,quartoLL,quintoHR,quintoHL,quintoLL,quintoLR,sestoHR,sestoLL,sestoHL,sestoLR;
+
     /**
      * Contains the initialization steps to make before running each test.
      */
@@ -68,6 +69,7 @@ class PlayingFieldTest {
 
 
     }
+
     /**
      * This test checks if the getPosFromCornerFunction returns the right position when called on a Corner.
      */

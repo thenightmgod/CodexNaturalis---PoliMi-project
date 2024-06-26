@@ -136,7 +136,7 @@ public class MainController {
             };
 
             long delay = 5000L;
-            long period = 10000L;
+            long period = 5000L;
             timer.scheduleAtFixedRate(task, delay, period);
         }).start();
     }

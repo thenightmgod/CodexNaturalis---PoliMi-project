@@ -282,7 +282,6 @@ class MainControllerTest {
         game1.joinGame("pino", v2, 1);
 
         game1.getYourRoomId("pino");
-
     }
 
 }

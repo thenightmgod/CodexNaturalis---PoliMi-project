@@ -10,7 +10,6 @@ import it.polimi.ingsw.Model.PlayerPackage.Player;
 import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
-import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.CompositionGoalCard;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
