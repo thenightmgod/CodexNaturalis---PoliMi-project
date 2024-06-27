@@ -147,16 +147,6 @@ class GameControllerTest {
             public void updateColors(Player turn, LinkedList<PlayerColor> colors) throws RemoteException {
 
             }
-
-            @Override
-            public void update() throws RemoteException {
-
-            }
-
-            @Override
-            public void showOtherField(String player) throws RemoteException {
-
-            }
         };
         VirtualView v2 = new VirtualView() {
             @Override
@@ -273,18 +263,8 @@ class GameControllerTest {
             public void updateColors(Player turn, LinkedList<PlayerColor> colors) throws RemoteException {
 
             }
-
-            @Override
-            public void update() throws RemoteException {
-
-            }
-
-            @Override
-            public void showOtherField(String player) throws RemoteException {
-
-            }
         };
-        VirtualView v3= new VirtualView() {
+        VirtualView v3 = new VirtualView() {
             @Override
             public void sendPlayers(LinkedList<String> players) throws RemoteException {
 
@@ -397,16 +377,6 @@ class GameControllerTest {
 
             @Override
             public void updateColors(Player turn, LinkedList<PlayerColor> colors) throws RemoteException {
-
-            }
-
-            @Override
-            public void update() throws RemoteException {
-
-            }
-
-            @Override
-            public void showOtherField(String player) throws RemoteException {
 
             }
         };
@@ -523,16 +493,6 @@ class GameControllerTest {
 
             @Override
             public void updateColors(Player turn, LinkedList<PlayerColor> colors) throws RemoteException {
-
-            }
-
-            @Override
-            public void update() throws RemoteException {
-
-            }
-
-            @Override
-            public void showOtherField(String player) throws RemoteException {
 
             }
         };

@@ -143,16 +143,6 @@ class RoomTest {
             public void updateColors(Player turn, LinkedList<PlayerColor> colors) throws RemoteException {
 
             }
-
-            @Override
-            public void update() throws RemoteException {
-
-            }
-
-            @Override
-            public void showOtherField(String player) throws RemoteException {
-
-            }
         };
         VirtualView client2 = new VirtualView() {
             @Override
@@ -267,16 +257,6 @@ class RoomTest {
 
             @Override
             public void updateColors(Player turn, LinkedList<PlayerColor> colors) throws RemoteException {
-
-            }
-
-            @Override
-            public void update() throws RemoteException {
-
-            }
-
-            @Override
-            public void showOtherField(String player) throws RemoteException {
 
             }
         };
@@ -395,16 +375,6 @@ class RoomTest {
             public void updateColors(Player turn, LinkedList<PlayerColor> colors) throws RemoteException {
 
             }
-
-            @Override
-            public void update() throws RemoteException {
-
-            }
-
-            @Override
-            public void showOtherField(String player) throws RemoteException {
-
-            }
         };
         VirtualView client4 = new VirtualView() {
             @Override
@@ -519,16 +489,6 @@ class RoomTest {
 
             @Override
             public void updateColors(Player turn, LinkedList<PlayerColor> colors) throws RemoteException {
-
-            }
-
-            @Override
-            public void update() throws RemoteException {
-
-            }
-
-            @Override
-            public void showOtherField(String player) throws RemoteException {
 
             }
         };

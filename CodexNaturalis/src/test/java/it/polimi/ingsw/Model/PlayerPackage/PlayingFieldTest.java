@@ -200,16 +200,6 @@ class PlayingFieldTest {
             public void updateColors(Player turn, LinkedList<PlayerColor> colors) throws RemoteException {
 
             }
-
-            @Override
-            public void update() throws RemoteException {
-
-            }
-
-            @Override
-            public void showOtherField(String player) throws RemoteException {
-
-            }
         };
         views.add(v1);
 

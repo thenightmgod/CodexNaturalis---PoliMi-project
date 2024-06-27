@@ -139,16 +139,6 @@ class MainControllerTest {
             public void updateColors(Player turn, LinkedList<PlayerColor> colors) throws RemoteException {
 
             }
-
-            @Override
-            public void update() throws RemoteException {
-
-            }
-
-            @Override
-            public void showOtherField(String player) throws RemoteException {
-
-            }
         };
         game1.createGame("hamingway", 2, v1, 1);
 
@@ -265,16 +255,6 @@ class MainControllerTest {
 
             @Override
             public void updateColors(Player turn, LinkedList<PlayerColor> colors) throws RemoteException {
-
-            }
-
-            @Override
-            public void update() throws RemoteException {
-
-            }
-
-            @Override
-            public void showOtherField(String player) throws RemoteException {
 
             }
         };
