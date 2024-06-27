@@ -203,11 +203,14 @@ public class GUI implements GameView {
     public void showStartCard(StartCard card) throws RemoteException {
         Platform.runLater(() -> {
             try {
-                if ((guicontrollers).get("startCard") != null) {
-                    ((StartCardController) guicontrollers.get("startCard")).showStartCard(card);
-                }
+                switchToScene("startCard", card);
+               // if ((guicontrollers).get("startCard") != null) {
+                //    ((StartCardController) guicontrollers.get("startCard")).showStartCard(card);
+                //}
             } catch (FileNotFoundException e) {
                 System.out.println("Show start card scene non correttamente inizializzata");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         });
     }
@@ -266,13 +269,13 @@ public class GUI implements GameView {
 
     @Override
     public void startingGame() throws RemoteException {
-        Platform.runLater(() -> {
+        /*Platform.runLater(() -> {
             try {
                 switchToScene("startCard", 1);
             } catch (IOException e) {
                 System.out.println("StartCardScene non correttamente inizializzata");
             }
-        });
+        });*/
     }
 
     @Override

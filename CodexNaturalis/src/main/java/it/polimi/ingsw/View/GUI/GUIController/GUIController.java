@@ -34,7 +34,7 @@ public abstract class GUIController {
         }
     }
 
-    public void setArgs(Object... args) {
+    public void setArgs(Object... args) throws FileNotFoundException {
     }
 
     public CommonClient getClient(){

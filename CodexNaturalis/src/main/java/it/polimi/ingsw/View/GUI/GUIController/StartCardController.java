@@ -28,7 +28,15 @@ public class StartCardController extends GUIController{
     private ImageView leftStartCardImage;
     @FXML
     private ImageView rightStartCardImage;
+
     private boolean StartCardOk=false;
+    private StartCard card;
+
+    @Override
+    public void setArgs(Object... args) throws FileNotFoundException {
+        this.card = (StartCard) args[0];
+        showStartCard(card);
+    }
 
     @FXML
     private void initialize() {
