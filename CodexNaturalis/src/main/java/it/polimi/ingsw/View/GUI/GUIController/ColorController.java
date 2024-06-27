@@ -28,7 +28,6 @@ public class ColorController extends GUIController{
     @FXML
     private ImageView red;
     protected boolean colorchosen;
-    private LinkedList<GoalCard> goals;
 
     @Override
     public void setArgs(Object... args) {
@@ -42,20 +41,19 @@ public class ColorController extends GUIController{
     }
 
     public void loadColor() {
-        setImageForGoalCard(yellow, goals.get(0));
-        setImageForGoalCard(blue, goals.get(1));
-        setImageForGoalCard(green, goals.get(0));
-        setImageForGoalCard(red, goals.get(1));
+        setImageForColor(PlayerColor.YELLOW);
+        setImageForColor(PlayerColor.BLUE);
+        setImageForColor(PlayerColor.GREEN);
+        setImageForColor(PlayerColor.RED);
         yellow.setVisible(true);
         blue.setVisible(true);
         green.setVisible(true);
         red.setVisible(true);
     }
 
-    private void setImageForGoalCard(ImageView imageView, P) {
+    private void setImageForColor(PlayerColor c) {
         try {
-            int cardId = goal.getId();
-            Image colorImage = loadColorImage(ca);
+            Image colorImage = loadColorImage(c);
 
             imageView.setImage(colorImage);
             imageView.setFitWidth(125.0);  // Imposta la larghezza desiderata
@@ -69,7 +67,7 @@ public class ColorController extends GUIController{
         }
     }
 
-    public void chooseGoalCard() {
+    public void chooseColor() {
         enableColorInteractions();
         myLabel.setText("CHOOSE YOUR COLOR");
     }
