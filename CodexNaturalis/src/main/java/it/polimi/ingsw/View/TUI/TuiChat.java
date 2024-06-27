@@ -57,6 +57,7 @@ public class TuiChat {
         System.out.println("Private chat:");
         printMessagesPp(privateMessages, border, resetColor, senderColor, recipientColor, messageColor, myUsername);
     }
+
     /**
      * Prints private messages.
      *

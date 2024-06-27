@@ -42,6 +42,10 @@ public class ClientModel {
         this.colors = new LinkedList<>();
     }
 
+    /** Series of getter and setter methods to update things in the client model
+     *
+     */
+
     public void setColors(LinkedList<PlayerColor> colors){
         this.colors = colors;
     }
@@ -133,5 +137,4 @@ public class ClientModel {
     public LinkedList<ChatMessage> getChat(){
         return chat;
     }
-
 }

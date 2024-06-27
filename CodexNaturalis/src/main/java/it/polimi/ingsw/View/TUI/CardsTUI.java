@@ -1,26 +1,14 @@
 package it.polimi.ingsw.View.TUI;
 
-import it.polimi.ingsw.Controller.GameController;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.ObjectsGoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.*;
 import it.polimi.ingsw.Model.CornerPackage.*;
 
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
-import java.util.HashMap;
 import java.util.LinkedList;
-
-import it.polimi.ingsw.Model.DeckPackage.GoldDeck;
-import it.polimi.ingsw.Model.DeckPackage.ResourceDeck;
 import it.polimi.ingsw.Model.CornerPackage.CardRes;
-import it.polimi.ingsw.Model.DeckPackage.StartDeck;
 import it.polimi.ingsw.Model.PlayerPackage.*;
-import it.polimi.ingsw.Model.RoomPackage.Room;
-import it.polimi.ingsw.Network.VirtualView;
-
 import java.util.List;
-import java.util.Map;
 
 import static it.polimi.ingsw.Model.CornerPackage.Resources.*;
 
@@ -44,6 +32,12 @@ public class CardsTUI {
     }
 
     //-----------------------------------------PRINTARE START CARD------------------------------------------------------
+
+
+    /** Functions that print the Start Card divided in lines
+     *
+     * @param c
+     */
 
     public void printFrontStartCard(StartCard c) {
         System.out.print(ANSI_BRIGHT_YELLOW);
@@ -224,46 +218,10 @@ public class CardsTUI {
 
     //-----------------------------------------PRINTARE RESOURCE CARD---------------------------------------------------
 
-    public void printFrontResourceCard(ResourceCard card) {
-        if (card.getColor().equals(CardColor.GREEN)) {
-            System.out.print(ANSI_GREEN);
-        } else if (card.getColor().equals(CardColor.PURPLE)) {
-            System.out.println(ANSI_PURPLE);
-        } else if (card.getColor().equals(CardColor.BLUE)) {
-            System.out.println(ANSI_BLUE);
-        } else if (card.getColor().equals(CardColor.RED))
-            System.out.println(ANSI_RED);
-        System.out.println("———————————————");
-        System.out.print("|");
-        StringBuilder sb = new StringBuilder();
-        Corner c = card.getCorner(Orientation.HL);
-        printCorner(c, sb);
-        printResourcePoints(card);
-
-
-        System.out.print("    ");
-        StringBuilder sb2 = new StringBuilder();
-        Corner c3 = card.getCorner(Orientation.HR);
-        printCorner(c3, sb2);
-        System.out.println("|");
-
-        System.out.println("|             |");
-
-
-        System.out.print("|");
-        StringBuilder sb3 = new StringBuilder();
-        Corner c2 = card.getCorner(Orientation.LL);
-        printCorner(c2, sb3);
-        System.out.print("         ");
-
-        StringBuilder sb4 = new StringBuilder();
-        Corner c4 = card.getCorner(Orientation.LR);
-        printCorner(c4, sb4);
-        System.out.println("|");
-
-        System.out.println("———————————————");
-        System.out.print(ANSI_RESET);
-    }
+    /** Functions that print the Resource Card divided in lines
+     *
+     * @param card
+     */
 
     public void printResourceCardJackie(ResourceCard card) {
         if (card.getColor().equals(CardColor.GREEN)) {
@@ -356,31 +314,6 @@ public class CardsTUI {
     }
 
 
-    public void printBackResourceCard(ResourceCard card) {
-        CardColor c = card.getColor();
-        switch (c) {
-            case GREEN -> System.out.print(ANSI_GREEN);
-            case RED -> System.out.print(ANSI_RED);
-            case PURPLE -> System.out.print(ANSI_PURPLE);
-            case BLUE -> System.out.print(ANSI_BLUE);
-        }
-        System.out.println("———————————————");
-        System.out.print("|");
-        System.out.print("              ");
-        System.out.println("|");
-        System.out.print("|      ");
-        switch (c) {
-            case GREEN -> System.out.print((Resources.PLANT_KINGDOM.getShortName()));
-            case RED -> System.out.print((FUNGI_KINGDOM.getShortName()));
-            case PURPLE -> System.out.print((INSECT_KINGDOM.getShortName()));
-            case BLUE -> System.out.print((ANIMAL_KINGDOM.getShortName()));
-        }
-        System.out.println("      |");
-        System.out.println("|              |");
-        System.out.println("———————————————");
-        System.out.print(ANSI_RESET);
-    }
-
     public void printBackResourceCardFirstLine(ResourceCard card) {
         CardColor c = card.getColor();
         switch (c) {
@@ -426,48 +359,11 @@ public class CardsTUI {
 
 
     //----------------------------------------------PRINTARE GOLD CARD--------------------------------------------------
-    public void printFrontGoldCard(GoldCard card) {
-        if (card.getColor().equals(CardColor.GREEN)) {
-            System.out.print(ANSI_GREEN);
-        } else if (card.getColor().equals(CardColor.PURPLE)) {
-            System.out.print(ANSI_PURPLE);
-        } else if (card.getColor().equals(CardColor.BLUE)) {
-            System.out.print(ANSI_BLUE);
-        } else if (card.getColor().equals(CardColor.RED))
-            System.out.print(ANSI_RED);
-        System.out.println("———————————————");
-        System.out.print("|");
-        StringBuilder sb = new StringBuilder();
-        Corner c = card.getCorner(Orientation.HL);
-        printCorner(c, sb);
-        printPoints(card);
 
-
-        StringBuilder sb2 = new StringBuilder();
-        Corner c3 = card.getCorner(Orientation.HR);
-        printCorner(c3, sb2);
-        System.out.println("|");
-
-        System.out.println("|              |");
-
-
-        System.out.print("|");
-        StringBuilder sb3 = new StringBuilder();
-        Corner c2 = card.getCorner(Orientation.LL);
-        printCorner(c2, sb3);
-        System.out.print(" ");
-        printRequirement(card);
-        System.out.print(" ");
-
-
-        StringBuilder sb4 = new StringBuilder();
-        Corner c4 = card.getCorner(Orientation.LR);
-        printCorner(c4, sb4);
-        System.out.println("|");
-
-        System.out.println("———————————————");
-        System.out.print(ANSI_RESET);
-    }
+    /** Functions that print the Gold Card divided in lines
+     *
+     * @param card
+     */
 
     public void printGoldCardJackie(GoldCard card) {
         if (card.getColor().equals(CardColor.GREEN)) {
@@ -607,31 +503,6 @@ public class CardsTUI {
     }
 
 
-    public void printBackGoldCard(GoldCard card) {
-        CardColor c = card.getColor();
-        switch (c) {
-            case GREEN -> System.out.print(ANSI_GREEN);
-            case RED -> System.out.print(ANSI_RED);
-            case PURPLE -> System.out.print(ANSI_PURPLE);
-            case BLUE -> System.out.print(ANSI_BLUE);
-        }
-        System.out.println("———————————————");
-        System.out.print("|");
-        System.out.print("              ");
-        System.out.println("|");
-        System.out.print("|      ");
-        switch (c) {
-            case GREEN -> System.out.print((Resources.PLANT_KINGDOM.getShortName()));
-            case RED -> System.out.print((FUNGI_KINGDOM.getShortName()));
-            case PURPLE -> System.out.print((INSECT_KINGDOM.getShortName()));
-            case BLUE -> System.out.print((ANIMAL_KINGDOM.getShortName()));
-        }
-        System.out.println("      |");
-        System.out.println("|              |");
-        System.out.println("———————————————");
-        System.out.print(ANSI_RESET);
-    }
-
     public void printBackGoldCardFirstLine(GoldCard card) {
         CardColor c = card.getColor();
         switch (c) {
@@ -676,6 +547,10 @@ public class CardsTUI {
 
     //--------------------------------------------printare goal card----------------------------------------------------
 
+    /**Function that prints a single Goal Card
+     *
+     * @param c
+     */
     public void printGoalCard(GoalCard c) {
         System.out.print(ANSI_YELLOW);
         System.out.println("———————————————");
@@ -762,6 +637,12 @@ public class CardsTUI {
         }
         System.out.print(ANSI_RESET);
     }
+
+
+    /** Functions that print the various composition in the goal card
+     *
+     * @param c
+     */
 
     private void printL(GoalCard c) {
         System.out.print("  3");
@@ -877,6 +758,11 @@ public class CardsTUI {
 
     //----------------------------PRINTARE ANGOLI (UGUALE SIA PER GOLD CHE PER RISORSA)---------------------------------
 
+    /** Function that pritns the corners of a card
+     *
+     * @param c
+     * @param sb
+     */
     public void printCorner(Corner c, StringBuilder sb) {
         if (c.getCovered()) {
             sb.append("❌");
@@ -924,6 +810,11 @@ public class CardsTUI {
         System.out.print(sb.toString());
         }
 
+
+    /** Function that prints the Playing Field
+     *
+     * @param model
+     */
     public void plotPlayingField(ClientModel model){
         PlayingField Field = model.getField();
         int maxX = Field.getField().keySet().stream().mapToInt(Position::getX).max().orElse(400);
@@ -1125,6 +1016,10 @@ public class CardsTUI {
             }
     }
 
+    /** Function that prints the list of free position in your playing field
+     *
+     * @param model
+     */
     public void plotFreePos(ClientModel model){
         PlayingField field = model.getField();
         LinkedList<Position> pos = field.getFreePositions();
@@ -1133,12 +1028,19 @@ public class CardsTUI {
         }
     }
 
+    /** Function that prints an empty line to align cards in the playing field
+     */
     public void printEmpty(){
         System.out.print("               ");
     }
 
     //-----------------------------------------------PUNTI--------------------------------------------------------------
 
+
+    /** Function that prints the points of every player
+     *
+     * @param model
+     */
     public void plotPoints(ClientModel model){
         System.out.printf("%-20s %-10s%n", "Player", "Points");
         System.out.println("---------------------------------");
@@ -1148,6 +1050,11 @@ public class CardsTUI {
 
     //-----------------------------------------------HAND---------------------------------------------------------------
 
+
+    /** Function that prints the Hand of a player
+     *
+     * @param model
+     */
     public void plotHandSeria(ClientModel model){
         LinkedList<PlayableCard> toPrint= model.getHand();
         System.out.println();
@@ -1285,6 +1192,11 @@ public class CardsTUI {
 
     //-------------------------------------------------DECK-------------------------------------------------------------
 
+
+    /** Function that prints the Drawable Cards
+     *
+     * @param model
+     */
     public void plotDrawables(ClientModel model){
         LinkedList<GoldCard> Gold = model.getDrawableGoldCards();
         LinkedList<ResourceCard> Res = model.getDrawableResourceCards();
@@ -1388,6 +1300,10 @@ public class CardsTUI {
 
     }
 
+    /** Function that prints the Goal Cards(common and personal)
+     *
+     * @param model
+     */
     public void plotGoals(ClientModel model){
         LinkedList<GoalCard> common = model.getCommonGoals();
         for(GoalCard c: common){

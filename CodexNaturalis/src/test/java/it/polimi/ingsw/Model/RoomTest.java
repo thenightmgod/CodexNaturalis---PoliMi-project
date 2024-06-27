@@ -14,6 +14,7 @@ import it.polimi.ingsw.Model.RoomPackage.Room;
 import it.polimi.ingsw.Network.VirtualView;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.HashMap;
@@ -124,7 +125,7 @@ class RoomTest {
             }
 
             @Override
-            public void isAlivee() throws RemoteException {
+            public void isAlivee() throws IOException {
 
             }
 
@@ -135,6 +136,11 @@ class RoomTest {
 
             @Override
             public void leaveGameMessage() throws RemoteException {
+
+            }
+
+            @Override
+            public void updateColors(Player turn, LinkedList<PlayerColor> colors) throws RemoteException {
 
             }
 
@@ -245,7 +251,7 @@ class RoomTest {
             }
 
             @Override
-            public void isAlivee() throws RemoteException {
+            public void isAlivee() throws IOException {
 
             }
 
@@ -256,6 +262,11 @@ class RoomTest {
 
             @Override
             public void leaveGameMessage() throws RemoteException {
+
+            }
+
+            @Override
+            public void updateColors(Player turn, LinkedList<PlayerColor> colors) throws RemoteException {
 
             }
 
@@ -366,7 +377,7 @@ class RoomTest {
             }
 
             @Override
-            public void isAlivee() throws RemoteException {
+            public void isAlivee() throws IOException {
 
             }
 
@@ -377,6 +388,11 @@ class RoomTest {
 
             @Override
             public void leaveGameMessage() throws RemoteException {
+
+            }
+
+            @Override
+            public void updateColors(Player turn, LinkedList<PlayerColor> colors) throws RemoteException {
 
             }
 
@@ -487,7 +503,7 @@ class RoomTest {
             }
 
             @Override
-            public void isAlivee() throws RemoteException {
+            public void isAlivee() throws IOException {
 
             }
 
@@ -498,6 +514,11 @@ class RoomTest {
 
             @Override
             public void leaveGameMessage() throws RemoteException {
+
+            }
+
+            @Override
+            public void updateColors(Player turn, LinkedList<PlayerColor> colors) throws RemoteException {
 
             }
 

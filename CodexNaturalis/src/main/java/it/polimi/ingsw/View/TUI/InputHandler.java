@@ -43,6 +43,7 @@ public class InputHandler extends Thread{
         this.whatToDo = "";
         this.tui = tui;
     }
+
     /**
      * The main loop that runs in the thread, handling user input.
      */
@@ -57,6 +58,7 @@ public class InputHandler extends Thread{
             } catch (RemoteException ignored) {}
         }
     }
+
     /**
      * Handles user input based on the given command.
      * @param whatToDo The command to be executed.
@@ -88,6 +90,7 @@ public class InputHandler extends Thread{
                 updateColors();
         }
     }
+
     /**
      * Asks the user if they want to play another game. If the user chooses to play again, the game is restarted.
      * If the user chooses not to play again, the application is closed.
@@ -104,6 +107,7 @@ public class InputHandler extends Thread{
             this.tui.joinGame();
         else System.exit(0);
     }
+
     /**
      * Prompts the user to enter their nickname and sets it. If the connection type is not RMI, it prepares for a socket connection.
      *
@@ -119,6 +123,7 @@ public class InputHandler extends Thread{
         }
         this.tui.joinGame();
     }
+
     /**
      * Prompts the user to create a new game by entering the number of players. The game is created with the entered number of players.
      */
@@ -150,6 +155,7 @@ public class InputHandler extends Thread{
             }
         }
     }
+
     /**
      * Prompts the user to enter a number and returns the entered number.
      *
@@ -167,6 +173,7 @@ public class InputHandler extends Thread{
         }
         return input;
     }
+
     /**
      * Prompts the user to place a card on the game board. The user is asked to choose a card, its position, and its orientation (front or back).
      *
@@ -203,6 +210,7 @@ public class InputHandler extends Thread{
             }
         } while (!goon);
     }
+
     /**
      * Prompts the user to choose a goal card. The user can choose the card on the top or the card on the bottom.
      *
@@ -229,6 +237,7 @@ public class InputHandler extends Thread{
         } while (!goon);
         this.tui.endTurn("GoalCard");
     }
+
     /**
      * Prompts the user to set the orientation (front or back) of their start card.
      *
@@ -259,6 +268,7 @@ public class InputHandler extends Thread{
         this.tui.endTurn("StartCard");
 
     }
+
     /**
      * Prompts the user to draw a card from a specified deck.
      */
@@ -282,6 +292,7 @@ public class InputHandler extends Thread{
         }while (!goon) ;
 
     }
+
     /**
      * Prompts the user to choose the type of client connection (RMI or Socket) and sets up the chosen connection.
      */
@@ -315,6 +326,7 @@ public class InputHandler extends Thread{
         } while(!connection.equals("0") && !connection.equals("1"));
 
     }
+
     /**
      * Prompts the user to enter their nickname and sets it.
      */
@@ -340,6 +352,7 @@ public class InputHandler extends Thread{
 
         this.tui.name = nickname;
     }
+
     /**
      * Prompts the user to enter the server IP address.
      */

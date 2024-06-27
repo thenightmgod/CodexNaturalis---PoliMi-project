@@ -10,6 +10,7 @@ import it.polimi.ingsw.Model.PlayerPackage.*;
 import it.polimi.ingsw.Network.VirtualView;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.HashMap;
@@ -128,7 +129,7 @@ class GameControllerTest {
             }
 
             @Override
-            public void isAlivee() throws RemoteException {
+            public void isAlivee() throws IOException {
 
             }
 
@@ -139,6 +140,11 @@ class GameControllerTest {
 
             @Override
             public void leaveGameMessage() throws RemoteException {
+
+            }
+
+            @Override
+            public void updateColors(Player turn, LinkedList<PlayerColor> colors) throws RemoteException {
 
             }
 
@@ -249,7 +255,7 @@ class GameControllerTest {
             }
 
             @Override
-            public void isAlivee() throws RemoteException {
+            public void isAlivee() throws IOException {
 
             }
 
@@ -264,6 +270,11 @@ class GameControllerTest {
             }
 
             @Override
+            public void updateColors(Player turn, LinkedList<PlayerColor> colors) throws RemoteException {
+
+            }
+
+            @Override
             public void update() throws RemoteException {
 
             }
@@ -273,7 +284,7 @@ class GameControllerTest {
 
             }
         };
-        VirtualView v3 = new VirtualView() {
+        VirtualView v3= new VirtualView() {
             @Override
             public void sendPlayers(LinkedList<String> players) throws RemoteException {
 
@@ -370,7 +381,7 @@ class GameControllerTest {
             }
 
             @Override
-            public void isAlivee() throws RemoteException {
+            public void isAlivee() throws IOException {
 
             }
 
@@ -381,6 +392,11 @@ class GameControllerTest {
 
             @Override
             public void leaveGameMessage() throws RemoteException {
+
+            }
+
+            @Override
+            public void updateColors(Player turn, LinkedList<PlayerColor> colors) throws RemoteException {
 
             }
 
@@ -491,7 +507,7 @@ class GameControllerTest {
             }
 
             @Override
-            public void isAlivee() throws RemoteException {
+            public void isAlivee() throws IOException {
 
             }
 
@@ -502,6 +518,11 @@ class GameControllerTest {
 
             @Override
             public void leaveGameMessage() throws RemoteException {
+
+            }
+
+            @Override
+            public void updateColors(Player turn, LinkedList<PlayerColor> colors) throws RemoteException {
 
             }
 

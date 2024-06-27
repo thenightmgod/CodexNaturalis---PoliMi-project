@@ -12,6 +12,7 @@ import it.polimi.ingsw.Network.VirtualView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.HashMap;
@@ -181,7 +182,7 @@ class PlayingFieldTest {
             }
 
             @Override
-            public void isAlivee() throws RemoteException {
+            public void isAlivee() throws IOException {
 
             }
 
@@ -192,6 +193,11 @@ class PlayingFieldTest {
 
             @Override
             public void leaveGameMessage() throws RemoteException {
+
+            }
+
+            @Override
+            public void updateColors(Player turn, LinkedList<PlayerColor> colors) throws RemoteException {
 
             }
 

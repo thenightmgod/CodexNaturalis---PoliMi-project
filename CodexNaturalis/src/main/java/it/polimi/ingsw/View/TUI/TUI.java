@@ -128,11 +128,9 @@ public class TUI implements GameView {
         } else {
             client.getClient().setDrawableResourceCards(resourceCards);
             if (name.equals(Turn.getName())) {
-//                System.out.println("These are the new drawable cards");
                 client.getClient().setDrawableResourceCards(resourceCards);
             } else {
                 System.out.println(Turn.getName() + " has drawn a card");
-//                System.out.println("These are the new drawable cards");
                 client.getClient().setDrawableResourceCards(resourceCards);
             }
         }
@@ -146,11 +144,9 @@ public class TUI implements GameView {
         } else {
             client.getClient().setDrawableGoldCards(goldCards);
             if (name.equals(Turn.getName())) {
-//                System.out.println("These are the new drawable cards");
                 client.getClient().setDrawableGoldCards(goldCards);
             } else {
                 System.out.println(name + "has drawn a card");
-//                System.out.println("These are the new drawable cards");
                 client.getClient().setDrawableGoldCards(goldCards);
             }
         }
@@ -299,7 +295,7 @@ public class TUI implements GameView {
     public void declareWinner(LinkedList<String> standings) {
 
         System.out.println("...");
-        System.out.println("You are jackie down the line...");
+        System.out.println("...");
         System.out.println("...");
         System.out.println("...");
         System.out.println("...");
@@ -307,17 +303,15 @@ public class TUI implements GameView {
 
 
         if(client.getNames().equals(standings.get(0)))
-            System.out.println("JACKIE DOWN THE LINE YOU WON");
+            System.out.println("YOU WON");
         else if (client.getNames().equals(standings.get(1))) {
-            System.out.println("JACKIE DOWN THE LINE YOU GOT THE SECOND PLACE");
+            System.out.println("YOU GOT THE SECOND PLACE");
         }
         else if (client.getNames().equals(standings.get(2))) {
-            System.out.println("JACKIE DOWN THE LINE YOU GOT THE THIRD PLACE");
+            System.out.println("YOU GOT THE THIRD PLACE");
         } else {
-            System.out.println("JACKIE DOWN THE LINE YOU GOT THE FOURTH PLACE");
+            System.out.println("YOU GOT THE FOURTH PLACE");
         }
-        //far finire tutto
         System.exit(0);
     }
-
 }
