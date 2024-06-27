@@ -44,6 +44,20 @@ Jang Hamin</a></h4>
 | Chat | | ✅ |
 
 ## How to use
+1. Go to /deliverables/final/jar and download the jar files for both, client and server
+2. Open Terminal and go to the folder where the jar files you downloaded are located
+3. Once you are in the right directory type:
+```shell
+java -jar Server.jar
+ ```
+to run the server, and
+```shell
+java -jar Client.jar
+ ```
+to run the client
+
+
+
 
 
 
