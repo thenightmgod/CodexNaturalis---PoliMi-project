@@ -21,6 +21,11 @@ public class ServerProxy implements VirtualServerSocket {
     }
 
     @Override
+    public void endColor(String message){
+        sendMessage(message);
+    }
+
+    @Override
     public void createGame(String stringMessage)  {
         sendMessage(stringMessage);
     }
