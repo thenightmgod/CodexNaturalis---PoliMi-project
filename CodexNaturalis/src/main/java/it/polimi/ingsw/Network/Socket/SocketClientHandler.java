@@ -223,7 +223,7 @@ public class SocketClientHandler extends Thread implements VirtualView {
      */
     @Override
     public void leaveGameMessage() throws RemoteException {
-        LeaveGameMessage message = new LeaveGameMessage(name);
+        LeaveGameMessage message = new LeaveGameMessage();
         String gson = message.MessageToJson();
         proxy.leaveGameMessage(gson);
     }
@@ -373,7 +373,7 @@ public class SocketClientHandler extends Thread implements VirtualView {
 
     @Override
     public void updateColors(Player turn, LinkedList<PlayerColor> colors) throws RemoteException {
-        UpdateColorsMessage message = new UpdateColorsMessage(name, turn, colors);
+        UpdateColorsMessage message = new UpdateColorsMessage(turn, colors);
         String gson = message.MessageToJson();
         proxy.updateColors(gson);
     }

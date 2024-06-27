@@ -14,7 +14,13 @@ import java.util.*;
  * The MainController class manages multiple game controllers and their associated views.
  */
 public class MainController {
+    /**
+     * The list of game controllers.
+     */
     LinkedList<GameController> controllers;
+    /**
+     * The map of the clients per game.
+     */
     final HashMap<Integer, LinkedList<VirtualView>> viewPerGame;
 
     /**
@@ -98,7 +104,7 @@ public class MainController {
     }
 
     /**
-     * Returns the map of views per game.
+     * Returns the map of clients per game.
      *
      * @return a HashMap with room IDs as keys and LinkedLists of VirtualView objects as values
      */
@@ -107,7 +113,7 @@ public class MainController {
     }
 
     /**
-     * Periodically checks if all the clients in a room are still in,then ends the game for all the players in that room.
+     * Periodically checks if all the clients in a room are still in, then ends the game for all the players in that room.
      */
     public void isAlive() {
         new Thread(() -> {

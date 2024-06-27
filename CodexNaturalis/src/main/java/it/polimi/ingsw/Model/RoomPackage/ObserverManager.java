@@ -225,13 +225,14 @@ public class ObserverManager {
     public void updateChat(String name, LinkedList<ChatMessage> chat) throws RemoteException {
         observers.get(name).updateChat(name, chat);
     }
-
+    /**
+     * Updates the colors for a specific observer.
+     * @param turn The player who is currently taking their turn.
+     * @param colors The colors that can be chosen.
+     * @throws RemoteException If a remote communication error occurs.
+     */
     public void updateColors(Player turn, LinkedList<PlayerColor> colors) throws RemoteException {
         observers.get(turn.getName()).updateColors(turn, colors);
     }
-
-    //eventualmente implementarli
-    public void message(String name, String mex){};
-
 
 }
