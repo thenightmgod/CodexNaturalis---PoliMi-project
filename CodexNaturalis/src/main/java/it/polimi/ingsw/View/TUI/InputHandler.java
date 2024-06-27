@@ -318,7 +318,7 @@ public class InputHandler extends Thread{
                     System.out.print("NotBoundException occurred while initializing the client");
                 }
             }else {
-                this.tui.client = new SocketClient(this.tui.name);
+                this.tui.client = new SocketClient(this.tui.name, this.tui.serverIp);
                 this.tui.client.setView(this.tui);
                 connectionType = true;
             }

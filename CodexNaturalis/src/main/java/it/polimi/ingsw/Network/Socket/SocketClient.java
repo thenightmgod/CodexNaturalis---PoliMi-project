@@ -37,10 +37,9 @@ public class SocketClient implements CommonClient {
     private GameView view;
     private ClientModel model;
 
-    public SocketClient(String name) {
+    public SocketClient(String name, String serverIp) {
         this.name = name;
-        String ip = "127.0.0.1";
-        this.initializeClient(this, ip, 44458);
+        this.initializeClient(this, serverIp, 44458);
     }
 
     public String getNames() {
