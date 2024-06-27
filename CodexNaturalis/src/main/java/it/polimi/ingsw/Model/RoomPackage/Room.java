@@ -261,7 +261,7 @@ public class Room implements Serializable {
     }
 
     /**
-     * Creates all decks required for the game and shuffles them.
+     * Creates all the decks required for the game, shuffles them and shows them to all the players.
      */
     public void createDecks() {
         boolean robo = true;
@@ -352,11 +352,18 @@ public class Room implements Serializable {
         p.addTotalPoints(p.getPointsCounter());
         p.addTotalPoints(p.getGoalPointsCounter());
     }
-
+    /**
+     * Starts the color selection phase of the game for the player whose turn is.
+     * @throws RemoteException If a remote communication error occurs.
+     */
     public void startColors() throws RemoteException {
         observerManager.updateColors(turn, colors);
     }
-
+    /**
+     * Sets the color for the player whose turn is. If this player is the last one, then the game starts.
+     * @param color The color selected by the player.
+     * @throws RemoteException If a remote communication error occurs.
+     */
     public void endColor(PlayerColor color) throws RemoteException {
         turn.setColor(color);
         colors.remove(color);
@@ -410,7 +417,7 @@ public class Room implements Serializable {
 
     /**
      * Changes the turn of the game.
-     * @param mex The message to send to the players.
+     * @param mex The message to send to the players (StartCard if the player has to choose the face of the start card, GoalCard if the player has to choose his goal card, NormalTurn if the player has the turn in the game)
      * @throws RemoteException If a remote communication error occurs.
      */
     public void changeTurns(String mex) throws RemoteException {

@@ -16,15 +16,31 @@ import java.io.Serializable;
  */
 
 public class Message implements Serializable {
+    /**
+     * The type of the message.
+     */
     public String type;
-
+    /**
+     * Constructs a new Message with the specified type.
+     *
+     * @param type The type of the message.
+     */
     public Message(String type) {
         this.type=type;
     }
+    /**
+     * Returns the type of the message.
+     *
+     * @return The type of the message.
+     */
     public String getType() {
         return type;
     }
-
+    /**
+     * Converts the message to a JSON string.
+     *
+     * @return The JSON string representing the message.
+     */
     public String MessageToJson() {
         Gson gson = new Gson();
         return gson.toJson(this);

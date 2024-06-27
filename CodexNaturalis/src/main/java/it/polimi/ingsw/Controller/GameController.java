@@ -21,11 +21,29 @@ import java.util.TimerTask;
 /**The GameController class manages the game state, players, and game logic.
  * */
 public class GameController {
+    /**
+     * The number of the players needed to start the game.
+     */
     private final int numPlayers;
+    /**
+     * The GameState enum represents the possible states of the game (WAITING or RUNNING).
+     */
     private GameState state;
+    /**
+     * The Room object that represents the game room.
+     */
     private Room game;
+    /**
+     * The ID of the room.
+     */
     private final int roomId;
+    /**
+     * The list of players in the game.
+     */
     private final LinkedList<Player> players;
+    /**
+     * The list of clients in the game.
+     */
     private final LinkedList<VirtualView> clients;
 
     /**
@@ -213,7 +231,7 @@ public class GameController {
     }
 
     /**
-     * Calls the room method that picks a resource card for the current player. And then notifies the player of his new hand.
+     * Calls the room method that picks a resource card for the current player, notifies the player of his new hand and updates the resource deck.
      *
      * @param i the index of the card to pick
      * @throws RemoteException if a remote communication error occurs
@@ -242,7 +260,7 @@ public class GameController {
     }
 
     /**
-     * Calls the room method that picks a gold card for the current player. And then notifies the player of his new hand.
+     * Calls the room method that picks a gold card for the current player, notifies the player of his new hand and updates the gold deck.
      *
      * @param i the index of the card to pick
      * @throws RemoteException if a remote communication error occurs
@@ -273,7 +291,7 @@ public class GameController {
     /**
      * Changes the turn to the next player.
      *
-     * @param mex the message indicating the type of turn change
+     * @param mex The message to send to the players (StartCard if the player has to choose the face of the start card, GoalCard if the player has to choose his goal card, NormalTurn if the player has the turn in the game).
      * @throws RemoteException if a remote communication error occurs
      */
     public void changeTurns(String mex) throws RemoteException {
@@ -321,11 +339,21 @@ public class GameController {
     public Player getPlayerByName(String name) {
         return players.stream().filter(x -> x.getName().equals(name)).findFirst().orElse(null);
     }
-
+    /**
+     * Calls the sendChatMessage method of this room to send a chat message to all relevant observers.
+     *
+     * @param message the chat message
+     * @throws RemoteException if a remote communication error occurs
+     */
     public void sendChatMessage(ChatMessage message) throws RemoteException {
         this.game.sendChatMessage(message);
     }
-
+    /**
+     * Calls the endColor method of this room to set the color for the player whose turn is.
+     *
+     * @param color the color chosen by the player
+     * @throws RemoteException if a remote communication error occurs
+     */
     public void endColor(PlayerColor color) throws RemoteException {
         this.game.endColor(color);
     }

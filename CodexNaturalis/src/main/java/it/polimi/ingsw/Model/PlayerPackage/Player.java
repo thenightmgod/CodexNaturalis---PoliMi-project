@@ -24,7 +24,7 @@ public class Player implements Serializable {
      */
     private final String Name;
     /**
-     * The color assigned to the player.
+     * The color chosen by the player.
      */
     private PlayerColor Color;
     /**
@@ -205,7 +205,10 @@ public class Player implements Serializable {
         else
             return ObjectCounter[2];
     }
-
+    /**
+     * Sets the color to the player.
+     * @param color The color to be set.
+     */
     public void setColor(PlayerColor color){
         Color = color;
     }
@@ -237,7 +240,6 @@ public class Player implements Serializable {
      * @param c    The start card to be placed.
      * @param face The face of the card to be placed.
      */
-
     public void placeStartCard(StartCard c, FB face){
         this.PlayerField.getField().put(new Position(face, 0, 0), c);
         if(face.equals(FB.FRONT)){
