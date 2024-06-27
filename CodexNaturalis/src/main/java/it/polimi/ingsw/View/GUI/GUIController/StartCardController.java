@@ -50,7 +50,7 @@ public class StartCardController extends GUIController{
             System.out.println("Failed to load image from path: " + newImagePath);
         }
         welcomeLabel.setText("WELCOME TO THE GAME...");
-        PauseTransition pause = new PauseTransition(Duration.seconds(3));
+        PauseTransition pause = new PauseTransition(Duration.seconds(1));
         pause.setOnFinished(event -> showNeutralBackground());
         pause.play();
     }

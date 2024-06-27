@@ -232,7 +232,11 @@ public class ObserverManager {
      * @throws RemoteException If a remote communication error occurs.
      */
     public void updateColors(Player turn, LinkedList<PlayerColor> colors) throws RemoteException {
-        observers.get(turn.getName()).updateColors(turn, colors);
+        for(String s: observers.keySet()) {
+            if(s.equals(turn.getName()))
+                observers.get(s).updateColors(turn, colors);
+            else observers.get(s).notYourTurn(turn, "Choose your color");
+        }
     }
 
 }

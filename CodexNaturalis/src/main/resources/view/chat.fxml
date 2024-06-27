@@ -18,7 +18,7 @@
                 </ScrollPane>
                 <TextArea fx:id="messageInput" prefHeight="60.0" prefWidth="362.0" />
             <Label fx:id="errorLabel" prefHeight="33.0" prefWidth="213.0" text="Label" />
-                <Button fx:id="sendButton" mnemonicParsing="false" onAction="#sendMessage" prefHeight="33.0" prefWidth="54.0" text="SEND" />
+                <Button fx:id="sendButton" mnemonicParsing="false" onAction="#sendMessage" prefHeight="41.0" prefWidth="85.0" styleClass="buttonA" stylesheets="@styles.css" text="SEND" textFill="#fcf8f8" />
                 <VBox fx:id="playersBox" />
             </children>
         </VBox>

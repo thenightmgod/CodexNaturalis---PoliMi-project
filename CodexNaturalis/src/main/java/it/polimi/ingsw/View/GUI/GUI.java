@@ -35,6 +35,7 @@ public class GUI implements GameView {
     private CommonClient client;
     private String[] args;
     public boolean first_turn = true;
+    public PlayerColor color;
     private ChatController chatController;
 
     public void setFirst_turn(boolean first_turn) {
@@ -314,6 +315,17 @@ public class GUI implements GameView {
                 case "GoalCard"-> {
                     ((GoalCardController) guicontrollers.get("goalCard")).waitYourTurn();
                 }
+                case "Choose your color" ->{
+                    if(guicontrollers.get("color") != null)
+                        ((ColorController) guicontrollers.get("color")).waitYourTurn();
+                    else {
+                        try {
+                            switchToScene("color", client.getClient().getColors(), false);
+                        } catch (IOException e) {
+                            System.out.println("errore colori");
+                        }
+                    }
+                }
                 case "NormalTurn"->{
                     try {
                         if(first_turn) {
@@ -352,7 +364,9 @@ public class GUI implements GameView {
         client.getClient().setColors(colors);
         Platform.runLater(() -> {
             try {
-                switchToScene("color", colors);
+                if(guicontrollers.get("color") != null)
+                    ((ColorController) guicontrollers.get("color")).loadThings(colors);
+                else switchToScene("color", colors, true);
             } catch (IOException e) {
                 System.out.println("Color scene non correttamente inizializzata");
             }
@@ -366,6 +380,9 @@ public class GUI implements GameView {
     public PlayerColor getPlayerColor() {
         PlayerColor color = Turn.getColor();
         return color;
+    }
+    public void setPlayerColor(PlayerColor color) {
+        this.color = color;
     }
 
     public void setChatController(ChatController chatController) {

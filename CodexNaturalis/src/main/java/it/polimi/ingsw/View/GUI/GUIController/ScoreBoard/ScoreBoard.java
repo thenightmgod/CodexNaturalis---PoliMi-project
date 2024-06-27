@@ -1,6 +1,7 @@
 package it.polimi.ingsw.View.GUI.GUIController.ScoreBoard;
 
 import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
+import it.polimi.ingsw.View.GUI.GUI;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -8,6 +9,7 @@ import java.net.URL;
 import java.util.*;
 
 public class ScoreBoard {
+    private GUI gui;
     private LinkedHashMap<String, Integer> points;
     private HashMap<PlayerColor, ImageView> placeholders;
     private Set<ScoreBoardPosition> occupiedPositions;

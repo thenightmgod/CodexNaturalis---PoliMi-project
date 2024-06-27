@@ -630,7 +630,7 @@ public class TurnController extends GUIController{
         }else {
             messageLabel.setText("");
             String text= messageLabel.getText();
-            messageLabel.setText("This game has just started! Every players has zero points.\n" +text);
+            messageLabel.setText("This game has just started!\n Every players has zero points." +text);
             return;
         }
     }
@@ -738,15 +738,12 @@ public class TurnController extends GUIController{
     }
 
 
+    @FXML
     public void plotOthersField(String name) {
         PlayingField field = this.gui.getClient().getClient().getOtherFields().get(name);
         StackPane stackPane = new StackPane();
         ScrollPane scrollPane = new ScrollPane();
         GridPane mariuccio = new GridPane();
-
-        BackgroundFill backgroundFill = new BackgroundFill(Color.PALEGREEN, CornerRadii.EMPTY, Insets.EMPTY);
-        Background background = new Background(backgroundFill);
-        stackPane.setBackground(background);
 
         mariuccio.setHgap(0);
         mariuccio.setVgap(0);
@@ -797,7 +794,6 @@ public class TurnController extends GUIController{
 
         mariuccio.setAlignment(Pos.CENTER);
         scrollPane.setContent(mariuccio);
-        // Imposta le dimensioni prefissate per abilitare lo scorrimento
         scrollPane.setPrefSize(800, 600);
         scrollPane.setFitToWidth(true);
         scrollPane.setFitToHeight(true);

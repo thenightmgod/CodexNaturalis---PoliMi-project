@@ -28,18 +28,40 @@ public class ColorController extends GUIController{
     @FXML
     private ImageView red;
 
+    private boolean flag;
     private LinkedList<PlayerColor> colors;
     protected boolean colorchosen;
 
     @Override
-    public void setArgs(Object... args) {
+    public void setArgs(Object... args) throws FileNotFoundException {
         this.colors = (LinkedList<PlayerColor>) args[0];
-        loadColor();
+        this.flag = (boolean) args[1];
+        if(flag) loadColor();
+        else waitYourTurn();
     }
     @FXML
     private void initialize() {
         colorchosen=false;
         myLabel.setVisible(true);
+    }
+    private void loadColordisabled() throws FileNotFoundException {
+        disableColorInteractions();
+        myLabel.setText("WAIT, IT'S NOT YOUR TURN");
+        for(int i=0; i< colors.size(); i++){
+            if(colors.get(i) == PlayerColor.YELLOW){
+                setImageDisabledForColor(yellow, colors.get(i));
+                yellow.setVisible(true);
+            } else if(colors.get(i) == PlayerColor.BLUE){
+                setImageDisabledForColor(blue, colors.get(i));
+                blue.setVisible(true);
+            } else if(colors.get(i) == PlayerColor.GREEN){
+                setImageDisabledForColor(green, colors.get(i));
+                green.setVisible(true);
+            } else if(colors.get(i) == PlayerColor.RED){
+                setImageDisabledForColor(red, colors.get(i));
+                red.setVisible(true);
+            }
+        }
     }
 
     public void loadColor() {
@@ -76,6 +98,16 @@ public class ColorController extends GUIController{
             e.printStackTrace();
         }
     }
+    private void setImageDisabledForColor(ImageView imageView, PlayerColor c) throws FileNotFoundException {
+        Image colorImage = loadColorImage(c);
+
+        imageView.setImage(colorImage);
+        imageView.setFitWidth(125.0);  // Imposta la larghezza desiderata
+        imageView.setFitHeight(187.5); // Imposta l'altezza desiderata
+        imageView.setPreserveRatio(true); //
+        disableColorInteractions();
+        myLabel.setText("WAIT TO CHOOSE YOUR COLOR");
+    }
 
     public void chooseColor(){
         enableColorInteractions();
@@ -98,9 +130,7 @@ public class ColorController extends GUIController{
 
     public void waitYourTurn() {
         disableColorInteractions();
-        if (!colorchosen){
-            myLabel.setText("WAIT, IT'S NOT YOUR TURN");
-        }
+        myLabel.setText("WAIT, IT'S NOT YOUR TURN");
     }
 
     @FXML
@@ -129,17 +159,20 @@ public class ColorController extends GUIController{
                 try {
                     if (color == yellow) {
                         client.endColor(PlayerColor.YELLOW);
+                        gui.setPlayerColor(PlayerColor.YELLOW);
                         System.out.println("set yellow");
                         blue.setOpacity(0.5);
                         green.setOpacity(0.5);
                         red.setOpacity(0.5);
                     } else if (color == blue){
+                        gui.setPlayerColor(PlayerColor.BLUE);
                         client.endColor(PlayerColor.BLUE);
                         System.out.println("set blue");
                         yellow.setOpacity(0.5);
                         green.setOpacity(0.5);
                         red.setOpacity(0.5);
                     } else if(color == green){
+                        gui.setPlayerColor(PlayerColor.GREEN);
                         client.endColor(PlayerColor.GREEN);
                         System.out.println("set green");
                         yellow.setOpacity(0.5);
@@ -147,6 +180,7 @@ public class ColorController extends GUIController{
                         red.setOpacity(0.5);
                     } else {
                         client.endColor(PlayerColor.RED);
+                        gui.setPlayerColor(PlayerColor.RED);
                         System.out.println("set red");
                         yellow.setOpacity(0.5);
                         blue.setOpacity(0.5);
@@ -161,5 +195,11 @@ public class ColorController extends GUIController{
         disableColorInteractions();
         myLabel.setText("COLOOR CHOSEN!");
     }
+
+    public void loadThings(LinkedList<PlayerColor> colors){
+        this.colors = colors;
+        loadColor();
+    }
+
 }
 
