@@ -346,8 +346,14 @@ public class GUI implements GameView {
 
     @Override
     public void updateColors(Player turn, LinkedList<PlayerColor> colors) {
-        //client.getClient().setColors(colors);
-        //todo
+        client.getClient().setColors(colors);
+        Platform.runLater(() -> {
+            try {
+                switchToScene("color", colors);
+            } catch (IOException e) {
+                System.out.println("Color scene non correttamente inizializzata");
+            }
+        });
     }
 
     public CommonClient getClient() {
@@ -358,6 +364,7 @@ public class GUI implements GameView {
         PlayerColor color = Turn.getColor();
         return color;
     }
+
     public void setChatController(ChatController chatController) {
         this.chatController = chatController;
     }

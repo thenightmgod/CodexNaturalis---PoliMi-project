@@ -27,11 +27,13 @@ public class ColorController extends GUIController{
     private ImageView green;
     @FXML
     private ImageView red;
+
+    private LinkedList<PlayerColor> colors;
     protected boolean colorchosen;
 
     @Override
     public void setArgs(Object... args) {
-        this.goals = (LinkedList<GoalCard>) args[0];
+        this.colors = (LinkedList<PlayerColor>) args[0];
         loadColor();
     }
     @FXML
@@ -41,17 +43,24 @@ public class ColorController extends GUIController{
     }
 
     public void loadColor() {
-        setImageForColor(PlayerColor.YELLOW);
-        setImageForColor(PlayerColor.BLUE);
-        setImageForColor(PlayerColor.GREEN);
-        setImageForColor(PlayerColor.RED);
-        yellow.setVisible(true);
-        blue.setVisible(true);
-        green.setVisible(true);
-        red.setVisible(true);
+        for(int i=0; i< colors.size(); i++){
+            if(colors.get(i) == PlayerColor.YELLOW){
+                setImageForColor(yellow, colors.get(i));
+                yellow.setVisible(true);
+            } else if(colors.get(i) == PlayerColor.BLUE){
+                setImageForColor(blue, colors.get(i));
+                blue.setVisible(true);
+            } else if(colors.get(i) == PlayerColor.GREEN){
+                setImageForColor(green, colors.get(i));
+                green.setVisible(true);
+            } else if(colors.get(i) == PlayerColor.RED){
+                setImageForColor(red, colors.get(i));
+                red.setVisible(true);
+            }
+        }
     }
 
-    private void setImageForColor(PlayerColor c) {
+    private void setImageForColor(ImageView imageView, PlayerColor c) {
         try {
             Image colorImage = loadColorImage(c);
 
@@ -102,6 +111,7 @@ public class ColorController extends GUIController{
             }
         }
     }
+
     @FXML
     private void onColorMouseExited(MouseEvent event) {
         if (event.getSource() instanceof ImageView) {
@@ -109,6 +119,7 @@ public class ColorController extends GUIController{
             color.setOpacity(1.0); // Ripristina l'opacità originale
         }
     }
+
     @FXML
     private void onColorMouseClicked(MouseEvent event) {
         if (event.getSource() instanceof ImageView) {
@@ -148,9 +159,6 @@ public class ColorController extends GUIController{
         colorchosen = true;
         disableColorInteractions();
         myLabel.setText("COLOOR CHOSEN!");
-        try {
-            this.gui.endTurn("Goalard");
-        } catch (RemoteException ignored) {}
     }
 }
 
