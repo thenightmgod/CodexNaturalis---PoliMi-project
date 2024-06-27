@@ -132,7 +132,6 @@ public class TurnController extends GUIController{
         double cellWidth = 210;
         double cellHeight = 140.0;
 
-        //boh non so come andrebbero settati
         this.marione.setVgap(0);
         this.marione.setHgap(0);
 
@@ -816,7 +815,6 @@ public class TurnController extends GUIController{
         FXMLLoader loader = new FXMLLoader(fxmlUrl);
         AnchorPane chatRoot = loader.load();
         ChatController chatController = loader.getController();
-        //il chatController ha i riferimenti alla gui e al client
         chatController.setGui(this.gui);
         chatController.setClient(client);
         chatController.initializeChat();
@@ -828,17 +826,9 @@ public class TurnController extends GUIController{
         chatStage.setTitle("Chat");
         chatStage.setScene(chatScene);
         chatStage.initModality(Modality.WINDOW_MODAL);
-        chatStage.initOwner(((Button) event.getSource()).getScene().getWindow());
+        chatStage.initOwner(stage);
         chatStage.setOnCloseRequest(e -> {
-            // Gestisci la chiusura della chat se necessario
         });
         chatStage.show();
     }
-
-
-    //usando la client.sendChatMessage
-
-    //ci serve funzione che ti chiami poi la client.sendChatMessage(mex);
-    //la updateChat ti arriva già qua e la piazza sul client model
-
 }
