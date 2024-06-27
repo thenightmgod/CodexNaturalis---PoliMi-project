@@ -233,6 +233,7 @@ public class ObserverManager {
      */
     public void updateColors(Player turn, LinkedList<PlayerColor> colors) throws RemoteException {
         for(String s: observers.keySet()) {
+
             if(s.equals(turn.getName()))
                 observers.get(s).updateColors(turn, colors);
             else observers.get(s).notYourTurn(turn, "Choose your color");
