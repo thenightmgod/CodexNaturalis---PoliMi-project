@@ -19,6 +19,7 @@ import java.net.URL;
 public class GUIApplication extends Application {
     private String[] args;
 
+
     @Override
     public void start(Stage stage) throws IOException {
 

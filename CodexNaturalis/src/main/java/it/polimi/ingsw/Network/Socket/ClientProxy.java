@@ -3,13 +3,20 @@ package it.polimi.ingsw.Network.Socket;
 
 import java.io.PrintWriter;
 
+/**
+ * The ClientProxy class is used to send messages to the client.
+ * It contains methods to send messages to the client. It is used to hide the connection between the client and the server.
 
+ */
 public class ClientProxy {
+    /**
+     * The output stream of the client.
+     */
     final PrintWriter output;
+
     public ClientProxy(PrintWriter output) {
         this.output = new PrintWriter(output);
     }
-
     public void updateColors(String StringMessage) {sendMessage(StringMessage);}
     public void isAlivee(String message) {sendMessage(message);}
     public void updateChat(String message) {sendMessage(message);}
@@ -40,9 +47,6 @@ public class ClientProxy {
     }
     public void updateGoldDeck(String StringMessage) { sendMessage(StringMessage); }
     public void updateResourceDeck(String StringMessage) { sendMessage(StringMessage); }
-    public void showOtherField(String StringMessage) {
-        sendMessage(StringMessage);
-    }
     public void leaveGameMessage(String StringMessage) { sendMessage(StringMessage); }
 
 

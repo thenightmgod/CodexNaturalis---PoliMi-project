@@ -8,20 +8,24 @@ import java.rmi.RemoteException;
 
 
 /**
- * Represents an action where a player ends their turn.
- * This action is a subclass of the Actions class.
+ * The EndTurnAction extends Actions and represents an action where a player ends their turn.
  */
 public class EndTurnAction extends Actions{
-
+    /**
+     * The message associated with this EndTurnAction.
+     */
     String mex;
+    /**
+     * The ID of the room where this action is executed.
+     */
     int roomId;
 
     /**
-     * Constructs a new EndTurnAction with the specified message, view, manager, server, priority, and room ID.
+     * Constructs a new EndTurnAction with the specified message, view, manager, priority, and room ID.
      *
      * @param view The VirtualView associated with this action.
      * @param manager The MainController managing this action.
-     * @param mex The message to be displayed when the turn ends.
+     * @param mex The message associated with this EndTurnAction.
      * @param priority The priority of this action.
      * @param roomId The ID of the room where this action is executed.
      */
@@ -33,17 +37,13 @@ public class EndTurnAction extends Actions{
 
     /**
      * Executes this action.
-     * The player's turn ends and the next player's turn begins.
+     * It calls the changeTurns method of the GameController referred to this room.
      *
      * @throws RemoteException If a remote access error occurs.
      */
     @Override
     public void executor() throws RemoteException {
-
         GameController controller = getManager().getControllers().get(roomId);
         controller.changeTurns(mex);
-
     }
-
-
 }

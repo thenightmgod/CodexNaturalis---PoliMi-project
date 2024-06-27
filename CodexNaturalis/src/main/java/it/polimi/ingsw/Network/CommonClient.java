@@ -107,8 +107,20 @@ public interface CommonClient {
      */
     VirtualServer getServer();
 
+    /**
+     * Allows a player to send chat message.
+     *
+     * @param message The chat message to send.
+     * @throws RemoteException If a remote access error occurs.
+     */
     void sendChatMessage(ChatMessage message) throws RemoteException;
 
+    /**
+     * Allows this client to set their color.
+     *
+     * @param color The color to set.
+     * @throws RemoteException If a remote access error occurs.
+     */
     void endColor(PlayerColor color) throws RemoteException;
 
 }

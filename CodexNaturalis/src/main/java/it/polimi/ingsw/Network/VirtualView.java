@@ -23,8 +23,21 @@ import java.util.LinkedList;
  */
 public interface VirtualView extends Remote {
 
+    /**
+     * Sends the players to this client.
+     *
+     * @param players The players to send.
+     * @throws RemoteException If a remote access error occurs.
+     */
     void sendPlayers(LinkedList<String> players) throws RemoteException;
 
+    /**
+     * Updates the chat for this client.
+     *
+     * @param name The name of the player.
+     * @param chat The new chat for this client.
+     * @throws RemoteException If a remote access error occurs.
+     */
     void updateChat(String name, LinkedList<ChatMessage> chat) throws RemoteException;
 
     /**
@@ -161,7 +174,7 @@ public interface VirtualView extends Remote {
     void startingGame(Player p) throws RemoteException;
 
     /**
-     * Notifies this client that the game is in the last round.
+     * Notifies this client that someone has reached 20 points.
      *
      * @throws RemoteException If a remote access error occurs.
      */
@@ -182,22 +195,26 @@ public interface VirtualView extends Remote {
     void isAlivee() throws IOException;
 
     /**
-     * Leaves the game to this client that they have left the game.
+     * Allows this client to leave the game.
      *
      * @throws RemoteException If a remote access error occurs.
      */
     void leaveGame() throws RemoteException;
 
     /**
-     * Sends a message to this client that they have left the game.
+     * Sends a message to this client that someone has left the game.
      *
      * @throws RemoteException If a remote access error occurs.
      */
     void leaveGameMessage() throws RemoteException;
 
+    /**
+     * Updates the colors for this client.
+     *
+     * @param turn The player whose turn it is.
+     * @param colors The new colors that can be chosen by the player.
+     * @throws RemoteException If a remote access error occurs.
+     */
     void updateColors(Player turn, LinkedList<PlayerColor> colors) throws RemoteException;
 
-    void update() throws RemoteException; //update il clientModel
-
-    void showOtherField(String player) throws RemoteException;
 }

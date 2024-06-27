@@ -22,6 +22,7 @@ import java.io.*;
 import java.lang.reflect.Type;
 import java.net.Socket;
 import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -29,25 +30,58 @@ import java.util.stream.Collectors;
 
 import static java.lang.System.exit;
 
-//QUANDO CREO IL SOCKETCLIENT DEVO DARGLI COME NOME IL NOME DEL PLAYER
+/**
+ * The SocketClient class is used to create a client that connects to the server via socket.
+ * It contains methods to send messages to the server and to handle the messages received from the server.
+ */
 public class SocketClient implements CommonClient {
+    /**
+     * The server proxy.
+     */
     private ServerProxy server;
+    /**
+     * The input stream of the client.
+     */
     private BufferedReader input;
+    /**
+     * The name of the client.
+     */
     private String name;
+    /**
+     * The view of this client.
+     */
     private GameView view;
+    /**
+     * The ClientModel of this client.
+     */
     private ClientModel model;
-
+    /**
+     * The constructor for the SocketClient class.
+     *
+     * @param name The name of the client.
+     */
     public SocketClient(String name, String serverIp) {
         this.name = name;
         this.initializeClient(this, serverIp, 44458);
     }
 
+    /**
+     * Gets the name of the client.
+     *
+     * @return The name of the client.
+     */
     public String getNames() {
         return this.name;
     }
 
 
-    //VA ASSOCIATO IL BUFFERED READER INPUT del client al PRINT WRITER DEL CLIENT PROXY
+    /**
+     * Initializes the client.
+     *
+     * @param client The client.
+     * @param ip The IP address of the server.
+     * @param ServerPort The port of the server.
+     */
     public void initializeClient(SocketClient client, String ip, int ServerPort) {
         Socket socket;
         PrintWriter socketTx= null;
@@ -75,6 +109,9 @@ public class SocketClient implements CommonClient {
         this.run();
     }
 
+    /**
+     * Runs the client.
+     */
     public void run() {
         new Thread(() -> {
             try {
@@ -85,10 +122,9 @@ public class SocketClient implements CommonClient {
         }).start();
     }
 
-    //si mette in ascolto sul client e traduce le cose digitate sulla tui nelle chiamate ai propri metodi giusti
-
-
-    //      GESTISCE LE FUNZIONI DELLA VIRTUAL VIEW:
+    /**
+     * Runs the virtual server. This method is used to handle the messages received from the server.
+     */
     public void runVirtualServer()  {
         String receivedMessage;
         while (true) {
@@ -113,6 +149,13 @@ public class SocketClient implements CommonClient {
         }
     }
 
+    /**
+     * Handles the command received from the server.
+     *
+     * @param mex The message received from the server.
+     * @throws IOException If an I/O error occurs.
+     * @throws NotBoundException If the server is not bound.
+     */
     public void handleCommand(Message mex) throws IOException, NotBoundException {
         switch(mex.getType()) {
             case "UpdateColorsMessage" ->{
@@ -225,7 +268,12 @@ public class SocketClient implements CommonClient {
     }
 
 
-    //             FUNZIONI DEL COMMONCLIENT
+    /**
+     * Sets the start card face.
+     *
+     * @param face The face of the start card.
+     * @param client The client that represents the player.
+     */
     @Override
     public void setStartCardFace(boolean face, CommonClient client) {
         SetStartCardFaceMessage msg = new SetStartCardFaceMessage(face, name);
@@ -233,13 +281,23 @@ public class SocketClient implements CommonClient {
         server.setStartCardFace(gson);
     }
 
+    /**
+     * Joins an existing game.
+     *
+     * @param name The name of the player.
+     */
     @Override
     public void joinGame(String name) {
         JoinExistingGameMessage msg = new JoinExistingGameMessage(name);
         String gson = msg.MessageToJson();
         server.joinGame(gson);
     }
-
+    /**
+     * Creates an existing game.
+     *
+     * @param name The name of the player.
+     * @param numPlayers The number of players.
+     */
     @Override
     public void createGame(String name, int numPlayers) {
         CreateGameMessage msg = new CreateGameMessage(name, numPlayers);
@@ -247,14 +305,27 @@ public class SocketClient implements CommonClient {
         server.createGame(gson);
     }
 
-
+    /**
+     * Places a card on the playing field for this client.
+     *
+     * @param client The client who is placing the card.
+     * @param whichInHand The index of the card in the client's hand.
+     * @param x The x-coordinate on the playing field where the card is to be placed.
+     * @param y The y-coordinate on the playing field where the card is to be placed.
+     * @param face The face of the card.
+     */
     @Override
     public void placeCard(CommonClient client, int whichInHand, int x, int y, FB face) {
         PlaceCardMessage msg = new PlaceCardMessage(name, whichInHand, x, y, face);
         String gson = msg.MessageToJson();
         server.placeCard(gson);
     }
-
+    /**
+     * Allows this client to choose a goal card.
+     *
+     * @param i The index of the goal card to choose.
+     * @param client The client who is choosing the goal card.
+     */
     @Override
     public void chooseGoalCard(int i, CommonClient client)  {
         ChooseGoalCardMessage msg = new ChooseGoalCardMessage(i, name);
@@ -262,6 +333,11 @@ public class SocketClient implements CommonClient {
         server.chooseGoalcard(gson);
     }
 
+    /**
+     * Sends a chat message.
+     *
+     * @param message The chat message to send.
+     */
     @Override
     public void sendChatMessage(ChatMessage message) {
         ChatMessageMessage msg = new ChatMessageMessage(message, name);
@@ -269,21 +345,45 @@ public class SocketClient implements CommonClient {
         server.sendChatMessage(gson);
     }
 
+    /**
+     * Draws a card.
+     *
+     * @param i The index of the deck from which to draw the card.
+     * @param whichOne The index of the card to draw.
+     * @param client The client who is drawing the card.
+     */
     @Override
     public void drawCard(int i, int whichOne, CommonClient client){
         DrawCardMessage msg = new DrawCardMessage(i, whichOne, name);
         String gson = msg.MessageToJson();
         server.drawCard(gson);
     }
+
+    /**
+     * Sets the view.
+     *
+     * @param view The view to set.
+     */
     public void setView(GameView view){
         this.view = view;
     }
 
+    /**
+     * Gets the ClientModel of this client.
+     *
+     * @return The ClientModel.
+     */
     @Override
     public ClientModel getClient() {
         return model;
     }
 
+    /**
+     * Ends the turn for this client.
+     *
+     * @param name The name of the player.
+     * @param mex The message associated with the turn ending.
+     */
     @Override
     public void endTurn(String name, String mex){
         EndTurnMessage msg = new EndTurnMessage(name, mex);
@@ -300,10 +400,20 @@ public class SocketClient implements CommonClient {
         return null;
     }
 
+    /**
+     * Sets the name.
+     *
+     * @param name The name to set.
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Allows this client to set their color.
+     *
+     * @param color The color to set.
+     */
     @Override
     public void endColor(PlayerColor color) {
         EndColorMessage msg = new EndColorMessage(name, color);

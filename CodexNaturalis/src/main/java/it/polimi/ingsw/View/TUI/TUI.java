@@ -17,23 +17,61 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.*;
 
-
+/**
+ * This class is the Text User Interface of the game, it's the view of the game
+ */
 public class TUI implements GameView {
 
+    /**
+     * This is the connection type of the client
+     */
     boolean connectionType;
+
+    /**
+     * This is the class that handles the cards
+     */
     CardsTUI cards = new CardsTUI();
+    /**
+     * This is the player that has the turn
+     */
     Player Turn;
     String name = "Carlos O'Connell";
+    /**
+     * This is the client that is connected to the server
+     */
     CommonClient client;
+    /**
+     * This is the port of the server
+     */
     int ServerPort= 4444;
+    /**
+     * This is the ip of the server
+     */
     String serverIp;
+    /**
+     * This is the input handler of the client
+     */
     InputHandler inputHandler;
+    /**
+     * This is the chat of the client
+     */
     TuiChat chat = new TuiChat();
+    /**
+     * This is the boolean that tells if it's the last turn
+     */
     Boolean mirko = true;
+    /**
+     * This is the color of the player
+     */
     PlayerColor color;
-
+    /**
+     * This is the constructor of the class
+     */
     public TUI(){}
 
+    /**
+     * Starts the TUI of the game
+     */
     public void startTui() throws RemoteException {
         inputHandler = new InputHandler(this);
         inputHandler.handleUserInput("askServerIp");
@@ -41,6 +79,13 @@ public class TUI implements GameView {
         joinGame();
     }
 
+    /**
+     * Updates the colors for this client.
+     *
+     * @param turn The player whose turn it is.
+     * @param colors The updated colors.
+     * @throws RemoteException If a remote access error occurs.
+     */
     @Override
     public void updateColors(Player turn, LinkedList<PlayerColor> colors) throws RemoteException {
         this.client.getClient().setColors(colors);
@@ -48,6 +93,12 @@ public class TUI implements GameView {
         this.client.endColor(color);
     }
 
+    /**
+     * Updates the chat of the client
+     *
+     * @param name The name of the player
+     * @param chat The chat of the game.
+     */
     @Override
     public void updateChat(String name, LinkedList<ChatMessage> chat){
         if(name.equals(this.name)){
@@ -55,6 +106,11 @@ public class TUI implements GameView {
         }
     }
 
+    /**
+     * Notifies the client when the 20 points are achieved.
+     *
+     * @param name the name of the player that does it.
+     */
     @Override
     public void twenty(String name){
         if(name.equals(client.getNames()))
@@ -62,23 +118,40 @@ public class TUI implements GameView {
         else System.out.println( name + " arrived at 20 points");
     }
 
+    /**
+     * Notifies the clients when the last round begins
+     */
     @Override
     public void lastRound(){
         mirko = false;
         System.out.println("This is your last turn");
     }
-
+    /**
+     * Updates the points for this client.
+     *
+     * @param points The new points for this client.
+     * @param name The name of the client.
+     */
     @Override
     public void updatePoints(HashMap<String, Integer> points, String name){
         client.getClient().setPointsCounter(points);
     }
 
+    /**
+     * Sends a message to this client that someone has left the game.
+     *
+     */
     @Override
     public void leaveGameMessage(){
         System.out.println("Someone left the game, you'll have to start a new one");
         System.exit(0);
     }
 
+    /**
+     * Shows the goal cards for this client.
+     *
+     * @param goals The new goal cards for this client.
+     */
     @Override
     public void updateGoals(LinkedList<GoalCard> goals, String name) throws RemoteException {
         System.out.println("Choose your personal GoalCard");
@@ -86,12 +159,21 @@ public class TUI implements GameView {
         cards.printGoalCard(goals.getLast());
     }
 
+    /**
+     * Shows the common goal cards for this client.
+     *
+     * @param goals The new common goal cards for this client.
+     */
     public void updateCommonGoals(LinkedList<GoalCard> goals, String name) throws RemoteException{
         client.getClient().setCommonGoals(goals);
         cards.plotGoals(client.getClient());
     }
 
-
+    /**
+     * Shows the hand for this client.
+     *
+     * @param hand The new hand for this client.
+     */
     @Override
     public void updateHands(LinkedList<PlayableCard> hand, String name) {
         client.getClient().setHand(hand);
@@ -99,6 +181,12 @@ public class TUI implements GameView {
         cards.plotHandSeria(client.getClient());
     }
 
+    /**
+     * Shows the field for this client.
+     *
+     * @param field The new field for this client.
+     * @param name The name of the player
+     */
     @Override
     public void updateField(PlayingField field, String name) {
         if(name.equals(client.getNames())) {
@@ -111,6 +199,12 @@ public class TUI implements GameView {
         }
     }
 
+    /**
+     * Shows the free positions for this client.
+     *
+     * @param freePositions The new free positions for this client.
+     * @param name The name of the player
+     */
     @Override
     public void updateFreePosition(String name, LinkedList<Position> freePositions) {
         client.getClient().setFreePositions(freePositions);
@@ -120,6 +214,13 @@ public class TUI implements GameView {
 
     }
 
+    /**
+     * Updates the resource deck for this client.
+     *
+     * @param resourceCards The new resource deck for this client.
+     * @param start The boolean that tells if it's the start of the game.
+     * @param name The name of the player
+     */
     @Override
     public void updateResourceDeck(LinkedList<ResourceCard> resourceCards, boolean start, String name){
         if(start){
@@ -136,6 +237,13 @@ public class TUI implements GameView {
         }
     }
 
+    /**
+     * Updates the gold deck for this client.
+     *
+     * @param goldCards The new gold deck for this client.
+     * @param start The boolean that tells if it's the start of the game.
+     * @param name The name of the player
+     */
     @Override
     public void updateGoldDeck(LinkedList<GoldCard> goldCards, boolean start, String name){
         if(start){
@@ -152,6 +260,11 @@ public class TUI implements GameView {
         }
     }
 
+    /**
+     * Shows the start card for this client.
+     *
+     * @param card The new start card for this client.
+     */
     @Override
     public void showStartCard(StartCard card) throws RemoteException {
         cards.printFrontStartCard(card);
@@ -159,27 +272,51 @@ public class TUI implements GameView {
 
     }
 
+    /**
+     * Asks the client to choose the start card face.
+     */
     public void setStartCardFace() throws RemoteException {
         inputHandler.handleUserInput("setStartCardFace");
     }
 
+    /**
+     * Asks the client to choose the goal card.
+     */
     public void chooseGoalCard() throws RemoteException {
         inputHandler.handleUserInput("chooseGoalCard");
     }
 
+    /**
+     * Asks the client to place a card.
+     */
     public void placeCard() throws RemoteException {
         inputHandler.handleUserInput("placeCard");
     }
 
+    /**
+     * Asks the client to draw a card.
+     */
     public void drawCard() throws RemoteException {
         cards.plotDrawables(client.getClient());
         inputHandler.handleUserInput("drawCard");
     }
 
+    /**
+     * Sends a chat message to the server.
+     */
     public void sendChatMessage(ChatMessage mex) throws RemoteException {
         client.sendChatMessage(mex);
     }
 
+    /**
+     * Handles exceptions that occur during the game and provides appropriate responses.
+     * This method takes in the type of exception and additional details to determine the correct response.
+     *
+     * @param exception The type of exception that occurred.
+     * @param details Additional details about the exception.
+     * @throws RemoteException If a remote access error occurs.
+     * @throws NotBoundException If an attempt is made to lookup or unbind in the registry a name that has no associated binding.
+     */
     @Override
     public void showException(String exception, String details) throws RemoteException, NotBoundException {
         switch(exception) {
@@ -237,18 +374,34 @@ public class TUI implements GameView {
         }
     }
 
+    /**
+     * Sets the name of the player by handling user input.
+     *
+     * @throws RemoteException If a remote access error occurs.
+     */
     public void setName() throws RemoteException {
         inputHandler.handleUserInput("setName");
     }
 
+    /**
+     * Creates a new game by handling user input.
+     *
+     * @throws RemoteException If a remote access error occurs.
+     */
     public void createGame() throws RemoteException {
         inputHandler.handleUserInput("createGame");
     }
 
+    /**
+     * Notifies that the game is starting.
+     */
     public void startingGame(){
         System.out.println("Game is starting...");
     }
 
+    /**
+     * Allows the client to join the game
+     */
     public void joinGame() throws RemoteException {
         try {
             this.client.joinGame(name);
@@ -257,7 +410,12 @@ public class TUI implements GameView {
         }
     }
 
-
+    /**
+     * This method is called when it's the turn of the client. It prints the points of the client,
+     * asks for a chat message input and then proceeds to place a card.
+     *
+     * @throws RemoteException If a remote access error occurs.
+     */
     private void isYourTurn() throws RemoteException {
         System.out.println();
         cards.plotPoints(client.getClient());
@@ -266,10 +424,16 @@ public class TUI implements GameView {
         placeCard();
     }
 
-
+    /**
+     * This method is called to update the turn of the game. It sets the current player and if it's the turn of the client,
+     * it handles the different cases based on the provided message.
+     *
+     * @param player The player whose turn it is.
+     * @param mex The message provided.
+     * @throws RemoteException If a remote access error occurs.
+     */
     @Override
     public void updateTurn(Player player, String mex) throws RemoteException {
-        //robaccia per printare che non è il tuo turno e bla bla
         this.Turn = player;
         if(Turn.getName().equals(client.getNames())) {
             switch (mex) {
@@ -281,16 +445,34 @@ public class TUI implements GameView {
         return;
     }
 
+    /**
+     * This method is called to print a message indicating that it's not the turn of the client.
+     *
+     * @param player The player whose turn it is.
+     * @param mex The message indicating the type of turn.
+     */
     @Override
     public void printNotYourTurn(Player player, String mex) {
         this.Turn = player;
         System.out.println("It's " + Turn.getName() + "'s turn");
     }
 
+    /**
+     * Ends the current turn . This method sends a message to the server to indicate the end of the turn.
+     *
+     * @param mex The message to be sent to the server.
+     * @throws RemoteException If a remote access error occurs.
+     */
     public void endTurn(String mex) throws RemoteException {
         client.endTurn(Turn.getName(), mex);
     }
 
+    /**
+     * Declares the winner of the game based on the final standings. This method prints out the result of the game
+     * and the position of the client in the standings.
+     *
+     * @param standings The final standings of the game.
+     */
     @Override
     public void declareWinner(LinkedList<String> standings) {
 

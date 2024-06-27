@@ -17,11 +17,21 @@ import java.util.concurrent.*;
  * The RMIServer class implements the VirtualServer interface and handles the server-side logic of the game.
  */
 public class RMIServer implements VirtualServer {
-
+    /**
+     * The main controller of the game.
+     */
     final MainController controller;
+    /**
+     * The port number of the server.
+     */
     int port;
-    ExecutorService executorService;
+    /**
+     * Map of multiple flows of actions in the game.
+     */
     ConcurrentHashMap<Integer, MultipleFlow> actionsPerGame;
+    /**
+     * The queue of actions to be executed (only for CreateGameAction and JoinGameAction).
+     */
     PriorityBlockingQueue<Actions> joins;
 
     /**
@@ -178,7 +188,7 @@ public class RMIServer implements VirtualServer {
      * Allows a player to end their turn.
      *
      * @param client The client that represents the player.
-     * @param mex The message to be displayed when the turn ends.
+     * @param mex The message associated with the turn ended.
      * @throws RemoteException If a remote access error occurs.
      */
     @Override
@@ -187,14 +197,26 @@ public class RMIServer implements VirtualServer {
         Actions eAction = new EndTurnAction(client, controller, mex, 0, roomId);
         actionsPerGame.get(roomId).getActionsQueue().add(eAction);
     }
-
+    /**
+     * Allows a player to send a chat message.
+     *
+     * @param message The message to be sent.
+     * @param client The client that represents the player.
+     * @throws RemoteException If a remote access error occurs.
+     */
     @Override
     public void sendChatMessage(ChatMessage message, VirtualView client) throws RemoteException {
         int roomId = controller.getYourRoomId(client.getNames());
         Actions cAction = new ChatMessageAction(client, controller, 0, message, roomId);
         actionsPerGame.get(roomId).getActionsQueue().add(cAction);
     }
-
+    /**
+     * Allows a player to set his color.
+     *
+     * @param color The color chosen.
+     * @param client The client that represents the player.
+     * @throws RemoteException If a remote access error occurs.
+     */
     @Override
     public void endColor(PlayerColor color, VirtualView client) throws RemoteException {
         int roomId = controller.getYourRoomId(client.getNames());

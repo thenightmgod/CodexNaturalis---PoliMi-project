@@ -8,17 +8,25 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 /**
- * Represents an action where a player draws a card.
- * This action is a subclass of the Actions class.
+ * The DrawCardAction extends Actions and represents an action where a player draws a card.
+ *
  */
 public class DrawCardAction extends Actions {
-
+    /**
+     * The index of the deck from which to draw a card.
+     */
     int i;
+    /**
+     * The index of the card to be drawn.
+     */
     int whichOne;
+    /**
+     * The ID of the room where this action is executed.
+     */
     int roomId;
 
     /**
-     * Constructs a new DrawCardAction with the specified index, view, manager, server, priority, and room ID.
+     * Constructs a new DrawCardAction with the specified index, view, manager, priority, and room ID.
      *
      * @param i The index of the deck from which to draw a card.
      * @param whichOne The index of the card to be drawn.
@@ -36,7 +44,7 @@ public class DrawCardAction extends Actions {
 
     /**
      * Executes this action.
-     * The player draws a card from the specified deck.
+     * It calls the drawCard method of the GameController referred to this room.
      *
      * @throws RemoteException If a remote access error occurs.
      * @throws NotBoundException If an attempt is made to lookup or unbind in the registry a name that has no associated binding.

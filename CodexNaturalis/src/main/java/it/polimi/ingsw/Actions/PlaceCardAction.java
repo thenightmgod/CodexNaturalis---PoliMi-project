@@ -9,19 +9,32 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 /**
- * Represents an action where a player places a card on the board.
- * This action is a subclass of the Actions class.
+ * The PlaceCardAction class extends Actions and represents an action where a player places a card on the board.
  */
 public class PlaceCardAction extends Actions{
-
+    /**
+     * The index of the card in the player's hand.
+     */
     int whichInHand;
+    /**
+     * The x-coordinate of the location where the card is to be placed.
+     */
     int x;
+    /**
+     * The y-coordinate of the location where the card is to be placed.
+     */
     int y;
+    /**
+     * The face of the card to be placed.
+     */
     FB face;
+    /**
+     * The ID of the room where this action is executed.
+     */
     int roomId;
 
     /**
-     * Constructs a new PlaceCardAction with the specified manager, view, card index, x-coordinate, y-coordinate, face, server, priority, and room ID.
+     * Constructs a new PlaceCardAction with the specified manager, view, card index, x-coordinate, y-coordinate, face,  priority, and room ID.
      *
      * @param manager The MainController managing this action.
      * @param view The VirtualView associated with this action.
@@ -43,8 +56,8 @@ public class PlaceCardAction extends Actions{
     }
 
     /**
-     * Executes this action.
-     * The player places a card on the board at the specified location.
+     * Executes this PlaceCardAction.
+     * It calls the placeCard method of the GameController referred to this room.
      *
      * @throws RemoteException If a remote access error occurs.
      * @throws NotBoundException If an attempt is made to lookup or unbind in the registry a name that has no associated binding.

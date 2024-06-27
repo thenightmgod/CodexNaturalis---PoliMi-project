@@ -20,8 +20,11 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-
+/**
+ * Controller for the chat feature in the GUI.
+ */
 public class ChatController extends GUIController {
+
     @FXML
     private AnchorPane rootPane;
     @FXML
@@ -38,7 +41,9 @@ public class ChatController extends GUIController {
     private List<CheckBox> playerCheckBoxes = new LinkedList<>();
     private Set<String> displayedMessages = new HashSet<>(); // Utilizziamo una Set di stringhe per controllare i messaggi unici
 
-
+    /**
+     * Initializes the chat by updating the active players, loading messages, and setting the background color.
+     */
     public void initializeChat() {
         updateActivePlayers();
         loadMessages(client.getClient().getChat());
@@ -48,6 +53,9 @@ public class ChatController extends GUIController {
         rootPane.setBackground(background);
     }
 
+    /**
+     * Updates the list of active players by getting the list of all players and removing the current client's name.
+     */
     public void updateActivePlayers() {
         LinkedList<String> allPlayers = client.getClient().getPlayers();
         String myName = client.getClient().getName();
@@ -58,6 +66,9 @@ public class ChatController extends GUIController {
         createPlayerCheckboxes();
     }
 
+    /**
+     * Creates checkboxes for each active player and adds them to the playersBox VBox.
+     */
     private void createPlayerCheckboxes() {
         playersBox.getChildren().clear();
 
@@ -71,6 +82,12 @@ public class ChatController extends GUIController {
         }
     }
 
+    /**
+     * Loads messages from the chat and displays them in the messageVBox VBox. Each message is displayed as a HBox containing
+     * the sender's name and the message text.
+     *
+     * @param chat The list of chat messages to load.
+     */
     public void loadMessages(LinkedList<ChatMessage> chat) {
         for (ChatMessage message : chat) {
             String uniqueMessageIdentifier = message.getSender() + ": " + message.getMessage();
@@ -89,7 +106,12 @@ public class ChatController extends GUIController {
             }
         }
     }
-
+    /**
+     * Sends a message to the selected players. The message text is retrieved from the messageInput TextArea. If no players
+     * are selected, an error message is displayed.
+     *
+     * @param event The ActionEvent that triggered this method.
+     */
     @FXML
     public void sendMessage(ActionEvent event) {
         String messageText = messageInput.getText().trim();
@@ -126,6 +148,12 @@ public class ChatController extends GUIController {
         }
     }
 
+    /**
+     * Adds a message to the chat by creating a HBox containing the sender's name and the message text, and adding it to the
+     * messageVBox VBox.
+     *
+     * @param message The message to add to the chat.
+     */
     private void addMessageToChat(ChatMessage message) {
         String uniqueMessageIdentifier = message.getSender() + ": " + message.getMessage();
         if (!displayedMessages.contains(uniqueMessageIdentifier)) {
@@ -143,6 +171,9 @@ public class ChatController extends GUIController {
         }
     }
 
+    /**
+     * Refreshes the chat by loading messages from the client's chat.
+     */
     public void refreshChat() {
         loadMessages(client.getClient().getChat());
     }

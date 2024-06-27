@@ -11,9 +11,17 @@ import java.rmi.RemoteException;
  * Each action has a priority, with higher priority actions executed first.
  */
 public abstract class Actions implements Comparable<Actions>{
-
+    /**
+     * The VirtualView associated with this action.
+     */
     private VirtualView view;
+    /**
+     * The MainController managing this action.
+     */
     private MainController manager;
+    /**
+     * The priority of this action.
+     */
     private int priority;
 
     /**

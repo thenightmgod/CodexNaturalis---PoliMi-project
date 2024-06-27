@@ -8,16 +8,20 @@ import it.polimi.ingsw.Network.VirtualView;
 import java.rmi.RemoteException;
 
 /**
- * Represents an action where a player sets the face of the start card.
- * This action is a subclass of the Actions class.
+ * The SetStartCardFaceAction class extends Actions and represents an action where the player sets the face of the start card.
  */
 public class SetStartCardFaceAction extends Actions {
-
+    /**
+     * The face of the start card.
+     */
     boolean face;
+    /**
+     * The ID of the room where this action is executed.
+     */
     int roomId;
 
     /**
-     * Constructs a new SetStartCardFaceAction with the specified face, view, manager, server, priority, and room ID.
+     * Constructs a new SetStartCardFaceAction with the specified face, view, manager, priority, and room ID.
      *
      * @param face The face of the start card.
      * @param view The VirtualView associated with this action.
@@ -32,10 +36,10 @@ public class SetStartCardFaceAction extends Actions {
     }
 
     /**
-     * Executes this action.
-     * The player sets the face of the start card.
+     * Executes this SetStartCardFaceAction.
+     * It calls the placeStartCard method of the GameController referred to this room.
      *
-     * @throws RemoteException If a remote access error occurs.
+     * @throws RemoteException if there is an error executing the action remotely.
      */
     @Override
     public void executor() throws RemoteException {
