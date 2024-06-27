@@ -266,7 +266,7 @@ public class LoginController extends GUIController {
     //--------STARTARE IL SOCKET!!!-----------------
     @FXML
     public void startSocket(ActionEvent event) {
-        client= new SocketClient(username);
+        client= new SocketClient(username, serverIp);
         connectionType = true;
         gui.setClient(client);
         client.setView(gui);
