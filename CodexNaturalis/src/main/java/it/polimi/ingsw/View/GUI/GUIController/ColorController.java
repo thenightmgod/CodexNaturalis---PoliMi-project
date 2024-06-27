@@ -68,15 +68,16 @@ public class ColorController extends GUIController{
             imageView.setFitWidth(125.0);  // Imposta la larghezza desiderata
             imageView.setFitHeight(187.5); // Imposta l'altezza desiderata
             imageView.setPreserveRatio(true); // Mantieni il rapporto d'aspetto
-
             enableColorInteractions();
+            myLabel.setText("CHOOSE YOUR COLOR");
+
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    public void chooseColor() {
+    public void chooseColor(){
         enableColorInteractions();
         myLabel.setText("CHOOSE YOUR COLOR");
     }

@@ -323,10 +323,17 @@ public class InputHandler extends Thread{
         String nickname = "Carlos";
 
         try {
-            System.out.println("Write your nickname");
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            nickname = reader.readLine();
+            while (true) {
+                System.out.println("Write your nickname:");
+                nickname = reader.readLine();
 
+                if (nickname != null && !nickname.trim().isEmpty()) {
+                    break;
+                } else {
+                    System.out.println("Nickname cannot be empty. Please enter a valid nickname.");
+                }
+            }
         } catch (IOException e) {
             System.out.println("There has been an error with the nickname");
         }
@@ -342,6 +349,7 @@ public class InputHandler extends Thread{
             this.tui.serverIp = scanner.nextLine();
         } while (!this.tui.serverIp.isEmpty() && !isValidFormat(this.tui.serverIp));
     }
+
     /**
      * Checks if the given string is a valid IP address format.
      *
@@ -368,6 +376,7 @@ public class InputHandler extends Thread{
 
         return true;
     }
+
     /**
      * Checks if the given string can be parsed to an integer.
      *
@@ -382,6 +391,7 @@ public class InputHandler extends Thread{
             return false;
         }
     }
+
     /**
      * Handles the chat functionality of the game. The user can choose to see the chat, send a message, or go back to the game.
      * If the user chooses to send a message, they can select the recipient of the message and write the message content.
@@ -460,8 +470,7 @@ public class InputHandler extends Thread{
             case BLUE:
                 return "\u001B[34m";
             default:
-                return "\u001B[0m"; // Default to white
+                return "\u001B[0m";
         }
     }
-
 }
