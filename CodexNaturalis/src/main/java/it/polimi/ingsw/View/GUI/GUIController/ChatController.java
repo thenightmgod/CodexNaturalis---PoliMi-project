@@ -36,8 +36,8 @@ public class ChatController extends GUIController {
     private Label errorLabel;
     private List<String> activePlayers = new LinkedList<>();
     private List<CheckBox> playerCheckBoxes = new LinkedList<>();
+    private CheckBox everyoneCheckBox; // CheckBox for "everyone"
     private Set<String> displayedMessages = new HashSet<>(); // Utilizziamo una Set di stringhe per controllare i messaggi unici
-
 
     public void initializeChat() {
         updateActivePlayers();
@@ -60,14 +60,55 @@ public class ChatController extends GUIController {
 
     private void createPlayerCheckboxes() {
         playersBox.getChildren().clear();
+        playerCheckBoxes.clear();
+
+        // Create and add the "everyone" checkbox
+        everyoneCheckBox = new CheckBox("everyone");
+        everyoneCheckBox.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+        everyoneCheckBox.setPadding(new Insets(5));
+        everyoneCheckBox.setOnAction(event -> handleEveryoneCheckBox());
+
+        playersBox.getChildren().add(everyoneCheckBox);
 
         for (String playerName : activePlayers) {
             CheckBox checkBox = new CheckBox(playerName);
             checkBox.setFont(Font.font("Arial", FontWeight.BOLD, 14));
             checkBox.setPadding(new Insets(5));
+            checkBox.setOnAction(event -> handleIndividualCheckBox(checkBox));
 
             playersBox.getChildren().add(checkBox);
             playerCheckBoxes.add(checkBox);
+        }
+    }
+
+    private void handleEveryoneCheckBox() {
+        if (everyoneCheckBox.isSelected()) {
+            for (CheckBox checkBox : playerCheckBoxes) {
+                checkBox.setSelected(false);
+                checkBox.setDisable(true);
+            }
+        } else {
+            for (CheckBox checkBox : playerCheckBoxes) {
+                checkBox.setDisable(false);
+            }
+        }
+    }
+
+    private void handleIndividualCheckBox(CheckBox selectedCheckBox) {
+        if (selectedCheckBox.isSelected()) {
+            everyoneCheckBox.setSelected(false);
+            everyoneCheckBox.setDisable(true);
+            for (CheckBox checkBox : playerCheckBoxes) {
+                if (checkBox != selectedCheckBox) {
+                    checkBox.setSelected(false);
+                    checkBox.setDisable(true);
+                }
+            }
+        } else {
+            everyoneCheckBox.setDisable(false);
+            for (CheckBox checkBox : playerCheckBoxes) {
+                checkBox.setDisable(false);
+            }
         }
     }
 
@@ -75,15 +116,20 @@ public class ChatController extends GUIController {
         for (ChatMessage message : chat) {
             String uniqueMessageIdentifier = message.getSender() + ": " + message.getMessage();
             if (!displayedMessages.contains(uniqueMessageIdentifier)) {
-                Text senderText = new Text(message.getSender() + ": ");
+                Text senderText = new Text(message.getSender() + " ");
                 senderText.setFont(Font.font("Arial", FontWeight.BOLD, 14));
                 senderText.setFill(Color.DARKGREEN);
+
+                String recipient = message.getRecipient().equals("everyone") ? "everyone" : message.getRecipient();
+                Text recipientText = new Text("to " + recipient + ": ");
+                recipientText.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+                recipientText.setFill(Color.DARKGREEN);
 
                 Text messageText = new Text(message.getMessage());
                 messageText.setFont(Font.font("Arial", 14));
                 messageText.setFill(Color.BLACK);
 
-                HBox messageBox = new HBox(senderText, messageText);
+                HBox messageBox = new HBox(senderText, recipientText, messageText);
                 messageVBox.getChildren().add(messageBox);
                 displayedMessages.add(uniqueMessageIdentifier);
             }
@@ -96,10 +142,17 @@ public class ChatController extends GUIController {
 
         if (!messageText.isEmpty()) {
             List<String> selectedPlayers = new LinkedList<>();
+            boolean everyone = false;
 
-            for (CheckBox checkBox : playerCheckBoxes) {
-                if (checkBox.isSelected()) {
-                    selectedPlayers.add(checkBox.getText());
+            if (everyoneCheckBox.isSelected()) {
+                everyone = true;
+                selectedPlayers.addAll(activePlayers);
+                selectedPlayers.add(client.getClient().getName());
+            } else {
+                for (CheckBox checkBox : playerCheckBoxes) {
+                    if (checkBox.isSelected()) {
+                        selectedPlayers.add(checkBox.getText());
+                    }
                 }
             }
 
@@ -111,10 +164,13 @@ public class ChatController extends GUIController {
                 errorLabel.setVisible(false);
             }
 
-            selectedPlayers.add(client.getClient().getName());
-
             for (String recipient : selectedPlayers) {
-                ChatMessage message = new ChatMessage(messageText, client.getClient().getName(), recipient);
+                ChatMessage message;
+                if (everyone) {
+                    message = new ChatMessage(messageText, client.getClient().getName(), "everyone");
+                } else {
+                    message = new ChatMessage(messageText, client.getClient().getName(), recipient);
+                }
                 try {
                     client.sendChatMessage(message);
                 } catch (RemoteException e) {
@@ -129,15 +185,20 @@ public class ChatController extends GUIController {
     private void addMessageToChat(ChatMessage message) {
         String uniqueMessageIdentifier = message.getSender() + ": " + message.getMessage();
         if (!displayedMessages.contains(uniqueMessageIdentifier)) {
-            Text senderText = new Text(message.getSender() + ": ");
+            Text senderText = new Text(message.getSender() + " ");
             senderText.setFont(Font.font("Arial", FontWeight.BOLD, 14));
             senderText.setFill(Color.DARKGREEN);
+
+            String recipient = message.getRecipient().equals("everyone") ? "everyone" : message.getRecipient();
+            Text recipientText = new Text("to " + recipient + ": ");
+            recipientText.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+            recipientText.setFill(Color.DARKGREEN);
 
             Text messageText = new Text(message.getMessage());
             messageText.setFont(Font.font("Arial", 14));
             messageText.setFill(Color.BLACK);
 
-            HBox messageBox = new HBox(senderText, messageText);
+            HBox messageBox = new HBox(senderText, recipientText, messageText);
             messageVBox.getChildren().add(messageBox);
             displayedMessages.add(uniqueMessageIdentifier);
         }
