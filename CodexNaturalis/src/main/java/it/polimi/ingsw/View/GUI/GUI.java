@@ -35,6 +35,7 @@ public class GUI implements GameView {
     private CommonClient client;
     private String[] args;
     public boolean first_turn = true;
+    public PlayerColor color;
     private ChatController chatController;
 
     public void setFirst_turn(boolean first_turn) {
@@ -379,6 +380,9 @@ public class GUI implements GameView {
     public PlayerColor getPlayerColor() {
         PlayerColor color = Turn.getColor();
         return color;
+    }
+    public void setPlayerColor(PlayerColor color) {
+        this.color = color;
     }
 
     public void setChatController(ChatController chatController) {

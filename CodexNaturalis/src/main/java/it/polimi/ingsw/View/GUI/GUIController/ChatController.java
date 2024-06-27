@@ -9,8 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -44,6 +43,9 @@ public class ChatController extends GUIController {
         updateActivePlayers();
         loadMessages(client.getClient().getChat());
         errorLabel.setVisible(false);
+        BackgroundFill backgroundFill = new BackgroundFill(Color.PALEGREEN, CornerRadii.EMPTY, null);
+        Background background = new Background(backgroundFill);
+        rootPane.setBackground(background);
     }
 
     public void updateActivePlayers() {
@@ -71,12 +73,18 @@ public class ChatController extends GUIController {
 
     public void loadMessages(LinkedList<ChatMessage> chat) {
         for (ChatMessage message : chat) {
-            // Usa una combinazione unica di mittente e testo del messaggio per controllare i duplicati
             String uniqueMessageIdentifier = message.getSender() + ": " + message.getMessage();
             if (!displayedMessages.contains(uniqueMessageIdentifier)) {
-                Text messageText = new Text(uniqueMessageIdentifier);
+                Text senderText = new Text(message.getSender() + ": ");
+                senderText.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+                senderText.setFill(Color.DARKGREEN);
+
+                Text messageText = new Text(message.getMessage());
                 messageText.setFont(Font.font("Arial", 14));
-                messageVBox.getChildren().add(messageText);
+                messageText.setFill(Color.BLACK);
+
+                HBox messageBox = new HBox(senderText, messageText);
+                messageVBox.getChildren().add(messageBox);
                 displayedMessages.add(uniqueMessageIdentifier);
             }
         }
@@ -121,9 +129,16 @@ public class ChatController extends GUIController {
     private void addMessageToChat(ChatMessage message) {
         String uniqueMessageIdentifier = message.getSender() + ": " + message.getMessage();
         if (!displayedMessages.contains(uniqueMessageIdentifier)) {
-            Text messageText = new Text(uniqueMessageIdentifier);
+            Text senderText = new Text(message.getSender() + ": ");
+            senderText.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+            senderText.setFill(Color.DARKGREEN);
+
+            Text messageText = new Text(message.getMessage());
             messageText.setFont(Font.font("Arial", 14));
-            messageVBox.getChildren().add(messageText);
+            messageText.setFill(Color.BLACK);
+
+            HBox messageBox = new HBox(senderText, messageText);
+            messageVBox.getChildren().add(messageBox);
             displayedMessages.add(uniqueMessageIdentifier);
         }
     }

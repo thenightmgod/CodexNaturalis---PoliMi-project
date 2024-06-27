@@ -68,7 +68,7 @@
                   <font>
                      <Font name="Weibei TC Bold" size="13.0" />
                   </font></Button>
-               <Button layoutX="181.0" layoutY="126.0" mnemonicParsing="false" onAction="#openChat" prefHeight="41.0" prefWidth="83.0" text="CHAT" />
+               <Button layoutX="181.0" layoutY="126.0" mnemonicParsing="false" onAction="#openChat" styleClass="buttonA" stylesheets="@styles.css" prefHeight="41.0" prefWidth="83.0" text="CHAT" textFill="#fcf8f8"/>
                    </children>
                </Pane>
            </children>
