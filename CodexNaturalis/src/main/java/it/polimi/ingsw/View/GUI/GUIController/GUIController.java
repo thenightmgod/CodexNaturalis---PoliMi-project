@@ -1,4 +1,5 @@
 package it.polimi.ingsw.View.GUI.GUIController;
+import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import it.polimi.ingsw.Network.CommonClient;
 
 import it.polimi.ingsw.View.GUI.GUI;
@@ -69,6 +70,21 @@ public abstract class GUIController {
         String cardPath = "/view/CODEX_cards_gold_front/" + String.format("%03d", cardId) + ".png";
         return loadImage(cardPath);
     }
+
+    protected Image loadColorImage(PlayerColor c) throws FileNotFoundException {
+        String colorPath = "carlos";
+        if(c == PlayerColor.YELLOW)
+            colorPath = "/view/MyCodexNaturalisPhotos/CODEX_pion_yellow.png";
+        else if(c == PlayerColor.RED)
+            colorPath = "/view/MyCodexNaturalisPhotos/CODEX_pion_red.png";
+        else if(c == PlayerColor.BLUE)
+            colorPath = "/view/MyCodexNaturalisPhotos/CODEX_pion_blue.png";
+        else
+            colorPath = "/view/MyCodexNaturalisPhotos/CODEX_pion_green.png";
+        return loadImage(colorPath);
+    }
+
+
 
     protected Image loadCardBackImage(int cardId) throws FileNotFoundException {
         int path = 0;
