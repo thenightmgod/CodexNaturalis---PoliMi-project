@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
@@ -8,9 +9,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane opacity="0.8" prefHeight="527.0" prefWidth="1186.0" styleClass="winnerBackground" stylesheets="@stylesturn.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.GUI.GUIController.WinnerController">
+<AnchorPane opacity="0.8" prefHeight="527.0" prefWidth="1186.0" styleClass="winnerBackground" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.View.GUI.GUIController.WinnerController">
    <children>
-      <VBox layoutX="316.0" layoutY="28.0" opacity="0.95" prefHeight="440.0" prefWidth="600.0" styleClass="tappeto-background" stylesheets="@styles.css">
+      <VBox layoutX="317.0" layoutY="44.0" prefHeight="440.0" prefWidth="600.0" styleClass="tappeto-background" stylesheets="@styles.css">
          <children>
             <HBox prefHeight="110.0" prefWidth="200.0">
                <children>
@@ -80,4 +81,8 @@
          </children>
       </VBox>
    </children>
+   <stylesheets>
+      <URL value="@styles.css" />
+      <URL value="@styles2.css" />
+   </stylesheets>
 </AnchorPane>

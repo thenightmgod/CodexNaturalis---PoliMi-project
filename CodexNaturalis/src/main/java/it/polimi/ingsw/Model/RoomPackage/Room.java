@@ -130,10 +130,10 @@ public class Room implements Serializable {
      * Sets the flag indicating whether the game has reached the twenty points threshold.
      */
     public void setTwentyFlag() {
-        if(turn.getPointsCounter()>=5)
+        if(turn.getPointsCounter()>=20)
             this.twenty = true;
         if(twenty && !lastRound)
-            if(turn.getPointsCounter()>=5)
+            if(turn.getPointsCounter()>=20)
                 observerManager.twenty(turn.getName());
     }
     /**
@@ -417,7 +417,7 @@ public class Room implements Serializable {
 
     /**
      * Changes the turn of the game.
-     * @param mex The message to send to the players (StartCard if the player has to choose the face of the start card, GoalCard if the player has to choose his goal card, NormalTurn if the player has the turn in the game)
+     * @param mex The message that specifies what action has been completed (StartCard if the player has to choose the face of the start card, GoalCard if the player has to choose his goal card, NormalTurn if the player has the turn in the game)
      * @throws RemoteException If a remote communication error occurs.
      */
     public void changeTurns(String mex) throws RemoteException {

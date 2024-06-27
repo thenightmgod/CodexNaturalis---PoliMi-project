@@ -7,24 +7,61 @@ import javafx.scene.image.ImageView;
 
 import java.util.LinkedList;
 
+/**
+ * This class is a controller for the Winner view in the GUI.
+ * It extends the GUIController class and manages the display of the winner and the standings.
+ */
 public class WinnerController extends GUIController {
+    /**
+     * A LinkedList of Strings representing the standings.
+     */
     private LinkedList<String> standings;
+    /**
+     * The label for the first place player.
+     */
     @FXML
     private Label labelUno;
+    /**
+     * The label for the second place player.
+     */
     @FXML
     private Label labelDue;
+    /**
+     * The label for the third place player.
+     */
     @FXML
     private Label labelTre;
+    /**
+     * The label for the fourth place player.
+     */
     @FXML
     private Label labelQuattro;
+    /**
+     * The image view for the first place player.
+     */
     @FXML
     private ImageView image1;
+    /**
+     * The image view for the second place player.
+     */
     @FXML
     private ImageView image2;
+    /**
+     * The image view for the third place player.
+     */
     @FXML
     private ImageView image3;
+    /**
+     * The image view for the fourth place player.
+     */
     @FXML
     private ImageView image4;
+
+    /**
+     * Sets the arguments for the controller.
+     * In this case, it sets the standings and calls the appropriate method to load the labels and images.
+     * @param args The arguments to be set. The first argument should be a LinkedList of Strings representing the standings.
+     */
     @Override
     public void setArgs(Object... args){
         standings = (LinkedList<String>) args[0];
@@ -41,6 +78,9 @@ public class WinnerController extends GUIController {
             }
         }
     }
+    /**
+     * Loads the labels and images for the first and second place.
+     */
     private void loadLabelDue(){
         Image primo = loadImage("/view/MyCodexNaturalisPhotos/oro.png");
         image1.setImage(primo);
@@ -55,6 +95,10 @@ public class WinnerController extends GUIController {
         labelDue.setText(standings.get(1));
         labelDue.setVisible(true);
     }
+
+    /**
+     * Loads the labels and images for the first, second, and third place.
+     */
     private void loadLabelTre(){
         Image primo = loadImage("/view/MyCodexNaturalisPhotos/oro.png");
         image1.setImage(primo);
@@ -69,6 +113,10 @@ public class WinnerController extends GUIController {
         labelTre.setText(standings.get(2));
         labelTre.setVisible(true);
     }
+
+    /**
+     * Loads the labels and images for the first, second, third, and fourth place.
+     */
     private void loadLabelQuattro(){
         Image primo = loadImage("/view/MyCodexNaturalisPhotos/oro.png");
         image1.setImage(primo);

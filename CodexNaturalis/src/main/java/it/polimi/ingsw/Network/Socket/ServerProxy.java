@@ -3,49 +3,49 @@ package it.polimi.ingsw.Network.Socket;
 
 import java.io.BufferedWriter;
 import java.io.PrintWriter;
+/**
+ * The ServerProxy class is used to send messages to the server.
+ * It contains methods to send messages to the server. It is used to hide the connection between the client and the server.
+ */
+public class ServerProxy {
 
-public class ServerProxy implements VirtualServerSocket {
-
+    /**
+     * The output stream of the client/
+     */
     final PrintWriter output;
 
     public ServerProxy(PrintWriter output) {
         this.output = new PrintWriter(output);
     }
-    @Override
+
     public void joinGame(String stringMessage)  {
         sendMessage(stringMessage);
     }
-    @Override
+
     public void sendChatMessage(String message){
         sendMessage(message);
     }
 
-    @Override
     public void endColor(String message){
         sendMessage(message);
     }
 
-    @Override
     public void createGame(String stringMessage)  {
         sendMessage(stringMessage);
     }
 
-    @Override
     public void leaveGame(String stringMessage) {
         sendMessage(stringMessage);
     }
 
-    @Override
     public void placeCard(String stringMessage) {
         sendMessage(stringMessage);
     }
 
-    @Override
     public void setStartCardFace(String stringMessage) {
         sendMessage(stringMessage);
     }
 
-    @Override
     public void chooseGoalcard(String stringMessage) {
         sendMessage(stringMessage);
     }
@@ -54,7 +54,6 @@ public class ServerProxy implements VirtualServerSocket {
         sendMessage(stringMessage);
     }
 
-    @Override
     public void setView(String stringMessage) {
         sendMessage(stringMessage);
     }
@@ -66,6 +65,5 @@ public class ServerProxy implements VirtualServerSocket {
             output.write("\n");
             output.flush();
     }
-    //per ogni metodo che chiamo dal client mando sul output del canale output.write(gson)
 
 }

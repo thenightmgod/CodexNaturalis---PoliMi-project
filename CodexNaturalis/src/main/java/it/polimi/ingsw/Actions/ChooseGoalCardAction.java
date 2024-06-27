@@ -8,18 +8,23 @@ import java.rmi.RemoteException;
 
 
 /**
- * Represents an action where a player chooses a goal card.
+ * This ChooseGoalCardAction class extends Actions and represents an action where a player chooses a goal card.
  * This action is a subclass of the Actions class.
  */
 public class ChooseGoalCardAction extends Actions{
-
+    /**
+     * The index of the goal card chosen.
+     */
     int i;
+    /**
+     * The ID of the room where this action is executed.
+     */
     int roomId;
 
     /**
-     * Constructs a new ChooseGoalCardAction with the specified index, view, manager, server, priority, and room ID.
+     * Constructs a new ChooseGoalCardAction with the specified index, view, manager, priority, and room ID.
      *
-     * @param i The index of the goal card to be chosen.
+     * @param i The index of the goal card chosen.
      * @param roomId The ID of the room where this action is executed.
      * @see Actions
      */
@@ -31,7 +36,7 @@ public class ChooseGoalCardAction extends Actions{
 
     /**
      * Executes this action.
-     * The player chooses a goal card.
+     * It calls the chooseGoalCard method of the GameController referred to this room.
      *
      * @throws RemoteException If a remote access error occurs.
      */

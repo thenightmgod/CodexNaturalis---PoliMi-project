@@ -11,9 +11,25 @@ import it.polimi.ingsw.Model.PlayerPackage.Position;
 
 import java.util.HashMap;
 import java.util.LinkedList;
-
+/** Class that represents the client model, it contains all the information that the client needs to know
+ * about the game state
+ */
 public class ClientModel {
 
+    /** Attributes:
+     * name: the name of the player
+     * players: the list of players in the game
+     * hand: the list of cards in the player's hand
+     * field: the playing field of the player
+     * points: the points of the player
+     * commonGoals: the list of common goals
+     * freePosition: the list of free positions
+     * drawableGoldCards: the list of drawable gold cards
+     * drawableResourceCards: the list of drawable resource cards
+     * otherFields: the playing fields of the other players
+     * chat: the list of chat messages
+     * colors: the list of colors
+     */
     private String name;
     private LinkedList<String> players;
     private LinkedList<PlayableCard> hand;
@@ -27,6 +43,9 @@ public class ClientModel {
     private LinkedList<ChatMessage> chat;
     private LinkedList<PlayerColor> colors;
 
+    /** Constructor:
+     * It creates a new client model with the given name
+     */
     public ClientModel(String name){
         this.name = name;
         this.hand = new LinkedList<>();

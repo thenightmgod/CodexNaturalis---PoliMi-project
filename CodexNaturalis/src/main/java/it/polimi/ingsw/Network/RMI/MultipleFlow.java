@@ -11,8 +11,13 @@ import java.util.concurrent.PriorityBlockingQueue;
  * This class is part of the RMI (Remote Method Invocation) package.
  */
 public class MultipleFlow {
-
+    /**
+     * The ExecutorService associated with this MultipleFlow.
+     */
     private ExecutorService executorService;
+    /**
+     * The PriorityBlockingQueue of actions associated with this MultipleFlow.
+     */
     private PriorityBlockingQueue<Actions> actionsQueue;
 
     /**
@@ -31,7 +36,11 @@ public class MultipleFlow {
     public ExecutorService getExecutorService() {
         return executorService;
     }
-
+    /**
+     * Returns the PriorityBlockingQueue of actions associated with this MultipleFlow.
+     *
+     * @return The PriorityBlockingQueue of actions associated with this MultipleFlow.
+     */
     public PriorityBlockingQueue<Actions> getActionsQueue() {
         return actionsQueue;
     }

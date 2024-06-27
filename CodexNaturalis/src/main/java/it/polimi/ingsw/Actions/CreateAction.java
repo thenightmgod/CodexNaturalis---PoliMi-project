@@ -6,22 +6,29 @@ import it.polimi.ingsw.Network.VirtualView;
 import java.rmi.RemoteException;
 
 /**
- * Represents an action where a player creates a game.
- * This action is a subclass of the Actions class.
+ * This CreateActions extends Actions and represents an action where a player creates a game.
  */
 public class CreateAction extends Actions{
-
+    /**
+     * The number of players in the game.
+     */
     int i;
+    /**
+     * The ID of the room where this action is executed.
+     */
     int roomId;
+    /**
+     * The name of the player that wants to create a game.
+     */
     String name;
 
     /**
-     * Constructs a new CreateAction with the specified number of players, view, manager, game name, server, priority, and room ID.
+     * Constructs a new CreateAction with the specified number of players, view, manager, player name,  priority, and room ID.
      *
      * @param i The number of players in the game to be created.
      * @param view The VirtualView associated with this action.
      * @param manager The MainController managing this action.
-     * @param name The name of the game to be created.
+     * @param name The name of player that wants to create a game.
      * @param priority The priority of this action.
      * @param roomId The ID of the room where this action is executed.
      */
@@ -34,7 +41,7 @@ public class CreateAction extends Actions{
 
     /**
      * Executes this action.
-     * The player creates a game.
+     * It calls the createGame method of the MainController.
      *
      * @throws RemoteException If a remote access error occurs.
      */

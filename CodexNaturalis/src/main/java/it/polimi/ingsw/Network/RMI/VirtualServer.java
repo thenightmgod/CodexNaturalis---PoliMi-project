@@ -87,9 +87,21 @@ public interface VirtualServer extends Remote {
      * @throws RemoteException If a remote access error occurs.
      */
     void endTurn(VirtualView client, String mex) throws RemoteException;
-
+    /**
+     * Allows a player to send a chat message.
+     *
+     * @param message The message to be sent.
+     * @param client The client that represents the player.
+     * @throws RemoteException If a remote access error occurs.
+     */
     void sendChatMessage(ChatMessage message, VirtualView client) throws RemoteException;
-
+    /**
+     * Allows a player to set his color.
+     *
+     * @param color The color chosen.
+     * @param client The client that represents the player.
+     * @throws RemoteException If a remote access error occurs.
+     */
     void endColor(PlayerColor color, VirtualView client) throws RemoteException;
 
 }

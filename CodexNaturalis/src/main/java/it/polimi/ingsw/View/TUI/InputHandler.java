@@ -452,6 +452,9 @@ public class InputHandler extends Thread{
         }
     }
 
+    /**
+     * Prompts the user to choose a color from the available colors and sets the chosen color.
+     */
     public void updateColors(){
         LinkedList<PlayerColor> colors;
         colors = this.tui.client.getClient().getColors();
@@ -473,6 +476,12 @@ public class InputHandler extends Thread{
         }
     }
 
+    /**
+     * Returns the color code associated with the given color.
+     *
+     * @param color The color to get the color code for.
+     * @return The color code associated with the given color.
+     */
     private String getColorCode(PlayerColor color) {
         switch (color) {
             case RED:

@@ -15,6 +15,9 @@ import static it.polimi.ingsw.Model.CornerPackage.Resources.*;
 import static it.polimi.ingsw.Model.PlayerPackage.FB.BACK;
 import static it.polimi.ingsw.Model.PlayerPackage.FB.FRONT;
 
+/** Class that contains the functions to print the cards in the TUI
+ *
+ */
 public class CardsTUI {
     public static final String ANSI_RED = "\u001B[31m";
     public static final String ANSI_GREEN = "\u001B[32m";
@@ -36,7 +39,7 @@ public class CardsTUI {
 
     /** Functions that print the Start Card divided in lines
      *
-     * @param c
+     * @param c the start card to print
      */
 
     public void printFrontStartCard(StartCard c) {
@@ -220,7 +223,7 @@ public class CardsTUI {
 
     /** Functions that print the Resource Card divided in lines
      *
-     * @param card
+     * @param card the resource card to print
      */
 
     public void printResourceCardJackie(ResourceCard card) {
@@ -360,9 +363,9 @@ public class CardsTUI {
 
     //----------------------------------------------PRINTARE GOLD CARD--------------------------------------------------
 
-    /** Functions that print the Gold Card divided in lines
+    /** Functions that print the Gold Card divided in lines.
      *
-     * @param card
+     * @param card the gold card to print.
      */
 
     public void printGoldCardJackie(GoldCard card) {
@@ -549,7 +552,7 @@ public class CardsTUI {
 
     /**Function that prints a single Goal Card
      *
-     * @param c
+     * @param c the goal card to print
      */
     public void printGoalCard(GoalCard c) {
         System.out.print(ANSI_YELLOW);
@@ -641,7 +644,7 @@ public class CardsTUI {
 
     /** Functions that print the various composition in the goal card
      *
-     * @param c
+     * @param c the goal card to print
      */
 
     private void printL(GoalCard c) {
@@ -760,8 +763,8 @@ public class CardsTUI {
 
     /** Function that pritns the corners of a card
      *
-     * @param c
-     * @param sb
+     * @param c the corner to print
+     * @param sb the StringBuilder that contains the corner
      */
     public void printCorner(Corner c, StringBuilder sb) {
         if (c.getCovered()) {
@@ -813,7 +816,7 @@ public class CardsTUI {
 
     /** Function that prints the Playing Field
      *
-     * @param model
+     * @param model the model of the game
      */
     public void plotPlayingField(ClientModel model){
         PlayingField Field = model.getField();
@@ -1018,7 +1021,7 @@ public class CardsTUI {
 
     /** Function that prints the list of free position in your playing field
      *
-     * @param model
+     * @param model the model of the client
      */
     public void plotFreePos(ClientModel model){
         PlayingField field = model.getField();
@@ -1039,7 +1042,7 @@ public class CardsTUI {
 
     /** Function that prints the points of every player
      *
-     * @param model
+     * @param model the model of the client
      */
     public void plotPoints(ClientModel model){
         System.out.printf("%-20s %-10s%n", "Player", "Points");
@@ -1053,7 +1056,7 @@ public class CardsTUI {
 
     /** Function that prints the Hand of a player
      *
-     * @param model
+     * @param model the model of the client
      */
     public void plotHandSeria(ClientModel model){
         LinkedList<PlayableCard> toPrint= model.getHand();
@@ -1195,7 +1198,7 @@ public class CardsTUI {
 
     /** Function that prints the Drawable Cards
      *
-     * @param model
+     * @param model The ClientModel.
      */
     public void plotDrawables(ClientModel model){
         LinkedList<GoldCard> Gold = model.getDrawableGoldCards();

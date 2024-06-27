@@ -27,11 +27,25 @@ import java.util.Objects;
  * The RMIClient is responsible for interacting with the RMI server and performing actions based on the user's input.
  */
 public class RMIClient extends UnicastRemoteObject implements VirtualView, CommonClient {
-
+    /**
+     * The name of the client.
+     */
     private String name;
+    /**
+     * The GameView associated with this client.
+     */
     private GameView view;
+    /**
+     * The VirtualServer where this client is connected.
+     */
     private VirtualServer server;
+    /**
+     * The Registry where this client is connected.
+     */
     private Registry registry;
+    /**
+     * The ClientModel associated with this client.
+     */
     private ClientModel model;
 
     /**
@@ -57,7 +71,9 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     public void setName(String name) {
         this.name = name;
     }
-
+    /**
+     * Sets the name of the other players in the same game to the ClientModel.
+     */
     @Override
     public void sendPlayers(LinkedList<String> players) throws RemoteException {
         this.model.setPlayers(players);
@@ -199,7 +215,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
      * Ends the turn for this client.
      *
      * @param name The name of the client.
-     * @param mex The message to be displayed when the turn ends.
+     * @param mex The message to send associated with the turn ending.
      */
     @Override
     public void endTurn(String name, String mex){
@@ -406,26 +422,6 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     }
 
     /**
-     * Updates the client's view.
-     *
-     * @throws RemoteException If a remote access error occurs.
-     */
-    @Override
-    public void update() throws RemoteException {
-
-    }
-
-    /**
-     * Shows the other player's field to this client.
-     *
-     * @param player The name of the other player.
-     */
-    @Override
-    public void showOtherField(String player) {
-
-    }
-
-    /**
      * Checks if this client is alive.
      *
      * @throws RemoteException If a remote access error occurs.
@@ -436,7 +432,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
     }
 
     /**
-     * Sends a message to this client that they have left the game.
+     * Sends a message to this client that someone has left the game.
      *
      * @throws RemoteException If a remote access error occurs.
      */
@@ -445,11 +441,23 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
         this.view.leaveGameMessage();
     }
 
+    /**
+     * Sends a chat message to the server.
+     *
+     * @param message The chat message to send.
+     * @throws RemoteException If a remote access error occurs.
+     */
     @Override
     public void sendChatMessage(ChatMessage message) throws RemoteException {
         this.server.sendChatMessage(message, this);
     }
 
+    /**
+     * Updates the chat for this client.
+     *
+     * @param name The name of the client.
+     * @param chat The updated chat messages.
+     */
     @Override
     public void updateChat(String name, LinkedList<ChatMessage> chat) {
         if(name.equals(this.name)){
@@ -457,11 +465,24 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
         }
     }
 
+    /**
+     * Updates the colors for this client.
+     *
+     * @param turn The player whose turn it is.
+     * @param colors The updated colors.
+     * @throws RemoteException If a remote access error occurs.
+     */
     @Override
     public void updateColors(Player turn, LinkedList<PlayerColor> colors) throws RemoteException {
         this.view.updateColors(turn, colors);
     }
 
+    /**
+     * Allows this client to set their color.
+     *
+     * @param color The color to set.
+     * @throws RemoteException If a remote access error occurs.
+     */
     @Override
     public void endColor(PlayerColor color) throws RemoteException {
         this.server.endColor(color, this);

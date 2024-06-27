@@ -28,7 +28,7 @@
     -fx-spacing: 10px;
 }
 .winnerBackground {
-    -fx-background-image: url("/view/MyCodexNaturalisPhotos/berlusconitrofei.jpg");
+    -fx-background-image: url("/view/MyCodexNaturalisPhotos/schermataWinner.jpg");
     -fx-background-size: cover;
     -fx-background-repeat: stretch;
 }

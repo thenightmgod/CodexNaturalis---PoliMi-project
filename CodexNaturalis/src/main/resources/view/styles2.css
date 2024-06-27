@@ -34,4 +34,10 @@
     -fx-background-repeat: stretch;
 }
 
+.winnerBackground {
+    -fx-background-image: url("MyCodexNaturalisPhotos/schermataWinner.jpg");
+    -fx-background-size: cover;
+    -fx-background-repeat: stretch;
+}
+
 
