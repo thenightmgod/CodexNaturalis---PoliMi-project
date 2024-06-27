@@ -28,13 +28,16 @@ public class ColorController extends GUIController{
     @FXML
     private ImageView red;
 
+    private boolean flag;
     private LinkedList<PlayerColor> colors;
     protected boolean colorchosen;
 
     @Override
     public void setArgs(Object... args) {
         this.colors = (LinkedList<PlayerColor>) args[0];
-        loadColor();
+        this.flag = (boolean) args[1];
+        if(flag) loadColor();
+        else waitYourTurn();
     }
     @FXML
     private void initialize() {
@@ -98,9 +101,7 @@ public class ColorController extends GUIController{
 
     public void waitYourTurn() {
         disableColorInteractions();
-        if (!colorchosen){
             myLabel.setText("WAIT, IT'S NOT YOUR TURN");
-        }
     }
 
     @FXML
@@ -161,5 +162,11 @@ public class ColorController extends GUIController{
         disableColorInteractions();
         myLabel.setText("COLOOR CHOSEN!");
     }
+
+    public void loadThings(LinkedList<PlayerColor> colors){
+        this.colors = colors;
+        loadColor();
+    }
+
 }
 

@@ -456,8 +456,9 @@ public class InputHandler extends Thread{
         LinkedList<PlayerColor> colors;
         colors = this.tui.client.getClient().getColors();
         int selectedColorIndex = -1;
-        while (selectedColorIndex < 0 || selectedColorIndex >= colors.size()) {
+        while (selectedColorIndex < 0 || selectedColorIndex > colors.size()) {
             System.out.println("Select a color:");
+
             for (int i = 0; i < colors.size(); i++) {
                 String colorCode = getColorCode(colors.get(i));
                 System.out.println(colorCode + (i + 1) + " -> " + colors.get(i) + "\u001B[0m");            }
