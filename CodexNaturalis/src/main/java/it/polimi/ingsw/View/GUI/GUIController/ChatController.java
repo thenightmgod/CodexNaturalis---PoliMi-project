@@ -62,7 +62,6 @@ public class ChatController extends GUIController {
         playersBox.getChildren().clear();
         playerCheckBoxes.clear();
 
-        // Create and add the "everyone" checkbox
         everyoneCheckBox = new CheckBox("everyone");
         everyoneCheckBox.setFont(Font.font("Arial", FontWeight.BOLD, 14));
         everyoneCheckBox.setPadding(new Insets(5));
@@ -141,17 +140,16 @@ public class ChatController extends GUIController {
         String messageText = messageInput.getText().trim();
 
         if (!messageText.isEmpty()) {
-            List<String> selectedPlayers = new LinkedList<>();
+            String selectedPlayers = new String();
             boolean everyone = false;
 
             if (everyoneCheckBox.isSelected()) {
                 everyone = true;
-                selectedPlayers.addAll(activePlayers);
-                selectedPlayers.add(client.getClient().getName());
+                selectedPlayers="everyone";
             } else {
                 for (CheckBox checkBox : playerCheckBoxes) {
                     if (checkBox.isSelected()) {
-                        selectedPlayers.add(checkBox.getText());
+                        selectedPlayers = checkBox.getText();
                     }
                 }
             }
@@ -163,24 +161,23 @@ public class ChatController extends GUIController {
             } else {
                 errorLabel.setVisible(false);
             }
+            ChatMessage mex;
 
-            for (String recipient : selectedPlayers) {
-                ChatMessage message;
-                if (everyone) {
-                    message = new ChatMessage(messageText, client.getClient().getName(), "everyone");
-                } else {
-                    message = new ChatMessage(messageText, client.getClient().getName(), recipient);
-                }
-                try {
-                    client.sendChatMessage(message);
+            if (everyone) {
+                mex = new ChatMessage(messageText, client.getClient().getName(), "everyone");
+            }else {
+                mex = new ChatMessage(messageText, client.getClient().getName(), selectedPlayers);
+            }
+
+            try {
+                client.sendChatMessage(mex);
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
-                addMessageToChat(message);
+                addMessageToChat(mex);
             }
             messageInput.clear();
         }
-    }
 
     private void addMessageToChat(ChatMessage message) {
         String uniqueMessageIdentifier = message.getSender() + ": " + message.getMessage();
