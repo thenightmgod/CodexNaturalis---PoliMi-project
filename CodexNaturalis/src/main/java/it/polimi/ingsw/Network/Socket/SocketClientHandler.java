@@ -92,6 +92,13 @@ public class SocketClientHandler extends Thread implements VirtualView {
 
     public void handleCommand(Message msg) throws RemoteException, NotBoundException {
         switch(msg.getType()){
+            case "EndColorMessage" -> {
+                String name = ((EndColorMessage) msg).getName();
+                PlayerColor color = ((EndColorMessage) msg).getColor();
+                int roomId = controller.getYourRoomId(name);
+                Actions eColor = new EndColorAction(this, controller, 0, color, roomId);
+                actionsPerGame.get(roomId).getActionsQueue().add(eColor);
+            }
             case "ChatMessageMessage" ->{
                 String name = ((ChatMessageMessage) msg).getName();
                 ChatMessage message = ((ChatMessageMessage) msg).getMessage();

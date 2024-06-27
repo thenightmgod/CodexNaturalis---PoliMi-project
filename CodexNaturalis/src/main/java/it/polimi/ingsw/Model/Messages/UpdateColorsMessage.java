@@ -7,15 +7,15 @@ import java.util.LinkedList;
 
 public class UpdateColorsMessage extends Message{
 
-    String name;
-    Player turn;
-    LinkedList<PlayerColor> colrs;
+    public String name;
+    public Player turn;
+    public LinkedList<PlayerColor> colors;
 
-    public UpdateColorsMessage(String name, Player turn, LinkedList<PlayerColor> colrs){
+    public UpdateColorsMessage(String name, Player turn, LinkedList<PlayerColor> colors){
         super("UpdateColorsMessage");
         this.name = name;
         this.turn = turn;
-        this.colrs = colrs;
+        this.colors = colors;
     }
 
     public String getName(){
@@ -27,6 +27,6 @@ public class UpdateColorsMessage extends Message{
     }
 
     public LinkedList<PlayerColor> getColors(){
-        return colrs;
+        return colors;
     }
 }

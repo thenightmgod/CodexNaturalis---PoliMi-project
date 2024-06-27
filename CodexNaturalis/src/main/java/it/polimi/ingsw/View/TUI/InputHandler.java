@@ -447,9 +447,6 @@ public class InputHandler extends Thread{
                 System.out.println("Please enter a valid number!");
             }
         }
-
-        PlayerColor selectedColor = colors.get(selectedColorIndex);
-        System.out.println("You selected: " + selectedColor);
     }
 
     private String getColorCode(PlayerColor color) {

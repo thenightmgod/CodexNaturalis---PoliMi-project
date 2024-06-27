@@ -307,7 +307,7 @@ public class SocketClient implements CommonClient {
 
     @Override
     public void endColor(PlayerColor color) {
-        EndColorMessage msg = new EndColorMessage(color);
+        EndColorMessage msg = new EndColorMessage(name, color);
         String gson = msg.MessageToJson();
         server.endColor(gson);
     }

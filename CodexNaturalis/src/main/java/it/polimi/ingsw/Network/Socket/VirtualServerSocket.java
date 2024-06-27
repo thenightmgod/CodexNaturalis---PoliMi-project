@@ -18,6 +18,7 @@ public interface VirtualServerSocket {
     void setView(String stringMessage);
     void sendMessage(String message);
     void sendChatMessage(String message);
+    void endColor(String message);
     void checkGoals(String name);
 
     // ci dev'essere anche la chooseStartCard()
