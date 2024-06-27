@@ -1,5 +1,6 @@
 package it.polimi.ingsw.View.TUI;
 
+import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import it.polimi.ingsw.View.ChatMessage;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
@@ -29,6 +30,7 @@ public class TUI implements GameView {
     InputHandler inputHandler;
     TuiChat chat = new TuiChat();
     Boolean mirko = true;
+    PlayerColor color;
 
     public TUI(){}
 
@@ -37,6 +39,13 @@ public class TUI implements GameView {
         inputHandler.handleUserInput("askServerIp");
         inputHandler.handleUserInput("chooseClient");
         joinGame();
+    }
+
+    @Override
+    public void updateColors(Player turn, LinkedList<PlayerColor> colors) throws RemoteException {
+        this.client.getClient().setColors(colors);
+        this.inputHandler.handleUserInput("updateColors");
+        this.client.endColor(color);
     }
 
     @Override

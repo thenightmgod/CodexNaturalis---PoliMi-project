@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Model.RoomPackage;
 
 
+import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import it.polimi.ingsw.View.ChatMessage;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
@@ -225,6 +226,9 @@ public class ObserverManager {
         observers.get(name).updateChat(name, chat);
     }
 
+    public void updateColors(Player turn, LinkedList<PlayerColor> colors) throws RemoteException {
+        observers.get(turn.getName()).updateColors(turn, colors);
+    }
 
     //eventualmente implementarli
     public void message(String name, String mex){};

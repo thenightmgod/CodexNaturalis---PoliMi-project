@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Model.RoomPackage;
 
+import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import it.polimi.ingsw.View.ChatMessage;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.CompositionGoalCard;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
@@ -77,6 +78,8 @@ public class Room implements Serializable {
      */
     private boolean ll;
 
+    LinkedList<PlayerColor> colors = new LinkedList<>();
+
 
     /**
      * Constructs a game room with the specified room identifier and list of players.
@@ -95,6 +98,7 @@ public class Room implements Serializable {
         for(int i=0; i<this.players.size(); i++){
             observerManager.addObserver(clients.get(i), players.get(i).getName());
         }
+        colors.addAll(Arrays.asList(PlayerColor.values()));
     }
 
     /**
@@ -349,11 +353,26 @@ public class Room implements Serializable {
         p.addTotalPoints(p.getGoalPointsCounter());
     }
 
+    public void startColors() throws RemoteException {
+        observerManager.updateColors(turn, colors);
+    }
+
+    public void endColor(PlayerColor color) throws RemoteException {
+        turn.setColor(color);
+        colors.remove(color);
+        int index = players.indexOf(turn);
+        turn = players.getLast().equals(turn) ? players.getFirst() : players.get(index + 1);
+        if(turn.equals(players.getFirst()))
+            start();
+        else startColors();
+    }
+
     /**
      * Starts the game.
      * @throws RemoteException If a remote communication error occurs.
      */
     public void start() throws RemoteException {
+        giveStartCards();
         this.observerManager.updateTurn(turn, "StartCard");
     }
 
@@ -411,6 +430,7 @@ public class Room implements Serializable {
             switch(mex) {
                 case "StartCard" -> {
                     if(turn.equals(players.getFirst())) {
+
                         for(Player p: players) {
                             giveInitialCards(p);
                         }

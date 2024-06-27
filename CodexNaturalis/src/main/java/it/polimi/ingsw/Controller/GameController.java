@@ -149,8 +149,8 @@ public class GameController {
         createDecks();
         createCommonGoals();
         this.game.sendPlayers();
-        this.game.giveStartCards();
-        this.game.start();
+        //this.game.start();
+        this.game.startColors();
     }
 
     /**
@@ -324,5 +324,9 @@ public class GameController {
 
     public void sendChatMessage(ChatMessage message) throws RemoteException {
         this.game.sendChatMessage(message);
+    }
+
+    public void endColor(PlayerColor color) throws RemoteException {
+        this.game.endColor(color);
     }
 }

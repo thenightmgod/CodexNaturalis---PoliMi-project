@@ -1,15 +1,12 @@
 package it.polimi.ingsw.Network.RMI;
 
+import it.polimi.ingsw.Model.PlayerPackage.*;
 import it.polimi.ingsw.View.ChatMessage;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.StartCard;
-import it.polimi.ingsw.Model.PlayerPackage.FB;
-import it.polimi.ingsw.Model.PlayerPackage.Player;
-import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
-import it.polimi.ingsw.Model.PlayerPackage.Position;
 import it.polimi.ingsw.View.TUI.ClientModel;
 import it.polimi.ingsw.Network.CommonClient;
 import it.polimi.ingsw.Network.VirtualView;
@@ -458,6 +455,16 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Commo
         if(name.equals(this.name)){
             this.view.updateChat(name, chat);
         }
+    }
+
+    @Override
+    public void updateColors(Player turn, LinkedList<PlayerColor> colors) throws RemoteException {
+        this.view.updateColors(turn, colors);
+    }
+
+    @Override
+    public void endColor(PlayerColor color) throws RemoteException {
+        this.server.endColor(color, this);
     }
 
     /**

@@ -116,6 +116,11 @@ public class SocketClient implements CommonClient {
 
     public void handleCommand(Message mex) throws IOException, NotBoundException {
         switch(mex.getType()) {
+            case "UpdateColorsMessage" ->{
+                Player turn = ((UpdateColorsMessage)mex).getTurn();
+                LinkedList<PlayerColor> colors = ((UpdateColorsMessage)mex).getColors();
+                this.view.updateColors(turn, colors);
+            }
             case "IsAliveMessage" -> {
                 String name = ((IsAliveMessage) mex).getName();
             }
@@ -298,5 +303,12 @@ public class SocketClient implements CommonClient {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public void endColor(PlayerColor color) {
+        EndColorMessage msg = new EndColorMessage(color);
+        String gson = msg.MessageToJson();
+        server.endColor(gson);
     }
 }

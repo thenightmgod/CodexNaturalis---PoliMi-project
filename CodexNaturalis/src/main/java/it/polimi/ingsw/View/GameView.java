@@ -6,6 +6,7 @@ import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.PlayableCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.ResourceCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.StartCard;
 import it.polimi.ingsw.Model.PlayerPackage.Player;
+import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import it.polimi.ingsw.Model.PlayerPackage.PlayingField;
 import it.polimi.ingsw.Model.PlayerPackage.Position;
 
@@ -15,6 +16,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 public interface GameView {
+
+    void updateColors(Player turn, LinkedList<PlayerColor> colors) throws RemoteException;
 
     void updateChat(String name, LinkedList<ChatMessage> chat);
 

@@ -10,6 +10,7 @@ public class ClientProxy {
         this.output = new PrintWriter(output);
     }
 
+    public void updateColors(String StringMessage) {sendMessage(StringMessage);}
     public void isAlivee(String message) {sendMessage(message);}
     public void updateChat(String message) {sendMessage(message);}
     public void sendPlayers(String StringMessage) {sendMessage(StringMessage);}

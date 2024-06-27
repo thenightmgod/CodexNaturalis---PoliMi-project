@@ -344,6 +344,12 @@ public class GUI implements GameView {
         }
     }
 
+    @Override
+    public void updateColors(Player turn, LinkedList<PlayerColor> colors) {
+        //client.getClient().setColors(colors);
+        //todo
+    }
+
     public CommonClient getClient() {
         return this.client;
     }

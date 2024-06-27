@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Network;
 
+import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import it.polimi.ingsw.View.ChatMessage;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
@@ -193,6 +194,8 @@ public interface VirtualView extends Remote {
      * @throws RemoteException If a remote access error occurs.
      */
     void leaveGameMessage() throws RemoteException;
+
+    void updateColors(Player turn, LinkedList<PlayerColor> colors) throws RemoteException;
 
     void update() throws RemoteException; //update il clientModel
 

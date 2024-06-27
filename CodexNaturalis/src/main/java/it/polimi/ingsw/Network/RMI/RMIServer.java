@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Network.RMI;
 
 import it.polimi.ingsw.Actions.*;
+import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import it.polimi.ingsw.View.ChatMessage;
 import it.polimi.ingsw.Controller.MainController;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
@@ -192,6 +193,13 @@ public class RMIServer implements VirtualServer {
         int roomId = controller.getYourRoomId(client.getNames());
         Actions cAction = new ChatMessageAction(client, controller, 0, message, roomId);
         actionsPerGame.get(roomId).getActionsQueue().add(cAction);
+    }
+
+    @Override
+    public void endColor(PlayerColor color, VirtualView client) throws RemoteException {
+        int roomId = controller.getYourRoomId(client.getNames());
+        Actions ecAction = new EndColorAction(client, controller, 0, color, roomId);
+        actionsPerGame.get(roomId).getActionsQueue().add(ecAction);
     }
 
 

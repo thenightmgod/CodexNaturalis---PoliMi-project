@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Network.RMI;
 
+import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import it.polimi.ingsw.View.ChatMessage;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Network.VirtualView;
@@ -88,5 +89,7 @@ public interface VirtualServer extends Remote {
     void endTurn(VirtualView client, String mex) throws RemoteException;
 
     void sendChatMessage(ChatMessage message, VirtualView client) throws RemoteException;
+
+    void endColor(PlayerColor color, VirtualView client) throws RemoteException;
 
 }

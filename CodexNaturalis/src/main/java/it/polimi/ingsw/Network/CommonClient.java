@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Network;
 
+import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import it.polimi.ingsw.View.ChatMessage;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.View.GameView;
@@ -107,5 +108,7 @@ public interface CommonClient {
     VirtualServer getServer();
 
     void sendChatMessage(ChatMessage message) throws RemoteException;
+
+    void endColor(PlayerColor color) throws RemoteException;
 
 }

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.View.TUI;
 
+import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import it.polimi.ingsw.View.ChatMessage;
 import it.polimi.ingsw.Model.PlayerPackage.FB;
 import it.polimi.ingsw.Network.RMI.RMIClient;
@@ -83,6 +84,8 @@ public class InputHandler extends Thread{
                 anotherGame();
             case "chatMessage" ->
                 chatMessage();
+            case "updateColors" ->
+                updateColors();
         }
     }
     /**
@@ -423,6 +426,44 @@ public class InputHandler extends Thread{
                     return;
                 }
             }
+        }
+    }
+
+    public void updateColors(){
+        LinkedList<PlayerColor> colors;
+        colors = this.tui.client.getClient().getColors();
+        int selectedColorIndex = -1;
+        while (selectedColorIndex < 0 || selectedColorIndex >= colors.size()) {
+            System.out.println("Select a color:");
+            for (int i = 0; i < colors.size(); i++) {
+                String colorCode = getColorCode(colors.get(i));
+                System.out.println(colorCode + (i + 1) + " -> " + colors.get(i) + "\u001B[0m");            }
+            try {
+                selectedColorIndex = Integer.parseInt(scanner.nextLine()) - 1;
+                this.tui.color = colors.get(selectedColorIndex);
+                colors.remove(selectedColorIndex);
+                this.tui.client.getClient().setColors(colors);
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a valid number!");
+            }
+        }
+
+        PlayerColor selectedColor = colors.get(selectedColorIndex);
+        System.out.println("You selected: " + selectedColor);
+    }
+
+    private String getColorCode(PlayerColor color) {
+        switch (color) {
+            case RED:
+                return "\u001B[31m";
+            case GREEN:
+                return "\u001B[32m";
+            case YELLOW:
+                return "\u001B[33m";
+            case BLUE:
+                return "\u001B[34m";
+            default:
+                return "\u001B[0m"; // Default to white
         }
     }
 

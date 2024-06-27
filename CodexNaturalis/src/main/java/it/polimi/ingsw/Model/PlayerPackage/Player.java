@@ -26,7 +26,7 @@ public class Player implements Serializable {
     /**
      * The color assigned to the player.
      */
-    private final PlayerColor Color;
+    private PlayerColor Color;
     /**
      * The counter for the points accumulated by the player.
      */
@@ -204,6 +204,10 @@ public class Player implements Serializable {
             return ObjectCounter[1];
         else
             return ObjectCounter[2];
+    }
+
+    public void setColor(PlayerColor color){
+        Color = color;
     }
     /**
      * Retrieves the counters for each type of object the player has.

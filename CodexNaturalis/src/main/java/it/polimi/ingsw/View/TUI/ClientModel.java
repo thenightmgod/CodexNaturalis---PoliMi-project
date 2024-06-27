@@ -1,5 +1,6 @@
 package it.polimi.ingsw.View.TUI;
 
+import it.polimi.ingsw.Model.PlayerPackage.PlayerColor;
 import it.polimi.ingsw.View.ChatMessage;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.GoldCard;
@@ -24,6 +25,7 @@ public class ClientModel {
     private LinkedList<ResourceCard> drawableResourceCards;
     private HashMap<String, PlayingField> otherFields;
     private LinkedList<ChatMessage> chat;
+    private LinkedList<PlayerColor> colors;
 
     public ClientModel(String name){
         this.name = name;
@@ -37,6 +39,15 @@ public class ClientModel {
         this.otherFields = new HashMap<>();
         this.players = new LinkedList<>();
         this.chat = new LinkedList<>();
+        this.colors = new LinkedList<>();
+    }
+
+    public void setColors(LinkedList<PlayerColor> colors){
+        this.colors = colors;
+    }
+
+    public LinkedList<PlayerColor> getColors(){
+        return colors;
     }
 
     public void setPlayers(LinkedList<String> players){
