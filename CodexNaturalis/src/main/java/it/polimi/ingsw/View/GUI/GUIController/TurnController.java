@@ -39,47 +39,134 @@ import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+/**
+ * This class is a controller for the game turn in the GUI.
+ * It extends the GUIController class and manages the game turn logic.
+ */
 public class TurnController extends GUIController{
+    /**
+     * The HBox that contains the cards in the user's hand.
+     */
     @FXML
     private HBox myHandBox;
+    /**
+     * The HBox that contains the resource cards.
+     */
     @FXML
     private HBox resourceBox;
+    /**
+     * The HBox that contains the gold cards.
+     */
     @FXML
     private HBox goldBox;
+    /**
+     * The HBox that contains the goal cards.
+     */
     @FXML
     private HBox goalsBox;
+    /**
+     * The label that displays messages to the user.
+     */
     @FXML
     private Label messageLabel;
+    /**
+     * The label that displays the drawable resource cards.
+     */
     @FXML
     private Label myResource;
+    /**
+     * The label that displays the drawable gold cards.
+     */
     @FXML
     private Label myGold;
+    /**
+     * The label that displays the user's goal cards.
+     */
     @FXML
     private Label myGoal;
+    /**
+     * The label that displays secondary messages to the user.
+     */
     @FXML
     private Label secondmessageLabel;
     @FXML
     private Button myPointsButton;
+    /**
+     * The GridPane that represents the game board.
+     */
     @FXML
     private GridPane marione;
+    /**
+     * The AnchorPane that contains the game board.
+     */
     private AnchorPane anchorPane;
+    /**
+     * A LinkedList of GoalCards representing the common goals.
+     */
     private LinkedList<GoalCard> commongoals;
+    /**
+     * A LinkedList of GoldCards representing the deck of gold cards.
+     */
     private LinkedList<GoldCard> golddeck;
+    /**
+     * A LinkedList of ResourceCards representing the deck of resource cards.
+     */
     private LinkedList<ResourceCard> resourcedeck = new LinkedList<>();
+    /**
+     * A LinkedList of PlayableCards representing the player's hand.
+     */
     private LinkedList<PlayableCard> myhand;
+    /**
+     * A LinkedHashMap mapping player names to their points.
+     */
     private LinkedHashMap<String,Integer> points = new LinkedHashMap<>();
+    /**
+     * A LinkedHashMap mapping player names to their playing fields.
+     */
     private LinkedHashMap<String, PlayingField> othersPlayingField;
+    /**
+     * The ScoreBoard object representing the game's score board.
+     */
     private ScoreBoard scoreBoard;
+    /**
+     * The PlayingField object representing the player's playing field.
+     */
     private PlayingField field;
+    /**
+     * A boolean indicating whether it's the player's turn.
+     */
     boolean myTurn;
+    /**
+     * A boolean indicating whether the front image of a card is loaded.
+     */
     boolean isFrontImageLoaded=true;
+    /**
+     * A boolean indicating whether a card has been revealed.
+     */
     boolean revealed;
+    /**
+     * A boolean indicating whether the points have been updated.
+     */
     boolean updatedPoints=false;
+    /**
+     * A boolean indicating whether it's the last round of the game.
+     */
     boolean lastRound=false;
+    /**
+     * A boolean used for game logic, its purpose is handling the last round.
+     */
     boolean mirko = true;
+    /**
+     * A LinkedList of Booleans used for game logic, its purpose is handling the flip of the cards in the hand.
+     */
     LinkedList<Boolean> omar = new LinkedList<>();
 
-
+    /**
+     * Sets the arguments for the controller.
+     * In this case, it sets the resource deck, gold deck, common goals, my hand, field, and my turn.
+     * Then it calls the method to load all arguments.
+     * @param args The arguments to be set.
+     */
     @Override
     public void setArgs(Object... args) {
         resourcedeck=(LinkedList<ResourceCard>) args[0];
@@ -91,6 +178,9 @@ public class TurnController extends GUIController{
         loadAllArgs();
     }
 
+    /**
+     * Loads all arguments and initializes the game field.
+     */
     private void loadAllArgs() {
         for(int i=0; i<3; i++){
             this.omar.add(i, true);
@@ -107,6 +197,9 @@ public class TurnController extends GUIController{
         }
     }
 
+    /**
+     * Plots the game field with the current state of the game.
+     */
     public void plotField() {
         PlayingField field = this.gui.getClient().getClient().getField();
         this.marione.getChildren().clear();
@@ -215,16 +308,27 @@ public class TurnController extends GUIController{
         }
     }
 
+    /**
+     * Updates the resource deck and reloads the resource box.
+     * @param resourcedeck The new resource deck.
+     */
     public void updateResourceDeck(LinkedList<ResourceCard> resourcedeck) {
         this.resourcedeck = resourcedeck;
         loadResourceBox();
     }
 
+    /**
+     * Updates the gold deck and reloads the gold box.
+     * @param golddeck The new gold deck.
+     */
     public void updateGoldDeck(LinkedList<GoldCard> golddeck){
         this.golddeck = golddeck;
         loadGoldBox();
     }
 
+    /**
+     * Handles the actions to be performed when it's the user's turn.
+     */
     public void isYourTurn() {
         messageLabel.setText("IT'S YOUR TURN!");
         messageLabel.setVisible(true);
@@ -250,6 +354,10 @@ public class TurnController extends GUIController{
         }
     }
 
+    /**
+     * Handles the action of drawing a card.
+     * @throws RemoteException If there's an error in the remote method invocation.
+     */
     public void drawCard() throws RemoteException {
         messageLabel.setText("Now, draw a card!");
         messageLabel.setVisible(true);
@@ -269,6 +377,12 @@ public class TurnController extends GUIController{
         }
     }
 
+    /**
+     * Adds a draw effect to the specified image.
+     * @param image The image to add the effect to.
+     * @param deck The deck the image belongs to.
+     * @param index The index of the image in the deck.
+     */
     private void addDrawEffect(ImageView image, int deck, int index) {
         image.setOnMouseClicked(event -> {
             removeDrawEffect();
@@ -281,6 +395,12 @@ public class TurnController extends GUIController{
         });
     }
 
+    /**
+     * Gets the index of the specified image in the HBox.
+     * @param image The image to get the index of.
+     * @param deck The deck the image belongs to.
+     * @return The index of the image in the HBox.
+     */
     private int getIndexInHBox(ImageView image, int deck) {
         if (deck==1) {
             int index = resourceBox.getChildren().indexOf(image);
@@ -312,6 +432,9 @@ public class TurnController extends GUIController{
         return 0;
     }
 
+    /**
+     * Removes the draw effect from all images in the resource box and gold box.
+     */
     private void removeDrawEffect() {
         for (int i = 0; i < resourceBox.getChildren().size(); i++) {
             ImageView imageView = (ImageView) resourceBox.getChildren().get(i);
@@ -323,6 +446,9 @@ public class TurnController extends GUIController{
         }
     }
 
+    /**
+     * Handles the actions to be performed when it's not the user's turn.
+     */
     public void waitMyTurn() {
         messageLabel.setText("Please, wait your turn to place a card");
         messageLabel.setVisible(true);
@@ -332,7 +458,11 @@ public class TurnController extends GUIController{
         }
     }
 
-
+    /**
+     * Loads the resource box with images of the resource cards.
+     * The images are loaded from the resource deck.
+     * The first two cards are shown with their front image, the rest with their back image.
+     */
     private void loadResourceBox() {
 
         resourceBox.getChildren().clear();
@@ -362,6 +492,11 @@ public class TurnController extends GUIController{
         }
     }
 
+    /**
+     * Loads the gold box with images of the gold cards.
+     * The images are loaded from the gold deck.
+     * The first two cards are shown with their front image, the rest with their back image.
+     */
     private void loadGoldBox() {
 
         goldBox.getChildren().clear();
@@ -391,6 +526,12 @@ public class TurnController extends GUIController{
         }
     }
 
+    /**
+     * Loads the goal box with images of the goal cards.
+     * The images are loaded from the common goals.
+     * The first two cards are shown with their front image, the rest with their back image.
+     * The last card in the common goals has a special click effect to reveal or hide the secret goal card.
+     */
     private void loadGoalBox() {
         goalsBox.setPrefHeight(160.0);
         goalsBox.setPrefWidth(492.0);
@@ -423,6 +564,12 @@ public class TurnController extends GUIController{
         }
     }
 
+    /**
+     * Loads the player's hand with images of the cards.
+     * The images are loaded from the player's hand.
+     * All cards are shown with their front image.
+     * Each card has an interaction effect to flip the card when clicked.
+     */
     private void loadMyHand() {
         for(int i = 0; i < 3; i++)
             this.omar.set(i, true);
@@ -447,6 +594,12 @@ public class TurnController extends GUIController{
         }
     }
 
+    /**
+     * Adds a special click effect to the given image view.
+     * The effect is to reveal or hide the secret goal card when the image view is clicked.
+     * @param imageView The image view to add the effect to.
+     * @param id The id of the card.
+     */
     private void addSpecialGoalClickEffect(ImageView imageView, int id) {
         ColorAdjust colorAdjust = new ColorAdjust();
         Label label = new Label("");
@@ -500,6 +653,11 @@ public class TurnController extends GUIController{
         });
     }
 
+    /**
+     * Adds a click effect to the given image view.
+     * The effect is to change the brightness of the image view when the mouse enters or exits the image view.
+     * @param imageView The image view to add the effect to.
+     */
     private void addClickEffect(ImageView imageView) {
         ColorAdjust colorAdjust = new ColorAdjust();
         imageView.setOnMouseEntered(event -> {
@@ -521,6 +679,12 @@ public class TurnController extends GUIController{
         });
     }
 
+    /**
+     * Sets the interaction for the given image view in the player's hand.
+     * The interaction is to flip the card when the image view is clicked.
+     * @param imageView The image view to set the interaction for.
+     * @param cardId The id of the card.
+     */
     private void setmyHandinteraction(ImageView imageView, int cardId) {
         imageView.setOnMouseEntered(event -> {
             imageView.setOpacity(0.7);
@@ -560,10 +724,19 @@ public class TurnController extends GUIController{
         });
     }
 
+    /**
+     * Updates the player's hand with the given hand.
+     * @param hand The new hand of the player.
+     */
     public void updateHands(LinkedList<PlayableCard> hand) {
         myhand = hand;
         loadMyHand();
     }
+
+    /**
+     * Updates the points of the players with the given points.
+     * @param points The new points of the players.
+     */
     public void updatePoints(HashMap<String, Integer> points) {
         if (points != null) {
             this.points = new LinkedHashMap<>(points);
@@ -574,6 +747,11 @@ public class TurnController extends GUIController{
         }
     }
 
+    /**
+     * Handles the action event of showing the points counter. If the points have been updated, it creates a new stage and
+     * displays the scoreboard. If the points have not been updated yet, it displays a message indicating that the game has just started.
+     * @param event The action event that triggered this method.
+     */
     @FXML
     public void showPointsCounter(ActionEvent event) {
         if (updatedPoints) {
@@ -634,6 +812,13 @@ public class TurnController extends GUIController{
         }
     }
 
+    /**
+     * Creates a horizontal box (HBox) with an image and a label. The image is loaded from the provided path and the label
+     * is set with the provided text.
+     * @param imagePath The path to the image file.
+     * @param labelText The text to be set on the label.
+     * @return The created HBox.
+     */
     private HBox createHbox(String imagePath, String labelText){
         ImageView image = new ImageView(loadImage(imagePath));
         image.setFitWidth(50);  // Set appropriate width
@@ -647,7 +832,10 @@ public class TurnController extends GUIController{
         return hbox;
     }
 
-
+    /**
+     * Displays an exception message based on the provided exception string.
+     * @param exception The exception string.
+     */
     public void showException(String exception) {
         switch (exception) {
             case "RequirementsNotSatisfied"-> {
@@ -657,10 +845,18 @@ public class TurnController extends GUIController{
             }
         }
     }
+
+    /**
+     * Sets the last round flag to false.
+     */
     public void lastRound() {
         this.mirko = false;
     }
 
+    /**
+     * Displays a message indicating that a player has reached 20 points.
+     * @param name The name of the player who reached 20 points.
+     */
     public void twenty(String name) {
         if (! (name.equals(client.getNames()))) {
             secondmessageLabel.setText(name+ " HAS REACHED 20 POINTS!");
@@ -671,6 +867,13 @@ public class TurnController extends GUIController{
 //        lastRound=true;
     }
 
+    /**
+     * This method is triggered when the user wants to view the playing fields of other players.
+     * It creates a new stage and populates it with buttons for each other player.
+     * When a button is clicked, it calls the plotOthersField method to display the selected player's playing field.
+     *
+     * @param event the action event that triggered this method
+     */
     @FXML
     private void viewOthersPlayingField(ActionEvent event) {
         Stage newStage = new Stage();
@@ -736,7 +939,13 @@ public class TurnController extends GUIController{
         newStage.show();
     }
 
-
+    /**
+     * This method is used to display the playing field of a specific player.
+     * It creates a new stage and populates it with the cards in the player's playing field.
+     * The cards are displayed in a grid, with their positions determined by their coordinates in the playing field.
+     *
+     * @param name the name of the player whose playing field is to be displayed
+     */
     @FXML
     public void plotOthersField(String name) {
         PlayingField field = this.gui.getClient().getClient().getOtherFields().get(name);
@@ -809,6 +1018,14 @@ public class TurnController extends GUIController{
         stage.show();
     }
 
+    /**
+     * This method is triggered when the user wants to open the chat.
+     * It creates a new stage and loads the chat.fxml file into it.
+     * It also initializes the chat controller and sets the client and GUI for it.
+     *
+     * @param event the action event that triggered this method
+     * @throws IOException if there is an error loading the chat.fxml file
+     */
     @FXML
     private void openChat(ActionEvent event) throws IOException {
         URL fxmlUrl = getClass().getResource("/view/chat.fxml");

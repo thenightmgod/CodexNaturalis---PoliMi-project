@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.View.ChatMessage;
 import it.polimi.ingsw.Model.CardPackage.GoalCardPackage.GoalCard;
 import it.polimi.ingsw.Model.CardPackage.PlayableCardPackage.*;
@@ -136,8 +137,9 @@ public class SocketClient implements CommonClient {
                             .registerTypeAdapter(PlayingField.class, new PlayingFieldAdapter())
                             .registerTypeAdapter(PlayableCard.class, new PlayableCardAdapter())
                             .create();
-                    JsonParser parser = new JsonParser();
-                    JsonObject jsonObject = parser.parse(receivedMessage).getAsJsonObject();
+                    JsonReader reader = new JsonReader(new StringReader(receivedMessage));
+                    reader.setLenient(true);
+                    JsonObject jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
                     String type = jsonObject.get("type").getAsString();
                     Class<?> clazz = Class.forName("it.polimi.ingsw.Model.Messages." + type);
                     Message message = gson.fromJson(receivedMessage, (Type) clazz);

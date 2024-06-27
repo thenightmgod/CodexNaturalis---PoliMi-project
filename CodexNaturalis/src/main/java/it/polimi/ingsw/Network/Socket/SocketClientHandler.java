@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.lang.reflect.Type;
 import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.Actions.*;
 import it.polimi.ingsw.View.ChatMessage;
 import it.polimi.ingsw.Controller.MainController;
@@ -98,11 +99,12 @@ public class SocketClientHandler extends Thread implements VirtualView {
                                 .registerTypeAdapter(PlayingField.class, new PlayingFieldAdapter())
                                 .registerTypeAdapter(PlayableCard.class, new PlayableCardAdapter())
                                 .create();
-                        JsonParser parser = new JsonParser();
-                        JsonObject jsonObject = parser.parse(receivedmessage).getAsJsonObject();
+                        JsonReader reader = new JsonReader(new StringReader(receivedmessage));
+                        reader.setLenient(true);
+                        JsonObject jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
                         String type = jsonObject.get("type").getAsString();
                         Class<?> clazz = Class.forName("it.polimi.ingsw.Model.Messages." + type);
-                        Message message = gson.fromJson(receivedmessage, (Type) clazz);                        //gestire le eccezioni di handleCommand in questo metodo
+                        Message message = gson.fromJson(receivedmessage, (Type) clazz);
                         handleCommand(message);
                     }
                 } catch (NotBoundException e) {
