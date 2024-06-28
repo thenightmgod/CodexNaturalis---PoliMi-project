@@ -4,7 +4,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Codex Naturalis Project</title>
 </head>
 <body>
   <h1 align="center">
