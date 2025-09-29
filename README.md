@@ -1,4 +1,4 @@
-# IngSW2024
+# Codex Naturalis
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +11,7 @@
       <img src="https://m.media-amazon.com/images/S/aplus-media-library-service-media/92312973-eef7-4866-90c4-3397c324f9dd.__CR0,0,2425,750_PT0_SX970_V1___.jpg" alt="CodexNaturalis" width="900">
     </a>
     <br>
-    Project PoliMi for ing-sw
+    PoliMi project for Software Engineering
     <br>
   </h1>
 </body>
