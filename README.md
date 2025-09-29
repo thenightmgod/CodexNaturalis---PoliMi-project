@@ -31,15 +31,15 @@ Jang Hamin</a></h4>
 
 ## Functions Implemented
 
-|  Funzionalità   | Base  | Avanzata |
+|  Functionalities   | Base  | Advanced |
 |-----|---|---|
-| Regole semplificate | ✅ | |
-| Regole complete | ✅ | |
+| Simplified rules | ✅ | |
+| Complete rules | ✅ | |
 | Socket | ✅ | |
 | RMI | ✅ | |
 | TUI | ✅ | |
 | GUI | ✅ | |
-| Partite Multiple | | ✅ |
+| Multiple games | | ✅ |
 | Chat | | ✅ |
 
 ## How to use
